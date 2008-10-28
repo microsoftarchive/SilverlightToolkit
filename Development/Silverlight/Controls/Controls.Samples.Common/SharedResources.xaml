@@ -1,0 +1,188 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:common="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common">
+
+    <!-- Label used by samples -->
+    <Style x:Key="Description" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    
+    <!-- Informational paragraph text -->
+    <Style x:Key="Information" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontFamily" Value="Tahoma" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+    </Style>
+
+    <!-- API Names -->
+    <Style x:Key="ApiName" TargetType="TextBlock">
+        <Setter Property="Margin" Value="5 0 0 0" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#FF555555" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+    </Style>
+    
+    <!-- API Descriptions -->
+    <Style x:Key="ApiDescription" TargetType="TextBlock">
+        <Setter Property="Margin" Value="5 0 0 5" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontFamily" Value="Tahoma" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+    </Style>
+
+    <!-- Header used to seperate sections in the sample pages -->
+    <Style x:Key="Header" TargetType="ContentControl">
+        <Setter Property="Background" Value="#FFF0F0F0" />
+        <Setter Property="BorderBrush" Value="#FF333333" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontStretch" Value="UltraExpanded" />
+        <Setter Property="Foreground" Value="#FF333333" />
+        <Setter Property="Margin" Value="0 8 0 2" />
+        <Setter Property="Padding" Value="6 2 2 2" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      CornerRadius="2"
+                      Margin="{TemplateBinding Margin}">
+                        <ContentControl
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Cursor="{TemplateBinding Cursor}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          FontFamily="{TemplateBinding FontFamily}"
+                          FontSize="{TemplateBinding FontSize}"
+                          FontStretch="{TemplateBinding FontStretch}"
+                          Foreground="{TemplateBinding Foreground}"
+                          IsTabStop="{TemplateBinding IsTabStop}"
+                          Margin="{TemplateBinding Padding}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    <Style x:Key="Note" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="Red"/>
+    </Style>
+    -->
+    
+    <!-- Tree of Life used for hierarchical data binding examples -->
+    <controls:ObjectCollection x:Key="TreeOfLife" xmlns="http://schemas.microsoft.com/client/2007">
+        <common:Domain Classification="Bacteria">
+            <common:Kingdom Classification="Eubacteria" />
+        </common:Domain>
+        <common:Domain Classification="Archaea">
+            <common:Kingdom Classification="Archaebacteria" />
+        </common:Domain>
+        <common:Domain Classification="Eukarya">
+            <common:Kingdom Classification="Protista" />
+            <common:Kingdom Classification="Fungi" />
+            <common:Kingdom Classification="Plantae" />
+            <common:Kingdom Classification="Animalia">
+                <common:Phylum Classification="Arthropoda">
+                    <common:Class Classification="Insecta">
+                        <common:Order Classification="Diptera">
+                            <common:Family Classification="Drosophilidae">
+                                <common:Genus Classification="Drosophila">
+                                    <common:Species Classification="D. melanogaster" />
+                                </common:Genus>
+                            </common:Family>
+                        </common:Order>
+                    </common:Class>
+                </common:Phylum>
+                <common:Phylum Classification="Chordata">
+                    <common:Class Classification="Mammalia">
+                        <common:Order Classification="Primates">
+                            <common:Family Classification="Hominidae">
+                                <common:Genus Classification="Homo">
+                                    <common:Species Classification="H. sapiens" />
+                                </common:Genus>
+                            </common:Family>
+                        </common:Order>
+                    </common:Class>
+                </common:Phylum>
+                <common:Phylum Classification="Ctenophora" />
+                <common:Phylum Classification="Porifera" />
+                <common:Phylum Classification="Placozoa" />
+            </common:Kingdom>
+        </common:Domain>
+    </controls:ObjectCollection>
+
+    <!-- Catalog of music used for sample -->
+    <controls:ObjectCollection x:Key="MusicCatalog" xmlns="http://schemas.microsoft.com/client/2007">
+        <common:Artist ArtistName="Frank Sinatra" Genre="Pop">
+            <common:Album Title="In The Wee Small Hours" ReleaseYear="1954">
+                <common:Song Title="In The Wee Small Hours Of The Morning" Length="3:00" />
+                <common:Song Title="Mood Indigo" Length="3:30" />
+                <common:Song Title="Glad To Be Unhappy" Length="2:35" />
+                <common:Song Title="I Get Along Without You Very Well" Length="3:42" />
+                <common:Song Title="Deep In A Dream" Length="2:49" />
+            </common:Album>
+            <common:Album Title="You Do Something To Me" ReleaseYear="2008">
+                <common:Song Title="As Time Goes By" Length="2:13" />
+                <common:Song Title="Close To You" Length="3:06" />
+                <common:Song Title="Come Fly With Me" Length="2:54" />
+                <common:Song Title="Guess I'll Hang My Tears Out To Dry" Length="3:05" />
+                <common:Song Title="I've Got My Love To Keep Me Warm" Length="1:56" />
+            </common:Album>
+        </common:Artist>
+        <common:Artist ArtistName="African Wind" Genre="Blues">
+            <common:Album Title="Mercy" ReleaseYear="2006">
+                <common:Song Title="From African Soul" Length="3:12" />
+                <common:Song Title="Buren Of Blues" Length="4:23" />
+                <common:Song Title="Mississippi Fred's Dream" Length="4:48" />
+                <common:Song Title="What You Gonna Do" Length="4:01" />
+            </common:Album>
+        </common:Artist>
+        <common:Artist ArtistName="Johnny Cash" Genre="Country">
+            <common:Album Title="At Folsom Prison" ReleaseYear="1968">
+                <common:Song Title="Folsom Prison Blues" Length="2:42" />
+                <common:Song Title="Busted" Length="1:25" />
+                <common:Song Title="Dark As The Dungeon" Length="3:04" />
+                <common:Song Title="I Still Miss Someone" Length="1:38" />
+            </common:Album>
+            <common:Album Title="The Man Comes Around" ReleaseYear="2002">
+                <common:Song Title="The Man Comes Around" Length="4:26" />
+                <common:Song Title="Hurt" Length="3:36" />
+                <common:Song Title="Give My Love To Rose" Length="3:27" />
+                <common:Song Title="Bridge Over Troubled Water" Length="3:54" />
+            </common:Album>
+        </common:Artist>
+    </controls:ObjectCollection>
+
+</ResourceDictionary>

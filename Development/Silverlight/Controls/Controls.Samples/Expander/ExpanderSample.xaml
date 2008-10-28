@@ -1,0 +1,416 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.ExpanderSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="DemoButton" TargetType="Button">
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Foreground" Value="Blue" />
+                <Setter Property="Content" Value="Content From Style" />
+            </Style>
+            <Style x:Key="DemoExpander" TargetType="controls:Expander">
+                <Setter Property="Header" Value="Header" />
+                <Setter Property="Content" Value="Content" />
+            </Style>
+        </StackPanel.Resources>
+
+        <!-- ExpandDirection table -->
+        <ContentControl Content="ExpandDirection" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="ExpandDirection.Down"  FontWeight="Bold"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="ExpandDirection.Up" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="ExpandDirection.Left"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="ExpandDirection.Right" />
+            
+            <controls:Expander Grid.Row="1" Grid.Column="0" ExpandDirection="Down" Style="{StaticResource DemoExpander}">
+            </controls:Expander>
+            <controls:Expander Grid.Row="1" Grid.Column="1" ExpandDirection="Up" Style="{StaticResource DemoExpander}">
+                <controls:Expander.Content>
+                    <Button Content="&lt;Button&gt;"></Button>
+                </controls:Expander.Content>
+            </controls:Expander>
+            <controls:Expander Grid.Row="1" Grid.Column="2" ExpandDirection="Left" Style="{StaticResource DemoExpander}"
+                               Header="&lt;HeaderTemplate&gt;">
+                <controls:Expander.HeaderTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding}" Style="{StaticResource DemoButton}"></Button>
+                    </DataTemplate>
+                </controls:Expander.HeaderTemplate>
+            </controls:Expander>
+            <controls:Expander Grid.Row="1" Grid.Column="3" ExpandDirection="Right" Style="{StaticResource DemoExpander}"
+                               Header="&lt;HeaderTemplate&gt;" Content="&lt;ContentTemplate&gt;">
+                <controls:Expander.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Foreground="Blue"/>
+                    </DataTemplate>
+                </controls:Expander.HeaderTemplate>
+                <controls:Expander.ContentTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding}" Style="{StaticResource DemoButton}"></Button>
+                    </DataTemplate>
+                </controls:Expander.ContentTemplate>
+            </controls:Expander>
+        </Grid>
+        
+        <!-- Interactive Usage -->
+        <ContentControl Content="Interactive Usage" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <StackPanel>
+                    <Button Content="Button1"/>
+                    <controls:Expander x:Name="expander" Style="{StaticResource DemoExpander}"/>
+                    <Button Content="Button2"/>
+                    <TextBlock x:Name="output" />
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="ExpandDirection:" Grid.Row="0" Grid.Column="0" />
+                <ListBox x:Name="lbExpandDirection" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left">
+                    <ListBoxItem Content="Down" IsSelected="True"/>
+                    <ListBoxItem Content="Up" />
+                    <ListBoxItem Content="Left" />
+                    <ListBoxItem Content="Right" />
+                </ListBox>
+                
+                <TextBlock Text="Header:" Grid.Row="1" Grid.Column="0" />
+                <TextBox x:Name="tbHeader" Grid.Row="1" Grid.Column="2" />
+                
+                <TextBlock Text="HeaderTemplate:" Grid.Row="2" Grid.Column="0" />
+                <TextBox x:Name="tbHeaderTemplate" Grid.Row="2" Grid.Column="2" />
+                
+                <TextBlock Text="Content:" Grid.Row="3" Grid.Column="0" />
+                <TextBox x:Name="tbContent" Grid.Row="3" Grid.Column="2" />
+                
+                <TextBlock Text="ContentTemplate:" Grid.Row="4" Grid.Column="0" />
+                <TextBox x:Name="tbContentTemplate" Grid.Row="4" Grid.Column="2" />
+
+                <CheckBox x:Name="cbIsEnabled" Grid.Row="5" Grid.Column="2"
+                          HorizontalAlignment="Left" Content="IsEnabled" IsChecked="true" />
+
+                <Button x:Name="btnChange" Grid.Row="6" Grid.Column="2"
+                        HorizontalAlignment="Left" Content="Change!"/>
+            </Grid>
+        </Grid>
+            <src:SourceViewer xmlns:src="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="ExpanderSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.ExpanderSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="DemoButton" TargetType="Button"&gt;
+                &lt;Setter Property="Margin" Value="2" /&gt;
+                &lt;Setter Property="Foreground" Value="Blue" /&gt;
+                &lt;Setter Property="Content" Value="Content From Style" /&gt;
+            &lt;/Style&gt;
+            &lt;Style x:Key="DemoExpander" TargetType="controls:Expander"&gt;
+                &lt;Setter Property="Header" Value="Header" /&gt;
+                &lt;Setter Property="Content" Value="Content" /&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;!-- ExpandDirection table --&gt;
+        &lt;ContentControl Content="ExpandDirection" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="200" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            
+            &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="ExpandDirection.Down"  FontWeight="Bold"/&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="ExpandDirection.Up" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="ExpandDirection.Left"/&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="ExpandDirection.Right" /&gt;
+            
+            &lt;controls:Expander Grid.Row="1" Grid.Column="0" ExpandDirection="Down" Style="{StaticResource DemoExpander}"&gt;
+            &lt;/controls:Expander&gt;
+            &lt;controls:Expander Grid.Row="1" Grid.Column="1" ExpandDirection="Up" Style="{StaticResource DemoExpander}"&gt;
+                &lt;controls:Expander.Content&gt;
+                    &lt;Button Content="&amp;lt;Button&amp;gt;"&gt;&lt;/Button&gt;
+                &lt;/controls:Expander.Content&gt;
+            &lt;/controls:Expander&gt;
+            &lt;controls:Expander Grid.Row="1" Grid.Column="2" ExpandDirection="Left" Style="{StaticResource DemoExpander}"
+                               Header="&amp;lt;HeaderTemplate&amp;gt;"&gt;
+                &lt;controls:Expander.HeaderTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;Button Content="{Binding}" Style="{StaticResource DemoButton}"&gt;&lt;/Button&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/controls:Expander.HeaderTemplate&gt;
+            &lt;/controls:Expander&gt;
+            &lt;controls:Expander Grid.Row="1" Grid.Column="3" ExpandDirection="Right" Style="{StaticResource DemoExpander}"
+                               Header="&amp;lt;HeaderTemplate&amp;gt;" Content="&amp;lt;ContentTemplate&amp;gt;"&gt;
+                &lt;controls:Expander.HeaderTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextBlock Text="{Binding}" Foreground="Blue"/&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/controls:Expander.HeaderTemplate&gt;
+                &lt;controls:Expander.ContentTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;Button Content="{Binding}" Style="{StaticResource DemoButton}"&gt;&lt;/Button&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/controls:Expander.ContentTemplate&gt;
+            &lt;/controls:Expander&gt;
+        &lt;/Grid&gt;
+        
+        &lt;!-- Interactive Usage --&gt;
+        &lt;ContentControl Content="Interactive Usage" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="10" /&gt;
+                &lt;ColumnDefinition Width="*" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid&gt;
+                &lt;StackPanel&gt;
+                    &lt;Button Content="Button1"/&gt;
+                    &lt;controls:Expander x:Name="expander" Style="{StaticResource DemoExpander}"/&gt;
+                    &lt;Button Content="Button2"/&gt;
+                    &lt;TextBlock x:Name="output" /&gt;
+                &lt;/StackPanel&gt;
+            &lt;/Grid&gt;
+            &lt;Grid Grid.Column="2"&gt;
+                &lt;Grid.ColumnDefinitions&gt;
+                    &lt;ColumnDefinition Width="100" /&gt;
+                    &lt;ColumnDefinition Width="5" /&gt;
+                    &lt;ColumnDefinition Width="*" /&gt;
+                &lt;/Grid.ColumnDefinitions&gt;
+                &lt;Grid.RowDefinitions&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="*" /&gt;
+                &lt;/Grid.RowDefinitions&gt;
+                
+                &lt;TextBlock Text="ExpandDirection:" Grid.Row="0" Grid.Column="0" /&gt;
+                &lt;ListBox x:Name="lbExpandDirection" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"&gt;
+                    &lt;ListBoxItem Content="Down" IsSelected="True"/&gt;
+                    &lt;ListBoxItem Content="Up" /&gt;
+                    &lt;ListBoxItem Content="Left" /&gt;
+                    &lt;ListBoxItem Content="Right" /&gt;
+                &lt;/ListBox&gt;
+                
+                &lt;TextBlock Text="Header:" Grid.Row="1" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbHeader" Grid.Row="1" Grid.Column="2" /&gt;
+                
+                &lt;TextBlock Text="HeaderTemplate:" Grid.Row="2" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbHeaderTemplate" Grid.Row="2" Grid.Column="2" /&gt;
+                
+                &lt;TextBlock Text="Content:" Grid.Row="3" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbContent" Grid.Row="3" Grid.Column="2" /&gt;
+                
+                &lt;TextBlock Text="ContentTemplate:" Grid.Row="4" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbContentTemplate" Grid.Row="4" Grid.Column="2" /&gt;
+
+                &lt;CheckBox x:Name="cbIsEnabled" Grid.Row="5" Grid.Column="2"
+                          HorizontalAlignment="Left" Content="IsEnabled" IsChecked="true" /&gt;
+
+                &lt;Button x:Name="btnChange" Grid.Row="6" Grid.Column="2"
+                        HorizontalAlignment="Left" Content="Change!"/&gt;
+            &lt;/Grid&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ExpanderSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Markup;
+using System.Windows.Media;
+
+namespace Microsoft.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the Expander.
+    /// &lt;/summary&gt;
+    [Sample("Expander")]
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Expander", Justification = "Name of the control")]
+    public partial class ExpanderSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ExpanderSample class.
+        /// &lt;/summary&gt;
+        public ExpanderSample()
+        {
+            InitializeComponent();
+            Loaded += OnLoaded;
+            expander.Expanded += (s, e) =&gt; OutputExpander();
+            expander.Collapsed += (s, e) =&gt; OutputExpander();
+        }
+
+        /// &lt;summary&gt;
+        /// Load the demo page.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sample page.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            btnChange.Click += ChangeSettings;
+
+            tbHeader.Text = "Header";
+            tbHeaderTemplate.Text = @"&lt;DataTemplate&gt;&lt;StackPanel Orientation=""Horizontal""&gt;&lt;Ellipse Width=""10"" Height=""10"" Fill=""Red""/&gt;&lt;Button Content=""{Binding}""/&gt;&lt;Ellipse Width=""10"" Height=""10"" Fill=""Red""/&gt;&lt;/StackPanel&gt;&lt;/DataTemplate&gt;";
+            tbContent.Text = "Content";
+            tbContentTemplate.Text = @"&lt;DataTemplate&gt;&lt;Button Content=""{Binding}""/&gt;&lt;/DataTemplate&gt;";
+        }
+
+        /// &lt;summary&gt;
+        /// Change ContentControl settings (Header, HeaderTemplate, Content, ContentTemplate).
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sender Button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event args.&lt;/param&gt;
+        private void ChangeSettings(object sender, RoutedEventArgs e)
+        {
+            expander.ExpandDirection = (ExpandDirection) lbExpandDirection.SelectedIndex;
+            expander.Header = tbHeader.Text;
+            expander.Content = tbContent.Text;
+            expander.IsEnabled = cbIsEnabled.IsChecked ?? true;
+
+            if (String.IsNullOrEmpty(tbHeaderTemplate.Text))
+            {
+                expander.ClearValue(HeaderedContentControl.HeaderTemplateProperty);
+            }
+            else
+            {
+                try
+                {
+                    expander.HeaderTemplate = (DataTemplate) XamlReader.Load(AddXmlNS(tbHeaderTemplate.Text));
+                    tbHeaderTemplate.Foreground = new SolidColorBrush(Colors.Black);
+                }
+                catch (XamlParseException)
+                {
+                    tbHeaderTemplate.Foreground = new SolidColorBrush(Colors.Red);
+                }
+            }
+
+            if (string.IsNullOrEmpty(tbContentTemplate.Text))
+            {
+                expander.ClearValue(HeaderedContentControl.ContentTemplateProperty);
+            }
+            else
+            {
+                try
+                {
+                    expander.ContentTemplate = (DataTemplate) XamlReader.Load(AddXmlNS(tbContentTemplate.Text));
+                    tbContentTemplate.Foreground = new SolidColorBrush(Colors.Black);
+                }
+                catch (XamlParseException)
+                {
+                    tbContentTemplate.Foreground = new SolidColorBrush(Colors.Red);
+                }
+            }
+
+            OutputExpander();
+        }
+
+        /// &lt;summary&gt;
+        /// Utility function to add xmlns to user inputed template string.
+        /// &lt;/summary&gt;
+        /// &lt;param name="s"&gt;User input template string.&lt;/param&gt;
+        /// &lt;returns&gt;Well formated xaml with xmlns added.&lt;/returns&gt;
+        private static string AddXmlNS(string s)
+        {
+            string xmlns = @" xmlns=""http://schemas.microsoft.com/client/2007""
+                              xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""
+                              xmlns:controls=""clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls.InternalOnly"" ";
+            int i = s.IndexOf("&gt;", StringComparison.Ordinal);
+            return (i == -1) ? "&gt;/" : s.Substring(0, i) + xmlns + s.Substring(i);
+        }
+
+        /// &lt;summary&gt;
+        /// Display the interactive Expander control's properties.
+        /// &lt;/summary&gt;
+        private void OutputExpander()
+        {
+            string formatString = "\n\n" +
+                " ExpandDirection:\t{0}\n" +
+                " Header:\t{1}\n" +
+                " Content:\t{2}\n" +
+                " IsExpanded:\t{3}\n" +
+                " IsEnabled:\t{4}\n";
+
+            output.Text = string.Format(
+                CultureInfo.InvariantCulture,
+                formatString,
+                expander.ExpandDirection,
+                expander.Header,
+                expander.Content,
+                expander.IsExpanded,
+                expander.IsEnabled);
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

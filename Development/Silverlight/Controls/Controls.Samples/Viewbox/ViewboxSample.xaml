@@ -1,0 +1,1044 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.ViewboxSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="DemoButton" TargetType="Button">
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Content" Value="Content" />
+            </Style>
+        </StackPanel.Resources>
+
+        <!-- Stretch table -->
+        <ContentControl Content="Stretch" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Stretch.None" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="Stretch.Fill" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="Stretch.Uniform" FontWeight="Bold" />
+            <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="Stretch.UniformToFill" />
+            
+            <controls:Viewbox Grid.Row="1" Grid.Column="0" Stretch="None">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="1" Grid.Column="1" Stretch="Fill">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="1" Grid.Column="3" Stretch="UniformToFill">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+        </Grid>
+
+        <!-- StretchDirection table -->
+        <ContentControl Content="StretchDirection" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="15" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="StretchDirection.UpOnly" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="StretchDirection.DownOnly" />
+            <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="StretchDirection.Both" FontWeight="Bold" />
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Smaller" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Bigger" />
+            
+            <controls:Viewbox Grid.Row="1" Grid.Column="1" StretchDirection="UpOnly">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="1" Grid.Column="2" StretchDirection="DownOnly">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="1" Grid.Column="3" StretchDirection="Both">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            
+            <controls:Viewbox Grid.Row="2" Grid.Column="1" StretchDirection="UpOnly">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="2" Grid.Column="2" StretchDirection="DownOnly">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+            <controls:Viewbox Grid.Row="2" Grid.Column="3" StretchDirection="Both">
+                <Button Style="{StaticResource DemoButton}" />
+            </controls:Viewbox>
+        </Grid>
+        
+        <!-- Paths in Viewbox -->
+        <ContentControl Content="Paths in Viewbox" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Style="{StaticResource Description}" Text="Basic Path" />
+            <controls:Viewbox Grid.Row="1" >
+                <Path Stroke="#ff000000" StrokeThickness="8" Fill="#00ffff00" Width="200" Height="200"
+                  Data="M95,0 L120,66 L190,69 L135,113 L154,181 L95,142 L36,181 L55,113 L0,69 L70,66 Z"/>
+            </controls:Viewbox>
+
+            <TextBlock Grid.Column="1" Style="{StaticResource Description}" Text="Button Without Viewbox" />
+            <Grid Grid.Row="1" Grid.Column="1" Background="LightGray" Margin="3">
+                <!-- TODO: Determine why we can't have colors in Resources
+                <Button Style="{StaticResource DemoButton}" VerticalAlignment="Top" Margin="10">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button" xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows">
+                            <Grid>
+                                <Grid.Resources>
+                                    < ! - - Visual constants used by the template - - >
+                                    <Color x:Key="LinearBevelLightStartColor">#FCFFFFFF</Color>
+                                    <Color x:Key="LinearBevelLightEndColor">#F4FFFFFF</Color>
+                                    <Color x:Key="LinearBevelDarkStartColor">#E0FFFFFF</Color>
+                                    <Color x:Key="LinearBevelDarkEndColor">#B2FFFFFF</Color>
+                                    <Color x:Key="MouseOverLinearBevelDarkEndColor">#7FFFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelLightStartColor">#FCFFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelLightEndColor">#EAFFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelDarkStartColor">#D8FFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelDarkEndColor">#4CFFFFFF</Color>
+                                    <Color x:Key="CurvedBevelFillStartColor">#B3FFFFFF</Color>
+                                    <Color x:Key="CurvedBevelFillEndColor">#3CFFFFFF</Color>
+                                    <SolidColorBrush x:Key="BorderBrush" Color="#FF000000" />
+                                    <SolidColorBrush x:Key="AccentBrush" Color="#FFFFFFFF" />
+                                    <SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF" />
+                                    <LinearGradientBrush x:Key="FocusedStrokeBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#B2FFFFFF" Offset="0" />
+                                        <GradientStop Color="#51FFFFFF" Offset="1" />
+                                        <GradientStop Color="#66FFFFFF" Offset="0.325" />
+                                        <GradientStop Color="#1EFFFFFF" Offset="0.325" />
+                                    </LinearGradientBrush>
+                                </Grid.Resources>
+                                <vsm:VisualStateManager.VisualStateGroups>
+                                    <vsm:VisualStateGroup x:Name="CommonStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition To="MouseOver" GeneratedDuration="0:0:0.2" />
+                                            <vsm:VisualTransition To="Pressed" GeneratedDuration="0:0:0.1" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="Normal" />
+                                        <vsm:VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource MouseOverLinearBevelDarkEndColor}" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Offset" To=".2" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelLightStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelDarkStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkStartColor}" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkEndColor}" Duration="0" />
+                                                <DoubleAnimation Storyboard.TargetName="DownStroke" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="FocusStates">
+                                        <vsm:VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Unfocused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                </vsm:VisualStateManager.VisualStateGroups>
+
+                                <Rectangle x:Name="Background" RadiusX="4" RadiusY="4" Fill="{TemplateBinding Background}" />
+                                <Rectangle x:Name="BackgroundGradient" RadiusX="4" RadiusY="4" StrokeThickness="1" Stroke="{StaticResource BorderBrush}">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0.7,0" EndPoint="0.7,1">
+                                            <GradientStop x:Name="LinearBevelLightStart" Color="{StaticResource LinearBevelLightStartColor}" Offset="0" />
+                                            <GradientStop x:Name="LinearBevelLightEnd" Color="{StaticResource LinearBevelLightEndColor}" Offset="0.35" />
+                                            <GradientStop x:Name="LinearBevelDarkStart" Color="{StaticResource LinearBevelDarkStartColor}" Offset="0.35" />
+                                            <GradientStop x:Name="LinearBevelDarkEnd" Color="{StaticResource LinearBevelDarkEndColor}" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Grid x:Name="CurvedBevelScale" Margin="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="7*" />
+                                        <RowDefinition Height="3*" />
+                                    </Grid.RowDefinitions>
+                                    <Path x:Name="CurvedBevel" Stretch="Fill" Margin="3,0,3,0" Data="F1 M 0,0.02 V 0.15 C 0.15,0.22 0.30,0.25 0.50,0.26 C 0.70,0.26 0.85,0.22 1,0.15 V 0.02 L 0.97,0 H 0.02 L 0,0.02 Z">
+                                        <Path.Fill>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop x:Name="CurvedBevelFillStart" Color="{StaticResource CurvedBevelFillStartColor}" Offset="0" />
+                                                <GradientStop x:Name="CurvedBevelFillEnd" Color="{StaticResource CurvedBevelFillEndColor}" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Path.Fill>
+                                    </Path>
+                                </Grid>
+                                <Rectangle x:Name="Accent" RadiusX="3" RadiusY="3" Margin="1" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" />
+                                <Grid x:Name="FocusVisual" Visibility="Collapsed">
+                                    <Rectangle RadiusX="3" RadiusY="3" Margin="2" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" />
+                                    <Rectangle RadiusX="3" RadiusY="3" Stroke="{TemplateBinding Background}" StrokeThickness="2" />
+                                    <Rectangle RadiusX="3" RadiusY="3" Stroke="{StaticResource FocusedStrokeBrush}" StrokeThickness="2" />
+                                </Grid>
+                                <Grid x:Name="DownStroke" Opacity="0">
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,2,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.75,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.5,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.25,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="1" Margin="1" />
+                                    <Rectangle RadiusX="4" RadiusY="4" StrokeThickness="1"  Margin="1">
+                                        <Rectangle.Stroke>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#A5FFFFFF" Offset="0" />
+                                                <GradientStop Color="#FFFFFFFF" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Stroke>
+                                    </Rectangle>
+                                </Grid>
+                                <ContentPresenter
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Padding="{TemplateBinding Padding}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Margin="4,5,4,4" />
+                                <Rectangle x:Name="DisabledVisual" RadiusX="4" RadiusY="4" Fill="{StaticResource DisabledBrush}" Opacity="0" IsHitTestVisible="false" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                -->
+            </Grid>
+            
+            <TextBlock Grid.Column="2" Style="{StaticResource Description}" Text="Button With Viewbox" />
+            <Grid Grid.Row="1" Grid.Column="2" Background="LightGray" Margin="3">
+                <!-- TODO: Determine why we can't have colors in Resources
+                <Button Style="{StaticResource DemoButton}" VerticalAlignment="Top" Margin="10">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button" xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows">
+                            <Grid>
+                                <Grid.Resources>
+                                    < ! - - Visual constants used by the template - - >
+                                    <Color x:Key="LinearBevelLightStartColor">#FCFFFFFF</Color>
+                                    <Color x:Key="LinearBevelLightEndColor">#F4FFFFFF</Color>
+                                    <Color x:Key="LinearBevelDarkStartColor">#E0FFFFFF</Color>
+                                    <Color x:Key="LinearBevelDarkEndColor">#B2FFFFFF</Color>
+                                    <Color x:Key="MouseOverLinearBevelDarkEndColor">#7FFFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelLightStartColor">#FCFFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelLightEndColor">#EAFFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelDarkStartColor">#D8FFFFFF</Color>
+                                    <Color x:Key="HoverLinearBevelDarkEndColor">#4CFFFFFF</Color>
+                                    <Color x:Key="CurvedBevelFillStartColor">#B3FFFFFF</Color>
+                                    <Color x:Key="CurvedBevelFillEndColor">#3CFFFFFF</Color>
+                                    <SolidColorBrush x:Key="BorderBrush" Color="#FF000000" />
+                                    <SolidColorBrush x:Key="AccentBrush" Color="#FFFFFFFF" />
+                                    <SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF" />
+                                    <LinearGradientBrush x:Key="FocusedStrokeBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#B2FFFFFF" Offset="0" />
+                                        <GradientStop Color="#51FFFFFF" Offset="1" />
+                                        <GradientStop Color="#66FFFFFF" Offset="0.325" />
+                                        <GradientStop Color="#1EFFFFFF" Offset="0.325" />
+                                    </LinearGradientBrush>
+                                </Grid.Resources>
+                                <vsm:VisualStateManager.VisualStateGroups>
+                                    <vsm:VisualStateGroup x:Name="CommonStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition To="MouseOver" GeneratedDuration="0:0:0.2" />
+                                            <vsm:VisualTransition To="Pressed" GeneratedDuration="0:0:0.1" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="Normal" />
+                                        <vsm:VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource MouseOverLinearBevelDarkEndColor}" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Offset" To=".2" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelLightStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelDarkStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkStartColor}" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkEndColor}" Duration="0" />
+                                                <DoubleAnimation Storyboard.TargetName="DownStroke" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="FocusStates">
+                                        <vsm:VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Unfocused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                </vsm:VisualStateManager.VisualStateGroups>
+
+                                <Rectangle x:Name="Background" RadiusX="4" RadiusY="4" Fill="{TemplateBinding Background}" />
+                                <Rectangle x:Name="BackgroundGradient" RadiusX="4" RadiusY="4" StrokeThickness="1" Stroke="{StaticResource BorderBrush}">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0.7,0" EndPoint="0.7,1">
+                                            <GradientStop x:Name="LinearBevelLightStart" Color="{StaticResource LinearBevelLightStartColor}" Offset="0" />
+                                            <GradientStop x:Name="LinearBevelLightEnd" Color="{StaticResource LinearBevelLightEndColor}" Offset="0.35" />
+                                            <GradientStop x:Name="LinearBevelDarkStart" Color="{StaticResource LinearBevelDarkStartColor}" Offset="0.35" />
+                                            <GradientStop x:Name="LinearBevelDarkEnd" Color="{StaticResource LinearBevelDarkEndColor}" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Grid x:Name="CurvedBevelScale" Margin="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="7*" />
+                                        <RowDefinition Height="3*" />
+                                    </Grid.RowDefinitions>
+                                    <controls:Viewbox Stretch="Fill">
+                                        <Path x:Name="CurvedBevel" Width="1" Height="1" Stretch="Uniform" Margin="3,0,3,0" Data="F1 M 0,0.02 V 0.15 C 0.15,0.22 0.30,0.25 0.50,0.26 C 0.70,0.26 0.85,0.22 1,0.15 V 0.02 L 0.97,0 H 0.02 L 0,0.02 Z">
+                                            <Path.Fill>
+                                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                    <GradientStop x:Name="CurvedBevelFillStart" Color="{StaticResource CurvedBevelFillStartColor}" Offset="0" />
+                                                    <GradientStop x:Name="CurvedBevelFillEnd" Color="{StaticResource CurvedBevelFillEndColor}" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </Path.Fill>
+                                        </Path>
+                                    </controls:Viewbox>
+                                </Grid>
+                                <Rectangle x:Name="Accent" RadiusX="3" RadiusY="3" Margin="1" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" />
+                                <Grid x:Name="FocusVisual" Visibility="Collapsed">
+                                    <Rectangle RadiusX="3" RadiusY="3" Margin="2" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" />
+                                    <Rectangle RadiusX="3" RadiusY="3" Stroke="{TemplateBinding Background}" StrokeThickness="2" />
+                                    <Rectangle RadiusX="3" RadiusY="3" Stroke="{StaticResource FocusedStrokeBrush}" StrokeThickness="2" />
+                                </Grid>
+                                <Grid x:Name="DownStroke" Opacity="0">
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,2,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.75,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.5,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.25,1,1" />
+                                    <Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="1" Margin="1" />
+                                    <Rectangle RadiusX="4" RadiusY="4" StrokeThickness="1"  Margin="1">
+                                        <Rectangle.Stroke>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#A5FFFFFF" Offset="0" />
+                                                <GradientStop Color="#FFFFFFFF" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Stroke>
+                                    </Rectangle>
+                                </Grid>
+                                <ContentPresenter
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Padding="{TemplateBinding Padding}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Margin="4,5,4,4" />
+                                <Rectangle x:Name="DisabledVisual" RadiusX="4" RadiusY="4" Fill="{StaticResource DisabledBrush}" Opacity="0" IsHitTestVisible="false" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                -->
+            </Grid>
+        </Grid>
+        
+        <!-- Usage scenarios -->
+        <ContentControl Content="Usage Scenarios" Style="{StaticResource Header}" />
+        <StackPanel Margin="20">
+            <TextBlock Style="{StaticResource Description}" Text="Select a thumbnail:" HorizontalAlignment="Left" />
+            <ListBox
+              x:Name="Thumbnails"
+              ItemTemplate="{StaticResource PhotographTemplate}"
+              ItemContainerStyle="{StaticResource SmoothListBoxItem}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </StackPanel>
+
+        <!-- Interactive example -->
+        <ContentControl Content="Interactive" Style="{StaticResource Header}" />
+        <Grid Margin="2">
+            <Grid.Resources>
+                <Style x:Key="InteractionSlider" TargetType="Slider">
+                    <Setter Property="Minimum" Value="0" />
+                    <Setter Property="Maximum" Value="100" />
+                    <Setter Property="Value" Value="100" />
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="400" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Rectangle x:Name="InteractiveHeightIndicator" HorizontalAlignment="Stretch" VerticalAlignment="Top" Fill="#44FF0000" />
+            <Rectangle x:Name="InteractiveWidthIndicator" HorizontalAlignment="Left" VerticalAlignment="Stretch" Fill="#44FF0000" />
+            <Grid x:Name="InteractiveContainer">
+                <controls:Viewbox x:Name="InteractiveViewbox" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Button Style="{StaticResource DemoButton}" />
+                </controls:Viewbox>
+            </Grid>
+            <Slider x:Name="InteractiveVerticalSlider" Grid.Row="0" Grid.Column="1" Orientation="Vertical" Minimum="0" Maximum="100" Value="100" LargeChange="5" IsDirectionReversed="True" />
+            <Slider x:Name="InteractiveHorizontalSlider" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Minimum="0" Maximum="100" Value="100" LargeChange="5" />
+            <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+                <StackPanel.Resources>
+                    <Style x:Key="StretchRadio" TargetType="RadioButton">
+                        <Setter Property="GroupName" Value="Stretch" />
+                        <Setter Property="Margin" Value="10 0 0 0" />
+                        <Setter Property="FontSize" Value="10" />
+                    </Style>
+                    <Style x:Key="StretchDirectionRadio" TargetType="RadioButton">
+                        <Setter Property="GroupName" Value="StretchDirection" />
+                        <Setter Property="Margin" Value="10 0 0 0" />
+                        <Setter Property="FontSize" Value="10" />
+                    </Style>
+                </StackPanel.Resources>
+                
+                <TextBlock Style="{StaticResource Description}" Text="Stretch" HorizontalAlignment="Left" TextDecorations="Underline" />
+                <RadioButton x:Name="StretchNone" Style="{StaticResource StretchRadio}" Content="None"  />
+                <RadioButton x:Name="StretchFill" Style="{StaticResource StretchRadio}" Content="Fill" />
+                <RadioButton x:Name="StretchUniform" Style="{StaticResource StretchRadio}" Content="Uniform" IsChecked="true" />
+                <RadioButton x:Name="StretchUniformToFill" Style="{StaticResource StretchRadio}" Content="UniformToFill" />
+                
+                <TextBlock Style="{StaticResource Description}" Text="StretchDirection" Margin="0 20 0 0" HorizontalAlignment="Left" TextDecorations="Underline" />
+                <RadioButton x:Name="StretchDirectionUpOnly" Style="{StaticResource StretchDirectionRadio}" Content="UpOnly" />
+                <RadioButton x:Name="StretchDirectionDownOnly" Style="{StaticResource StretchDirectionRadio}" Content="DownOnly" />
+                <RadioButton x:Name="StretchDirectionBoth" Style="{StaticResource StretchDirectionRadio}" Content="Both" IsChecked="true" />
+            </StackPanel>
+        </Grid>
+        <src:SourceViewer xmlns:src="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="ViewboxSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.ViewboxSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="DemoButton" TargetType="Button"&gt;
+                &lt;Setter Property="Margin" Value="2" /&gt;
+                &lt;Setter Property="Content" Value="Content" /&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;!-- Stretch table --&gt;
+        &lt;ContentControl Content="Stretch" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="200" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            
+            &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Stretch.None" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="Stretch.Fill" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="Stretch.Uniform" FontWeight="Bold" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="Stretch.UniformToFill" /&gt;
+            
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="0" Stretch="None"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="1" Stretch="Fill"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="3" Stretch="UniformToFill"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+        &lt;/Grid&gt;
+
+        &lt;!-- StretchDirection table --&gt;
+        &lt;ContentControl Content="StretchDirection" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="15" /&gt;
+                &lt;RowDefinition Height="200" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+
+            &lt;TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="StretchDirection.UpOnly" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="StretchDirection.DownOnly" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="StretchDirection.Both" FontWeight="Bold" /&gt;
+            
+            &lt;TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Smaller" /&gt;
+            &lt;TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Bigger" /&gt;
+            
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="1" StretchDirection="UpOnly"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="2" StretchDirection="DownOnly"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="1" Grid.Column="3" StretchDirection="Both"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            
+            &lt;controls:Viewbox Grid.Row="2" Grid.Column="1" StretchDirection="UpOnly"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="2" Grid.Column="2" StretchDirection="DownOnly"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+            &lt;controls:Viewbox Grid.Row="2" Grid.Column="3" StretchDirection="Both"&gt;
+                &lt;Button Style="{StaticResource DemoButton}" /&gt;
+            &lt;/controls:Viewbox&gt;
+        &lt;/Grid&gt;
+        
+        &lt;!-- Paths in Viewbox --&gt;
+        &lt;ContentControl Content="Paths in Viewbox" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="100" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            
+            &lt;TextBlock Style="{StaticResource Description}" Text="Basic Path" /&gt;
+            &lt;controls:Viewbox Grid.Row="1" &gt;
+                &lt;Path Stroke="#ff000000" StrokeThickness="8" Fill="#00ffff00" Width="200" Height="200"
+                  Data="M95,0 L120,66 L190,69 L135,113 L154,181 L95,142 L36,181 L55,113 L0,69 L70,66 Z"/&gt;
+            &lt;/controls:Viewbox&gt;
+
+            &lt;TextBlock Grid.Column="1" Style="{StaticResource Description}" Text="Button Without Viewbox" /&gt;
+            &lt;Grid Grid.Row="1" Grid.Column="1" Background="LightGray" Margin="3"&gt;
+                &lt;!-- TODO: Determine why we can't have colors in Resources
+                &lt;Button Style="{StaticResource DemoButton}" VerticalAlignment="Top" Margin="10"&gt;
+                    &lt;Button.Template&gt;
+                        &lt;ControlTemplate TargetType="Button" xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"&gt;
+                            &lt;Grid&gt;
+                                &lt;Grid.Resources&gt;
+                                    &lt; ! - - Visual constants used by the template - - &gt;
+                                    &lt;Color x:Key="LinearBevelLightStartColor"&gt;#FCFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="LinearBevelLightEndColor"&gt;#F4FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="LinearBevelDarkStartColor"&gt;#E0FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="LinearBevelDarkEndColor"&gt;#B2FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="MouseOverLinearBevelDarkEndColor"&gt;#7FFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelLightStartColor"&gt;#FCFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelLightEndColor"&gt;#EAFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelDarkStartColor"&gt;#D8FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelDarkEndColor"&gt;#4CFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="CurvedBevelFillStartColor"&gt;#B3FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="CurvedBevelFillEndColor"&gt;#3CFFFFFF&lt;/Color&gt;
+                                    &lt;SolidColorBrush x:Key="BorderBrush" Color="#FF000000" /&gt;
+                                    &lt;SolidColorBrush x:Key="AccentBrush" Color="#FFFFFFFF" /&gt;
+                                    &lt;SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF" /&gt;
+                                    &lt;LinearGradientBrush x:Key="FocusedStrokeBrush" StartPoint="0.5,0" EndPoint="0.5,1"&gt;
+                                        &lt;GradientStop Color="#B2FFFFFF" Offset="0" /&gt;
+                                        &lt;GradientStop Color="#51FFFFFF" Offset="1" /&gt;
+                                        &lt;GradientStop Color="#66FFFFFF" Offset="0.325" /&gt;
+                                        &lt;GradientStop Color="#1EFFFFFF" Offset="0.325" /&gt;
+                                    &lt;/LinearGradientBrush&gt;
+                                &lt;/Grid.Resources&gt;
+                                &lt;vsm:VisualStateManager.VisualStateGroups&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="CommonStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition To="MouseOver" GeneratedDuration="0:0:0.2" /&gt;
+                                            &lt;vsm:VisualTransition To="Pressed" GeneratedDuration="0:0:0.1" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="Normal" /&gt;
+                                        &lt;vsm:VisualState x:Name="MouseOver"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource MouseOverLinearBevelDarkEndColor}" Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Pressed"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Offset" To=".2" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelLightStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelDarkStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkStartColor}" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkEndColor}" Duration="0" /&gt;
+                                                &lt;DoubleAnimation Storyboard.TargetName="DownStroke" Storyboard.TargetProperty="Opacity" To="1" Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Disabled"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Opacity" To="1" Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="FocusStates"&gt;
+                                        &lt;vsm:VisualState x:Name="Focused"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0"&gt;
+                                                    &lt;DiscreteObjectKeyFrame KeyTime="0"&gt;
+                                                        &lt;DiscreteObjectKeyFrame.Value&gt;
+                                                            &lt;Visibility&gt;Visible&lt;/Visibility&gt;
+                                                        &lt;/DiscreteObjectKeyFrame.Value&gt;
+                                                    &lt;/DiscreteObjectKeyFrame&gt;
+                                                &lt;/ObjectAnimationUsingKeyFrames&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Unfocused"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0"&gt;
+                                                    &lt;DiscreteObjectKeyFrame KeyTime="0"&gt;
+                                                        &lt;DiscreteObjectKeyFrame.Value&gt;
+                                                            &lt;Visibility&gt;Collapsed&lt;/Visibility&gt;
+                                                        &lt;/DiscreteObjectKeyFrame.Value&gt;
+                                                    &lt;/DiscreteObjectKeyFrame&gt;
+                                                &lt;/ObjectAnimationUsingKeyFrames&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
+
+                                &lt;Rectangle x:Name="Background" RadiusX="4" RadiusY="4" Fill="{TemplateBinding Background}" /&gt;
+                                &lt;Rectangle x:Name="BackgroundGradient" RadiusX="4" RadiusY="4" StrokeThickness="1" Stroke="{StaticResource BorderBrush}"&gt;
+                                    &lt;Rectangle.Fill&gt;
+                                        &lt;LinearGradientBrush StartPoint="0.7,0" EndPoint="0.7,1"&gt;
+                                            &lt;GradientStop x:Name="LinearBevelLightStart" Color="{StaticResource LinearBevelLightStartColor}" Offset="0" /&gt;
+                                            &lt;GradientStop x:Name="LinearBevelLightEnd" Color="{StaticResource LinearBevelLightEndColor}" Offset="0.35" /&gt;
+                                            &lt;GradientStop x:Name="LinearBevelDarkStart" Color="{StaticResource LinearBevelDarkStartColor}" Offset="0.35" /&gt;
+                                            &lt;GradientStop x:Name="LinearBevelDarkEnd" Color="{StaticResource LinearBevelDarkEndColor}" Offset="1" /&gt;
+                                        &lt;/LinearGradientBrush&gt;
+                                    &lt;/Rectangle.Fill&gt;
+                                &lt;/Rectangle&gt;
+                                &lt;Grid x:Name="CurvedBevelScale" Margin="2"&gt;
+                                    &lt;Grid.RowDefinitions&gt;
+                                        &lt;RowDefinition Height="7*" /&gt;
+                                        &lt;RowDefinition Height="3*" /&gt;
+                                    &lt;/Grid.RowDefinitions&gt;
+                                    &lt;Path x:Name="CurvedBevel" Stretch="Fill" Margin="3,0,3,0" Data="F1 M 0,0.02 V 0.15 C 0.15,0.22 0.30,0.25 0.50,0.26 C 0.70,0.26 0.85,0.22 1,0.15 V 0.02 L 0.97,0 H 0.02 L 0,0.02 Z"&gt;
+                                        &lt;Path.Fill&gt;
+                                            &lt;LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1"&gt;
+                                                &lt;GradientStop x:Name="CurvedBevelFillStart" Color="{StaticResource CurvedBevelFillStartColor}" Offset="0" /&gt;
+                                                &lt;GradientStop x:Name="CurvedBevelFillEnd" Color="{StaticResource CurvedBevelFillEndColor}" Offset="1" /&gt;
+                                            &lt;/LinearGradientBrush&gt;
+                                        &lt;/Path.Fill&gt;
+                                    &lt;/Path&gt;
+                                &lt;/Grid&gt;
+                                &lt;Rectangle x:Name="Accent" RadiusX="3" RadiusY="3" Margin="1" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" /&gt;
+                                &lt;Grid x:Name="FocusVisual" Visibility="Collapsed"&gt;
+                                    &lt;Rectangle RadiusX="3" RadiusY="3" Margin="2" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" /&gt;
+                                    &lt;Rectangle RadiusX="3" RadiusY="3" Stroke="{TemplateBinding Background}" StrokeThickness="2" /&gt;
+                                    &lt;Rectangle RadiusX="3" RadiusY="3" Stroke="{StaticResource FocusedStrokeBrush}" StrokeThickness="2" /&gt;
+                                &lt;/Grid&gt;
+                                &lt;Grid x:Name="DownStroke" Opacity="0"&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,2,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.75,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.5,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.25,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="1" Margin="1" /&gt;
+                                    &lt;Rectangle RadiusX="4" RadiusY="4" StrokeThickness="1"  Margin="1"&gt;
+                                        &lt;Rectangle.Stroke&gt;
+                                            &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                &lt;GradientStop Color="#A5FFFFFF" Offset="0" /&gt;
+                                                &lt;GradientStop Color="#FFFFFFFF" Offset="1" /&gt;
+                                            &lt;/LinearGradientBrush&gt;
+                                        &lt;/Rectangle.Stroke&gt;
+                                    &lt;/Rectangle&gt;
+                                &lt;/Grid&gt;
+                                &lt;ContentPresenter
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Padding="{TemplateBinding Padding}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Margin="4,5,4,4" /&gt;
+                                &lt;Rectangle x:Name="DisabledVisual" RadiusX="4" RadiusY="4" Fill="{StaticResource DisabledBrush}" Opacity="0" IsHitTestVisible="false" /&gt;
+                            &lt;/Grid&gt;
+                        &lt;/ControlTemplate&gt;
+                    &lt;/Button.Template&gt;
+                &lt;/Button&gt;
+                --&gt;
+            &lt;/Grid&gt;
+            
+            &lt;TextBlock Grid.Column="2" Style="{StaticResource Description}" Text="Button With Viewbox" /&gt;
+            &lt;Grid Grid.Row="1" Grid.Column="2" Background="LightGray" Margin="3"&gt;
+                &lt;!-- TODO: Determine why we can't have colors in Resources
+                &lt;Button Style="{StaticResource DemoButton}" VerticalAlignment="Top" Margin="10"&gt;
+                    &lt;Button.Template&gt;
+                        &lt;ControlTemplate TargetType="Button" xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"&gt;
+                            &lt;Grid&gt;
+                                &lt;Grid.Resources&gt;
+                                    &lt; ! - - Visual constants used by the template - - &gt;
+                                    &lt;Color x:Key="LinearBevelLightStartColor"&gt;#FCFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="LinearBevelLightEndColor"&gt;#F4FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="LinearBevelDarkStartColor"&gt;#E0FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="LinearBevelDarkEndColor"&gt;#B2FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="MouseOverLinearBevelDarkEndColor"&gt;#7FFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelLightStartColor"&gt;#FCFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelLightEndColor"&gt;#EAFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelDarkStartColor"&gt;#D8FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="HoverLinearBevelDarkEndColor"&gt;#4CFFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="CurvedBevelFillStartColor"&gt;#B3FFFFFF&lt;/Color&gt;
+                                    &lt;Color x:Key="CurvedBevelFillEndColor"&gt;#3CFFFFFF&lt;/Color&gt;
+                                    &lt;SolidColorBrush x:Key="BorderBrush" Color="#FF000000" /&gt;
+                                    &lt;SolidColorBrush x:Key="AccentBrush" Color="#FFFFFFFF" /&gt;
+                                    &lt;SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF" /&gt;
+                                    &lt;LinearGradientBrush x:Key="FocusedStrokeBrush" StartPoint="0.5,0" EndPoint="0.5,1"&gt;
+                                        &lt;GradientStop Color="#B2FFFFFF" Offset="0" /&gt;
+                                        &lt;GradientStop Color="#51FFFFFF" Offset="1" /&gt;
+                                        &lt;GradientStop Color="#66FFFFFF" Offset="0.325" /&gt;
+                                        &lt;GradientStop Color="#1EFFFFFF" Offset="0.325" /&gt;
+                                    &lt;/LinearGradientBrush&gt;
+                                &lt;/Grid.Resources&gt;
+                                &lt;vsm:VisualStateManager.VisualStateGroups&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="CommonStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition To="MouseOver" GeneratedDuration="0:0:0.2" /&gt;
+                                            &lt;vsm:VisualTransition To="Pressed" GeneratedDuration="0:0:0.1" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="Normal" /&gt;
+                                        &lt;vsm:VisualState x:Name="MouseOver"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource MouseOverLinearBevelDarkEndColor}" Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Pressed"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Offset" To=".2" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelLightStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelLightEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelLightEndColor}" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelDarkStart" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkStartColor}" Duration="0" /&gt;
+                                                &lt;ColorAnimation Storyboard.TargetName="LinearBevelDarkEnd" Storyboard.TargetProperty="Color" To="{StaticResource HoverLinearBevelDarkEndColor}" Duration="0" /&gt;
+                                                &lt;DoubleAnimation Storyboard.TargetName="DownStroke" Storyboard.TargetProperty="Opacity" To="1" Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Disabled"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Opacity" To="1" Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="FocusStates"&gt;
+                                        &lt;vsm:VisualState x:Name="Focused"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0"&gt;
+                                                    &lt;DiscreteObjectKeyFrame KeyTime="0"&gt;
+                                                        &lt;DiscreteObjectKeyFrame.Value&gt;
+                                                            &lt;Visibility&gt;Visible&lt;/Visibility&gt;
+                                                        &lt;/DiscreteObjectKeyFrame.Value&gt;
+                                                    &lt;/DiscreteObjectKeyFrame&gt;
+                                                &lt;/ObjectAnimationUsingKeyFrames&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Unfocused"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0"&gt;
+                                                    &lt;DiscreteObjectKeyFrame KeyTime="0"&gt;
+                                                        &lt;DiscreteObjectKeyFrame.Value&gt;
+                                                            &lt;Visibility&gt;Collapsed&lt;/Visibility&gt;
+                                                        &lt;/DiscreteObjectKeyFrame.Value&gt;
+                                                    &lt;/DiscreteObjectKeyFrame&gt;
+                                                &lt;/ObjectAnimationUsingKeyFrames&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
+
+                                &lt;Rectangle x:Name="Background" RadiusX="4" RadiusY="4" Fill="{TemplateBinding Background}" /&gt;
+                                &lt;Rectangle x:Name="BackgroundGradient" RadiusX="4" RadiusY="4" StrokeThickness="1" Stroke="{StaticResource BorderBrush}"&gt;
+                                    &lt;Rectangle.Fill&gt;
+                                        &lt;LinearGradientBrush StartPoint="0.7,0" EndPoint="0.7,1"&gt;
+                                            &lt;GradientStop x:Name="LinearBevelLightStart" Color="{StaticResource LinearBevelLightStartColor}" Offset="0" /&gt;
+                                            &lt;GradientStop x:Name="LinearBevelLightEnd" Color="{StaticResource LinearBevelLightEndColor}" Offset="0.35" /&gt;
+                                            &lt;GradientStop x:Name="LinearBevelDarkStart" Color="{StaticResource LinearBevelDarkStartColor}" Offset="0.35" /&gt;
+                                            &lt;GradientStop x:Name="LinearBevelDarkEnd" Color="{StaticResource LinearBevelDarkEndColor}" Offset="1" /&gt;
+                                        &lt;/LinearGradientBrush&gt;
+                                    &lt;/Rectangle.Fill&gt;
+                                &lt;/Rectangle&gt;
+                                &lt;Grid x:Name="CurvedBevelScale" Margin="2"&gt;
+                                    &lt;Grid.RowDefinitions&gt;
+                                        &lt;RowDefinition Height="7*" /&gt;
+                                        &lt;RowDefinition Height="3*" /&gt;
+                                    &lt;/Grid.RowDefinitions&gt;
+                                    &lt;controls:Viewbox Stretch="Fill"&gt;
+                                        &lt;Path x:Name="CurvedBevel" Width="1" Height="1" Stretch="Uniform" Margin="3,0,3,0" Data="F1 M 0,0.02 V 0.15 C 0.15,0.22 0.30,0.25 0.50,0.26 C 0.70,0.26 0.85,0.22 1,0.15 V 0.02 L 0.97,0 H 0.02 L 0,0.02 Z"&gt;
+                                            &lt;Path.Fill&gt;
+                                                &lt;LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1"&gt;
+                                                    &lt;GradientStop x:Name="CurvedBevelFillStart" Color="{StaticResource CurvedBevelFillStartColor}" Offset="0" /&gt;
+                                                    &lt;GradientStop x:Name="CurvedBevelFillEnd" Color="{StaticResource CurvedBevelFillEndColor}" Offset="1" /&gt;
+                                                &lt;/LinearGradientBrush&gt;
+                                            &lt;/Path.Fill&gt;
+                                        &lt;/Path&gt;
+                                    &lt;/controls:Viewbox&gt;
+                                &lt;/Grid&gt;
+                                &lt;Rectangle x:Name="Accent" RadiusX="3" RadiusY="3" Margin="1" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" /&gt;
+                                &lt;Grid x:Name="FocusVisual" Visibility="Collapsed"&gt;
+                                    &lt;Rectangle RadiusX="3" RadiusY="3" Margin="2" Stroke="{StaticResource AccentBrush}" StrokeThickness="1" /&gt;
+                                    &lt;Rectangle RadiusX="3" RadiusY="3" Stroke="{TemplateBinding Background}" StrokeThickness="2" /&gt;
+                                    &lt;Rectangle RadiusX="3" RadiusY="3" Stroke="{StaticResource FocusedStrokeBrush}" StrokeThickness="2" /&gt;
+                                &lt;/Grid&gt;
+                                &lt;Grid x:Name="DownStroke" Opacity="0"&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,2,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.75,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.5,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="0.05" Margin="1,1.25,1,1" /&gt;
+                                    &lt;Rectangle Stroke="{TemplateBinding Background}" RadiusX="3" RadiusY="3" StrokeThickness="1" Opacity="1" Margin="1" /&gt;
+                                    &lt;Rectangle RadiusX="4" RadiusY="4" StrokeThickness="1"  Margin="1"&gt;
+                                        &lt;Rectangle.Stroke&gt;
+                                            &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                &lt;GradientStop Color="#A5FFFFFF" Offset="0" /&gt;
+                                                &lt;GradientStop Color="#FFFFFFFF" Offset="1" /&gt;
+                                            &lt;/LinearGradientBrush&gt;
+                                        &lt;/Rectangle.Stroke&gt;
+                                    &lt;/Rectangle&gt;
+                                &lt;/Grid&gt;
+                                &lt;ContentPresenter
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Padding="{TemplateBinding Padding}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Margin="4,5,4,4" /&gt;
+                                &lt;Rectangle x:Name="DisabledVisual" RadiusX="4" RadiusY="4" Fill="{StaticResource DisabledBrush}" Opacity="0" IsHitTestVisible="false" /&gt;
+                            &lt;/Grid&gt;
+                        &lt;/ControlTemplate&gt;
+                    &lt;/Button.Template&gt;
+                &lt;/Button&gt;
+                --&gt;
+            &lt;/Grid&gt;
+        &lt;/Grid&gt;
+        
+        &lt;!-- Usage scenarios --&gt;
+        &lt;ContentControl Content="Usage Scenarios" Style="{StaticResource Header}" /&gt;
+        &lt;StackPanel Margin="20"&gt;
+            &lt;TextBlock Style="{StaticResource Description}" Text="Select a thumbnail:" HorizontalAlignment="Left" /&gt;
+            &lt;ListBox
+              x:Name="Thumbnails"
+              ItemTemplate="{StaticResource PhotographTemplate}"
+              ItemContainerStyle="{StaticResource SmoothListBoxItem}"&gt;
+                &lt;ListBox.ItemsPanel&gt;
+                    &lt;ItemsPanelTemplate&gt;
+                        &lt;StackPanel Orientation="Horizontal" /&gt;
+                    &lt;/ItemsPanelTemplate&gt;
+                &lt;/ListBox.ItemsPanel&gt;
+            &lt;/ListBox&gt;
+        &lt;/StackPanel&gt;
+
+        &lt;!-- Interactive example --&gt;
+        &lt;ContentControl Content="Interactive" Style="{StaticResource Header}" /&gt;
+        &lt;Grid Margin="2"&gt;
+            &lt;Grid.Resources&gt;
+                &lt;Style x:Key="InteractionSlider" TargetType="Slider"&gt;
+                    &lt;Setter Property="Minimum" Value="0" /&gt;
+                    &lt;Setter Property="Maximum" Value="100" /&gt;
+                    &lt;Setter Property="Value" Value="100" /&gt;
+                &lt;/Style&gt;
+            &lt;/Grid.Resources&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="400" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="400" /&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+
+            &lt;Rectangle x:Name="InteractiveHeightIndicator" HorizontalAlignment="Stretch" VerticalAlignment="Top" Fill="#44FF0000" /&gt;
+            &lt;Rectangle x:Name="InteractiveWidthIndicator" HorizontalAlignment="Left" VerticalAlignment="Stretch" Fill="#44FF0000" /&gt;
+            &lt;Grid x:Name="InteractiveContainer"&gt;
+                &lt;controls:Viewbox x:Name="InteractiveViewbox" HorizontalAlignment="Left" VerticalAlignment="Top"&gt;
+                    &lt;Button Style="{StaticResource DemoButton}" /&gt;
+                &lt;/controls:Viewbox&gt;
+            &lt;/Grid&gt;
+            &lt;Slider x:Name="InteractiveVerticalSlider" Grid.Row="0" Grid.Column="1" Orientation="Vertical" Minimum="0" Maximum="100" Value="100" LargeChange="5" IsDirectionReversed="True" /&gt;
+            &lt;Slider x:Name="InteractiveHorizontalSlider" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Minimum="0" Maximum="100" Value="100" LargeChange="5" /&gt;
+            &lt;StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"&gt;
+                &lt;StackPanel.Resources&gt;
+                    &lt;Style x:Key="StretchRadio" TargetType="RadioButton"&gt;
+                        &lt;Setter Property="GroupName" Value="Stretch" /&gt;
+                        &lt;Setter Property="Margin" Value="10 0 0 0" /&gt;
+                        &lt;Setter Property="FontSize" Value="10" /&gt;
+                    &lt;/Style&gt;
+                    &lt;Style x:Key="StretchDirectionRadio" TargetType="RadioButton"&gt;
+                        &lt;Setter Property="GroupName" Value="StretchDirection" /&gt;
+                        &lt;Setter Property="Margin" Value="10 0 0 0" /&gt;
+                        &lt;Setter Property="FontSize" Value="10" /&gt;
+                    &lt;/Style&gt;
+                &lt;/StackPanel.Resources&gt;
+                
+                &lt;TextBlock Style="{StaticResource Description}" Text="Stretch" HorizontalAlignment="Left" TextDecorations="Underline" /&gt;
+                &lt;RadioButton x:Name="StretchNone" Style="{StaticResource StretchRadio}" Content="None"  /&gt;
+                &lt;RadioButton x:Name="StretchFill" Style="{StaticResource StretchRadio}" Content="Fill" /&gt;
+                &lt;RadioButton x:Name="StretchUniform" Style="{StaticResource StretchRadio}" Content="Uniform" IsChecked="true" /&gt;
+                &lt;RadioButton x:Name="StretchUniformToFill" Style="{StaticResource StretchRadio}" Content="UniformToFill" /&gt;
+                
+                &lt;TextBlock Style="{StaticResource Description}" Text="StretchDirection" Margin="0 20 0 0" HorizontalAlignment="Left" TextDecorations="Underline" /&gt;
+                &lt;RadioButton x:Name="StretchDirectionUpOnly" Style="{StaticResource StretchDirectionRadio}" Content="UpOnly" /&gt;
+                &lt;RadioButton x:Name="StretchDirectionDownOnly" Style="{StaticResource StretchDirectionRadio}" Content="DownOnly" /&gt;
+                &lt;RadioButton x:Name="StretchDirectionBoth" Style="{StaticResource StretchDirectionRadio}" Content="Both" IsChecked="true" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ViewboxSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+
+namespace Microsoft.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the Viewbox.
+    /// &lt;/summary&gt;
+    [Sample("Viewbox")]
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Viewbox", Justification = "Name of the control")]
+    public partial class ViewboxSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ViewboxSample class.
+        /// &lt;/summary&gt;
+        public ViewboxSample()
+        {
+            InitializeComponent();
+
+            // Add event handlers to update the interactive demo
+            InteractiveHorizontalSlider.ValueChanged += (s, e) =&gt; UpdateInteractiveDemo();
+            InteractiveVerticalSlider.ValueChanged += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchNone.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchFill.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchUniform.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchUniformToFill.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchDirectionUpOnly.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchDirectionDownOnly.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            StretchDirectionBoth.Checked += (s, e) =&gt; UpdateInteractiveDemo();
+            Loaded += OnLoaded;
+        }
+
+        /// &lt;summary&gt;
+        /// Load the demo page.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sample page.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Thumbnails.ItemsSource = Photograph.GetPhotographs();
+            UpdateInteractiveDemo();
+        }
+
+        /// &lt;summary&gt;
+        /// Update the interactive Viewbox demo when any property changes.
+        /// &lt;/summary&gt;
+        private void UpdateInteractiveDemo()
+        {
+            InteractiveWidthIndicator.Width = InteractiveViewbox.Width = InteractiveContainer.ActualWidth * InteractiveHorizontalSlider.Value / 100.0;
+            InteractiveHeightIndicator.Height = InteractiveViewbox.Height = InteractiveContainer.ActualHeight * InteractiveVerticalSlider.Value / 100.0;
+            InteractiveViewbox.Stretch =
+                (StretchFill.IsChecked == true) ? Stretch.Fill :
+                (StretchUniform.IsChecked == true) ? Stretch.Uniform :
+                (StretchUniformToFill.IsChecked == true) ? Stretch.UniformToFill :
+                Stretch.None;
+            InteractiveViewbox.StretchDirection =
+                (StretchDirectionUpOnly.IsChecked == true) ? StretchDirection.UpOnly :
+                (StretchDirectionDownOnly.IsChecked == true) ? StretchDirection.DownOnly :
+                StretchDirection.Both;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

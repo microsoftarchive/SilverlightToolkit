@@ -1,0 +1,79 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Application
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:samples="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common"
+  x:Class="Microsoft.Windows.Controls.Samples.App">
+    <Application.Resources>
+        
+        <!--Common Gradients used for different samples-->
+        <!--Gray-->
+        <Color x:Key="GrayShadeStartColor">#FFF4F4F4</Color>
+        <Color x:Key="GrayShadeEndColor">#FFB7B7B7</Color>
+        <RadialGradientBrush x:Key="GrayRadialBrush">
+            <RadialGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform X="-0.425" Y="-0.486"/>
+                </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+            <GradientStop Color="{StaticResource GrayShadeStartColor}"/>
+            <GradientStop Color="{StaticResource GrayShadeEndColor}" Offset="1"/>
+        </RadialGradientBrush>
+        <!--Blue-->
+        <LinearGradientBrush x:Key="DefaultEnhancedChartDarkBlue" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFB9D6F7" Offset="0" />
+            <GradientStop Color="#FF5A88CE" Offset="0.185" />
+            <GradientStop Color="#FF477DAB" Offset="0.475" />
+            <GradientStop Color="#FF284B70" Offset="1" />
+        </LinearGradientBrush>
+        <!--Red-->
+        <LinearGradientBrush x:Key="DefaultEnhancedChartDarkRed" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFFBB7B5" Offset="0" />
+            <GradientStop Color="#FFCE5A5A" Offset="0.185" />
+            <GradientStop Color="#FFAB4747" Offset="0.475" />
+            <GradientStop Color="#FF702828" Offset="1" />
+        </LinearGradientBrush>
+        <!--Yellow-->
+        <Color x:Key="ShinyTopGradientYellow">#FFFFFF72</Color>
+        <Color x:Key="ShinyBottomGradientYellow">#FF8F8832</Color>
+        <RadialGradientBrush x:Key="ShinyYellowBrush">
+            <RadialGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="2.09" ScaleY="1.819"/>
+                    <TranslateTransform X="-0.425" Y="-0.486"/>
+                </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+            <GradientStop Color="{StaticResource ShinyTopGradientYellow}"/>
+            <GradientStop Color="{StaticResource ShinyBottomGradientYellow}" Offset="1"/>
+        </RadialGradientBrush>
+
+        <!-- Style for the Grid wrapper around each sample item -->
+        <Style x:Key="WrapperStyle" TargetType="Grid">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="1,4,4,1"/>
+            <Setter Property="MinWidth" Value="380"/>
+            <Setter Property="MinHeight" Value="270"/>
+        </Style>
+
+        <!-- Style for the Grid wrapper around each sample item (with no MinWidth/MinHeight) -->
+        <Style x:Key="WrapperStyleNoMinimum" TargetType="Grid">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="1,4,4,1"/>
+        </Style>
+
+        <!-- Simple sample data set for charting -->
+        <samples:City x:Key="City"/>
+        <samples:ParticulateLevel x:Key="ParticulateLevel"/>
+        <samples:WidgetPopularityPollCollection x:Key="WidgetPopularity"/>
+        <samples:GizmoPopularityPollCollection x:Key="GizmoPopularity"/>
+
+    </Application.Resources>
+</Application>

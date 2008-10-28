@@ -1,0 +1,80 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls">
+
+    <Style TargetType="controls:AutoCompleteBox">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:AutoCompleteBox">
+                    <Grid Margin="{TemplateBinding Padding}" 
+                          Background="{TemplateBinding Background}">
+                        <TextBox IsTabStop="True" x:Name="Text" Style="{TemplateBinding TextBoxStyle}" Margin="0" />
+                        <Popup x:Name="Popup">
+                            <Border x:Name="PopupBorder" HorizontalAlignment="Stretch" Opacity="0.0" BorderThickness="0" CornerRadius="3">
+                                <Border.RenderTransform>
+                                    <TranslateTransform X="1" Y="1" />
+                                </Border.RenderTransform>
+                                <Border.Background>
+                                    <SolidColorBrush Color="#11000000" />
+                                </Border.Background>
+                                <Border
+                                    HorizontalAlignment="Stretch" 
+                                    Opacity="1.0" 
+                                    Padding="0" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    CornerRadius="3">
+                                    <Border.RenderTransform>
+                                        <TransformGroup>
+                                            <TranslateTransform X="-1" Y="-1" />
+                                        </TransformGroup>
+                                    </Border.RenderTransform>
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFDDDDDD" Offset="0"/>
+                                            <GradientStop Color="#AADDDDDD" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <ListBox 
+                                            x:Name="SelectionAdapter" 
+                                            ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                            ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                            ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                            ItemTemplate="{TemplateBinding ItemTemplate}" />
+                                </Border>
+                            </Border>
+                        </Popup>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PopupStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.1" To="PopupOpened" />
+                                    <VisualTransition GeneratedDuration="0:0:0.2" To="PopupClosed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="PopupOpened">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PopupBorder" Storyboard.TargetProperty="Opacity" To="1.0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PopupClosed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PopupBorder" Storyboard.TargetProperty="Opacity" To="0.0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
