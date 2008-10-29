@@ -48,18 +48,6 @@
     <DocumentationFile>ClientBin\Microsoft.Windows.Controls.Samples.Common.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Windows.Controls, Version=2.0.21027.59, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Binaries\Microsoft.Windows.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Windows.Controls.Input, Version=2.0.21027.100, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Binaries\Microsoft.Windows.Controls.Input.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Windows.Controls.Theming, Version=2.0.21027.59, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Binaries\Microsoft.Windows.Controls.Theming.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -201,6 +189,20 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\SilverlightThemesLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Input\Controls.Input.csproj">
+      <Project>{6FC39008-405B-405C-BAAE-BF20208F7635}</Project>
+      <Name>Controls.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Theming\Controls.Theming.csproj">
+      <Project>{94D59978-57A5-4EF9-8659-D33DD73A50C7}</Project>
+      <Name>Controls.Theming</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\Controls.csproj">
+      <Project>{BDC7605E-4B2E-41B8-A5F6-4FBFD7651AC9}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v2.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
