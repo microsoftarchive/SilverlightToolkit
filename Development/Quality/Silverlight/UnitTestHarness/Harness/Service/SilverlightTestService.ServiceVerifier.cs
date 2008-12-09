@@ -6,7 +6,6 @@
 using System;
 using System.Globalization;
 using System.Windows.Browser;
-using Microsoft.Silverlight.Testing.Harness;
 
 namespace Microsoft.Silverlight.Testing.Harness.Service
 {
@@ -69,7 +68,7 @@ namespace Microsoft.Silverlight.Testing.Harness.Service
                     VerificationServiceName,
                     delegate(ServiceResult result)
                     {
-                        if (result.Successful)
+                        if (result != null && result.Successful)
                         {
                             success();
                         }

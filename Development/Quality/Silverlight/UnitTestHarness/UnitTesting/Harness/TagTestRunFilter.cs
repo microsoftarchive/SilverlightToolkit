@@ -99,7 +99,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
 
             if (!_hasLoggedWarning)
             {
-                UnitTestHarness.LogWriter.Information(string.Format(CultureInfo.InvariantCulture, Properties.UnitTestMessage.TagTestRunFilter_TaggingInUse, TagExpression));
+                UnitTestHarness.LogWriter.Information(string.Format(CultureInfo.InvariantCulture, Properties.UnitTestMessage.TagTestRunFilter_TaggingInUse, Microsoft.Silverlight.Testing.UnitTesting.UI.UnitTestWebpageLog.TruncateNameIfNeededWithHover(TagExpression)));
                 _hasLoggedWarning = true;
             }
         }

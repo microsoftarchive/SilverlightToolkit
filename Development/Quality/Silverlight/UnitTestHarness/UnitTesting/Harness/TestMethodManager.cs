@@ -47,10 +47,21 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         private DateTime _started;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the bug attribute's logic
+        /// has already been processed.
+        /// </summary>
+        private bool BugAttributeProcessed { get; set; }
+
+        /// <summary>
         /// A value indicating whether the bug attribute was present on this 
         /// method.  If it is, the result will be inverted at completion.
         /// </summary>
         private bool _bugAttributePresent;
+
+        /// <summary>
+        /// Contains the main test contents.
+        /// </summary>
+        private UnitTestMethodContainer _mainTestMethodContainer;
 
         /// <summary>
         /// Constructor for a test method manager, which handles executing a single test method 
@@ -126,10 +137,10 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             Enqueue(() => _started = DateTime.Now);
 
             // [TestMethod] - actual test scenario
-            UnitTestMethodContainer mthd = new UnitTestMethodContainer(TestHarness, _instance, _testMethod.Method, _testMethod, TestGranularity.TestScenario);
-            mthd.UnhandledException += new EventHandler<UnhandledExceptionEventArgs>(UnhandledMethodException);
-            mthd.Complete += new EventHandler(CompleteMethod);
-            Enqueue(mthd);
+            _mainTestMethodContainer = new UnitTestMethodContainer(TestHarness, _instance, _testMethod.Method, _testMethod, TestGranularity.TestScenario);
+            _mainTestMethodContainer.UnhandledException += new EventHandler<UnhandledExceptionEventArgs>(UnhandledMethodException);
+            _mainTestMethodContainer.Complete += new EventHandler(CompleteMethod);
+            Enqueue(_mainTestMethodContainer);
 
             // [TestCleanup]
             if (_testClass.TestCleanupMethod != null) 
@@ -154,6 +165,16 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         }
 
         /// <summary>
+        /// Creates the ScenarioResult instance for this test method.
+        /// </summary>
+        /// <param name="outcome">The initial test outcome value.</param>
+        private void CreateNewResult(TestOutcome outcome)
+        {
+            _result = new ScenarioResult(_testMethod, _testClass, outcome, null);
+            SetResultTimes();
+        }
+
+        /// <summary>
         /// Process the result.
         /// </summary>
         /// <param name="sender">Source object.</param>
@@ -162,9 +183,8 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         {
             if (_testMethod.ExpectedException != null && _result == null)
             {
-                _result = new ScenarioResult(_testMethod, _testClass, TestOutcome.Failed, null);
-                SetResultTimes();
-                
+                CreateNewResult(TestOutcome.Failed);
+
                 // Don't log this when the bug attribute is present
                 if (_bugAttributePresent == false)
                 {
@@ -173,13 +193,13 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             }
             if (_result == null) 
             {
-                _result = new ScenarioResult(_testMethod, _testClass, TestOutcome.Passed, null);
-                SetResultTimes();
+                CreateNewResult(TestOutcome.Passed);
             }
 
             // Invert the result when the bug attribute is present
-            if (_bugAttributePresent)
+            if (_bugAttributePresent && !BugAttributeProcessed)
             {
+                BugAttributeProcessed = true;
                 bool bugVerified = _result.Result == TestOutcome.Failed;
                 TestOutcome newOutcome = bugVerified ? TestOutcome.Passed : TestOutcome.Failed;
                 _result.Result = newOutcome;
@@ -246,6 +266,15 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             // Create the result
             _result = new ScenarioResult(_testMethod, _testClass, res, excp);
             SetResultTimes();
+
+            // If an asynchronous method, do not run any additional parts of the method container
+            if (_mainTestMethodContainer.RemainingWork)
+            {
+                while (_mainTestMethodContainer.RemainingWork)
+                {
+                    _mainTestMethodContainer.Dequeue();
+                }
+            }
         }
 
         /// <summary>

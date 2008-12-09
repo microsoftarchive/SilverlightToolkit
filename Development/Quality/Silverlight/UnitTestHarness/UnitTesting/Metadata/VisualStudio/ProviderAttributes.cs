@@ -31,123 +31,77 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Metadata.VisualStudio
             AssemblyInitialize = typeof(VS.AssemblyInitializeAttribute);
             AssemblyCleanup = typeof(VS.AssemblyCleanupAttribute);
             TestMethod = typeof(VS.TestMethodAttribute);
+            Priority = typeof(VS.PriorityAttribute);
         }
 
         /// <summary>
         /// Gets VSTT [TestClass] attribute.
         /// </summary>
-        public static Type TestClass
-        {
-            get;
-            private set;
-        }
+        public static Type TestClass { get; private set; }
         
         /// <summary>
         /// Gets VSTT [Ignore] attribute.
         /// </summary>
-        public static Type IgnoreAttribute
-        {
-            get;
-            private set;
-        }
+        public static Type IgnoreAttribute { get; private set; }
         
         /// <summary>
         /// Gets VSTT [ClassInitialize] attribute.
         /// </summary>
-        public static Type ClassInitialize
-        {
-            get;
-            private set;
-        }
-        
+        public static Type ClassInitialize { get; private set; }
+
+        /// <summary>
+        /// Gets VSTT [Priority] attribute.
+        /// </summary>
+        public static Type Priority { get; private set; }
+
         /// <summary>
         /// Gets VSTT [ClassCleanup] attribute.
         /// </summary>
-        public static Type ClassCleanup
-        {
-            get;
-            private set;
-        }
+        public static Type ClassCleanup { get; private set; }
         
         /// <summary>
         /// Gets VSTT [TestInitialize] attribute.
         /// </summary>
-        public static Type TestInitialize
-        {
-            get;
-            private set;
-        }
+        public static Type TestInitialize { get; private set; }
         
         /// <summary>
         /// Gets VSTT [TestCleanup] attribute.
         /// </summary>
-        public static Type TestCleanup
-        {
-            get;
-            private set;
-        }
+        public static Type TestCleanup { get; private set; }
         
         /// <summary>
         /// Gets VSTT [Description] attribute.
         /// </summary>
-        public static Type DescriptionAttribute
-        {
-            get;
-            private set;
-        }
+        public static Type DescriptionAttribute { get; private set; }
         
         /// <summary>
         /// Gets VSTT [Timeout] attribute.
         /// </summary>
-        public static Type TimeoutAttribute
-        {
-            get;
-            private set;
-        }
+        public static Type TimeoutAttribute { get; private set; }
         
         /// <summary>
         /// Gets VSTT [Owner] attribute.
         /// </summary>
-        public static Type OwnerAttribute
-        {
-            get;
-            private set;
-        }
+        public static Type OwnerAttribute { get; private set; }
         
         /// <summary>
         /// Gets VSTT [ExpectedException] attribute.
         /// </summary>
-        public static Type ExpectedExceptionAttribute
-        {
-            get;
-            private set;
-        }
+        public static Type ExpectedExceptionAttribute { get; private set; }
         
         /// <summary>
         /// Gets VSTT [AssemblyInitialize] attribute.
         /// </summary>
-        public static Type AssemblyInitialize
-        {
-            get;
-            private set;
-        }
+        public static Type AssemblyInitialize { get; private set; }
         
         /// <summary>
         /// Gets VSTT [AssemblyCleanup] attribute.
         /// </summary>
-        public static Type AssemblyCleanup
-        {
-            get;
-            private set;
-        }
+        public static Type AssemblyCleanup { get; private set; }
         
         /// <summary>
         /// Gets VSTT [TestMethod] attribute.
         /// </summary>
-        public static Type TestMethod
-        {
-            get;
-            private set;
-        }
+        public static Type TestMethod { get; private set; }
     }
 }

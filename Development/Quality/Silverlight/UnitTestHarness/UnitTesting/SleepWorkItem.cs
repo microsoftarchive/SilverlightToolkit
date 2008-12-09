@@ -14,9 +14,9 @@ namespace Microsoft.Silverlight.Testing.UnitTesting
     public class SleepWorkItem : WorkItem
     {
         /// <summary>
-        /// The amount of milliseconds to wait for.
+        /// The amount of time to delay for.
         /// </summary>
-        private int _sleepTime;
+        private TimeSpan _delay;
 
         /// <summary>
         /// The DateTime that marks the point in time the task is complete.
@@ -27,10 +27,10 @@ namespace Microsoft.Silverlight.Testing.UnitTesting
         /// Create a new Sleep work item, including the number of 
         /// milliseconds to wait until continuing.
         /// </summary>
-        /// <param name="sleepMilliseconds">Milliseconds to wait.</param>
-        public SleepWorkItem(int sleepMilliseconds)
+        /// <param name="delay">Amount of time to wait/delay.</param>
+        public SleepWorkItem(TimeSpan delay)
         {
-            _sleepTime = sleepMilliseconds;
+            _delay = delay;
             _expires = null;
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting
         {
             if (_expires == null)
             {
-                _expires = DateTime.Now.AddMilliseconds(_sleepTime);
+                _expires = DateTime.Now + _delay;
             }
             if (DateTime.Now > _expires) 
             {

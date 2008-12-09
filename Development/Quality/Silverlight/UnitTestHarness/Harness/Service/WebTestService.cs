@@ -6,11 +6,12 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
-using System.Text;
 using System.IO;
-using System.Windows.Browser;
+using System.Net;
+using System.Security;
+using System.Text;
 using System.Threading;
+using System.Windows.Browser;
 
 namespace Microsoft.Silverlight.Testing.Harness.Service
 {
@@ -195,12 +196,24 @@ namespace Microsoft.Silverlight.Testing.Harness.Service
         {
             RequestData data = (RequestData)ar.AsyncState;
             HttpWebRequest request = data.Request;
-            HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(ar);
             Action<ServiceResult> callback = data.Callback;
-            WebServiceResult wsr = data.ConvertToResult(response);
-            wsr.ReadHttpWebResponse();
+            WebServiceResult wsr = null;
 
-            _sync.Post(UserInterfaceThreadCallback, new CrossThreadState(callback, wsr));
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(ar);
+                wsr = data.ConvertToResult(response);
+                wsr.ReadHttpWebResponse();
+            }
+            catch (SecurityException)
+            {
+                // HTTP request failed, cross domain issue, or unable to 
+                // complete.
+            }
+            finally
+            {
+                _sync.Post(UserInterfaceThreadCallback, new CrossThreadState(callback, wsr));
+            }
         }
 
         /// <summary>

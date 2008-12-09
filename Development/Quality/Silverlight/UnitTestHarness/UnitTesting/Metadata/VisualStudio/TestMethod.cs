@@ -22,9 +22,19 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Metadata.VisualStudio
         private const string ContextPropertyName = "TestContext";
 
         /// <summary>
+        /// Default value for methods when no priority attribute is defined.
+        /// </summary>
+        private const int DefaultPriority = 3;
+
+        /// <summary>
         /// An empty object array.
         /// </summary>
         private static readonly object[] None = { };
+
+        /// <summary>
+        /// Method reflection object.
+        /// </summary>
+        private MethodInfo _methodInfo;
 
         /// <summary>
         /// Private constructor, the constructor requires the method reflection object.
@@ -84,11 +94,6 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Metadata.VisualStudio
                 }
             }
         }
-
-        /// <summary>
-        /// Method reflection object.
-        /// </summary>
-        private MethodInfo _methodInfo;
 
         /// <summary>
         /// Gets the underlying reflected method.
@@ -197,7 +202,11 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Metadata.VisualStudio
         /// </summary>
         public IPriority Priority
         {
-            get { return null; }
+            get 
+            {
+                VS.PriorityAttribute pri = ReflectionUtility.GetAttribute(this, ProviderAttributes.Priority, true) as VS.PriorityAttribute;
+                return new Priority(pri == null ? DefaultPriority : pri.Priority);
+            }
         }
 
         /// <summary>

@@ -52,10 +52,12 @@ namespace Microsoft.Silverlight.Testing.Harness.Service
             string guid = TestService.UniqueTestRunIdentifier;
             if (string.IsNullOrEmpty(guid))
             {
-                base.Initialize();
+                ReadRunParameters(null);
             }
-
-            ((SilverlightTestService)TestService).WebService.CallMethod(MethodName_GetRunParameters, WebTestService.Dictionary("guid", guid), ReadRunParameters);
+            else
+            {
+                ((SilverlightTestService)TestService).WebService.CallMethod(MethodName_GetRunParameters, WebTestService.Dictionary("guid", guid), ReadRunParameters);
+            }
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace Microsoft.Silverlight.Testing.Harness.Service
         /// <param name="result">The service result.</param>
         private void ReadRunParameters(ServiceResult result)
         {
-            XElement xe = result.TryGetElement();
+            XElement xe = result == null ? null : result.TryGetElement();
             if (xe != null)
             {
                 Dictionary<string, string> settings = xe.Descendants("option").ToTransformedDictionary((option) => option.Attribute("name").Value, (option) => option.Attribute("value").Value);

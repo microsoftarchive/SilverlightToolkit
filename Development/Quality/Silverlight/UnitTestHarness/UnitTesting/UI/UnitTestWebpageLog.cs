@@ -373,9 +373,20 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.UI
         /// </summary>
         /// <param name="name">The name string.</param>
         /// <returns>Returns the updated string.</returns>
-        private static string TruncateNameIfNeeded(string name)
+        internal static string TruncateNameIfNeeded(string name)
         {
             return name.Length > MaximumNameDisplayLength ? name.Substring(0, MaximumNameDisplayLength) + Ellipsis : name;
+        }
+
+        /// <summary>
+        /// Returns either the full string, or a truncated version with an 
+        /// ellipsis, if needed.
+        /// </summary>
+        /// <param name="name">The name string.</param>
+        /// <returns>Returns the updated string.</returns>
+        internal static string TruncateNameIfNeededWithHover(string name)
+        {
+            return name.Length > MaximumNameDisplayLength ? "<span title=\"" + name + "\">" + name.Substring(0, MaximumNameDisplayLength) + Ellipsis + "</span>" : name;
         }
 
         /// <summary>

@@ -61,13 +61,11 @@ namespace Microsoft.Silverlight.Testing.Harness.Service
         public override void ReportFinalResult(Action<ServiceResult> callback, bool failure, int failures, int totalScenarios, string message)
         {
             string guid = TestService.UniqueTestRunIdentifier;
-            if (string.IsNullOrEmpty(guid))
+            if (!string.IsNullOrEmpty(guid))
             {
-                Callback(callback, ServiceResult.CreateExceptionalResult(new NotSupportedException("A unique identifier for the test run is required.")));
+                Dictionary<string, string> parameters = WebTestService.Dictionary("failure", failure.ToString(CultureInfo.InvariantCulture), "total", totalScenarios.ToString(CultureInfo.InvariantCulture), "failures", failures.ToString(CultureInfo.InvariantCulture), "guid", guid);
+                ((SilverlightTestService)TestService).WebService.CallMethod(MethodName_ReportTestResults, parameters, callback);
             }
-
-            Dictionary<string, string> parameters = WebTestService.Dictionary("failure", failure.ToString(CultureInfo.InvariantCulture), "total", totalScenarios.ToString(CultureInfo.InvariantCulture), "failures", failures.ToString(CultureInfo.InvariantCulture), "guid", guid);
-            ((SilverlightTestService)TestService).WebService.CallMethod(MethodName_ReportTestResults, parameters, callback);
         }
     }
 }

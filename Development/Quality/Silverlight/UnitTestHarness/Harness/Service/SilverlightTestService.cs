@@ -97,6 +97,11 @@ namespace Microsoft.Silverlight.Testing.Harness.Service
                 }
                 UniqueTestRunIdentifier = rest;
             }
+            else
+            {
+                // Special case for web hosted tests
+                UniqueTestRunIdentifier = "none";
+            }
         }
 
         /// <summary>

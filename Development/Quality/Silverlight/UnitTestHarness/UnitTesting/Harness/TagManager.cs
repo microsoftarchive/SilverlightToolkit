@@ -32,6 +32,11 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         private static readonly Type TagType = typeof(TagAttribute);
 
         /// <summary>
+        /// The prefix for any tags generated from priority values.
+        /// </summary>
+        private const string PriorityTagPrefix = "Priority";
+
+        /// <summary>
         /// The test tags associated with the class.
         /// </summary>
         private Tags _classTags;
@@ -130,6 +135,13 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             {
                 tags.Add(attribute);
             }
+
+            // 7. Add priority as a tag
+            if (method.Priority != null)
+            {
+                tags.Add(PriorityTagPrefix + method.Priority.ToString());
+            }
+
             _methodTags.Add(method, tags);
 
             foreach (string tag in tags)

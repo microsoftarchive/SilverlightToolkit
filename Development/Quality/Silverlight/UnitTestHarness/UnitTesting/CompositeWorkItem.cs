@@ -126,7 +126,10 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
                         // Remove the child
                         Dequeue();
                     }
-                    // Else: This should not be a possible condition
+                    else
+                    {
+                        WorkItemComplete();
+                    }
                 }
             }
             return true;

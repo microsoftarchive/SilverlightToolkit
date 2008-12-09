@@ -59,17 +59,24 @@ namespace Microsoft.Silverlight.Testing
         }
 
         /// <summary>
-        /// Sleep a minimum number of milliseconds.  This is the simplified 
-        /// overload which requires no callback.
+        /// Delay a minimum amount of time before continuing. Similar to a sleep
+        /// call that is not a blocking call.
         /// </summary>
-        /// <param name="sleepMillisecondsMinimum">Minimum number of 
-        /// milliseconds to sleep.  The only guarantee to the tester is that the
-        /// sleep will be >= this amount of ms, and NOT that there is precision 
-        /// or an exact time.</param>
-        public virtual void EnqueueSleep(int sleepMillisecondsMinimum)
+        /// <param name="delay">The minimum time span to wait before continuing.</param>
+        public virtual void EnqueueDelay(TimeSpan delay)
         {
-            SleepWorkItem sleep = new SleepWorkItem(sleepMillisecondsMinimum);
-            EnqueueWorkItem(sleep);
+            EnqueueWorkItem(new SleepWorkItem(delay));
+        }
+
+        /// <summary>
+        /// Delay a minimum amount of time before continuing. Similar to a sleep
+        /// call that is not a blocking call.
+        /// </summary>
+        /// <param name="milliseconds">The minimum number of milliseconds to wait
+        /// until the delay is finished.</param>
+        public void EnqueueDelay(double milliseconds)
+        {
+            EnqueueDelay(TimeSpan.FromMilliseconds(milliseconds));
         }
 
         /// <summary>
@@ -95,15 +102,6 @@ namespace Microsoft.Silverlight.Testing
         }
 
         /// <summary>
-        /// Enqueue an action.  A shortcut for the EnqueueCallback.
-        /// </summary>
-        /// <param name="action">The action to enqueue.</param>
-        public virtual void Enqueue(Action action)
-        {
-            EnqueueCallback(action);
-        }
-
-        /// <summary>
         /// Add a Callback method into the test task queue.  Similar to the 
         /// PumpMessages(...) call, with the difference being that there is no 
         /// longer a single requirement: you can enqueue several callback 
@@ -118,6 +116,23 @@ namespace Microsoft.Silverlight.Testing
         }
 
         /// <summary>
+        /// Adds a number of callback methods into the test task queue.
+        /// </summary>
+        /// <param name="actions">Set of Action instances.</param>
+        public void EnqueueCallback(params Action[] actions)
+        {
+            if (actions != null)
+            {
+                foreach (Action action in actions)
+                {
+                    EnqueueCallback(action);
+                }
+            }
+        }
+
+        // TODO: Remove obsolete methods in the next release
+        #region Obsolete methods (marked obsolete in Nov. 2008)
+        /// <summary>
         /// Sleep a minimum number of milliseconds before calling a test 
         /// callback delegate.
         /// </summary>
@@ -128,10 +143,36 @@ namespace Microsoft.Silverlight.Testing
         /// <param name="testCallback">Callback method to 
         /// execute after the minimum amount of time has 
         /// elapsed.</param>
+        [Obsolete("The Sleep method, composed of a EnqueueDelay and EnqueueCallback method call, is obsolete and will be replaced in a future test framework release.")]
         public virtual void Sleep(int sleepMillisecondsMinimum, Action testCallback)
         {
-            EnqueueSleep(sleepMillisecondsMinimum);
+            EnqueueDelay(sleepMillisecondsMinimum);
             EnqueueCallback(testCallback);
         }
+
+        /// <summary>
+        /// Enqueue an action.  A shortcut for the EnqueueCallback.
+        /// </summary>
+        /// <param name="action">The action to enqueue.</param>
+        [Obsolete("The Enqueue method is redundant with EnqueueCallback. Enqueue will be removed in a future release.")]
+        public virtual void Enqueue(Action action)
+        {
+            EnqueueCallback(action);
+        }
+
+        /// <summary>
+        /// Sleep a minimum number of milliseconds.  This is the simplified 
+        /// overload which requires no callback.
+        /// </summary>
+        /// <param name="sleepMillisecondsMinimum">Minimum number of 
+        /// milliseconds to sleep.  The only guarantee to the tester is that the
+        /// sleep will be >= this amount of ms, and NOT that there is precision 
+        /// or an exact time.</param>
+        [Obsolete("The EnqueueSleep API has been renamed to EnqueueDelay. The EnqueueSleep method will be removed from a future release.")]
+        public virtual void EnqueueSleep(int sleepMillisecondsMinimum)
+        {
+            EnqueueDelay(sleepMillisecondsMinimum);
+        }
+        #endregion
     }
 }
