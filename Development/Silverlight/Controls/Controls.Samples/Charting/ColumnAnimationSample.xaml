@@ -1,0 +1,159 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:datavis="clr-namespace:Microsoft.Windows.Controls.DataVisualization;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
+  x:Class="Microsoft.Windows.Controls.Samples.ColumnAnimationSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="ChartStyle" TargetType="charting:Chart">
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+        </StackPanel.Resources>
+
+        <!-- Default -->
+        <ContentControl Content="Default (Click chart to clear/reset series data)" Style="{StaticResource Header}"/>
+
+        <controls:WrapPanel>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = [Default]" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = Simultaneous" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="Simultaneous"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = FirstToLast" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="FirstToLast"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = LastToFirst" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="LastToFirst"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+        </controls:WrapPanel>
+
+        <!-- Custom (Grow) -->
+        <ContentControl Content="Custom: Grow (Click chart to clear/reset series data)" Style="{StaticResource Header}"/>
+
+        <controls:WrapPanel>
+            <controls:WrapPanel.Resources>
+                <ControlTemplate x:Key="GrowDataPoint" TargetType="charting:DataPoint">
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        RenderTransformOrigin="0,1">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="Scale" ScaleY="0"/>
+                        </Border.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="RevealStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Shown">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Hidden">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid
+                            Background="{TemplateBinding Background}">
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush>
+                                        <GradientStop
+                                            Color="#77ffffff"
+                                            Offset="0"/>
+                                        <GradientStop
+                                            Color="#00ffffff"
+                                            Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Border
+                                BorderBrush="#ccffffff"
+                                BorderThickness="1">
+                                <Border
+                                    BorderBrush="#77ffffff"
+                                    BorderThickness="1"/>
+                            </Border>
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ContentControl Content="{TemplateBinding DependentValue}"/>
+                        </ToolTipService.ToolTip>
+                    </Border>
+                </ControlTemplate>
+
+                <datavis:StylePalette x:Key="GrowDataPointPalette">
+                    <Style TargetType="charting:DataPoint">
+                        <Setter Property="Template" Value="{StaticResource GrowDataPoint}"/>
+                    </Style>
+                </datavis:StylePalette>
+            </controls:WrapPanel.Resources>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = Simultaneous" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="Simultaneous"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = FirstToLast" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="FirstToLast"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="AnimationSequence = LastToFirst" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="LastToFirst"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+        </controls:WrapPanel>
+       </StackPanel>
+</UserControl>

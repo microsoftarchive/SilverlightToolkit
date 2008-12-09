@@ -1,0 +1,329 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:datavis="clr-namespace:Microsoft.Windows.Controls.DataVisualization;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:samples="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples"
+  x:Class="Microsoft.Windows.Controls.Samples.PieSample">
+    <StackPanel>
+
+        <!-- Scenarios -->
+        <ContentControl Content="Scenarios" Style="{StaticResource Header}"/>
+
+        <controls:WrapPanel>
+
+            <!-- Typical Use -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="Typical Use">
+                    <charting:Chart.Series>
+                        <charting:PieSeries
+                            ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                            IndependentValueBinding="{Binding Name}"
+                            DependentValueBinding="{Binding Population}"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <!-- Portion of the Chart Resembling a Video Game Character -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="Part of the Chart Resembling a Video Game Character">
+                    <charting:Chart.Series>
+                        <charting:PieSeries
+                            IndependentValueBinding="{Binding First}"
+                            DependentValueBinding="{Binding Second}">
+                            <charting:PieSeries.ItemsSource>
+                                <controls:ObjectCollection>
+                                    <samples:Pair First="Resembles it" Second="8"/>
+                                    <samples:Pair First="Doesn't resemble it" Second="2"/>
+                                </controls:ObjectCollection>
+                            </charting:PieSeries.ItemsSource>
+                            <charting:PieSeries.StylePalette>
+                                <datavis:StylePalette>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Background" Value="Yellow"/>
+                                        <Setter Property="BorderBrush" Value="Black"/>
+                                    </Style>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Background" Value="Purple"/>
+                                        <Setter Property="BorderBrush" Value="Black"/>
+                                    </Style>
+                                </datavis:StylePalette>
+                            </charting:PieSeries.StylePalette>
+                            <charting:PieSeries.Template>
+                                <ControlTemplate TargetType="charting:PieSeries">
+                                    <Canvas x:Name="PlotArea" RenderTransformOrigin="0.5,0.5">
+                                        <Canvas.RenderTransform>
+                                            <RotateTransform Angle="125"/>
+                                        </Canvas.RenderTransform>
+                                    </Canvas>
+                                </ControlTemplate>
+                            </charting:PieSeries.Template>
+                        </charting:PieSeries>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <!-- Drill-Down -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <controls:DockPanel>
+                        <datavis:Title
+                            Content="Drill-Down"
+                            FontWeight="Bold"
+                            FontSize="14"
+                            HorizontalAlignment="Center"
+                            controls:DockPanel.Dock="Top"/>
+                        <controls:DockPanel
+                            LastChildFill="False"
+                            controls:DockPanel.Dock="Right">
+                            <StackPanel
+                                x:Name="InformationPanel"
+                                controls:DockPanel.Dock="Top"
+                                Margin="5">
+                                <TextBlock Text="Selected City Details" FontWeight="Bold"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Name: "/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Population: "/>
+                                    <TextBlock Text="{Binding Population}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <Button
+                                Content="Unselect"
+                                Click="Unselect_Click"
+                                Margin="5"
+                                controls:DockPanel.Dock="Bottom"/>
+                        </controls:DockPanel>
+                        <charting:Chart
+                            x:Name="DrillDownChart"
+                            BorderBrush="Gray"
+                            Margin="5">
+                            <charting:Chart.Series>
+                                <charting:PieSeries
+                                    ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                                    IndependentValueBinding="{Binding Name}"
+                                    DependentValueBinding="{Binding Population}"
+                                    IsSelectionEnabled="True"
+                                    SelectionChanged="DrillDown_SelectionChanged"/>
+                            </charting:Chart.Series>
+                        </charting:Chart>
+                    </controls:DockPanel>
+                </Border>
+            </Grid>
+
+        </controls:WrapPanel>
+
+
+        <!-- Generated Charts -->
+        <ContentControl Content="Generated Charts" Style="{StaticResource Header}"/>
+        <controls:WrapPanel x:Name="GeneratedChartsPanel" />
+
+        <src:SourceViewer xmlns:src="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="PieSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:datavis="clr-namespace:Microsoft.Windows.Controls.DataVisualization;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:samples="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples"
+  x:Class="Microsoft.Windows.Controls.Samples.PieSample"&gt;
+    &lt;StackPanel&gt;
+
+        &lt;!-- Scenarios --&gt;
+        &lt;ContentControl Content="Scenarios" Style="{StaticResource Header}"/&gt;
+
+        &lt;controls:WrapPanel&gt;
+
+            &lt;!-- Typical Use --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;charting:Chart Title="Typical Use"&gt;
+                    &lt;charting:Chart.Series&gt;
+                        &lt;charting:PieSeries
+                            ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                            IndependentValueBinding="{Binding Name}"
+                            DependentValueBinding="{Binding Population}"/&gt;
+                    &lt;/charting:Chart.Series&gt;
+                &lt;/charting:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Portion of the Chart Resembling a Video Game Character --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;charting:Chart Title="Part of the Chart Resembling a Video Game Character"&gt;
+                    &lt;charting:Chart.Series&gt;
+                        &lt;charting:PieSeries
+                            IndependentValueBinding="{Binding First}"
+                            DependentValueBinding="{Binding Second}"&gt;
+                            &lt;charting:PieSeries.ItemsSource&gt;
+                                &lt;controls:ObjectCollection&gt;
+                                    &lt;samples:Pair First="Resembles it" Second="8"/&gt;
+                                    &lt;samples:Pair First="Doesn't resemble it" Second="2"/&gt;
+                                &lt;/controls:ObjectCollection&gt;
+                            &lt;/charting:PieSeries.ItemsSource&gt;
+                            &lt;charting:PieSeries.StylePalette&gt;
+                                &lt;datavis:StylePalette&gt;
+                                    &lt;Style TargetType="Control"&gt;
+                                        &lt;Setter Property="Background" Value="Yellow"/&gt;
+                                        &lt;Setter Property="BorderBrush" Value="Black"/&gt;
+                                    &lt;/Style&gt;
+                                    &lt;Style TargetType="Control"&gt;
+                                        &lt;Setter Property="Background" Value="Purple"/&gt;
+                                        &lt;Setter Property="BorderBrush" Value="Black"/&gt;
+                                    &lt;/Style&gt;
+                                &lt;/datavis:StylePalette&gt;
+                            &lt;/charting:PieSeries.StylePalette&gt;
+                            &lt;charting:PieSeries.Template&gt;
+                                &lt;ControlTemplate TargetType="charting:PieSeries"&gt;
+                                    &lt;Canvas x:Name="PlotArea" RenderTransformOrigin="0.5,0.5"&gt;
+                                        &lt;Canvas.RenderTransform&gt;
+                                            &lt;RotateTransform Angle="125"/&gt;
+                                        &lt;/Canvas.RenderTransform&gt;
+                                    &lt;/Canvas&gt;
+                                &lt;/ControlTemplate&gt;
+                            &lt;/charting:PieSeries.Template&gt;
+                        &lt;/charting:PieSeries&gt;
+                    &lt;/charting:Chart.Series&gt;
+                &lt;/charting:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Drill-Down --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;Border BorderBrush="Black" BorderThickness="1"&gt;
+                    &lt;controls:DockPanel&gt;
+                        &lt;datavis:Title
+                            Content="Drill-Down"
+                            FontWeight="Bold"
+                            FontSize="14"
+                            HorizontalAlignment="Center"
+                            controls:DockPanel.Dock="Top"/&gt;
+                        &lt;controls:DockPanel
+                            LastChildFill="False"
+                            controls:DockPanel.Dock="Right"&gt;
+                            &lt;StackPanel
+                                x:Name="InformationPanel"
+                                controls:DockPanel.Dock="Top"
+                                Margin="5"&gt;
+                                &lt;TextBlock Text="Selected City Details" FontWeight="Bold"/&gt;
+                                &lt;StackPanel Orientation="Horizontal"&gt;
+                                    &lt;TextBlock Text="Name: "/&gt;
+                                    &lt;TextBlock Text="{Binding Name}"/&gt;
+                                &lt;/StackPanel&gt;
+                                &lt;StackPanel Orientation="Horizontal"&gt;
+                                    &lt;TextBlock Text="Population: "/&gt;
+                                    &lt;TextBlock Text="{Binding Population}"/&gt;
+                                &lt;/StackPanel&gt;
+                            &lt;/StackPanel&gt;
+                            &lt;Button
+                                Content="Unselect"
+                                Click="Unselect_Click"
+                                Margin="5"
+                                controls:DockPanel.Dock="Bottom"/&gt;
+                        &lt;/controls:DockPanel&gt;
+                        &lt;charting:Chart
+                            x:Name="DrillDownChart"
+                            BorderBrush="Gray"
+                            Margin="5"&gt;
+                            &lt;charting:Chart.Series&gt;
+                                &lt;charting:PieSeries
+                                    ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                                    IndependentValueBinding="{Binding Name}"
+                                    DependentValueBinding="{Binding Population}"
+                                    IsSelectionEnabled="True"
+                                    SelectionChanged="DrillDown_SelectionChanged"/&gt;
+                            &lt;/charting:Chart.Series&gt;
+                        &lt;/charting:Chart&gt;
+                    &lt;/controls:DockPanel&gt;
+                &lt;/Border&gt;
+            &lt;/Grid&gt;
+
+        &lt;/controls:WrapPanel&gt;
+
+
+        &lt;!-- Generated Charts --&gt;
+        &lt;ContentControl Content="Generated Charts" Style="{StaticResource Header}"/&gt;
+        &lt;controls:WrapPanel x:Name="GeneratedChartsPanel" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="PieSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using Microsoft.Windows.Controls.DataVisualization.Charting;
+using System.ComponentModel;
+
+namespace Microsoft.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the Pie Chart.
+    /// &lt;/summary&gt;
+    [Sample("(1)Pie", DifficultyLevel.Basic)]
+    [Category("Pie Series")]
+    public partial class PieSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the PieSample class.
+        /// &lt;/summary&gt;
+        public PieSample()
+        {
+            InitializeComponent();
+
+            SampleGenerators.GenerateNumericSeriesSamples(GeneratedChartsPanel, () =&gt; new PieSeries(), false);
+            SampleGenerators.GenerateValueSeriesSamples(GeneratedChartsPanel, () =&gt; new PieSeries());
+            SampleGenerators.GenerateCategoryValueSeriesSamples(GeneratedChartsPanel, () =&gt; new PieSeries());
+            SampleGenerators.GenerateMultipleValueSeriesSamples(GeneratedChartsPanel, () =&gt; new PieSeries(), false);
+        }
+
+        /// &lt;summary&gt;
+        /// Handles the SelectionChanged event of the "Drill-Down" sample Chart.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Event source.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached to event handler in XAML.")]
+        private void DrillDown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            InformationPanel.DataContext = (1 &lt;= e.AddedItems.Count) ? e.AddedItems[0] : null;
+        }
+
+        /// &lt;summary&gt;
+        /// Handles the Click event of the "Unselect" button for the "Drill-Down" sample Chart.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Event source.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached to event handler in XAML.")]
+        private void Unselect_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            (DrillDownChart.Series[0] as PieSeries).SelectedItem = null;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

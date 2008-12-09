@@ -1,0 +1,279 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Windows.Controls.Samples</RootNamespace>
+    <AssemblyName>Microsoft.Windows.Controls.Samples.Common</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>ClientBin\Microsoft.Windows.Controls.Samples.Common.XML</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>ClientBin\Microsoft.Windows.Controls.Samples.Common.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessObjects\Airport.cs" />
+    <Compile Include="BusinessObjects\City.cs" />
+    <Compile Include="BusinessObjects\Department.cs" />
+    <Compile Include="BusinessObjects\Feature.cs" />
+    <Compile Include="BusinessObjects\GizmoPopularityPollCollection.cs" />
+    <Compile Include="BusinessObjects\MemberInfoData.cs" />
+    <Compile Include="BusinessObjects\Music\Album.cs" />
+    <Compile Include="BusinessObjects\Music\Artist.cs" />
+    <Compile Include="BusinessObjects\Music\Song.cs" />
+    <Compile Include="BusinessObjects\ParticulateLevel.cs" />
+    <Compile Include="BusinessObjects\Employee.cs" />
+    <Compile Include="BusinessObjects\PopularityPoll.cs" />
+    <Compile Include="BusinessObjects\WidgetPopularityPollCollection.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Class.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Domain.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Family.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Genus.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Kingdom.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Order.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Phylum.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Species.cs" />
+    <Compile Include="BusinessObjects\Taxonomy\Taxonomy.cs" />
+    <Compile Include="BusinessObjects\Words.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="BusinessObjects\Photograph.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleBrowser\EmbeddedImage.cs" />
+    <Compile Include="SampleBrowser\SampleTreeItem.cs" />
+    <Compile Include="SampleBrowser\SampleAttribute.cs" />
+    <Compile Include="SampleBrowser\SampleBrowser.cs" />
+    <Compile Include="SampleBrowser\SampleBrowserItem.cs" />
+    <Compile Include="SampleBrowser\DifficultyLevel.cs" />
+    <Compile Include="SharedResources.cs" />
+    <Compile Include="SourceViewer\SourceFile.cs" />
+    <Compile Include="SourceViewer\SourceViewer.cs" />
+    <Compile Include="WebServiceHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="themes\generic.xaml">
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Theming\Controls.Theming.csproj">
+      <Project>{94D59978-57A5-4EF9-8659-D33DD73A50C7}</Project>
+      <Name>Controls.Theming</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\Controls.csproj">
+      <Project>{BDC7605E-4B2E-41B8-A5F6-4FBFD7651AC9}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="SampleBrowser\SampleBrowser.xaml">
+      <Generator>MSBuild:CompileXaml</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Autumn Leaves.jpg" />
+    <EmbeddedResource Include="Images\BillGates.jpg" />
+    <EmbeddedResource Include="Images\Desert Landscape.jpg" />
+    <EmbeddedResource Include="Images\Dock.jpg" />
+    <EmbeddedResource Include="Images\Ferry.jpg" />
+    <EmbeddedResource Include="Images\Forest Flowers.jpg" />
+    <EmbeddedResource Include="Images\Frangipani Flowers.jpg" />
+    <EmbeddedResource Include="Images\Garden.jpg" />
+    <EmbeddedResource Include="Images\Green Sea Turtle.jpg" />
+    <EmbeddedResource Include="Images\Humpback Whale.jpg" />
+    <EmbeddedResource Include="Images\Mountains.jpg" />
+    <EmbeddedResource Include="Images\Ocean Sunset.jpg" />
+    <EmbeddedResource Include="Images\Oryx Antelope.jpg" />
+    <EmbeddedResource Include="Images\Plains.jpg" />
+    <EmbeddedResource Include="Images\Reflection.jpg" />
+    <EmbeddedResource Include="Images\ScottGuthrie.jpg" />
+    <EmbeddedResource Include="Images\Somasegar.jpg" />
+    <EmbeddedResource Include="Images\SteveBallmer.jpg" />
+    <EmbeddedResource Include="Images\Stones.jpg" />
+    <EmbeddedResource Include="Images\Toco Toucan.jpg" />
+    <EmbeddedResource Include="Images\Winter Leaves.jpg" />
+    <EmbeddedResource Include="Images\Winter Water.jpg" />
+    <EmbeddedResource Include="Images\Abstract Circles.jpg" />
+    <EmbeddedResource Include="Images\Abstract Curve.jpg" />
+    <EmbeddedResource Include="Images\Abstract Glow.jpg" />
+    <EmbeddedResource Include="Images\Abstract Lines.jpg" />
+    <EmbeddedResource Include="Images\Abstract Misc.jpg" />
+    <EmbeddedResource Include="Images\Abstract Shards.jpg" />
+    <EmbeddedResource Include="Images\Aurora.jpg" />
+    <EmbeddedResource Include="Images\Bamboo.jpg" />
+    <EmbeddedResource Include="Images\Creek.jpg" />
+    <EmbeddedResource Include="Images\Fish Nuggets.jpg" />
+    <EmbeddedResource Include="Images\Fish.jpg" />
+    <EmbeddedResource Include="Images\Flower.jpg" />
+    <EmbeddedResource Include="Images\Forest.jpg" />
+    <EmbeddedResource Include="Images\Impressionist.jpg" />
+    <EmbeddedResource Include="Images\Knot.jpg" />
+    <EmbeddedResource Include="Images\Leaf.jpg" />
+    <EmbeddedResource Include="Images\Leaves.jpg" />
+    <EmbeddedResource Include="Images\Overpass.jpg" />
+    <EmbeddedResource Include="Images\River.jpg" />
+    <EmbeddedResource Include="Images\Skyline.jpg" />
+    <EmbeddedResource Include="Images\Stiplicious.jpg" />
+    <EmbeddedResource Include="Images\Sunset.jpg" />
+    <EmbeddedResource Include="Images\Tree.jpg" />
+    <EmbeddedResource Include="Images\Tropical.jpg" />
+    <EmbeddedResource Include="Images\Waterfall.jpg" />
+    <EmbeddedResource Include="Images\Wet Grass.jpg" />
+    <EmbeddedResource Include="Images\Wide Abstract Curve.jpg" />
+    <EmbeddedResource Include="Images\Wide Aurora.jpg" />
+    <EmbeddedResource Include="Images\Wide Fish Nuggets.jpg" />
+    <EmbeddedResource Include="Images\Wide Flower.jpg" />
+    <EmbeddedResource Include="Images\Wide Plains.jpg" />
+    <EmbeddedResource Include="Images\Wide Reflection.jpg" />
+    <EmbeddedResource Include="Images\Wide Tropical.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Event.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Static.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Method.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Property.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Album.png" />
+    <EmbeddedResource Include="Icons\Artist.png" />
+    <EmbeddedResource Include="Icons\Song.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\thumbExpresssionDark.png" />
+    <EmbeddedResource Include="Images\thumbExpresssionLight.png" />
+    <EmbeddedResource Include="Images\thumbRainierOrange.png" />
+    <EmbeddedResource Include="Images\thumbRainierPurple.png" />
+    <EmbeddedResource Include="Images\thumbShinyBlue.png" />
+    <EmbeddedResource Include="Images\thumbShinyRed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\SilverlightThemesLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\SamplesBackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\SilverlightToolkitLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\samplelogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\SilverlightToolkitLogoInver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\codeplexlogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="SampleBrowser\EmbeddedImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:CompileXaml</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\SampleArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\cslogo.png" />
+    <EmbeddedResource Include="Icons\xamllogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\AutoCompleteBox.png" />
+    <EmbeddedResource Include="Icons\BarSeries.png" />
+    <EmbeddedResource Include="Icons\ColumnSeries.png" />
+    <EmbeddedResource Include="Icons\DockPanel.png" />
+    <EmbeddedResource Include="Icons\Expander.png" />
+    <EmbeddedResource Include="Icons\Label.png" />
+    <EmbeddedResource Include="Icons\NumericUpDown.png" />
+    <EmbeddedResource Include="Icons\PieSeries.png" />
+    <EmbeddedResource Include="Icons\TreeView.png" />
+    <EmbeddedResource Include="Icons\ViewBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LineSeries.png" />
+    <EmbeddedResource Include="Icons\ScatterSeries.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\ButtonSpinner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\ImplicitStyleManager.png" />
+    <EmbeddedResource Include="Icons\ThemeBrowser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\UpDownBase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\BubbleSeries.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\DomainUpDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\WrapPanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\BureauBlack.png" />
+    <EmbeddedResource Include="Images\BureauBlue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\WhistlerBlue.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v2.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,27 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  xmlns:common="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows">
+
+    <!-- common:EmbeddedImage -->
+    <Style TargetType="common:EmbeddedImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="common:EmbeddedImage">
+                <Grid x:Name="LayoutRoot">
+                    <Image x:Name="Image"></Image>
+                </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

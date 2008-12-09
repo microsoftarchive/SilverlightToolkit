@@ -1,0 +1,112 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.HeaderedItemsControlSample">
+    <StackPanel>
+        <!-- Basic Usage -->
+        <ContentControl Content="Basic Usage" Style="{StaticResource Header}" />
+        <controls:HeaderedItemsControl x:Name="MicrosoftExecutives" Margin="10">
+            <controls:HeaderedItemsControl.Header>
+                <TextBlock Text="Microsoft Executives" FontWeight="Bold" FontSize="16" />
+            </controls:HeaderedItemsControl.Header>
+            <controls:HeaderedItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding FirstName}" Margin="10 0 4 0" />
+                        <TextBlock Text="{Binding LastName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:HeaderedItemsControl.ItemTemplate>
+        </controls:HeaderedItemsControl>
+        <src:SourceViewer xmlns:src="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="HeaderedItemsControlSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.HeaderedItemsControlSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;!-- Basic Usage --&gt;
+        &lt;ContentControl Content="Basic Usage" Style="{StaticResource Header}" /&gt;
+        &lt;controls:HeaderedItemsControl x:Name="MicrosoftExecutives" Margin="10"&gt;
+            &lt;controls:HeaderedItemsControl.Header&gt;
+                &lt;TextBlock Text="Microsoft Executives" FontWeight="Bold" FontSize="16" /&gt;
+            &lt;/controls:HeaderedItemsControl.Header&gt;
+            &lt;controls:HeaderedItemsControl.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel Orientation="Horizontal"&gt;
+                        &lt;TextBlock Text="{Binding FirstName}" Margin="10 0 4 0" /&gt;
+                        &lt;TextBlock Text="{Binding LastName}" /&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/controls:HeaderedItemsControl.ItemTemplate&gt;
+        &lt;/controls:HeaderedItemsControl&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="HeaderedItemsControlSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Controls;
+using System.ComponentModel;
+
+namespace Microsoft.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the HeaderedItemsControl.
+    /// &lt;/summary&gt;
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Headered", Justification = "Name of the control")]
+    [Sample("(4)HeadredItemsControl", DifficultyLevel.Basic)]
+    [Category("TreeView")]
+    public partial class HeaderedItemsControlSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the HeaderedItemsControlSample class.
+        /// &lt;/summary&gt;
+        public HeaderedItemsControlSample()
+        {
+            InitializeComponent();
+
+            Loaded += OnLoaded;
+        }
+
+        /// &lt;summary&gt;
+        /// Load the demonstration.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sample page.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            MicrosoftExecutives.ItemsSource = Employee.Executives;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

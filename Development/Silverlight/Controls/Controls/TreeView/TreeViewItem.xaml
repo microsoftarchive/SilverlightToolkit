@@ -1,0 +1,270 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls">
+
+    <Style TargetType="controls:TreeViewItem">
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="TabNavigation" Value="Once" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TreeViewItem">
+                    <Grid Background="{x:Null}">
+                        <vsm:VisualStateManager.VisualStateGroups>
+                            <vsm:VisualStateGroup x:Name="CommonStates">
+                                <vsm:VisualState x:Name="Normal" />
+                                <vsm:VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Header" Storyboard.TargetProperty="Foreground" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="#FF999999" />
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </vsm:VisualState>
+                            </vsm:VisualStateGroup>
+                            <vsm:VisualStateGroup x:Name="SelectionStates">
+                                <vsm:VisualState x:Name="Unselected" />
+                                <vsm:VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                          Storyboard.TargetName="select"
+                                          Storyboard.TargetProperty="Opacity"
+                                          Duration="0"
+                                          To=".75" />
+                                    </Storyboard>
+                                </vsm:VisualState>
+                                <vsm:VisualState x:Name="SelectedInactive">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                          Storyboard.TargetName="inactive"
+                                          Storyboard.TargetProperty="Opacity"
+                                          Duration="0"
+                                          To=".2" />
+                                    </Storyboard>
+                                </vsm:VisualState>
+                            </vsm:VisualStateGroup>
+                            <vsm:VisualStateGroup x:Name="HasItemsStates">
+                                <vsm:VisualState x:Name="HasItems" />
+                                <vsm:VisualState x:Name="NoItems">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                          Storyboard.TargetName="ExpanderButton"
+                                          Storyboard.TargetProperty="Visibility"
+                                          Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </vsm:VisualState>
+                            </vsm:VisualStateGroup>
+                            <vsm:VisualStateGroup x:Name="ExpansionStates">
+                                <vsm:VisualState x:Name="Collapsed" />
+                                <vsm:VisualState x:Name="Expanded">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                          Storyboard.TargetName="ItemsHost"
+                                          Storyboard.TargetProperty="Visibility"
+                                          Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </vsm:VisualState>
+                            </vsm:VisualStateGroup>
+                        </vsm:VisualStateManager.VisualStateGroups>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="15" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton
+                          x:Name="ExpanderButton"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          IsTabStop="False"
+                          TabNavigation="Once">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Grid x:Name="Root" Background="Transparent">
+                                        <vsm:VisualStateManager.VisualStateGroups>
+                                            <vsm:VisualStateGroup x:Name="CommonStates">
+                                                <vsm:VisualState x:Name="Normal" />
+                                                <vsm:VisualState x:Name="MouseOver">
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                          Storyboard.TargetName="UncheckedVisual"
+                                                          Storyboard.TargetProperty="(Path.Stroke).Color"
+                                                          To="#FF1BBBFA"
+                                                          Duration="0" />
+                                                    </Storyboard>
+                                                </vsm:VisualState>
+                                                <vsm:VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                          Storyboard.TargetName="Root"
+                                                          Storyboard.TargetProperty="Opacity"
+                                                          To=".7"
+                                                          Duration="0" />
+                                                    </Storyboard>
+                                                </vsm:VisualState>
+                                            </vsm:VisualStateGroup>
+                                            <vsm:VisualStateGroup x:Name="CheckStates">
+                                                <vsm:VisualState x:Name="Unchecked" />
+                                                <vsm:VisualState x:Name="Checked">
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                          Storyboard.TargetName="UncheckedVisual"
+                                                          Storyboard.TargetProperty="Opacity"
+                                                          To="0"
+                                                          Duration="0" />
+                                                        <DoubleAnimation
+                                                          Storyboard.TargetName="CheckedVisual"
+                                                          Storyboard.TargetProperty="Opacity"
+                                                          To="1"
+                                                          Duration="0" />
+                                                    </Storyboard>
+                                                </vsm:VisualState>
+                                            </vsm:VisualStateGroup>
+                                        </vsm:VisualStateManager.VisualStateGroups>
+                                        <Grid HorizontalAlignment="Right" Margin="2 2 5 2">
+                                            <Path
+                                              x:Name="UncheckedVisual"
+                                              Width="6"
+                                              Height="9"
+                                              Fill="#FFFFFFFF"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Right"
+                                              Data="M 0,0 L 0,9 L 5,4.5 Z"
+                                              StrokeThickness="1"
+                                              StrokeLineJoin="Miter">
+                                                <Path.Stroke>
+                                                    <SolidColorBrush Color="#FF989898" />
+                                                </Path.Stroke>
+                                            </Path>
+                                            <Path
+                                              x:Name="CheckedVisual"
+                                              Opacity="0"
+                                              Width="6"
+                                              Height="6"
+                                              Fill="#FF262626"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Data="M 6,0 L 6,6 L 0,6 Z"
+                                              StrokeLineJoin="Miter" />
+                                        </Grid>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <Rectangle
+                          x:Name="select"
+                          Grid.Column="1"
+                          Opacity="0"
+                          Fill="#FFBADDE9"
+                          Stroke="#FF6DBDD1"
+                          StrokeThickness="1"
+                          IsHitTestVisible="False"
+                          RadiusX="2"
+                          RadiusY="2" />
+                        <Rectangle
+                          x:Name="inactive"
+                          Grid.Column="1"
+                          Opacity="0"
+                          Fill="#FF999999"
+                          Stroke="#FF333333"
+                          StrokeThickness="1"
+                          IsHitTestVisible="False"
+                          RadiusX="2"
+                          RadiusY="2" />
+                        <Button
+                          x:Name="Header"
+                          Grid.Column="1"
+                          ClickMode="Hover"
+                          Content="{TemplateBinding Header}"
+                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                          Background="{TemplateBinding Background}"
+                          Foreground="{TemplateBinding Foreground}"
+                          Cursor="{TemplateBinding Cursor}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                          IsTabStop="False"
+                          TabNavigation="Once">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <vsm:VisualStateManager.VisualStateGroups>
+                                            <vsm:VisualStateGroup x:Name="CommonStates">
+                                                <vsm:VisualState x:Name="Normal" />
+                                                <vsm:VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                          Storyboard.TargetName="hover"
+                                                          Storyboard.TargetProperty="Opacity"
+                                                          Duration="0"
+                                                          To=".5" />
+                                                    </Storyboard>
+                                                </vsm:VisualState>
+                                                <vsm:VisualState x:Name="Disabled">
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                          Storyboard.TargetName="content"
+                                                          Storyboard.TargetProperty="Opacity"
+                                                          Duration="0"
+                                                          To=".55" />
+                                                    </Storyboard>
+                                                </vsm:VisualState>
+                                            </vsm:VisualStateGroup>
+                                        </vsm:VisualStateManager.VisualStateGroups>
+                                        <Rectangle
+                                          x:Name="hover"
+                                          Opacity="0"
+                                          Fill="#FFBADDE9"
+                                          Stroke="#FF6DBDD1"
+                                          StrokeThickness="1"
+                                          IsHitTestVisible="False"
+                                          RadiusX="2"
+                                          RadiusY="2" />
+                                        <ContentPresenter
+                                          x:Name="content"
+                                          Cursor="{TemplateBinding Cursor}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="Left"
+                                          Margin="{TemplateBinding Padding}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <ItemsPresenter
+                          x:Name="ItemsHost"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Visibility="Collapsed" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

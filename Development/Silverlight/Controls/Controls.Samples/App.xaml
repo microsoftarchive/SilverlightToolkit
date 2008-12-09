@@ -1,0 +1,483 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<Application
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:common="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  x:Class="Microsoft.Windows.Controls.Samples.App">
+    <Application.Resources>
+
+        <!--Collection of SampleTreeItems used to populate the Sample Browser TreeView-->
+        <controls:ObjectCollection x:Key="SampleTreeView" xmlns="http://schemas.microsoft.com/client/2007">
+            <common:SampleTreeItem TreeItemName="Controls">
+                <common:SampleTreeItem TreeItemName="AutoCompleteBox" IconResourceName="AutoCompleteBox.png"/>
+                <common:SampleTreeItem TreeItemName="DockPanel" IconResourceName="DockPanel.png"/>
+                <common:SampleTreeItem TreeItemName="WrapPanel" IconResourceName="WrapPanel.png"/>
+                <common:SampleTreeItem TreeItemName="Expander" IconResourceName="Expander.png"/>
+                <common:SampleTreeItem TreeItemName="TreeView" IconResourceName="TreeView.png"/>
+                <common:SampleTreeItem TreeItemName="ViewBox" IconResourceName="ViewBox.png"/>
+            </common:SampleTreeItem>
+            <common:SampleTreeItem TreeItemName="DataVisualization">
+                <common:SampleTreeItem TreeItemName="Column Series" IconResourceName="ColumnSeries.png"/>
+                <common:SampleTreeItem TreeItemName="Bar Series" IconResourceName="BarSeries.png"/>
+                <common:SampleTreeItem TreeItemName="Pie Series" IconResourceName="PieSeries.png"/>
+                <common:SampleTreeItem TreeItemName="Line Series" IconResourceName="LineSeries.png"/>
+                <common:SampleTreeItem TreeItemName="Bubble Series" IconResourceName="BubbleSeries.png"/>
+                <common:SampleTreeItem TreeItemName="Scatter Series" IconResourceName="ScatterSeries.png"/>
+            </common:SampleTreeItem>
+            <common:SampleTreeItem TreeItemName="Input">
+                <common:SampleTreeItem TreeItemName="ButtonSpinner" IconResourceName="ButtonSpinner.png"/>
+                <common:SampleTreeItem TreeItemName="NumericUpDown" IconResourceName="NumericUpDown.png"/>
+                <common:SampleTreeItem TreeItemName="UpDownBase" IconResourceName="UpDownBase.png"/>
+            </common:SampleTreeItem>
+            <common:SampleTreeItem TreeItemName="Theming">
+                <common:SampleTreeItem TreeItemName="Theme Browser" IconResourceName="ThemeBrowser.png"/>
+                <common:SampleTreeItem TreeItemName="ImplicitStyleManager" IconResourceName="ImplicitStyleManager.png"/>
+            </common:SampleTreeItem>
+        </controls:ObjectCollection>
+
+
+
+        <!-- DataTemplate for Photograph instances -->
+        <DataTemplate x:Key="PhotographTemplate">
+            <Grid Margin="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <controls:Viewbox Height="100" Width="100" VerticalAlignment="Bottom">
+                    <Border BorderBrush="#FF999999" BorderThickness="2" Padding="10">
+                        <ContentControl Content="{Binding Image}" />
+                    </Border>
+                </controls:Viewbox>
+                <ContentControl Grid.Row="1" Content="{Binding Name}" HorizontalAlignment="Center" FontSize="10" />
+            </Grid>
+        </DataTemplate>
+        
+        <!-- A smoothed out ListBoxItem style -->
+        <Style x:Key="SmoothListBoxItem" TargetType="ListBoxItem">
+            <Setter Property="IsEnabled" Value="true" />
+            <Setter Property="Foreground" Value="#FF000000" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Padding" Value="2,0,0,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Grid Background="{TemplateBinding Background}">
+                            <vsm:VisualStateManager.VisualStateGroups>
+                                <vsm:VisualStateGroup x:Name="CommonStates">
+                                    <vsm:VisualState x:Name="Normal" />
+                                    <vsm:VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HoverOverlay" Storyboard.TargetProperty="Opacity" To=".75" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="fillStop0Hover" Storyboard.TargetProperty="Color" To="#FFF9FAFA" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="fillStop1Hover" Storyboard.TargetProperty="Color" To="#FFD6DFE7" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="fillStop2Hover" Storyboard.TargetProperty="Color" To="#FFD3E4F5" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="strokeStop0Hover" Storyboard.TargetProperty="Color" To="#00000000" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="strokeStop1Hover" Storyboard.TargetProperty="Color" To="#00000000" Duration="0" />
+                                        </Storyboard>
+                                    </vsm:VisualState>
+                                </vsm:VisualStateGroup>
+                                <vsm:VisualStateGroup x:Name="SelectionStates">
+                                    <vsm:VisualState x:Name="Unselected" />
+                                    <vsm:VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="fillStop0" Storyboard.TargetProperty="Color" To="#FFD9EFFF" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="fillStop1" Storyboard.TargetProperty="Color" To="#FFBDD2E6" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="fillStop2" Storyboard.TargetProperty="Color" To="#FFA1B6CD" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="strokeStop0" Storyboard.TargetProperty="Color" To="#FF77B9EB" Duration="0" />
+                                            <ColorAnimation Storyboard.TargetName="strokeStop1" Storyboard.TargetProperty="Color" To="#FF4887CD" Duration="0" />
+                                        </Storyboard>
+                                    </vsm:VisualState>
+                                </vsm:VisualStateGroup>
+                                <vsm:VisualStateGroup x:Name="FocusStates">
+                                    <vsm:VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </vsm:VisualState>
+                                    <vsm:VisualState x:Name="Unfocused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </vsm:VisualState>
+                                </vsm:VisualStateGroup>
+                            </vsm:VisualStateManager.VisualStateGroups>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Rectangle IsHitTestVisible="False">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0.316111,0.0165521" EndPoint="0.316111,0.724833">
+                                        <GradientStop x:Name="fillStop0" Color="#00000000" Offset="0"/>
+                                        <GradientStop x:Name="fillStop1" Color="#00000000" Offset="0.682203"/>
+                                        <GradientStop x:Name="fillStop2" Color="#00000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.Stroke>
+                                    <LinearGradientBrush StartPoint="0.318122,0.0360108" EndPoint="0.318122,0.715784">
+                                        <GradientStop x:Name="strokeStop0" Color="#00000000" Offset="0"/>
+                                        <GradientStop x:Name="strokeStop1" Color="#00000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+                            <Rectangle x:Name="HoverOverlay" IsHitTestVisible="False" Opacity="0">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0.316111,0.0165521" EndPoint="0.316111,0.724833">
+                                        <GradientStop x:Name="fillStop0Hover" Color="#00000000" Offset="0"/>
+                                        <GradientStop x:Name="fillStop1Hover" Color="#00000000" Offset="0.682203"/>
+                                        <GradientStop x:Name="fillStop2Hover" Color="#00000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.Stroke>
+                                    <LinearGradientBrush StartPoint="0.318122,0.0360108" EndPoint="0.318122,0.715784">
+                                        <GradientStop x:Name="strokeStop0Hover" Color="#00000000" Offset="0"/>
+                                        <GradientStop x:Name="strokeStop1Hover" Color="#00000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+
+                            <Border x:Name="FocusVisual" BorderBrush="#FF0B8BAA" BorderThickness="1" CornerRadius="4" Visibility="Collapsed" IsHitTestVisible="False" />
+                            <ContentPresenter
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              HorizontalAlignment="Left" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ListBox template that uses a WrapPanel -->
+        <Style x:Key="WrapListBox" TargetType="ListBox">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource SmoothListBoxItem}" />
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <controls:WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Grid>
+                            <Border BorderBrush="#FF000000" BorderThickness="1" CornerRadius="3">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="#FFFFFFFF" BorderThickness="2" CornerRadius="3">
+                                    <ItemsPresenter />
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Image brush resources-->
+        <ImageBrush x:Key="SearchSuggestionsImageBrush" ImageSource="AutoCompleteBox/Venice.jpg" Stretch="None" />
+
+        <!-- Data Visualization -->
+
+        <!--Common Gradients used for different samples-->
+        <!--Gray-->
+        <Color x:Key="GrayShadeStartColor">#FFF4F4F4</Color>
+        <Color x:Key="GrayShadeEndColor">#FFB7B7B7</Color>
+        <RadialGradientBrush x:Key="GrayRadialBrush">
+            <RadialGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform X="-0.425" Y="-0.486"/>
+                </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+            <GradientStop Color="{StaticResource GrayShadeStartColor}"/>
+            <GradientStop Color="{StaticResource GrayShadeEndColor}" Offset="1"/>
+        </RadialGradientBrush>
+        <!--Blue-->
+        <LinearGradientBrush x:Key="DefaultEnhancedChartDarkBlue" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFB9D6F7" Offset="0" />
+            <GradientStop Color="#FF5A88CE" Offset="0.185" />
+            <GradientStop Color="#FF477DAB" Offset="0.475" />
+            <GradientStop Color="#FF284B70" Offset="1" />
+        </LinearGradientBrush>
+        <!--Red-->
+        <LinearGradientBrush x:Key="DefaultEnhancedChartDarkRed" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFFBB7B5" Offset="0" />
+            <GradientStop Color="#FFCE5A5A" Offset="0.185" />
+            <GradientStop Color="#FFAB4747" Offset="0.475" />
+            <GradientStop Color="#FF702828" Offset="1" />
+        </LinearGradientBrush>
+        <!--Yellow-->
+        <Color x:Key="ShinyTopGradientYellow">#FFFFFF72</Color>
+        <Color x:Key="ShinyBottomGradientYellow">#FF8F8832</Color>
+        <RadialGradientBrush x:Key="ShinyYellowBrush">
+            <RadialGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="2.09" ScaleY="1.819"/>
+                    <TranslateTransform X="-0.425" Y="-0.486"/>
+                </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+            <GradientStop Color="{StaticResource ShinyTopGradientYellow}"/>
+            <GradientStop Color="{StaticResource ShinyBottomGradientYellow}" Offset="1"/>
+        </RadialGradientBrush>
+
+        <!-- Style for the Grid wrapper around each sample item -->
+        <Style x:Key="WrapperStyle" TargetType="Grid">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="1,4,4,1"/>
+            <Setter Property="MinWidth" Value="380"/>
+            <Setter Property="MinHeight" Value="270"/>
+        </Style>
+
+        <!-- Style for the Grid wrapper around each sample item (with no MinWidth/MinHeight) -->
+        <Style x:Key="WrapperStyleNoMinimum" TargetType="Grid">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="1,4,4,1"/>
+        </Style>
+
+        <!-- Simple sample data set for charting -->
+        <common:City x:Key="City"/>
+        <common:ParticulateLevel x:Key="ParticulateLevel"/>
+        <common:WidgetPopularityPollCollection x:Key="WidgetPopularity"/>
+        <common:GizmoPopularityPollCollection x:Key="GizmoPopularity"/>
+        
+        <!-- Label used by samples -->
+        <Style x:Key="Description" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <!-- Informational paragraph text -->
+        <Style x:Key="Information" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+        </Style>
+
+        <!-- API Names -->
+        <Style x:Key="ApiName" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5 0 0 0" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#FF555555" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+        </Style>
+
+        <!-- API Descriptions -->
+        <Style x:Key="ApiDescription" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5 0 0 5" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="UseLayoutRounding" Value="False" />
+        </Style>
+
+        <!-- Departments of the United Kingdom Government -->
+        <controls:ObjectCollection x:Key="DepartmentOrganization" xmlns="http://schemas.microsoft.com/client/2007">
+            <common:Department Title="Government">
+                <!-- Sovereign -->
+                <common:Department Title="Sovereign">
+                    <common:Department.Employees>
+                        <common:Employee FirstName="Queen" LastName="Elizabeth II" />
+                    </common:Department.Employees>
+                </common:Department>
+
+                <!-- Cabinet -->
+                <common:Department Title="Cabinet">
+
+                    <common:Department Title="Prime Minister">
+                        <common:Department.Employees>
+                            <common:Employee FirstName="Gordon" LastName="Brown" />
+                        </common:Department.Employees>
+                    </common:Department>
+
+                    <common:Department Title="Chancellor">
+                        <common:Department.Employees>
+                            <common:Employee FirstName="Alistair" LastName="Darling" />
+                        </common:Department.Employees>
+                    </common:Department>
+
+                    <common:Department Title="Foreign Secretary">
+                        <common:Department.Employees>
+                            <common:Employee FirstName="David" LastName="Miliband" />
+                        </common:Department.Employees>
+                    </common:Department>
+
+                    <common:Department Title="Home Secretary">
+                        <common:Department.Employees>
+                            <common:Employee FirstName="Jacqui" LastName="Smith" />
+                        </common:Department.Employees>
+                    </common:Department>
+
+                    <common:Department Title="Justice Secretary">
+                        <common:Department.Employees>
+                            <common:Employee FirstName="Jack" LastName="Straw" />
+                        </common:Department.Employees>
+                    </common:Department>
+
+                </common:Department>
+            </common:Department>
+        </controls:ObjectCollection>
+
+        <!-- Tree of Life used for hierarchical data binding examples -->
+        <controls:ObjectCollection x:Key="TreeOfLife" xmlns="http://schemas.microsoft.com/client/2007">
+            <common:Domain Classification="Bacteria">
+                <common:Kingdom Classification="Eubacteria" />
+            </common:Domain>
+            <common:Domain Classification="Archaea">
+                <common:Kingdom Classification="Archaebacteria" />
+            </common:Domain>
+            <common:Domain Classification="Eukarya">
+                <common:Kingdom Classification="Protista" />
+                <common:Kingdom Classification="Fungi" />
+                <common:Kingdom Classification="Plantae" />
+                <common:Kingdom Classification="Animalia">
+                    <common:Phylum Classification="Arthropoda">
+                        <common:Class Classification="Insecta">
+                            <common:Order Classification="Diptera">
+                                <common:Family Classification="Drosophilidae">
+                                    <common:Genus Classification="Drosophila">
+                                        <common:Species Classification="D. melanogaster" />
+                                    </common:Genus>
+                                </common:Family>
+                            </common:Order>
+                        </common:Class>
+                    </common:Phylum>
+                    <common:Phylum Classification="Chordata">
+                        <common:Class Classification="Mammalia">
+                            <common:Order Classification="Primates">
+                                <common:Family Classification="Hominidae">
+                                    <common:Genus Classification="Homo">
+                                        <common:Species Classification="H. sapiens" />
+                                    </common:Genus>
+                                </common:Family>
+                            </common:Order>
+                        </common:Class>
+                    </common:Phylum>
+                    <common:Phylum Classification="Ctenophora" />
+                    <common:Phylum Classification="Porifera" />
+                    <common:Phylum Classification="Placozoa" />
+                </common:Kingdom>
+            </common:Domain>
+        </controls:ObjectCollection>
+
+        <!-- Catalog of music used for sample -->
+        <controls:ObjectCollection x:Key="MusicCatalog" xmlns="http://schemas.microsoft.com/client/2007">
+            <common:Artist ArtistName="Frank Sinatra" Genre="Pop">
+                <common:Album Title="In The Wee Small Hours" ReleaseYear="1954">
+                    <common:Song Title="In The Wee Small Hours Of The Morning" Length="3:00" />
+                    <common:Song Title="Mood Indigo" Length="3:30" />
+                    <common:Song Title="Glad To Be Unhappy" Length="2:35" />
+                    <common:Song Title="I Get Along Without You Very Well" Length="3:42" />
+                    <common:Song Title="Deep In A Dream" Length="2:49" />
+                </common:Album>
+                <common:Album Title="You Do Something To Me" ReleaseYear="2008">
+                    <common:Song Title="As Time Goes By" Length="2:13" />
+                    <common:Song Title="Close To You" Length="3:06" />
+                    <common:Song Title="Come Fly With Me" Length="2:54" />
+                    <common:Song Title="Guess I'll Hang My Tears Out To Dry" Length="3:05" />
+                    <common:Song Title="I've Got My Love To Keep Me Warm" Length="1:56" />
+                </common:Album>
+            </common:Artist>
+            <common:Artist ArtistName="African Wind" Genre="Blues">
+                <common:Album Title="Mercy" ReleaseYear="2006">
+                    <common:Song Title="From African Soul" Length="3:12" />
+                    <common:Song Title="Buren Of Blues" Length="4:23" />
+                    <common:Song Title="Mississippi Fred's Dream" Length="4:48" />
+                    <common:Song Title="What You Gonna Do" Length="4:01" />
+                </common:Album>
+            </common:Artist>
+            <common:Artist ArtistName="Johnny Cash" Genre="Country">
+                <common:Album Title="At Folsom Prison" ReleaseYear="1968">
+                    <common:Song Title="Folsom Prison Blues" Length="2:42" />
+                    <common:Song Title="Busted" Length="1:25" />
+                    <common:Song Title="Dark As The Dungeon" Length="3:04" />
+                    <common:Song Title="I Still Miss Someone" Length="1:38" />
+                </common:Album>
+                <common:Album Title="The Man Comes Around" ReleaseYear="2002">
+                    <common:Song Title="The Man Comes Around" Length="4:26" />
+                    <common:Song Title="Hurt" Length="3:36" />
+                    <common:Song Title="Give My Love To Rose" Length="3:27" />
+                    <common:Song Title="Bridge Over Troubled Water" Length="3:54" />
+                </common:Album>
+            </common:Artist>
+        </controls:ObjectCollection>
+        
+        <!-- Header used to seperate sections in the sample pages -->
+        <Style x:Key="Header" TargetType="ContentControl">
+            <Setter Property="Background" Value="#22D2D2D2" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStretch" Value="UltraExpanded" />
+            <Setter Property="Foreground" Value="#FF313861" />
+            <Setter Property="Margin" Value="0 8 0 2" />
+            <Setter Property="Padding" Value="6 2 2 2" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContentControl">
+                        <Border
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      CornerRadius="2">
+                            <ContentControl
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Cursor="{TemplateBinding Cursor}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          FontFamily="{TemplateBinding FontFamily}"
+                          FontSize="{TemplateBinding FontSize}"
+                          FontStretch="{TemplateBinding FontStretch}"
+                          Foreground="{TemplateBinding Foreground}"
+                          IsTabStop="{TemplateBinding IsTabStop}"
+                          Margin="{TemplateBinding Padding}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

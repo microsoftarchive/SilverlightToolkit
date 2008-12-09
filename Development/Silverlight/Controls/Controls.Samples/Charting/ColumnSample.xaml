@@ -1,0 +1,159 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
+  x:Class="Microsoft.Windows.Controls.Samples.ColumnSample">
+    <StackPanel>
+
+        <!-- Scenarios -->
+        <ContentControl Content="Scenarios" Style="{StaticResource Header}"/>
+
+        <controls:WrapPanel>
+
+            <!-- Typical Use -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="Typical Use">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries
+                            Title="Population"
+                            ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                            IndependentValueBinding="{Binding Name}"
+                            DependentValueBinding="{Binding Population}"/>
+                    </charting:Chart.Series>
+                </charting:Chart>
+            </Grid>
+
+            <!-- Custom Axes -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <charting:Chart Title="Custom Axes">
+                    <charting:Chart.Series>
+                        <charting:ColumnSeries
+                            Title="Population"
+                            ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                            IndependentValueBinding="{Binding Name}"
+                            DependentValueBinding="{Binding Population}"/>
+                    </charting:Chart.Series>
+                    <charting:Chart.Axes>
+                        <charting:CategoryAxis Title="City" Orientation="Horizontal" FontStyle="Italic"/>
+                        <charting:LinearAxis Title="Population" Orientation="Vertical" Minimum="0" Maximum="600000" Interval="200000" ShowGridLines="True"  FontStyle="Italic"/>
+                    </charting:Chart.Axes>
+                </charting:Chart>
+            </Grid>
+
+        </controls:WrapPanel>
+
+
+        <!-- Generated Charts -->
+        <ContentControl Content="Generated Charts" Style="{StaticResource Header}"/>
+        <controls:WrapPanel x:Name="GeneratedChartsPanel"/>
+        
+        <src:SourceViewer xmlns:src="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="ColumnSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
+  x:Class="Microsoft.Windows.Controls.Samples.ColumnSample"&gt;
+    &lt;StackPanel&gt;
+
+        &lt;!-- Scenarios --&gt;
+        &lt;ContentControl Content="Scenarios" Style="{StaticResource Header}"/&gt;
+
+        &lt;controls:WrapPanel&gt;
+
+            &lt;!-- Typical Use --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;charting:Chart Title="Typical Use"&gt;
+                    &lt;charting:Chart.Series&gt;
+                        &lt;charting:ColumnSeries
+                            Title="Population"
+                            ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                            IndependentValueBinding="{Binding Name}"
+                            DependentValueBinding="{Binding Population}"/&gt;
+                    &lt;/charting:Chart.Series&gt;
+                &lt;/charting:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Custom Axes --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;charting:Chart Title="Custom Axes"&gt;
+                    &lt;charting:Chart.Series&gt;
+                        &lt;charting:ColumnSeries
+                            Title="Population"
+                            ItemsSource="{Binding PugetSound, Source={StaticResource City}}"
+                            IndependentValueBinding="{Binding Name}"
+                            DependentValueBinding="{Binding Population}"/&gt;
+                    &lt;/charting:Chart.Series&gt;
+                    &lt;charting:Chart.Axes&gt;
+                        &lt;charting:CategoryAxis Title="City" Orientation="Horizontal" FontStyle="Italic"/&gt;
+                        &lt;charting:LinearAxis Title="Population" Orientation="Vertical" Minimum="0" Maximum="600000" Interval="200000" ShowGridLines="True"  FontStyle="Italic"/&gt;
+                    &lt;/charting:Chart.Axes&gt;
+                &lt;/charting:Chart&gt;
+            &lt;/Grid&gt;
+
+        &lt;/controls:WrapPanel&gt;
+
+
+        &lt;!-- Generated Charts --&gt;
+        &lt;ContentControl Content="Generated Charts" Style="{StaticResource Header}"/&gt;
+        &lt;controls:WrapPanel x:Name="GeneratedChartsPanel"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ColumnSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using Microsoft.Windows.Controls.DataVisualization.Charting;
+using System.ComponentModel;
+
+namespace Microsoft.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating ColumnSeries.
+    /// &lt;/summary&gt;
+    [Sample("(1)Column", DifficultyLevel.Basic)]
+    [Category("Column Series")]
+    public partial class ColumnSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ColumnSample class.
+        /// &lt;/summary&gt;
+        public ColumnSample()
+        {
+            InitializeComponent();
+
+            SampleGenerators.GenerateNumericSeriesSamples(GeneratedChartsPanel, () =&gt; new ColumnSeries(), false);
+            SampleGenerators.GenerateValueSeriesSamples(GeneratedChartsPanel, () =&gt; new ColumnSeries());
+            SampleGenerators.GenerateCategoryValueSeriesSamples(GeneratedChartsPanel, () =&gt; new ColumnSeries());
+            SampleGenerators.GenerateMultipleValueSeriesSamples(GeneratedChartsPanel, () =&gt; new ColumnSeries(), false);
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

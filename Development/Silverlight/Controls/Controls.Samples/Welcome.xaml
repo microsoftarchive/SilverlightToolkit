@@ -1,0 +1,63 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="Microsoft.Windows.Controls.Samples.Welcome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+    xmlns:common="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+            <!-- Welcome! -->
+            <TextBlock FontSize="18" Foreground="#FF313861" FontWeight="Bold" Margin="0,30,0,0">Welcome to the Silverlight Toolkit</TextBlock>
+
+            <!-- Introductory text The assembly tokens are replaced at runtime -->
+            <TextBlock  
+              Grid.Row="1"
+              Style="{StaticResource Information}" 
+              x:Name="WelcomeText">
+                <LineBreak />
+
+                This is the sample application project, {SAMPLE_ASSEMBLY}, part 
+                of the Microsoft Silverlight Toolkit.
+                <LineBreak /><LineBreak />
+                    
+                To the left you'll find the list of controls included in 
+                this release within the {ASSEMBLY} control library. Many of the 
+                nodes expand to reveal basic control information, properties, 
+                and scenarios.
+                <LineBreak /><LineBreak />
+                
+                Each sample page also includes the ability to view and copy 
+                both the XAML and the source code. To copy text, simply select 
+                the text and press Control + C (Windows) or Command + C (Mac).
+                <LineBreak /><LineBreak />
+                    
+                We're interested in hearing your feedback and experiences.
+                <LineBreak /><LineBreak />
+                    
+                Thank you, and enjoy,
+                <LineBreak /><LineBreak />
+                    
+                    Silverlight Toolkit Team
+            </TextBlock>
+
+            <!-- Link to the CodePlex site -->
+            <HyperlinkButton 
+              Foreground="#FF1F3269" 
+              Grid.Row="2"
+              Content="http://www.codeplex.com/silverlight/" 
+              NavigateUri="http://www.codeplex.com/silverlight/" 
+              FontSize="12" 
+              Margin="2,0,0,0" />
+    </Grid>
+</UserControl>

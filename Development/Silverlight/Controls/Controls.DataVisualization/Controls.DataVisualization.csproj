@@ -1,0 +1,279 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C203F873-5EC5-4233-A6BE-094F39DBB211}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Windows.Controls.DataVisualization</RootNamespace>
+    <AssemblyName>Microsoft.Windows.Controls.DataVisualization</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Binaries\Microsoft.Windows.Controls.DataVisualization.XML</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Binaries\Microsoft.Windows.Controls.DataVisualization.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AggregatedObservableCollection.cs" />
+    <Compile Include="Charting\Axis\Axis.cs" />
+    <Compile Include="Charting\Axis\AxisLabel.cs" />
+    <Compile Include="Charting\Axis\AxisLocation.cs" />
+    <Compile Include="Charting\Axis\CategoryAxis.cs" />
+    <Compile Include="Charting\Axis\CategorySortOrder.cs" />
+    <Compile Include="Charting\Axis\DateTimeAxis.cs" />
+    <Compile Include="Charting\Axis\DateTimeAxisLabel.cs" />
+    <Compile Include="Charting\Axis\DateTimeIntervalType.cs" />
+    <Compile Include="Charting\Axis\GridLines.cs" />
+    <Compile Include="Charting\Axis\HybridAxis.cs" />
+    <Compile Include="Charting\Axis\IAxis.cs" />
+    <Compile Include="Charting\Axis\IAxisGridLinesElementProvider.cs" />
+    <Compile Include="Charting\Axis\ICategoryAxis.cs" />
+    <Compile Include="Charting\Axis\ICategoryAxisInformationProvider.cs" />
+    <Compile Include="Charting\Axis\IRangeAxis.cs" />
+    <Compile Include="Charting\Axis\IRangeAxisInformationProvider.cs" />
+    <Compile Include="Charting\Axis\LinearAxis.cs" />
+    <Compile Include="Charting\Axis\NumericAxis.cs" />
+    <Compile Include="Charting\Axis\NumericAxisLabel.cs" />
+    <Compile Include="Charting\Axis\RangeAxis.cs" />
+    <Compile Include="Charting\DataPoint\BarDataPoint.cs" />
+    <Compile Include="Charting\DataPoint\BubbleDataPoint.cs" />
+    <Compile Include="Charting\DataPoint\ColumnDataPoint.cs" />
+    <Compile Include="Charting\ISeriesHost.cs" />
+    <Compile Include="Charting\ISeriesHostExtensions.cs" />
+    <Compile Include="Charting\Series\BubbleSeries.cs" />
+    <Compile Include="Charting\Series\IRequireGlobalSeriesIndex.cs" />
+    <Compile Include="DependencyPropertyAnimationHelper.cs" />
+    <Compile Include="DesignerProperties.cs" />
+    <Compile Include="GridExtensions.cs" />
+    <Compile Include="LayoutTransformControl.cs" />
+    <Compile Include="ObservableCollectionListAdapter.cs" />
+    <Compile Include="OrientedPanel.cs" />
+    <Compile Include="ReadOnlyObservableCollection.cs" />
+    <Compile Include="StoryboardQueue.cs" />
+    <Compile Include="Charting\Axis\AxisOrientation.cs" />
+    <Compile Include="Charting\Axis\AxisIntervalType.cs" />
+    <Compile Include="Charting\Axis\NullableConverter.cs" />
+    <Compile Include="Charting\Chart\Chart.cs" />
+    <Compile Include="Charting\Series\LegendItem.cs" />
+    <Compile Include="Charting\AnimationSequence.cs" />
+    <Compile Include="Charting\DataPoint\DataPoint.cs" />
+    <Compile Include="Charting\DataPoint\DataPointState.cs" />
+    <Compile Include="Charting\DataPoint\LineDataPoint.cs" />
+    <Compile Include="Charting\DataPoint\PieDataPoint.cs" />
+    <Compile Include="Charting\DataPoint\ScatterDataPoint.cs" />
+    <Compile Include="NoResetObservableCollection.cs" />
+    <Compile Include="Charting\Series\BarSeries.cs" />
+    <Compile Include="Charting\Series\DataPointSeriesWithAxes.cs" />
+    <Compile Include="Charting\Series\DataPointSingleSeriesWithAxes.cs" />
+    <Compile Include="StringFormatConverter.cs" />
+    <Compile Include="Tuple.cs" />
+    <Compile Include="ValueHelper.cs" />
+    <Compile Include="Range.cs" />
+    <Compile Include="Charting\Series\ColumnSeries.cs" />
+    <Compile Include="Charting\Series\LineSeries.cs" />
+    <Compile Include="Charting\Series\ScatterSeries.cs" />
+    <Compile Include="Charting\Series\PieSeries.cs" />
+    <Compile Include="Charting\Series\Series.cs" />
+    <Compile Include="Charting\Series\DataPointSeries.cs" />
+    <Compile Include="IStyleDispenser.cs" />
+    <Compile Include="Charting\StyleDispenser.cs" />
+    <Compile Include="EnumerableFunctions.cs" />
+    <Compile Include="Legend\Legend.cs" />
+    <Compile Include="RangeEnumerableFunctions.cs" />
+    <Compile Include="StylePalette.cs" />
+    <Compile Include="Title\Title.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="themes\generic.xaml">
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Legend\Legend.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Chart\Chart.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPoint\PieDataPoint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Series\DataPointSeries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Title\Title.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Series\LineSeries.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPoint\LineDataPoint.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Series\ScatterSeries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPoint\ScatterDataPoint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPoint\ColumnDataPoint.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPoint\BarDataPoint.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Series\LegendItem.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Series\PieSeries.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Axis\HybridAxis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Axis\DateTimeAxisLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Axis\NumericAxisLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Axis\AxisLabel.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\Axis\RangeAxis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPoint\BubbleDataPoint.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\BarSeries.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\BubbleSeries.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\ColumnSeries.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\LineSeries.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\PieSeries.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\ScatterSeries.Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\CategoryAxis.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\Chart.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\DateTimeAxis.Icon.png" />
+    <EmbeddedResource Include="Microsoft.Windows.Controls.DataVisualization.Charting\LinearAxis.Icon.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v2.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

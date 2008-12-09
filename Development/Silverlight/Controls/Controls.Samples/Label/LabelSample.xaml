@@ -1,0 +1,501 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.LabelSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="Formatting" TargetType="ContentControl">
+                <Setter Property="Margin" Value="5 3 3 3" />
+                <Setter Property="Padding" Value="2" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="Portable User Interface" />
+            </Style>
+        </StackPanel.Resources>
+        
+        <!-- Content Model -->
+        <ContentControl Content="Content Model" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource Description}" Text="Literal" />
+            <controls:Label Grid.Column="1" Content="Basic Content" />
+            
+            <TextBlock Grid.Row="1" Style="{StaticResource Description}" Text="UI Content" />
+            <controls:Label Grid.Row="1" Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="10" Height="10" Fill="Red" />
+                    <Ellipse Width="10" Height="10" Fill="Orange" />
+                    <Ellipse Width="10" Height="10" Fill="Yellow" />
+                    <Ellipse Width="10" Height="10" Fill="Green" />
+                    <Ellipse Width="10" Height="10" Fill="Blue" />
+                    <Ellipse Width="10" Height="10" Fill="Indigo" />
+                    <Ellipse Width="10" Height="10" Fill="Violet" />
+                </StackPanel>
+            </controls:Label>
+            
+            <TextBlock Grid.Row="2" Style="{StaticResource Description}" Text="Content Template" />
+            <controls:Label Grid.Row="2" Grid.Column="1" Content="Example Content">
+                <controls:Label.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding}" Foreground="Red" />
+                            <TextBlock Text=" is " />
+                            <TextBlock Text="{Binding Length}" Foreground="Red" />
+                            <TextBlock Text=" characters long!" />
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:Label.ContentTemplate>
+            </controls:Label>
+        </Grid>
+
+        <!-- Formatting samples -->
+        <ContentControl Content="Formatting" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="FontFamily" />
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Verdana" FontFamily="Verdana" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Trebuchet MS" FontFamily="Trebuchet MS" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Courier New" FontFamily="Courier New" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Times New Roman" FontFamily="Times New Roman" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Portable User Interface" FontFamily="Portable User Interface" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Foo" FontFamily="Foo" />
+            </StackPanel>
+            
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="FontStretch" />
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Condensed" FontStretch="Condensed" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Expanded" FontStretch="Expanded" />
+                <controls:Label Style="{StaticResource Formatting}" Content="ExtraCondensed" FontStretch="ExtraCondensed" />
+                <controls:Label Style="{StaticResource Formatting}" Content="ExtraExpanded" FontStretch="ExtraExpanded" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Normal" FontStretch="Normal" />
+                <controls:Label Style="{StaticResource Formatting}" Content="SemiCondensed" FontStretch="SemiCondensed" />
+                <controls:Label Style="{StaticResource Formatting}" Content="SemiExpanded" FontStretch="SemiExpanded" />
+                <controls:Label Style="{StaticResource Formatting}" Content="UltraCondensed" FontStretch="UltraCondensed" />
+                <controls:Label Style="{StaticResource Formatting}" Content="UltraExpanded" FontStretch="UltraExpanded" />
+            </StackPanel>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="FontStyle" />
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Normal" FontStyle="Normal" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Italic" FontStyle="Italic"  />
+            </StackPanel>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="FontWeight" />
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Black" FontWeight="Black" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Bold" FontWeight="Bold" />
+                <controls:Label Style="{StaticResource Formatting}" Content="ExtraBlack" FontWeight="ExtraBlack" />
+                <controls:Label Style="{StaticResource Formatting}" Content="ExtraBold" FontWeight="ExtraBold" />
+                <controls:Label Style="{StaticResource Formatting}" Content="ExtraLight" FontWeight="ExtraLight" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Light" FontWeight="Light" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Medium" FontWeight="Medium" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Normal" FontWeight="Normal" />
+                <controls:Label Style="{StaticResource Formatting}" Content="SemiBold" FontWeight="SemiBold" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Thin" FontWeight="Thin" />
+            </StackPanel>
+        </Grid>
+        
+        <!-- Brushes -->
+        <ContentControl Content="Brushes and Borders" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Foreground" />
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Black" Foreground="Black" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Red" Foreground="Red" />
+                <controls:Label Style="{StaticResource Formatting}" Content="#DD0000FF" Foreground="#DD0000FF" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Linear Gradient">
+                    <controls:Label.Foreground>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Offset="0" Color="Blue" />
+                            <GradientStop Offset="1" Color="Red" />
+                        </LinearGradientBrush>
+                    </controls:Label.Foreground>
+                </controls:Label>
+            </StackPanel>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Background" />
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Black" Background="Black" Foreground="White" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Red" Background="Red" Foreground="White" />
+                <controls:Label Style="{StaticResource Formatting}" Content="#DD0000FF" Background="#DD0000FF" Foreground="White" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Linear Gradient" Foreground="White">
+                    <controls:Label.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Offset="0" Color="Blue" />
+                            <GradientStop Offset="1" Color="Red" />
+                        </LinearGradientBrush>
+                    </controls:Label.Background>
+                </controls:Label>
+            </StackPanel>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="BorderBrush" />
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="Black" BorderBrush="Black" BorderThickness="2" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Red" BorderBrush="Red" BorderThickness="2" />
+                <controls:Label Style="{StaticResource Formatting}" Content="#DD0000FF" BorderBrush="#DD0000FF" BorderThickness="2" />
+                <controls:Label Style="{StaticResource Formatting}" Content="Linear Gradient" BorderThickness="2">
+                    <controls:Label.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Offset="0" Color="Blue" />
+                            <GradientStop Offset="1" Color="Red" />
+                        </LinearGradientBrush>
+                    </controls:Label.BorderBrush>
+                </controls:Label>
+            </StackPanel>
+            
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="BorderThickness" />
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <controls:Label Style="{StaticResource Formatting}" Content="1 1 1 1" BorderBrush="Black" BorderThickness="1" />
+                <controls:Label Style="{StaticResource Formatting}" Content="2 2 2 2" BorderBrush="Black" BorderThickness="2" />
+                <controls:Label Style="{StaticResource Formatting}" Content="5 2 5 2" BorderBrush="Black" BorderThickness="5 2 5 2" />
+                <controls:Label Style="{StaticResource Formatting}" Content="0 1 0 2" BorderBrush="Black" BorderThickness="0 1 0 2" />
+            </StackPanel>
+        </Grid>
+        
+        <ContentControl Content="Custom Style" Style="{StaticResource Header}" />
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style x:Key="Custom" TargetType="controls:Label">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="#FFFFFFE1" />
+                    <Setter Property="FontSize" Value="32" />
+                    <Setter Property="FontFamily" Value="Verdana" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Padding" Value="15 5 15 5" />
+                    <Setter Property="BorderThickness" Value="15 2 15 2" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="Margin" Value="10" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="controls:Label">
+                                <Border
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="25 0 25 0">
+                                    <ContentPresenter
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Cursor="{TemplateBinding Cursor}" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </StackPanel.Resources>
+            <controls:Label Style="{StaticResource Custom}" Content="Content" />
+        </StackPanel>
+        <src:SourceViewer xmlns:src="clr-namespace:Microsoft.Windows.Controls.Samples;assembly=Microsoft.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="LabelSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  x:Class="Microsoft.Windows.Controls.Samples.LabelSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="Formatting" TargetType="ContentControl"&gt;
+                &lt;Setter Property="Margin" Value="5 3 3 3" /&gt;
+                &lt;Setter Property="Padding" Value="2" /&gt;
+                &lt;Setter Property="FontSize" Value="14" /&gt;
+                &lt;Setter Property="FontFamily" Value="Portable User Interface" /&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+        
+        &lt;!-- Content Model --&gt;
+        &lt;ContentControl Content="Content Model" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+
+            &lt;TextBlock Style="{StaticResource Description}" Text="Literal" /&gt;
+            &lt;controls:Label Grid.Column="1" Content="Basic Content" /&gt;
+            
+            &lt;TextBlock Grid.Row="1" Style="{StaticResource Description}" Text="UI Content" /&gt;
+            &lt;controls:Label Grid.Row="1" Grid.Column="1"&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Red" /&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Orange" /&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Yellow" /&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Green" /&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Blue" /&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Indigo" /&gt;
+                    &lt;Ellipse Width="10" Height="10" Fill="Violet" /&gt;
+                &lt;/StackPanel&gt;
+            &lt;/controls:Label&gt;
+            
+            &lt;TextBlock Grid.Row="2" Style="{StaticResource Description}" Text="Content Template" /&gt;
+            &lt;controls:Label Grid.Row="2" Grid.Column="1" Content="Example Content"&gt;
+                &lt;controls:Label.ContentTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;StackPanel Orientation="Horizontal" Margin="5"&gt;
+                            &lt;TextBlock Text="{Binding}" Foreground="Red" /&gt;
+                            &lt;TextBlock Text=" is " /&gt;
+                            &lt;TextBlock Text="{Binding Length}" Foreground="Red" /&gt;
+                            &lt;TextBlock Text=" characters long!" /&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/controls:Label.ContentTemplate&gt;
+            &lt;/controls:Label&gt;
+        &lt;/Grid&gt;
+
+        &lt;!-- Formatting samples --&gt;
+        &lt;ContentControl Content="Formatting" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+
+            &lt;TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="FontFamily" /&gt;
+            &lt;StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Verdana" FontFamily="Verdana" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Trebuchet MS" FontFamily="Trebuchet MS" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Courier New" FontFamily="Courier New" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Times New Roman" FontFamily="Times New Roman" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Portable User Interface" FontFamily="Portable User Interface" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Foo" FontFamily="Foo" /&gt;
+            &lt;/StackPanel&gt;
+            
+            &lt;TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="FontStretch" /&gt;
+            &lt;StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Condensed" FontStretch="Condensed" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Expanded" FontStretch="Expanded" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="ExtraCondensed" FontStretch="ExtraCondensed" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="ExtraExpanded" FontStretch="ExtraExpanded" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Normal" FontStretch="Normal" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="SemiCondensed" FontStretch="SemiCondensed" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="SemiExpanded" FontStretch="SemiExpanded" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="UltraCondensed" FontStretch="UltraCondensed" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="UltraExpanded" FontStretch="UltraExpanded" /&gt;
+            &lt;/StackPanel&gt;
+            
+            &lt;TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="FontStyle" /&gt;
+            &lt;StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Normal" FontStyle="Normal" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Italic" FontStyle="Italic"  /&gt;
+            &lt;/StackPanel&gt;
+            
+            &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="FontWeight" /&gt;
+            &lt;StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Black" FontWeight="Black" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Bold" FontWeight="Bold" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="ExtraBlack" FontWeight="ExtraBlack" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="ExtraBold" FontWeight="ExtraBold" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="ExtraLight" FontWeight="ExtraLight" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Light" FontWeight="Light" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Medium" FontWeight="Medium" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Normal" FontWeight="Normal" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="SemiBold" FontWeight="SemiBold" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Thin" FontWeight="Thin" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Grid&gt;
+        
+        &lt;!-- Brushes --&gt;
+        &lt;ContentControl Content="Brushes and Borders" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+                &lt;ColumnDefinition Width="Auto" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+
+            &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Foreground" /&gt;
+            &lt;StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Black" Foreground="Black" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Red" Foreground="Red" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="#DD0000FF" Foreground="#DD0000FF" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Linear Gradient"&gt;
+                    &lt;controls:Label.Foreground&gt;
+                        &lt;LinearGradientBrush StartPoint="0,0" EndPoint="1,0"&gt;
+                            &lt;GradientStop Offset="0" Color="Blue" /&gt;
+                            &lt;GradientStop Offset="1" Color="Red" /&gt;
+                        &lt;/LinearGradientBrush&gt;
+                    &lt;/controls:Label.Foreground&gt;
+                &lt;/controls:Label&gt;
+            &lt;/StackPanel&gt;
+            
+            &lt;TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Background" /&gt;
+            &lt;StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Black" Background="Black" Foreground="White" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Red" Background="Red" Foreground="White" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="#DD0000FF" Background="#DD0000FF" Foreground="White" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Linear Gradient" Foreground="White"&gt;
+                    &lt;controls:Label.Background&gt;
+                        &lt;LinearGradientBrush StartPoint="0,0" EndPoint="1,0"&gt;
+                            &lt;GradientStop Offset="0" Color="Blue" /&gt;
+                            &lt;GradientStop Offset="1" Color="Red" /&gt;
+                        &lt;/LinearGradientBrush&gt;
+                    &lt;/controls:Label.Background&gt;
+                &lt;/controls:Label&gt;
+            &lt;/StackPanel&gt;
+            
+            &lt;TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="BorderBrush" /&gt;
+            &lt;StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Black" BorderBrush="Black" BorderThickness="2" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Red" BorderBrush="Red" BorderThickness="2" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="#DD0000FF" BorderBrush="#DD0000FF" BorderThickness="2" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="Linear Gradient" BorderThickness="2"&gt;
+                    &lt;controls:Label.BorderBrush&gt;
+                        &lt;LinearGradientBrush StartPoint="0,0" EndPoint="1,0"&gt;
+                            &lt;GradientStop Offset="0" Color="Blue" /&gt;
+                            &lt;GradientStop Offset="1" Color="Red" /&gt;
+                        &lt;/LinearGradientBrush&gt;
+                    &lt;/controls:Label.BorderBrush&gt;
+                &lt;/controls:Label&gt;
+            &lt;/StackPanel&gt;
+            
+            &lt;TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="BorderThickness" /&gt;
+            &lt;StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="1 1 1 1" BorderBrush="Black" BorderThickness="1" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="2 2 2 2" BorderBrush="Black" BorderThickness="2" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="5 2 5 2" BorderBrush="Black" BorderThickness="5 2 5 2" /&gt;
+                &lt;controls:Label Style="{StaticResource Formatting}" Content="0 1 0 2" BorderBrush="Black" BorderThickness="0 1 0 2" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Grid&gt;
+        
+        &lt;ContentControl Content="Custom Style" Style="{StaticResource Header}" /&gt;
+        &lt;StackPanel&gt;
+            &lt;StackPanel.Resources&gt;
+                &lt;Style x:Key="Custom" TargetType="controls:Label"&gt;
+                    &lt;Setter Property="BorderBrush" Value="Black" /&gt;
+                    &lt;Setter Property="Foreground" Value="Black" /&gt;
+                    &lt;Setter Property="Background" Value="#FFFFFFE1" /&gt;
+                    &lt;Setter Property="FontSize" Value="32" /&gt;
+                    &lt;Setter Property="FontFamily" Value="Verdana" /&gt;
+                    &lt;Setter Property="FontWeight" Value="Bold" /&gt;
+                    &lt;Setter Property="Padding" Value="15 5 15 5" /&gt;
+                    &lt;Setter Property="BorderThickness" Value="15 2 15 2" /&gt;
+                    &lt;Setter Property="HorizontalAlignment" Value="Left" /&gt;
+                    &lt;Setter Property="VerticalAlignment" Value="Top" /&gt;
+                    &lt;Setter Property="Margin" Value="10" /&gt;
+                    &lt;Setter Property="Template"&gt;
+                        &lt;Setter.Value&gt;
+                            &lt;ControlTemplate TargetType="controls:Label"&gt;
+                                &lt;Border
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="25 0 25 0"&gt;
+                                    &lt;ContentPresenter
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Cursor="{TemplateBinding Cursor}" /&gt;
+                                &lt;/Border&gt;
+                            &lt;/ControlTemplate&gt;
+                        &lt;/Setter.Value&gt;
+                    &lt;/Setter&gt;
+                &lt;/Style&gt;
+            &lt;/StackPanel.Resources&gt;
+            &lt;controls:Label Style="{StaticResource Custom}" Content="Content" /&gt;
+        &lt;/StackPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="LabelSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Windows.Controls;
+
+namespace Microsoft.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the Label.
+    /// &lt;/summary&gt;
+    [Sample("Controls/Label", DifficultyLevel.Basic)]
+    public partial class LabelSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the LabelSample class.
+        /// &lt;/summary&gt;
+        public LabelSample()
+        {
+            InitializeComponent();
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

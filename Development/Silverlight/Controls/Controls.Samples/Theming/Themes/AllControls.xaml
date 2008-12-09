@@ -1,0 +1,258 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="Microsoft.Windows.Controls.Samples.AllControls"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:basics="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controls="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls"
+  xmlns:input="clr-namespace:Microsoft.Windows.Controls;assembly=Microsoft.Windows.Controls.Input"
+  xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+  xmlns:clr="clr-namespace:System;assembly=mscorlib"
+  xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls"
+  xmlns:dataprimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:datavis="clr-namespace:Microsoft.Windows.Controls.DataVisualization;assembly=Microsoft.Windows.Controls.DataVisualization"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:local="clr-namespace:Microsoft.Windows.Controls.Samples"
+  mc:Ignorable="d">
+    <UserControl.Resources>
+        
+       <local:VacationBudgetCollection x:Key="VacationBudget"/>
+
+        <controls:HierarchicalDataTemplate x:Key="MediaEntry">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontWeight="Bold" Text="{Binding Path=MediaName}" />
+            </StackPanel>
+        </controls:HierarchicalDataTemplate>
+
+        <controls:HierarchicalDataTemplate x:Key="Catalog" ItemsSource="{Binding Path=MediaItems}" ItemTemplate="{StaticResource MediaEntry}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontWeight="Bold" Text="{Binding Path=CatalogName}" />
+            </StackPanel>
+        </controls:HierarchicalDataTemplate>
+    </UserControl.Resources>
+
+    <Grid x:Name="Root" Height="Auto" Width="Auto" Background="#FF595959" Opacity="1">
+        <controls:DockPanel Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+            <controls:Expander Header="Microsoft Communities" ExpandDirection="Down" VerticalAlignment="Stretch" controls:DockPanel.Dock="Top" Background="#FF858585" Margin="0,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image x:Name="ExpanderImage" Margin="10,10,10,10"></Image>
+                    <TextBlock Text="Welcome to Silverlight Themes" FontSize="20" Margin="40,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </controls:Expander>
+
+            <StackPanel controls:DockPanel.Dock="Bottom" Orientation="Horizontal" Background="DarkGray" HorizontalAlignment="Stretch" Margin="0,42,0,0" VerticalAlignment="Bottom">
+                <controls:Label Content="Connecting to server..." HorizontalContentAlignment="Right"></controls:Label>
+                <ProgressBar IsIndeterminate="True" Width="300" HorizontalContentAlignment="Right"></ProgressBar>
+            </StackPanel>
+
+            <Grid controls:DockPanel.Dock="Right" Margin="0,10,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Margin="5,2,5,0"  VerticalAlignment="Stretch" Grid.Row="0">
+                    <StackPanel Margin="0,0,0,0">
+                        <controls:Label Content="My Trips Bar" FontWeight="Bold" FontFamily="Portable User Interface" Height="16" Width="179" HorizontalAlignment="Left" />
+                        <basics:Calendar Height="168" Width="179" />
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="0" Background="#FF6A6A6A" Opacity="0.42" CornerRadius="5,5,5,5" Canvas.ZIndex="-1" Grid.RowSpan="3" />
+
+                <Grid Grid.Row="2" Grid.RowSpan="2" Margin="0,16,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Button Content="Scheduled Trips" IsEnabled="False" />
+                    <ListBox x:Name="TripsList" Grid.RowSpan="2" Grid.Row="1" Height="300" />
+                </Grid>
+
+                <Grid Height="Auto" VerticalAlignment="Top" Grid.Row="1" Margin="5,27,5,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.614*" />
+                        <ColumnDefinition Width="0.386*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.5*" />
+                    </Grid.RowDefinitions>
+
+                    <controls:Label Content="Add New Trip" FontWeight="Bold" FontFamily="Portable User Interface" Height="16" Width="179" VerticalAlignment="Stretch" />
+                    <Button Height="Auto" Content="Add" VerticalAlignment="Stretch" Grid.RowSpan="2" Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Padding="18,3,16,3" />
+                    <TextBox Height="Auto" Grid.Row="1" VerticalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" Margin="0,0,0,0" />
+                    <basics:DatePicker Grid.Row="2" />
+                </Grid>
+            </Grid>
+
+            <Grid controls:DockPanel.Dock="Left"  VerticalAlignment="Stretch" Margin="10,5,0,0">
+           
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <controls:TreeView ItemTemplate="{StaticResource Catalog}" x:Name="VactionTreeView" SelectedItemChanged="OnVacationChanged" Margin="0,0,0,0" Opacity="1" Background="{x:Null}" Width="350" Height="250" VerticalAlignment="Top" />
+                <Border Margin="0,0,0,0" Opacity="0.415" Background="#FF8C8484" CornerRadius="5,5,5,5" Canvas.ZIndex="-1" Width="350" Height="250" VerticalAlignment="Stretch"/>
+
+                <Grid Grid.Row="1" Margin="0,6,0,0" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Margin="7,5,0,0" Height="Auto">
+                        <controls:Label Content="Printing" FontFamily="Portable User Interface" FontWeight="Bold" HorizontalAlignment="Left" />
+
+                        <RadioButton Content="All"/>
+                        <RadioButton Content="Selection"/>
+                        <RadioButton Content="Current"/>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Right" Margin="0,5,7,7" Width="Auto" Grid.Column="1">
+                        <controls:Label Content="Copies" FontFamily="Portable User Interface" FontWeight="Bold" Height="Auto" Width="Auto" />
+                        <StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" >
+                            <controls:Label Content="Number of Copies:" FontFamily="Portable User Interface" FontWeight="Normal" Height="16" Width="104" />
+                            <input:NumericUpDown />
+                        </StackPanel>
+                        <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="25" SelectedIndex="0" Margin="0,7,0,0">
+                            <ComboBoxItem Content="Black&amp;White"></ComboBoxItem>
+                            <ComboBoxItem Content="Color"></ComboBoxItem>
+                            <ComboBoxItem Content="Draft"></ComboBoxItem>
+                        </ComboBox>
+                        <CheckBox Height="Auto" Width="Auto" Content="Collate" Margin="0,15,0,0" />
+                    </StackPanel>
+                    <Border Background="#FF979797" Canvas.ZIndex="-1" Opacity="0.44" CornerRadius="5,5,5,5" />
+                </Grid>
+                <basics:TabControl x:Name="ChartTabControl" Width="350" Height="270" Grid.Row="2" Margin="0,11,0,0" VerticalAlignment="Top">
+                    <basics:TabItem Header="Budget">
+                       <charting:Chart Title="Vacation Budget" VerticalAlignment="Stretch" >
+                            <charting:Chart.Series>
+                                <charting:PieSeries
+                                        IndependentValueBinding="{Binding ExpenseType}"
+                                        DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
+                                        <charting:PieSeries.ItemsSource>
+                                        <controls:ObjectCollection>
+                                            <local:Budget ExpenseType="Air Fair" ExpenseValue="150"/>
+                                            <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
+                                            <local:Budget ExpenseType="Food" ExpenseValue="20"/>
+                                            <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
+                                        </controls:ObjectCollection>
+                                </charting:PieSeries.ItemsSource>
+                             </charting:PieSeries>
+                           </charting:Chart.Series>
+                        </charting:Chart>
+                    </basics:TabItem>
+                    <basics:TabItem Header="Entertaiment">
+                        <charting:Chart Title="Entertainment Budget 2007-2008" Width="350" Height="240" LegendTitle="Legend" VerticalAlignment="Stretch">
+                            <charting:Chart.Series>
+                                <charting:ColumnSeries Title="Budget 2007" 
+                                      IndependentValueBinding="{Binding ExpenseType}"
+                                      DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
+                                        <charting:ColumnSeries.ItemsSource>
+                                            <controls:ObjectCollection>
+                                                <local:Budget ExpenseType="Movies" ExpenseValue="150"/>
+                                                <local:Budget ExpenseType="Museum" ExpenseValue="60"/>
+                                            </controls:ObjectCollection>
+                                        </charting:ColumnSeries.ItemsSource>
+                                </charting:ColumnSeries>
+                                <charting:ColumnSeries Title="Buget 2008"
+                                      IndependentValueBinding="{Binding ExpenseType}"
+                                      DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
+                                        <charting:ColumnSeries.ItemsSource>
+                                            <controls:ObjectCollection>
+                                                <local:Budget ExpenseType="Movies" ExpenseValue="200"/>
+                                                <local:Budget ExpenseType="Museum" ExpenseValue="140"/>
+                                            </controls:ObjectCollection>
+                                        </charting:ColumnSeries.ItemsSource>
+                                </charting:ColumnSeries>
+                            </charting:Chart.Series>
+                        </charting:Chart>
+                    </basics:TabItem>
+                    <basics:TabItem Header="Trends">
+                        <charting:Chart Width="350" Height="240" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LegendTitle="Legend" Title="Budget Trends in 2007">
+                            <charting:Chart.Series>
+                                <charting:LineSeries Title="Trends"
+                                ItemsSource="{StaticResource VacationBudget}"
+                                IndependentValueBinding="{Binding Date}"
+                                DependentValueBinding="{Binding ExpenseValue}">     
+                                </charting:LineSeries>
+                            </charting:Chart.Series>
+                             <charting:Chart.Axes>
+                                <charting:DateTimeAxis Orientation="Horizontal" MaxHeight="1" Opacity="0" Minimum="2008/07/07" Maximum="2008/09/08"/>
+                                <charting:LinearAxis Orientation="Vertical" MaxWidth="1" Opacity="0" Minimum="36" Maximum="55"/>
+                            </charting:Chart.Axes>
+                        </charting:Chart>
+                    </basics:TabItem>
+                </basics:TabControl>
+            </Grid>
+
+            <Grid Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,0,30,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.622*"/>
+                    <RowDefinition Height="0.378*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Margin="0,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="0.756*"/>
+                        <RowDefinition Height="Auto" MinHeight="45"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Background="#FF8E8D8D" CornerRadius="5,5,5,5">
+                        <Image x:Name="VacationImage" Width="400" Height="300" Stretch="UniformToFill" />         
+                    </Border>
+                    <Slider HorizontalAlignment="Center" Width="Auto" Grid.Column="1" Grid.Row="0" IsDirectionReversed="False" Orientation="Vertical" Margin="5,0,0,0" />
+                    <Slider Grid.Row="2" VerticalAlignment="Top" Height="Auto" Margin="0,5,0,0" />
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top">
+                        <controls:Label Content="Search" VerticalAlignment="Bottom" Margin="0,0,4,0" />
+                        <controls:AutoCompleteBox x:Name="SampleAutoComplete" Width="300" />
+                    </StackPanel>
+                    <data:DataGrid Grid.Row="1" x:Name="SampleDataGrid" Margin="10,10,10,10" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" VerticalAlignment="Top"/>
+                    <Border Height="280" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Width="Auto" Grid.Row="0" Grid.RowSpan="2" Background="#FF666666" CornerRadius="5,5,5,5" Canvas.ZIndex="-1" Opacity="0.3" />
+                </Grid>
+            </Grid>
+        </controls:DockPanel>
+        <Border CornerRadius="10,10,10,10" Opacity="0" Canvas.ZIndex="-1" HorizontalAlignment="Stretch" Width="Auto" Height="Auto">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.256,0.834" StartPoint="0.964,-0.021">
+                    <GradientStop Color="#FF000000" />
+                    <GradientStop Color="#FDFFFFFF" Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <Canvas>
+                <Path Stretch="Fill" Data="F1 M 4.33333,342L 3.00001,342.667C 38.4239,316.358 73.8478,290.05 115.514,276.495C 157.181,262.939 205.091,262.136 221.355,249.222C 237.62,236.307 222.239,211.281 216.964,196.869C 211.688,182.457 216.518,178.66 220.752,175.335C 224.987,172.011 228.625,169.159 236.123,170.46C 243.62,171.761 254.977,177.214 258.157,174.734C 261.337,172.255 256.341,161.843 255.656,155.23C 254.972,148.616 258.6,145.801 272.987,150.229C 287.374,154.657 312.52,166.329 323.224,158.176C 333.927,150.024 330.187,122.048 342.072,98.74C 353.958,75.4324 381.468,56.7934 408.2,42.9915C 434.933,29.1896 460.888,20.2247 479.177,24.1753C 497.465,28.1258 508.087,44.9917 516.113,62.7541C 524.139,80.5164 529.57,99.1753 535,117.834C 497.667,199.333 503,156.667 498.333,205.333C 496.62,223.201 492.301,230.285 489.07,232.788C 491.562,233.109 495.396,234.163 501,236.667C 532.333,250.667 540.333,266.667 562.333,244.667C 584.333,222.667 555.667,167.333 597.667,226C 639.667,284.667 590.333,346 577,352C 570.333,367.333 530.333,375.333 530.333,375.333C 530.333,375.333 427,410.667 433,389.333C 422.333,397.333 399,326 401,314.667C 403,303.333 415,285.333 415,285.333L 425.667,248.667L 422.333,234.667L 413.667,228C 357.667,224 321,237.333 323.667,254.667C 326.333,272 319.667,272 329.667,294.667C 339.667,317.333 405,316 344.333,362.667C 283.667,409.333 232.333,574 5.66667,489.333L 4.33333,342 Z M 145.333,311.333C 127.476,311.333 113,325.81 113,343.667C 113,361.524 127.476,376 145.333,376C 163.19,376 177.667,361.524 177.667,343.667C 177.667,325.81 163.19,311.333 145.333,311.333 Z M 203.667,292.667C 191.516,292.667 181.667,302.517 181.667,314.667C 181.667,326.817 191.516,336.667 203.667,336.667C 215.817,336.667 225.667,326.817 225.667,314.667C 225.667,302.517 215.817,292.667 203.667,292.667 Z M 246.667,279.333C 239.487,279.333 233.667,284.258 233.667,290.333C 233.667,296.408 239.487,301.333 246.667,301.333C 253.846,301.333 259.667,296.408 259.667,290.333C 259.667,284.258 253.846,279.333 246.667,279.333 Z M 567.667,270C 559.566,270 553,276.417 553,284.333C 553,292.249 559.566,298.667 567.667,298.667C 575.767,298.667 582.333,292.249 582.333,284.333C 582.333,276.417 575.767,270 567.667,270 Z " d:LayoutOverrides="Width, Height" Opacity="0.6" VerticalAlignment="Stretch" d:IsHidden="True">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="-7.80076e-010,0.495068" EndPoint="1.04155,0.495068">
+                            <GradientStop Color="#FF000000" Offset="0" />
+                            <GradientStop Color="#FFFFFFFF" Offset="1" />
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
+            </Canvas>
+        </Border>
+    </Grid>
+</UserControl>
