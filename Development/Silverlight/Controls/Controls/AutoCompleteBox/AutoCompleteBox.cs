@@ -117,6 +117,12 @@ namespace Microsoft.Windows.Controls
         private bool IgnoreTextSelectionChange { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to skip the text update 
+        /// processing when the selected item is updated.
+        /// </summary>
+        private bool SkipSelectedItemTextUpdate { get; set; }
+
+        /// <summary>
         /// Gets or sets the last observed text box selection start location.
         /// </summary>
         private int TextSelectionStart { get; set; }
@@ -555,7 +561,7 @@ namespace Microsoft.Windows.Controls
 
         #region public object SelectedItem
         /// <summary>
-        /// Gets the selected item's value. This is a read-only property.
+        /// Gets or sets the selected item's value.
         /// </summary>
         /// <remarks>
         /// The IsTextCompletionEnabled property of the control impacts the 
@@ -569,19 +575,7 @@ namespace Microsoft.Windows.Controls
         public object SelectedItem
         {
             get { return GetValue(SelectedItemProperty) as object; }
-
-            private set
-            {
-                try
-                {
-                    AllowWrite = true;
-                    SetValue(SelectedItemProperty, value);
-                }
-                finally
-                {
-                    AllowWrite = false;
-                }
-            }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary>
@@ -611,16 +605,17 @@ namespace Microsoft.Windows.Controls
                 return;
             }
 
-            // Ensure the property is only written when expected
-            if (!source.AllowWrite)
+            // Update the text display
+            if (source.SkipSelectedItemTextUpdate)
             {
-                // Reset the old value before it was incorrectly written
-                source.IgnorePropertyChange = true;
-                source.SetValue(e.Property, e.OldValue);
-
-                throw new InvalidOperationException(Properties.Resources.AutoComplete_OnSelectedItemPropertyChanged_InvalidWrite);
+                source.SkipSelectedItemTextUpdate = false;
+            }
+            else
+            {
+                source.OnSelectedItemChanged(e.NewValue);
             }
 
+            // Fire the SelectionChanged event
             List<object> removed = new List<object>();
             if (e.OldValue != null)
             {
@@ -635,6 +630,35 @@ namespace Microsoft.Windows.Controls
 
             source.OnSelectionChanged(new SelectionChangedEventArgs(removed, added));
         }
+
+        /// <summary>
+        /// Called when the selected item is changed, updates the text value
+        /// that is displayed in the text box part.
+        /// </summary>
+        /// <param name="newItem">The new item.</param>
+        private void OnSelectedItemChanged(object newItem)
+        {
+            string text;
+
+            if (newItem == null)
+            {
+                text = SearchText;
+            }
+            else
+            {
+                text = FormatValue(newItem);
+            }
+
+            // Update the Text property and the TextBox values
+            UpdateTextValue(text);
+
+            // Move the caret to the end of the text box
+            if (TextBox != null && Text != null)
+            {
+                TextBox.SelectionStart = Text.Length;
+            }
+        }
+
         #endregion public object SelectedItem
 
         #region public string Text
@@ -1685,6 +1709,10 @@ namespace Microsoft.Windows.Controls
             else
             {
                 SearchText = null;
+                if (SelectedItem != null)
+                {
+                    SkipSelectedItemTextUpdate = true;
+                }
                 SelectedItem = null;
                 if (IsDropDownOpen)
                 {
@@ -1794,6 +1822,11 @@ namespace Microsoft.Windows.Controls
             }
 
             // Update the selected item property
+
+            if (SelectedItem != newSelectedItem)
+            {
+                SkipSelectedItemTextUpdate = true;
+            }
             SelectedItem = newSelectedItem;
 
             // Restore updates for TextSelection
@@ -2013,29 +2046,7 @@ namespace Microsoft.Windows.Controls
         /// <param name="e">The selection changed event data.</param>
         private void OnAdapterSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            object o = _adapter.SelectedItem;
-            string text;
-
-            if (o == null)
-            {
-                text = SearchText;
-            }
-            else
-            {
-                text = FormatValue(o);
-            }
-
-            // Update the Text property and the TextBox values
-            UpdateTextValue(text);
-
-            // Set the selected value to the item
-            SelectedItem = o;
-            
-            // Move the caret to the end of the text box
-            if (TextBox != null && Text != null)
-            {
-                TextBox.SelectionStart = Text.Length;
-            }
+            SelectedItem = _adapter.SelectedItem;
         }
 
         /// <summary>

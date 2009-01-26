@@ -476,7 +476,7 @@ namespace Microsoft.Windows.Controls.Testing
             EnqueueCallback(() => control.TextBox.Text = string.Empty);
             EnqueueConditional(() => control.Text == string.Empty);
 
-            EnqueueCallback(() => control.MinimumPopulateDelay = 20);
+            EnqueueCallback(() => control.MinimumPopulateDelay = 1);
 
             EnqueueCallback(() =>
             {
@@ -1295,12 +1295,13 @@ namespace Microsoft.Windows.Controls.Testing
         }
 
         /// <summary>
-        /// Validate that the SelectedItem property is read only.
+        /// Validate that the SelectedItem property is no longer read only.
         /// </summary>
+        /// <remarks>This was a functional change after the December 2008
+        /// Silverlight Toolkit release.</remarks>
         [TestMethod]
-        [Description("Validate that the SelectedItem property is read only.")]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ReadOnlySelectedItem()
+        [Description("Validate that the SelectedItem property is no longer read only.")]
+        public void SetSelectedItem()
         {
             AutoCompleteBox ac = CreateSimpleStringAutoComplete();
             ac.SetValue(AutoCompleteBox.SelectedItemProperty, "a");
