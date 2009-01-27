@@ -23,6 +23,7 @@ namespace Microsoft.Windows.Controls.Theming
         public ShinyBlueTheme()
             : base(typeof(ShinyBlueTheme).Assembly, "Microsoft.Windows.Controls.Theming.Theme.xaml")
         {
+            DefaultStyleKey = typeof(ShinyBlueTheme);
         }
     }
 }

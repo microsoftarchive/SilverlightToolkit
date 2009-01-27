@@ -225,10 +225,10 @@
     </LinearGradientBrush>
 
     <!-- datagrid specific resources -->
-    <SolidColorBrush x:Name="HeaderSeparator" Color="#FFD7D5D8" />
-    <SolidColorBrush x:Name="GridBorder" Color="#FFD6D7D6" />
+    <SolidColorBrush x:Key="HeaderSeparator" Color="#FFD7D5D8" />
+    <SolidColorBrush x:Key="GridBorder" Color="#FFD6D7D6" />
 
-    <SolidColorBrush x:Name="dropLocator" Color="{StaticResource DropLocate}" />
+    <SolidColorBrush x:Key="dropLocator" Color="{StaticResource DropLocate}" />
     <LinearGradientBrush x:Key="sortArrow" EndPoint="0.725,0.832" StartPoint="0.275,0.168">
         <GradientStop Color="{StaticResource PressStroke2}"/>
         <GradientStop Color="{StaticResource DataSortArrow}" Offset="1"/>
