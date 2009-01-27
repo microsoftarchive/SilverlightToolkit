@@ -23,6 +23,7 @@ namespace Microsoft.Windows.Controls.Theming
         public RainierOrangeTheme()
             : base(typeof(RainierOrangeTheme).Assembly, "Microsoft.Windows.Controls.Theming.Theme.xaml")
         {
+            DefaultStyleKey = typeof(RainierOrangeTheme);
         }
     }
 }

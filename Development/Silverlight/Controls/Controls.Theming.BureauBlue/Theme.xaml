@@ -21,13 +21,13 @@
 
     <!-- Static Resources -->
     <SolidColorBrush x:Key="OutsideFontColor" Color="#FF000000"/>
-    <SolidColorBrush x:Name="HeaderSeparator" Color="#FF96BBFD" />
-    <SolidColorBrush x:Name="GridBorder" Color="#FF6593CF" />
-    <LinearGradientBrush x:Name="ColumnHeaderBackground" EndPoint="0.7,1" StartPoint="0.7,0">
+    <SolidColorBrush x:Key="HeaderSeparator" Color="#FF96BBFD" />
+    <SolidColorBrush x:Key="GridBorder" Color="#FF6593CF" />
+    <LinearGradientBrush x:Key="ColumnHeaderBackground" EndPoint="0.7,1" StartPoint="0.7,0">
         <GradientStop Color="#FFFFFFFF" Offset="0"/>
         <GradientStop Color="#FFC7DFFF" Offset="0.478"/>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Name="RowHeaderBackground" EndPoint="0.006,0.495" StartPoint="0.984,0.5">
+    <LinearGradientBrush x:Key="RowHeaderBackground" EndPoint="0.006,0.495" StartPoint="0.984,0.5">
         <GradientStop Color="#FFBDD8FE"/>
         <GradientStop Color="#FFFFFFFF" Offset="1"/>
     </LinearGradientBrush>
