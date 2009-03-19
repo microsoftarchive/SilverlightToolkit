@@ -1,0 +1,10 @@
+﻿<navControls:Page x:Class="System.Windows.Controls.UnitTests.PageEmptyStringTitle" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:navControls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+    Width="Auto"
+    Height="Auto"
+    Title="">
+    <Grid x:Name="LayoutRoot" Background="White">
+    </Grid>
+</navControls:Page>

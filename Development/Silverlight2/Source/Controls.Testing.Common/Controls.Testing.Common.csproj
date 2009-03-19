@@ -1,0 +1,109 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Testing</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Testing.Common</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>ClientBin\System.Windows.Controls.Testing.Common.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>ClientBin\System.Windows.Controls.Testing.Common.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SilverlightSDKPath)\v2.0\Libraries\Client\System.Xml.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContentControl\ContentControlTest.cs" />
+    <Compile Include="ContentControl\IOverriddenContentControl.cs" />
+    <Compile Include="Control\ControlTest.cs" />
+    <Compile Include="Control\IOverriddenControl.cs" />
+    <Compile Include="DependencyProperties\DependencyPropertyTest.cs" />
+    <Compile Include="DependencyProperties\DependencyPropertyTestMethod.cs" />
+    <Compile Include="FrameworkElement\FrameworkElementTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="FrameworkElement\IOverriddenFrameworkElement.cs" />
+    <Compile Include="ItemsControl\IOverriddenItemsControl.cs" />
+    <Compile Include="ItemsControl\ItemsControlTest.cs" />
+    <Compile Include="OverriddenMethod\MethodCallMonitor.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Double.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Quadruple.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Single.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Triple.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethodBase.cs" />
+    <Compile Include="Panel\IOverriddenPanel.cs" />
+    <Compile Include="Panel\LayoutTestContentControl.cs" />
+    <Compile Include="Panel\PanelTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tags.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TypeConverters\TypeConverterTest.cs" />
+    <Compile Include="Utilities\LiveReference.cs" />
+    <Compile Include="Utilities\TestExtensions.cs" />
+    <Compile Include="Utilities\TestVisualStateManager.cs" />
+    <Compile Include="Utilities\XamlBuilder.cs" />
+    <Compile Include="Utilities\XamlBuilder.Generic.cs" />
+    <Compile Include="Utilities\XamlConverter.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v2.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

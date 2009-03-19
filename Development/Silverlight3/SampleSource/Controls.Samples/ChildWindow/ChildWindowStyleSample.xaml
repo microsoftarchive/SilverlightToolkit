@@ -1,0 +1,485 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<UserControl x:Class="System.Windows.Controls.Samples.ChildWindowStyleSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Background="White">
+        <ContentControl Content="Using a ChildWindow" Style="{StaticResource Header}" />
+        <TextBlock Margin="4">
+            In this sample, a style is applied to the ChildWindow to change the color of the overlay and remove the Close button on the window.
+        </TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Center" Width="300" Grid.RowSpan="2">
+                <TextBlock Text="Title" Style="{StaticResource ApiName}" Margin="4" />
+                <TextBox x:Name="titleText" Text="Child Window Title" Margin="4" />
+                <Button Content="Show ChildWindow" Height="23" HorizontalAlignment="Center" Click="Button_Click" Margin="4" />
+                <Grid HorizontalAlignment="Stretch" Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="DialogResult:" />
+                    <TextBlock x:Name="dialogResult" Grid.Column="1" />
+                </Grid>
+            </StackPanel>
+            <ContentControl Content="Select a background image" Grid.Row="0" Grid.Column="1" Margin="4" />
+            <ListBox Grid.Row="1" Grid.Column="1"
+                  x:Name="thumbs"
+                  Style="{StaticResource WrapListBox}"
+                  ItemTemplate="{StaticResource PhotographTemplate}"
+                  Margin="4" />
+        </Grid>
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="ChildWindowStyleSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+    
+&lt;UserControl x:Class="System.Windows.Controls.Samples.ChildWindowStyleSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+    &lt;StackPanel Background="White"&gt;
+        &lt;ContentControl Content="Using a ChildWindow" Style="{StaticResource Header}" /&gt;
+        &lt;TextBlock Margin="4"&gt;
+            In this sample, a style is applied to the ChildWindow to change the color of the overlay and remove the Close button on the window.
+        &lt;/TextBlock&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition /&gt;
+                &lt;ColumnDefinition /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;StackPanel HorizontalAlignment="Center" Width="300" Grid.RowSpan="2"&gt;
+                &lt;TextBlock Text="Title" Style="{StaticResource ApiName}" Margin="4" /&gt;
+                &lt;TextBox x:Name="titleText" Text="Child Window Title" Margin="4" /&gt;
+                &lt;Button Content="Show ChildWindow" Height="23" HorizontalAlignment="Center" Click="Button_Click" Margin="4" /&gt;
+                &lt;Grid HorizontalAlignment="Stretch" Margin="4"&gt;
+                    &lt;Grid.ColumnDefinitions&gt;
+                        &lt;ColumnDefinition /&gt;
+                        &lt;ColumnDefinition /&gt;
+                    &lt;/Grid.ColumnDefinitions&gt;
+                    &lt;TextBlock Text="DialogResult:" /&gt;
+                    &lt;TextBlock x:Name="dialogResult" Grid.Column="1" /&gt;
+                &lt;/Grid&gt;
+            &lt;/StackPanel&gt;
+            &lt;ContentControl Content="Select a background image" Grid.Row="0" Grid.Column="1" Margin="4" /&gt;
+            &lt;ListBox Grid.Row="1" Grid.Column="1"
+                  x:Name="thumbs"
+                  Style="{StaticResource WrapListBox}"
+                  ItemTemplate="{StaticResource PhotographTemplate}"
+                  Margin="4" /&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ChildWindowStyleSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.ComponentModel;
+using System.Linq;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating styling of the ChildWindow.
+    /// &lt;/summary&gt;
+    [Sample("Styling", DifficultyLevel.Intermediate)]
+    [Category("ChildWindow")]
+    public partial class ChildWindowStyleSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Keeps an instance of a ChildWindow that will be shown when a button is clicked.
+        /// &lt;/summary&gt;
+        private StyledChildWindow scw;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ChildWindowStyleSample class.
+        /// &lt;/summary&gt;
+        public ChildWindowStyleSample()
+        {
+            InitializeComponent();
+            scw = new StyledChildWindow();
+            scw.Closed += new EventHandler(Scw_Closed);
+            thumbs.ItemsSource = from p in Photograph.GetPhotographs()
+                                 orderby p.Name
+                                 select p;
+            thumbs.SelectedIndex = 0;
+        }
+
+        /// &lt;summary&gt;
+        /// Handles the "Closed" event of the ChildWindow.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Child Window.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event Arguments.&lt;/param&gt;
+        private void Scw_Closed(object sender, EventArgs e)
+        {
+            dialogResult.Text = scw.DialogResult.ToString();
+        }
+
+        /// &lt;summary&gt;
+        /// Handles clicking the "Show" button.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Clicked Button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event Arguments.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used by event defined in Xaml.")]
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            scw.Title = titleText.Text;
+            scw.DataContext = (from p in Photograph.GetPhotographs()
+                               where p.Name.Equals((thumbs.SelectedItem as Photograph).Name)
+                               select p).First().Image;
+            scw.Show();
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ChildWindowStyleSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports System.Linq
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating styling of the ChildWindow.
+''' &lt;/summary&gt;
+&lt;Sample("Styling", DifficultyLevel.Intermediate)&gt; _
+&lt;Category("ChildWindow")&gt; _
+Partial Public Class ChildWindowStyleSample
+    Inherits UserControl
+
+    ''' &lt;summary&gt;
+    ''' Keeps an instance of a ChildWindow that will be shown when a button is clicked.
+    ''' &lt;/summary&gt;
+    Private WithEvents scw As StyledChildWindow
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the ChildWindowStyleSample class.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+        scw() = New StyledChildWindow()
+        thumbs.ItemsSource = From p In Photograph.GetPhotographs() _
+                             Order By p.Name _
+                             Select p
+        thumbs.SelectedIndex = 0
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Handles the "Closed" event of the ChildWindow.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;Child Window.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event Arguments.&lt;/param&gt;
+    Private Sub Scw_Closed(ByVal sender As Object, ByVal e As EventArgs) Handles scw.Closed
+        dialogResult.Text = scw.DialogResult.ToString()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Handles clicking the "Show" button.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;Clicked Button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event Arguments.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Used by event defined in Xaml.")&gt; _
+    Private Sub Button_Click(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        scw.Title = titleText.Text
+        scw.DataContext = (From p In Photograph.GetPhotographs() _
+                            Where p.Name.Equals(DirectCast(thumbs.SelectedItem, Photograph).Name) _
+                            Select p).First().Image
+        scw.Show()
+    End Sub
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="StyledChildWindow.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+    
+&lt;controls:ChildWindow x:Class="System.Windows.Controls.Samples.StyledChildWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+           Width="400" Height="300" 
+           Title="StyledChildWindow"&gt;
+    &lt;controls:ChildWindow.Style&gt;
+        &lt;Style TargetType="controls:ChildWindow"&gt;
+            &lt;Setter Property="IsTabStop" Value="false"/&gt;
+            &lt;Setter Property="TabNavigation" Value="Cycle"/&gt;
+            &lt;Setter Property="HorizontalAlignment" Value="Center"/&gt;
+            &lt;Setter Property="VerticalAlignment" Value="Center"/&gt;
+            &lt;Setter Property="HorizontalContentAlignment" Value="Stretch"/&gt;
+            &lt;Setter Property="VerticalContentAlignment" Value="Stretch"/&gt;
+            &lt;Setter Property="Template"&gt;
+                &lt;Setter.Value&gt;
+                    &lt;ControlTemplate TargetType="controls:ChildWindow"&gt;
+                        &lt;Grid x:Name="Root"&gt;
+                            &lt;vsm:VisualStateManager.VisualStateGroups&gt;
+                                &lt;vsm:VisualStateGroup x:Name="WindowStates"&gt;
+                                    &lt;vsm:VisualState x:Name="Open"&gt;
+                                        &lt;Storyboard&gt;
+                                            &lt;ColorAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="Overlay" Storyboard.TargetProperty="(Background).Color"&gt;
+                                                &lt;SplineColorKeyFrame KeyTime="0" Value="Pink"/&gt;
+                                            &lt;/ColorAnimationUsingKeyFrames&gt;
+                                        &lt;/Storyboard&gt;
+                                    &lt;/vsm:VisualState&gt;
+                                    &lt;vsm:VisualState x:Name="Opening"&gt;
+                                        &lt;Storyboard&gt;
+                                            &lt;ColorAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="Overlay" Storyboard.TargetProperty="(Background).Color"&gt;
+                                                &lt;SplineColorKeyFrame KeyTime="0" Value="Pink"/&gt;
+                                                &lt;SplineColorKeyFrame KeyTime="00:00:00.2" Value="Pink"/&gt;
+                                            &lt;/ColorAnimationUsingKeyFrames&gt;
+                                            &lt;DoubleAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(RenderTransform).(Children)[0].ScaleX"&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="0" Value="0"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.4" Value="1"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeySpline="0,0,0.5,1" KeyTime="00:00:00.45" Value="1.05"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.55" Value="1"/&gt;
+                                            &lt;/DoubleAnimationUsingKeyFrames&gt;
+                                            &lt;DoubleAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(RenderTransform).(Children)[0].ScaleY"&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="0" Value="0"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.4" Value="1"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeySpline="0,0,0.5,1" KeyTime="00:00:00.45" Value="1.05"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.55" Value="1"/&gt;
+                                            &lt;/DoubleAnimationUsingKeyFrames&gt;
+                                        &lt;/Storyboard&gt;
+                                    &lt;/vsm:VisualState&gt;
+                                    &lt;vsm:VisualState x:Name="Closing"&gt;
+                                        &lt;Storyboard&gt;
+                                            &lt;ColorAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="Overlay" Storyboard.TargetProperty="(Background).Color"&gt;
+                                                &lt;SplineColorKeyFrame KeyTime="0" Value="Pink"/&gt;
+                                                &lt;SplineColorKeyFrame KeyTime="00:00:00.45" Value="Pink" KeySpline="0,0,0.5,1"/&gt;
+                                                &lt;SplineColorKeyFrame KeyTime="00:00:00.5" Value="Pink"/&gt;
+                                            &lt;/ColorAnimationUsingKeyFrames&gt;
+                                            &lt;DoubleAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(RenderTransform).(Children)[0].ScaleX"&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.2" Value="1"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1.05"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.45" Value="0"/&gt;
+                                            &lt;/DoubleAnimationUsingKeyFrames&gt;
+                                            &lt;DoubleAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(RenderTransform).(Children)[0].ScaleY"&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.2" Value="1"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1.05"/&gt;
+                                                &lt;SplineDoubleKeyFrame KeyTime="00:00:00.45" Value="0"/&gt;
+                                            &lt;/DoubleAnimationUsingKeyFrames&gt;
+                                        &lt;/Storyboard&gt;
+                                    &lt;/vsm:VisualState&gt;
+                                &lt;/vsm:VisualStateGroup&gt;
+                            &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
+                            &lt;Grid x:Name="Overlay" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0" Opacity="0.5"&gt;
+                                &lt;Grid.Background&gt;
+                                    &lt;SolidColorBrush/&gt;
+                                &lt;/Grid.Background&gt;
+                            &lt;/Grid&gt;
+                            &lt;Grid x:Name="ContentRoot" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" RenderTransformOrigin="0.5,0.5" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"&gt;
+                                &lt;Grid.RenderTransform&gt;
+                                    &lt;TransformGroup&gt;
+                                        &lt;ScaleTransform /&gt;
+                                        &lt;SkewTransform /&gt;
+                                        &lt;RotateTransform /&gt;
+                                        &lt;TranslateTransform /&gt;
+                                    &lt;/TransformGroup&gt;
+                                &lt;/Grid.RenderTransform&gt;
+                                &lt;Border BorderThickness="1" CornerRadius="2" BorderBrush="#14000000" Background="#14000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-1"/&gt;
+                                &lt;Border BorderThickness="1" CornerRadius="2.25" BorderBrush="#0F000000" Background="#0F000000" HorizontalAlignment="Stretch" Margin="-2" VerticalAlignment="Stretch"/&gt;
+                                &lt;Border BorderThickness="1" CornerRadius="2.5" BorderBrush="#0C000000" Background="#0C000000" HorizontalAlignment="Stretch" Margin="-3" VerticalAlignment="Stretch"/&gt;
+                                &lt;Border BorderThickness="1" CornerRadius="2.75" BorderBrush="#0A000000" Background="#0A000000" HorizontalAlignment="Stretch" Margin="-4" VerticalAlignment="Stretch"/&gt;
+                                &lt;Border Background="#FFFFFFFF" BorderThickness="1" CornerRadius="2"&gt;
+                                    &lt;Border.BorderBrush&gt;
+                                        &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                            &lt;GradientStop Color="#FFA3AEB9" Offset="0"/&gt;
+                                            &lt;GradientStop Color="#FF8399A9" Offset="0.375"/&gt;
+                                            &lt;GradientStop Color="#FF718597" Offset="0.375"/&gt;
+                                            &lt;GradientStop Color="#FF617584" Offset="1"/&gt;
+                                        &lt;/LinearGradientBrush&gt;
+                                    &lt;/Border.BorderBrush&gt;
+                                    &lt;Border CornerRadius="1.5" Margin="1"&gt;
+                                        &lt;Border.Background&gt;
+                                            &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                &lt;GradientStop Color="#FFE5E8EB" Offset="1"/&gt;
+                                                &lt;GradientStop Color="#FFF6F8F9" Offset="0"/&gt;
+                                            &lt;/LinearGradientBrush&gt;
+                                        &lt;/Border.Background&gt;
+                                        &lt;Grid&gt;
+                                            &lt;Grid.RowDefinitions&gt;
+                                                &lt;RowDefinition Height="Auto"/&gt;
+                                                &lt;RowDefinition/&gt;
+                                            &lt;/Grid.RowDefinitions&gt;
+                                            &lt;Border x:Name="Chrome" Height="24" Width="Auto" BorderBrush="#FFFFFFFF" BorderThickness="0,0,0,1"&gt;
+                                                &lt;Border.Background&gt;
+                                                    &lt;LinearGradientBrush EndPoint="0.5,0.528" StartPoint="0.5,0"&gt;
+                                                        &lt;GradientStop Color="#FFE5E8EB" Offset="1"/&gt;
+                                                        &lt;GradientStop Color="#FFFEFEFE" Offset="0"/&gt;
+                                                    &lt;/LinearGradientBrush&gt;
+                                                &lt;/Border.Background&gt;
+                                                &lt;Grid Height="Auto" Width="Auto"&gt;
+                                                    &lt;Grid.ColumnDefinitions&gt;
+                                                        &lt;ColumnDefinition/&gt;
+                                                        &lt;ColumnDefinition Width="30"/&gt;
+                                                    &lt;/Grid.ColumnDefinitions&gt;
+                                                    &lt;ContentPresenter Content="{TemplateBinding Title}" 
+                                                                  HorizontalAlignment="Stretch"
+                                                                  VerticalAlignment="Center"
+                                                                  Margin="6,0,6,0"/&gt;
+                                                &lt;/Grid&gt;
+                                            &lt;/Border&gt;
+                                            &lt;Border Background="{TemplateBinding Background}" Margin="6" Grid.Row="1"&gt;
+                                                &lt;ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" 
+                                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/&gt;
+                                            &lt;/Border&gt;
+                                        &lt;/Grid&gt;
+                                    &lt;/Border&gt;
+                                &lt;/Border&gt;
+                            &lt;/Grid&gt;
+                        &lt;/Grid&gt;
+                    &lt;/ControlTemplate&gt;
+                &lt;/Setter.Value&gt;
+            &lt;/Setter&gt;
+        &lt;/Style&gt;
+    &lt;/controls:ChildWindow.Style&gt;
+    &lt;Grid Margin="2"&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition /&gt;
+            &lt;RowDefinition Height="Auto" /&gt;
+        &lt;/Grid.RowDefinitions&gt;
+
+        &lt;ContentControl Content="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" /&gt;
+
+        &lt;Button Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" /&gt;
+        &lt;Button Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" /&gt;
+    &lt;/Grid&gt;
+&lt;/controls:ChildWindow&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="StyledChildWindow.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Styled ChildWindow for demonstration purposes.
+    /// &lt;/summary&gt;
+    public partial class StyledChildWindow : ChildWindow
+    {
+        /// &lt;summary&gt;
+        /// Initializes a StyledChildWindow.
+        /// &lt;/summary&gt;
+        public StyledChildWindow()
+        {
+            InitializeComponent();
+        }
+
+        /// &lt;summary&gt;
+        /// Handles the Click event of the OK button.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;OK Button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used by event defined in Xaml.")]
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        /// &lt;summary&gt;
+        /// Handles the Click event of the Cancel button.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Cancel button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used by event defined in Xaml.")]
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+    }
+}
+
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="StyledChildWindow.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+''' &lt;summary&gt;
+''' Styled ChildWindow for demonstration purposes.
+''' &lt;/summary&gt;
+Partial Public Class StyledChildWindow
+    Inherits ChildWindow
+
+    ''' &lt;summary&gt;
+    ''' Initializes a StyledChildWindow.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Handles the Click event of the OK button.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;OK Button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Used by event defined in Xaml.")&gt; _
+    Private Sub OKButton_Click(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        DialogResult = True
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Handles the Click event of the Cancel button.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;Cancel button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Used by event defined in Xaml.")&gt; _
+    Private Sub CancelButton_Click(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        DialogResult = False
+    End Sub
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

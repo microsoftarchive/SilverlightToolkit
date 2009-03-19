@@ -1,0 +1,54 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/client/2007"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:shinyRed="clr-namespace:System.Windows.Controls.Theming">
+
+    <Style TargetType="shinyRed:ShinyRedTheme">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop Color="#FFD1D1D1"/>
+                    <GradientStop Color="#FFAE3138" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#FFFFFFFF" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      CornerRadius="2">
+                        <ContentControl
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Cursor="{TemplateBinding Cursor}"
+                          HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          FontFamily="{TemplateBinding FontFamily}"
+                          FontSize="{TemplateBinding FontSize}"
+                          FontStretch="{TemplateBinding FontStretch}"
+                          Foreground="{TemplateBinding Foreground}"
+                          Margin="{TemplateBinding Padding}"
+                          VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

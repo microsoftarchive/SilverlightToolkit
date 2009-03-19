@@ -1,0 +1,11 @@
+﻿<nav_controls:Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:nav_controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+    Width="Auto"
+    Height="Auto"
+    Title="PureXamlPage Page">
+    <Grid x:Name="LayoutRoot" Background="White">
+        <TextBlock Text="This is a pure XAML page (no code-behind)"/>
+    </Grid>
+</nav_controls:Page>

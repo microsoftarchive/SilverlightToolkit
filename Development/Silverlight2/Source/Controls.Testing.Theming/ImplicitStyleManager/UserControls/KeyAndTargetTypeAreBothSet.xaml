@@ -1,0 +1,34 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<UserControl x:Class="System.Windows.Controls.Testing.KeyAndTargetTypeAreBothSet"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:themingToolkit="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit"
+xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+
+    
+    Width="400" Height="300">
+    <StackPanel>
+        <Grid Background="White" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime">
+            <Grid.Resources>
+                <Style TargetType="inputToolkit:NumericUpDown">
+                    <Setter Property="Foreground" Value="Red" />
+                </Style>
+            </Grid.Resources>
+            <inputToolkit:NumericUpDown Value="10" x:Name="nud1"/>
+        </Grid>
+        <Grid Background="White" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime">
+            <Grid.Resources>
+                <Style TargetType="inputToolkit:NumericUpDown" x:Key="nudStyle">
+                    <Setter Property="Foreground" Value="Red" />
+                </Style>
+            </Grid.Resources>
+            <inputToolkit:NumericUpDown Value="10" x:Name="nud2"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

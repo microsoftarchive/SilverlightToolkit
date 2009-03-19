@@ -1,0 +1,2317 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Windows.Controls.Input</name>
+    </assembly>
+    <members>
+        <member name="T:System.Windows.Controls.BindingEvaluator`1">
+            <summary>
+            A framework element that permits a binding to be evaluated in a new data
+            context leaf node.
+            </summary>
+            <typeparam name="T">The type of dynamic binding to return.</typeparam>
+        </member>
+        <member name="F:System.Windows.Controls.BindingEvaluator`1._binding">
+            <summary>
+            Gets or sets the string value binding used by the control.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.BindingEvaluator`1.ValueProperty">
+            <summary>
+            Identifies the Value dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.BindingEvaluator`1.#ctor">
+            <summary>
+            Initializes a new instance of the BindingEvaluator class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.BindingEvaluator`1.#ctor(System.Windows.Data.Binding)">
+            <summary>
+            Initializes a new instance of the BindingEvaluator class,
+            setting the initial binding to the provided parameter.
+            </summary>
+            <param name="binding">The initial string value binding.</param>
+        </member>
+        <member name="M:System.Windows.Controls.BindingEvaluator`1.ClearDataContext">
+            <summary>
+            Clears the data context so that the control does not keep a
+            reference to the last-looked up item.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.BindingEvaluator`1.GetDynamicValue(System.Object,System.Boolean)">
+            <summary>
+            Updates the data context of the framework element and returns the 
+            updated binding value.
+            </summary>
+            <param name="o">The object to use as the data context.</param>
+            <param name="clearDataContext">If set to true, this parameter will
+            clear the data context immediately after retrieving the value.</param>
+            <returns>Returns the evaluated T value of the bound dependency
+            property.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.BindingEvaluator`1.GetDynamicValue(System.Object)">
+            <summary>
+            Updates the data context of the framework element and returns the 
+            updated binding value.
+            </summary>
+            <param name="o">The object to use as the data context.</param>
+            <returns>Returns the evaluated T value of the bound dependency
+            property.</returns>
+        </member>
+        <member name="P:System.Windows.Controls.BindingEvaluator`1.Value">
+            <summary>
+            Gets or sets the data item string value.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.BindingEvaluator`1.ValueBinding">
+            <summary>
+            Gets or sets the value binding.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.InteractionHelper">
+            <summary>
+            The InteractionHelper provides controls with support for all of the
+            common interactions like mouse movement, mouse clicks, key presses,
+            etc., and also incorporates proper event semantics when the control is
+            disabled.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.InteractionHelper.SequentialClickThresholdInMilliseconds">
+            <summary>
+            The threshold used to determine whether two clicks are temporally
+            local and considered a double click (or triple, quadruple, etc.).
+            500 milliseconds is the default double click value on Windows.
+            This value would ideally be pulled form the system settings.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.InteractionHelper.SequentialClickThresholdInPixelsSquared">
+            <summary>
+            The threshold used to determine whether two clicks are spatially
+            local and considered a double click (or triple, quadruple, etc.)
+            in pixels squared.  We use pixels squared so that we can compare to
+            the distance delta without taking a square root.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.InteractionHelper._updateVisualState">
+            <summary>
+            Reference used to call UpdateVisualState on the base class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.#ctor(System.Windows.Controls.Control)">
+            <summary>
+            Initializes a new instance of the InteractionHelper class.
+            </summary>
+            <param name="control">Control receiving interaction.</param>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.UpdateVisualState(System.Boolean)">
+            <summary>
+            Update the visual state of the control.
+            </summary>
+            <param name="useTransitions">
+            A value indicating whether to automatically generate transitions to
+            the new state, or instantly transition to the new state.
+            </param>
+            <remarks>
+            UpdateVisualState works differently than the rest of the injected
+            functionality.  Most of the other events are overridden by the
+            calling class which calls Allow, does what it wants, and then calls
+            Base.  UpdateVisualState is the opposite because a number of the
+            methods in InteractionHelper need to trigger it in the calling
+            class.  We do this using the IUpdateVisualState internal interface.
+            </remarks>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.UpdateVisualStateBase(System.Boolean)">
+            <summary>
+            Update the visual state of the control.
+            </summary>
+            <param name="useTransitions">
+            A value indicating whether to automatically generate transitions to
+            the new state, or instantly transition to the new state.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnLoaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handle the control's Loaded event.
+            </summary>
+            <param name="sender">The control.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnIsEnabledChanged(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Handle changes to the control's IsEnabled property.
+            </summary>
+            <param name="sender">The control.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnApplyTemplateBase">
+            <summary>
+            Update the visual state of the control when its template is changed.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowGotFocus(System.Windows.RoutedEventArgs)">
+            <summary>
+            Check if the control's GotFocus event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnGotFocusBase">
+            <summary>
+            Base implementation of the virtual GotFocus event handler.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowLostFocus(System.Windows.RoutedEventArgs)">
+            <summary>
+            Check if the control's LostFocus event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnLostFocusBase">
+            <summary>
+            Base implementation of the virtual LostFocus event handler.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowMouseEnter(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            Check if the control's MouseEnter event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnMouseEnterBase">
+            <summary>
+            Base implementation of the virtual MouseEnter event handler.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowMouseLeave(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            Check if the control's MouseLeave event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnMouseLeaveBase">
+            <summary>
+            Base implementation of the virtual MouseLeave event handler.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Check if the control's MouseLeftButtonDown event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnMouseLeftButtonDownBase">
+            <summary>
+            Base implementation of the virtual MouseLeftButtonDown event
+            handler.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Check if the control's MouseLeftButtonUp event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.OnMouseLeftButtonUpBase">
+            <summary>
+            Base implementation of the virtual MouseLeftButtonUp event handler.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Check if the control's KeyDown event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.InteractionHelper.AllowKeyUp(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Check if the control's KeyUp event should be handled.
+            </summary>
+            <param name="e">Event arguments.</param>
+            <returns>
+            A value indicating whether the event should be handled.
+            </returns>
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.Control">
+            <summary>
+            Gets the control the InteractionHelper is targeting.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.IsFocused">
+            <summary>
+            Gets a value indicating whether the control has focus.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.IsMouseOver">
+            <summary>
+            Gets a value indicating whether the mouse is over the control.
+            </summary> 
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.IsPressed">
+            <summary>
+            Gets a value indicating whether the mouse button is pressed down
+            over the control.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.LastClickTime">
+            <summary>
+            Gets or sets the last time the control was clicked.
+            </summary>
+            <remarks>
+            The value is stored as Utc time because it is slightly more
+            performant than converting to local time.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.LastClickPosition">
+            <summary>
+            Gets or sets the mouse position of the last click.
+            </summary>
+            <remarks>The value is relative to the control.</remarks>
+        </member>
+        <member name="P:System.Windows.Controls.InteractionHelper.ClickCount">
+            <summary>
+            Gets the number of times the control was clicked.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.IUpdateVisualState">
+            <summary>
+            The IUpdateVisualState interface is used to provide the
+            InteractionHelper with access to the type's UpdateVisualState method.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.IUpdateVisualState.UpdateVisualState(System.Boolean)">
+            <summary>
+            Update the visual state of the control.
+            </summary>
+            <param name="useTransitions">
+            A value indicating whether to automatically generate transitions to
+            the new state, or instantly transition to the new state.
+            </param>
+        </member>
+        <member name="T:System.Windows.Controls.ScrollExtensions">
+            <summary>
+            The ScrollExtensions class provides utility methods for scrolling items
+            ScrollViewers.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.ScrollExtensions.LineChange">
+            <summary>
+            The amount to scroll a ScrollViewer for a line change.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.ScrollByVerticalOffset(System.Windows.Controls.ScrollViewer,System.Double)">
+            <summary>
+            Scroll a ScrollViewer vertically by a given offset.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+            <param name="offset">The vertical offset to scroll.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.ScrollByHorizontalOffset(System.Windows.Controls.ScrollViewer,System.Double)">
+            <summary>
+            Scroll a ScrollViewer horizontally by a given offset.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+            <param name="offset">The horizontal offset to scroll.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.LineUp(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer up by a line.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.LineDown(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer down by a line.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.LineLeft(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer left by a line.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.LineRight(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer right by a line.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.PageUp(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer up by a page.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.PageDown(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer down by a page.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.PageLeft(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer left by a page.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.PageRight(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer right by a page.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.ScrollToTop(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer to the top.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.ScrollToBottom(System.Windows.Controls.ScrollViewer)">
+            <summary>
+            Scroll the ScrollViewer to the bottom.
+            </summary>
+            <param name="viewer">The ScrollViewer.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ScrollExtensions.GetTopAndBottom(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.Double@,System.Double@)">
+            <summary>
+            Get the top and bottom of an element with respect to its parent.
+            </summary>
+            <param name="element">The element to get the position of.</param>
+            <param name="parent">The parent of the element.</param>
+            <param name="top">Vertical offset to the top of the element.</param>
+            <param name="bottom">
+            Vertical offset to the bottom of the element.
+            </param>
+        </member>
+        <member name="T:System.Windows.Controls.VisualStates">
+            <summary>
+            Names and helpers for visual states in the controls.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupCommon">
+            <summary>
+            Common state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateNormal">
+            <summary>
+            Normal state of the Common state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateMouseOver">
+            <summary>
+            MouseOver state of the Common state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StatePressed">
+            <summary>
+            Pressed state of the Common state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateDisabled">
+            <summary>
+            Disabled state of the Common state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupFocus">
+            <summary>
+            Focus state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateUnfocused">
+            <summary>
+            Unfocused state of the Focus state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateFocused">
+            <summary>
+            Focused state of the Focus state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupSelection">
+            <summary>
+            Selection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateSelected">
+            <summary>
+            Selected state of the Selection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateUnselected">
+            <summary>
+            Unselected state of the Selection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateSelectedInactive">
+            <summary>
+            Selected inactive state of the Selection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupExpansion">
+            <summary>
+            Expansion state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateExpanded">
+            <summary>
+            Expanded state of the Expansion state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateCollapsed">
+            <summary>
+            Collapsed state of the Expansion state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupPopup">
+            <summary>
+            Popup state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StatePopupOpened">
+            <summary>
+            Opened state of the Popup state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StatePopupClosed">
+            <summary>
+            Closed state of the Popup state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupValidation">
+            <summary>
+            ValidationStates state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateValid">
+            <summary>
+            The valid state for the ValidationStates group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateInvalidFocused">
+            <summary>
+            Invalid, focused state for the ValidationStates group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateInvalidUnfocused">
+            <summary>
+            Invalid, unfocused state for the ValidationStates group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupExpandDirection">
+            <summary>
+            ExpandDirection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateExpandDown">
+            <summary>
+            Down expand direction state of ExpandDirection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateExpandUp">
+            <summary>
+            Up expand direction state of ExpandDirection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateExpandLeft">
+            <summary>
+            Left expand direction state of ExpandDirection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateExpandRight">
+            <summary>
+            Right expand direction state of ExpandDirection state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupHasItems">
+            <summary>
+            HasItems state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateHasItems">
+            <summary>
+            HasItems state of the HasItems state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateNoItems">
+            <summary>
+            NoItems state of the HasItems state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupIncrease">
+            <summary>
+            Increment state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateIncreaseEnabled">
+            <summary>
+            State enabled for increment group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateIncreaseDisabled">
+            <summary>
+            State disabled for increment group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupDecrease">
+            <summary>
+            Decrement state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateDecreaseEnabled">
+            <summary>
+            State enabled for decrement group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateDecreaseDisabled">
+            <summary>
+            State disabled for decrement group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupInteractionMode">
+            <summary>
+            InteractionMode state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateEdit">
+            <summary>
+            Edit of the DisplayMode state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateDisplay">
+            <summary>
+            Display of the DisplayMode state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupLocked">
+            <summary>
+            DisplayMode state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateLocked">
+            <summary>
+            Edit of the DisplayMode state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateUnlocked">
+            <summary>
+            Display of the DisplayMode state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateActive">
+            <summary>
+            Active state.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateInactive">
+            <summary>
+            Inactive state.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupActive">
+            <summary>
+            Active state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateUnwatermarked">
+            <summary>
+            Non-watermarked state.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateWatermarked">
+            <summary>
+            Watermarked state.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupWatermark">
+            <summary>
+            Watermark state group.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateCalendarButtonUnfocused">
+            <summary>
+            Unfocused state for Calendar Buttons.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.StateCalendarButtonFocused">
+            <summary>
+            Focused state for Calendar Buttons.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.VisualStates.GroupCalendarButtonFocus">
+            <summary>
+            CalendarButtons Focus state group.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.VisualStates.GoToState(System.Windows.Controls.Control,System.Boolean,System.String[])">
+            <summary>
+            Use VisualStateManager to change the visual state of the control.
+            </summary>
+            <param name="control">
+            Control whose visual state is being changed.
+            </param>
+            <param name="useTransitions">
+            A value indicating whether to use transitions when updating the
+            visual state, or to snap directly to the new visual state.
+            </param>
+            <param name="stateNames">
+            Ordered list of state names and fallback states to transition into.
+            Only the first state to be found will be used.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.VisualStates.GetImplementationRoot(System.Windows.DependencyObject)">
+            <summary>
+            Gets the implementation root of the Control.
+            </summary>
+            <param name="dependencyObject">The DependencyObject.</param>
+            <remarks>
+            Implements Silverlight's corresponding internal property on Control.
+            </remarks>
+            <returns>Returns the implementation root or null.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.VisualStates.TryGetVisualStateGroup(System.Windows.DependencyObject,System.String)">
+            <summary>
+            This method tries to get the named VisualStateGroup for the 
+            dependency object. The provided object's ImplementationRoot will be 
+            looked up in this call.
+            </summary>
+            <param name="dependencyObject">The dependency object.</param>
+            <param name="groupName">The visual state group's name.</param>
+            <returns>Returns null or the VisualStateGroup object.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.AutoCompleteBox">
+            <summary>
+            Represents a control that combines a text box and a drop down popup 
+            containing a selection control. AutoCompleteBox allows users to filter 
+            an items list.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ElementSelectionAdapter">
+            <summary>
+            Specifies the name of the ListBox TemplatePart.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ElementDropDownToggle">
+            <summary>
+            Specifies the name of the ToggleButton TemplatePart.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ElementPopup">
+            <summary>
+            Specifies the name of the Popup TemplatePart.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ElementTextBox">
+            <summary>
+            The name for the text box part.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ElementTextBoxStyle">
+            <summary>
+            The name for the text box style.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ElementItemContainerStyle">
+            <summary>
+            The name for the adapter's item container style.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.MinimumPrefixLengthProperty">
+            <summary>
+            Identifies the MinimumPrefixLength dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnMinimumPrefixLengthPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            MinimumPrefixLengthProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its MinimumPrefixLength.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.MinimumPopulateDelayProperty">
+            <summary>
+            Identifies the MinimumPopulateDelay dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnMinimumPopulateDelayPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            MinimumPopulateDelayProperty property changed handler. Any current 
+            dispatcher timer will be stopped. The timer will not be restarted 
+            until the next TextUpdate call by the user.
+            </summary>
+            <param name="d">AutoCompleteTextBox that changed its 
+            MinimumPopulateDelay.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.IsTextCompletionEnabledProperty">
+            <summary>
+            Identifies the IsTextCompletionEnabled dependency property.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ItemTemplateProperty">
+            <summary>
+            Identifies the ItemTemplate dependency property.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ItemContainerStyleProperty">
+            <summary>
+            Identifies the ItemContainerStyle dependency property.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.TextBoxStyleProperty">
+            <summary>
+            Identifies the TextBoxStyle dependency property.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.MaxDropDownHeightProperty">
+            <summary>
+            Identifies the MaxDropDownHeight dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnMaxDropDownHeightPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            MaxDropDownHeightProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteTextBox that changed its MaxDropDownHeight.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.IsDropDownOpenProperty">
+            <summary>
+            Identifies the IsDropDownOpen dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnIsDropDownOpenPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            IsDropDownOpenProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteTextBox that changed its IsDropDownOpen.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ItemsSourceProperty">
+            <summary>
+            Identifies the ItemsSource dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnItemsSourcePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            ItemsSourceProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its ItemsSource.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.SelectedItemProperty">
+            <summary>
+            Identifies the SelectedItem dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnSelectedItemPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            SelectedItemProperty property changed handler. Fires the 
+            SelectionChanged event. The event data will contain any non-null
+            removed items and non-null additions.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its SelectedItem.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnSelectedItemChanged(System.Object)">
+            <summary>
+            Called when the selected item is changed, updates the text value
+            that is displayed in the text box part.
+            </summary>
+            <param name="newItem">The new item.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.TextProperty">
+            <summary>
+            Identifies the Text dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnTextPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            TextProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its Text.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.SearchTextProperty">
+            <summary>
+            Identifies the SearchText dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnSearchTextPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            OnSearchTextProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its SearchText.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.SearchModeProperty">
+            <summary>
+            Identifies the SearchMode dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnSearchModePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            SearchModeProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its SearchMode.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.ItemFilterProperty">
+            <summary>
+            Identifies the ItemFilter dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnItemFilterPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            ItemFilterProperty property changed handler.
+            </summary>
+            <param name="d">AutoCompleteBox that changed its ItemFilter.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox.TextFilterProperty">
+            <summary>
+            Identifies the TextFilter dependency property.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox._toggleButton">
+            <summary>
+            The toggle button template part.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox._text">
+            <summary>
+            The TextBox template part.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteBox._adapter">
+            <summary>
+            The SelectionAdapter.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.#ctor">
+            <summary>
+            Initializes a new instance of the AutoCompleteBox control class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.ArrangeOverride(System.Windows.Size)">
+            <summary>
+            Arranges and sizes the auto complete control and its contents.
+            </summary>
+            <param name="finalSize">The provided arrangement bounds object.</param>
+            <returns>Returns the arrangement bounds, unchanged.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnApplyTemplate">
+            <summary>
+            Builds the visual tree for the AutoCompleteBox control when a 
+            new template is applied.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnCreateAutomationPeer">
+            <summary>
+            Creates the AutomationPeer for the AutoCompleteBox.
+            </summary>
+            <returns>Returns a new AutoCompleteBoxAutomationPeer.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.FocusChanged(System.Boolean)">
+            <summary>
+            Handles the FocusChanged event.
+            </summary>
+            <param name="hasFocus">A value indicating whether the control 
+            currently has the focus.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.HasFocus">
+            <summary>
+            Checks to see if the control has focus currently.
+            </summary>
+            <returns>Returns a value indicating whether the control or its popup
+            have focus.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnGotFocus(System.Windows.RoutedEventArgs)">
+            <summary>
+            Provides class handling for the GotFocus event.
+            </summary>
+            <param name="e">The data for the event.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnLostFocus(System.Windows.RoutedEventArgs)">
+            <summary>
+            Provides handling for the LostFocus event.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.ControlIsEnabledChanged(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Handle the change of the IsEnabled property.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnPopupClosedStateChanged(System.Object,System.Windows.VisualStateChangedEventArgs)">
+            <summary>
+            Actually closes the popup after the VSM state animation completes.
+            </summary>
+            <param name="sender">Event source.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.TryGetSelectionAdapter(System.Object)">
+            <summary>
+            Attempts to return an ISelectionAdapter wrapper for a specified object.
+            </summary>
+            <param name="value">The object value.</param>
+            <returns>Returns an IItemsSelector wrapping the value.</returns>
+            <remarks>
+            The specified object will be returned if it implements 
+            ISelectionAdapter. If the specified object can be placed in a known 
+            implementation of ISelectionAdapter, one containing the specified 
+            object will be returned. Otherwise null will be returned.
+            
+            Custom adapters can be added by deriving a new control from 
+            AutoCompleteBox and overriding the TryGetSelectionAdapter method.</remarks>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopulateDropDown(System.Object,System.EventArgs)">
+            <summary>
+            Handles the timer tick when using a populate delay.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnPopulating(System.Windows.Controls.PopulatingEventArgs)">
+            <summary>
+            Raises the Populating event when the AutoCompleteBox is populating the 
+            selection adapter with suggestions based on the text property.
+            </summary>
+            <param name="e">The populating event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnPopulated(System.Windows.Controls.PopulatedEventArgs)">
+            <summary>
+            Raises the Populated event when the AutoCompleteBox has populated the 
+            selection adapter with suggestions based on the text property.
+            </summary>
+            <param name="e">The populated event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            Raises the SelectionChanged event when the selected item has
+            changed.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnDropDownOpening(System.Windows.Controls.RoutedPropertyChangingEventArgs{System.Boolean})">
+            <summary>
+            Raises an DropDownOpening event when the IsDropDownOpen property is 
+            changing from false to true.
+            </summary>
+            <param name="e">
+            Provides any observers the opportunity to cancel the operation and 
+            halt opening the drop down.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnDropDownOpened(System.Windows.RoutedPropertyChangedEventArgs{System.Boolean})">
+            <summary>
+            Raises an DropDownOpened event when the IsDropDownOpen property 
+            changed from false to true.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnDropDownClosing(System.Windows.Controls.RoutedPropertyChangingEventArgs{System.Boolean})">
+            <summary>
+            Raises an DropDownClosing event when the IsDropDownOpen property is 
+            changing from true to false.
+            </summary>
+            <param name="e">
+            Provides any observers the opportunity to cancel the operation 
+            and halt closing the drop down.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnDropDownClosed(System.Windows.RoutedPropertyChangedEventArgs{System.Boolean})">
+            <summary>
+            Raises an DropDownClosed event when the IsDropDownOpen property 
+            changed from true to false.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.FormatValue(System.Object,System.Boolean)">
+            <summary>
+            Formats an Item for text comparisons based on Converter 
+            and ConverterCulture properties.
+            </summary>
+            <param name="value">The object to format.</param>
+            <param name="clearDataContext">A value indicating whether to clear
+            the data context after the lookup is performed.</param>
+            <returns>Formatted Value.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.FormatValue(System.Object)">
+            <summary>
+            Formats an Item for text comparisons based on Converter 
+            and ConverterCulture properties.
+            </summary>
+            <param name="value">The object to format.</param>
+            <returns>Formatted Value.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnTextChanged(System.Windows.RoutedEventArgs)">
+            <summary>
+            Raises the TextChanged event when the text has changed.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnTextBoxTextChanged(System.Object,System.Windows.Controls.TextChangedEventArgs)">
+            <summary>
+            Handle the TextChanged event that is directly attached to the 
+            TextBox part. This ensures that only user initiated actions will 
+            result in an AutoCompleteBox suggestion and operation.
+            </summary>
+            <param name="sender">The source TextBox object.</param>
+            <param name="e">The TextChanged event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnTextBoxSelectionChanged(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            When selection changes, save the location of the selection start.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.UpdateTextValue(System.String)">
+            <summary>
+            Updates both the text box value and underlying text dependency 
+            property value if and when they change. Automatically fires the 
+            text changed events when there is a change.
+            </summary>
+            <param name="value">The new string value.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.UpdateTextValue(System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Updates both the text box value and underlying text dependency 
+            property value if and when they change. Automatically fires the 
+            text changed events when there is a change.
+            </summary>
+            <param name="value">The new string value.</param>
+            <param name="userInitiated">A nullable bool value indicating whether
+            the action was user initiated. In a user initiated mode, the 
+            underlying text dependency property is updated. In a non-user 
+            interaction, the text box value is updated. When user initiated is 
+            null, all values are updated.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.TextUpdated(System.String,System.Boolean)">
+            <summary>
+            Handle the update of the text for the control from any source, 
+            including the TextBox part and the Text dependency property.
+            </summary>
+            <param name="newText">The new text.</param>
+            <param name="userInitiated">A value indicating whether the update 
+            is a user-initiated action. This should be a True value when the 
+            TextUpdated method is called from a TextBox event handler.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopulateComplete">
+            <summary>
+            Notifies AutoCompleteBox that ItemsSource has been populated and 
+            suggestions can now be computed using that data.
+            </summary>
+            <remarks>
+            Allows a developer to continue the population event after setting 
+            the Cancel property to True. This allows for custom, 
+            developer-driven AutoCompleteBox scenarios.
+            </remarks>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.UpdateTextCompletion(System.Boolean)">
+            <summary>
+            Performs text completion, if enabled, and a lookup on the underlying
+            item values for an exact match. Will update the SelectedItem value.
+            </summary>
+            <param name="userInitiated">A value indicating whether the operation
+            was user initiated. Text completion will not be performed when not 
+            directly initiated by the user.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.TryGetMatch(System.String,System.Collections.ObjectModel.ObservableCollection{System.Object},System.Windows.Controls.AutoCompleteSearchPredicate{System.String})">
+            <summary>
+            Attempts to look through the view and locate the specific exact 
+            text match.
+            </summary>
+            <param name="searchText">The search text.</param>
+            <param name="view">The view reference.</param>
+            <param name="predicate">The predicate to use for the partial or 
+            exact match.</param>
+            <returns>Returns the object or null.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.ClearView">
+            <summary>
+            A simple helper method to clear the view and ensure that a view 
+            object is always present and not null.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.RefreshView">
+            <summary>
+            Walks through the items enumeration. Performance is not going to be 
+            perfect with the current implementation.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnItemsSourceChanged(System.Collections.IEnumerable,System.Collections.IEnumerable)">
+            <summary>
+            Handle any change to the ItemsSource dependency property, update 
+            the underlying ObservableCollection view, and set the selection 
+            adapter's ItemsSource to the view if appropriate.
+            </summary>
+            <param name="oldValue">The old enumerable reference.</param>
+            <param name="newValue">The new enumerable reference.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.ItemsSourceCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            Method that handles the ObservableCollection.CollectionChanged event for the ItemsSource property.
+            </summary>
+            <param name="sender">The object that raised the event.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnAdapterSelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            Handles the SelectionChanged event of the selection adapter.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The selection changed event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnAdapterSelectionComplete(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handles the Commit event on the selection adapter.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnAdapterSelectionCanceled(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Handles the Cancel event on the selection adapter.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnMaxDropDownHeightChanged(System.Double)">
+            <summary>
+            Handles MaxDropDownHeightChanged by re-arranging and updating the 
+            popup arrangement.
+            </summary>
+            <param name="newValue">The new value.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OpenDropDown(System.Boolean,System.Boolean)">
+            <summary>
+            Private method that directly opens the popup, checks the expander 
+            button, and then fires the Opened event.
+            </summary>
+            <param name="oldValue">The old value.</param>
+            <param name="newValue">The new value.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.CloseDropDown(System.Boolean,System.Boolean)">
+            <summary>
+            Private method that directly closes the popup, flips the Checked 
+            value, and then fires the Closed event.
+            </summary>
+            <param name="oldValue">The old value.</param>
+            <param name="newValue">The new value.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopupChild_GotFocus(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            The popup child has received focus.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopupChild_LostFocus(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            The popup child has lost focus.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopupChild_MouseEnter(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            The popup child has had the mouse enter its bounds.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopupChild_MouseLeave(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            The mouse has left the popup child's bounds.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.PopupChild_SizeChanged(System.Object,System.Windows.SizeChangedEventArgs)">
+            <summary>
+            The size of the popup child has changed.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OutsidePopup_MouseLeftButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            The mouse has clicked outside of the popup.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.ArrangePopup">
+            <summary>
+            Arrange the drop down popup.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.ToggleDropDown(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Toggles the drop down visibility. If visible, the text updated 
+            method will be called, eventually refreshing the selection adapter's
+            view and making the appropriate visibility call on the drop down. 
+            If no items are in the filtered view, the drop down will not be 
+            displayed.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Provides class handling for the KeyDown event that occurs when a 
+            key is pressed while the control has focus.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnTextBoxKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Occurs when the KeyDown event fires and the drop down is not open.
+            </summary>
+            <param name="e">The key event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.OnDropDownKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Raises the DropDownKeyDown event when a key down event occurs 
+            when the drop down is open.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.System#Windows#Controls#IUpdateVisualState#UpdateVisualState(System.Boolean)">
+            <summary>
+            Update the visual state of the control.
+            </summary>
+            <param name="useTransitions">
+            A value indicating whether to automatically generate transitions to
+            the new state, or instantly transition to the new state.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteBox.UpdateVisualState(System.Boolean)">
+            <summary>
+            Update the current visual state of the button.
+            </summary>
+            <param name="useTransitions">
+            True to use transitions when updating the visual state, false to
+            snap directly to the new visual state.
+            </param>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.Items">
+            <summary>
+            Gets or sets a local cached copy of the items data.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.View">
+            <summary>
+            Gets or sets the observable collection that contains references to 
+            all of the items in the generated view of data that is provided to 
+            the selection-style control adapter.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.IgnoreTextPropertyChange">
+            <summary>
+            Gets or sets a value to ignore a number of pending change handlers. 
+            The value is decremented after each use. This is used to reset the 
+            value of properties without performing any of the actions in their 
+            change handlers.
+            </summary>
+            <remarks>The int is important as a value because the TextBox 
+            TextChanged event does not immediately fire, and this will allow for
+            nested property changes to be ignored.</remarks>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.IgnorePropertyChange">
+            <summary>
+            Gets or sets a value indicating whether to ignore calling a pending 
+            change handlers. 
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.IgnoreTextSelectionChange">
+            <summary>
+            Gets or sets a value indicating whether to ignore the selection 
+            changed event.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.SkipSelectedItemTextUpdate">
+            <summary>
+            Gets or sets a value indicating whether to skip the text update 
+            processing when the selected item is updated.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.TextSelectionStart">
+            <summary>
+            Gets or sets the last observed text box selection start location.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.UserCalledPopulate">
+            <summary>
+            Gets or sets a value indicating whether the user initiated the 
+            current populate call.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.PopupClosedVisualState">
+            <summary>
+            Gets or sets a value indicating whether a visual popup state is 
+            being used in the current template for the Closed state. Setting 
+            this value to true will delay the actual setting of Popup.IsOpen 
+            to false until after the visual state's transition for Closed is 
+            complete.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.DelayTimer">
+            <summary>
+            Gets or sets the DispatcherTimer used for the MinimumPopulateDelay 
+            condition for auto completion.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.AllowWrite">
+            <summary>
+            Gets or sets a value indicating whether a read-only dependency 
+            property change handler should allow the value to be set.  This is 
+            used to ensure that read-only properties cannot be changed via 
+            SetValue, etc.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.Interaction">
+            <summary>
+            Gets or sets the helper that provides all of the standard
+            interaction functionality. Making it internal for subclass access.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.ValueBindingEvaluator">
+            <summary>
+            Gets or sets the BindingEvaluator, a framework element that can
+            provide updated string values from a single binding.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.MinimumPrefixLength">
+            <summary>
+            Gets or sets the minimum text length before the AutoCompleteBox can 
+            display suggestions.
+            </summary>
+            <remarks>
+            The default MinimumPrefixLength value is 1 character. Valid integers
+            range from -1 to any reasonable maximum. -1 effectively disables the 
+            AutoCompleteBox functionality of the control.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.MinimumPopulateDelay">
+            <summary>
+            Gets or sets the minimum delay required, in milliseconds, before 
+            the AutoCompleteBox control will lookup and provide suggestions for 
+            the current Text.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.IsTextCompletionEnabled">
+            <summary>
+            Gets or sets a value indicating whether the first suggestion found 
+            during a lookup will be automatically displayed in the TextBox.
+            </summary>
+            <remarks>
+            Additionally, performs a lookup for the associated item value 
+            belonging to the first suggestion.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.ItemTemplate">
+            <summary>
+            Gets or sets the DataTemplate used to display each item in the 
+            drop down.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.ItemContainerStyle">
+            <summary>
+            Gets or sets the Style that is applied to the selection adapter.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.TextBoxStyle">
+            <summary>
+            Gets or sets the Style that is applied to the TextBox.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.MaxDropDownHeight">
+            <summary>
+            Gets or sets the maximum drop down height.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.IsDropDownOpen">
+            <summary>
+            Gets or sets a value indicating whether the drop down is open.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.ItemsSource">
+            <summary>
+            Gets or sets a collection that is used to generate the content of 
+            the control.
+            </summary>
+            <remarks>
+            AutoCompleteBox does not properly support the INotifyCollectionChanged 
+            interface. Directly set ItemsSource to a new value if the source 
+            data has changed.</remarks>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.SelectedItem">
+            <summary>
+            Gets or sets the selected item's value.
+            </summary>
+            <remarks>
+            The IsTextCompletionEnabled property of the control impacts the 
+            SelectedItem behavior: if the property is set to false, and the 
+            user enters a valid items' textual representation, without 
+            selection, the SelectedItem value will be null. The lookup between 
+            text and items is only done when the IsTextCompletionEnabled property 
+            is true (the default value). This is the same behavior that the 
+            ComboBox control has in WPF.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.Text">
+            <summary>
+            Gets or sets the contents of the TextBox.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.SearchText">
+            <summary>
+            Gets the text value used to search. This is a read-only dependency 
+            property.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.SearchMode">
+            <summary>
+            Gets or sets the built-in, predefined search mode to use for 
+            searching the ItemsSource.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.ItemFilter">
+            <summary>
+            Gets or sets a search filter that determines whether an item object 
+            is a valid suggestion given the search string.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.TextFilter">
+            <summary>
+            Gets or sets a search filter that determines whether a string is a 
+            valid suggestion given the search text.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.DropDownToggleButton">
+            <summary>
+            Gets or sets the template's ToggleButton part.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.DropDownPopup">
+            <summary>
+            Gets or sets the drop down popup control.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.TextBox">
+            <summary>
+            Gets or sets the Text template part.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.SelectionAdapter">
+            <summary>
+            Gets or sets the adapter that represents a selection control. Now 
+            internal or protected so that automation peers and derived classes 
+            can access it.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.PopupChild">
+            <summary>
+            Gets or sets the popup child content.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.OutsidePopupCanvas">
+            <summary>
+            Gets or sets the expansive area outside of the popup.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.PopupChildCanvas">
+            <summary>
+            Gets or sets the canvas for the popup child.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.TextChanged">
+            <summary>
+            Occurs when the text changes.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.Populating">
+            <summary>
+            Occurs when the AutoCompleteBox is populating the selection adapter 
+            with suggestions based on the text property. 
+            </summary>
+            <remarks>
+            If Canceled, the control will not continue the automatic suggestion 
+            process, which will be left to the handler.
+            </remarks>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.Populated">
+            <summary>
+            Occurs when the AutoCompleteBox has populated the selection adapter 
+            with suggestions based on the text property.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.DropDownOpening">
+            <summary>
+            Occurs when the IsDropDownOpen property is changing from false to 
+            true. The event can be cancelled.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.DropDownOpened">
+            <summary>
+            Occurs when the IsDropDownOpen property was changed from false to true.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.DropDownClosing">
+            <summary>
+            Occurs when the IsDropDownOpen property is changing from true to 
+            false. The event can be cancelled.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.DropDownClosed">
+            <summary>
+            Occurs when the IsDropDownOpen property was changed from true to 
+            false.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.AutoCompleteBox.SelectionChanged">
+            <summary>
+            Occurs when the selected item has changed.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.IsEditable">
+            <summary>
+            Gets a value indicating whether the content is editable. The 
+            default Silverlight Toolkit AutoCompleteBox is always editable.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.AutoCompleteBox.ValueMemberBinding">
+            <summary>
+            Gets or sets the string value binding for item-to-string value 
+            conversions.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer">
+            <summary>
+            Exposes AutoCompleteBox types to UI Automation.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="F:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.AutoCompleteBoxClassNameCore">
+            <summary>
+            The name reported as the core class name.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.#ctor(System.Windows.Controls.AutoCompleteBox)">
+            <summary>
+            Initializes a new instance of the AutoCompleteBoxAutomationPeer
+            class.
+            </summary>
+            <param name="owner">
+            The AutoCompleteBox that is associated with this
+            AutoCompleteBoxAutomationPeer.
+            </param>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the AutoCompleteBox that is associated
+            with this AutoCompleteBoxAutomationPeer. This method is called by
+            GetAutomationControlType.
+            </summary>
+            <returns>ComboBox AutomationControlType.</returns>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the AutoCompleteBox that is associated with this
+            AutoCompleteBoxAutomationPeer. This method is called by
+            GetClassName.
+            </summary>
+            <returns>The name AutoCompleteBox.</returns>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the control pattern for the AutoCompleteBox that is associated
+            with this AutoCompleteBoxAutomationPeer.
+            </summary>
+            <param name="patternInterface">The desired PatternInterface.</param>
+            <returns>The desired AutomationPeer or null.</returns>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#IExpandCollapseProvider#Expand">
+            <summary>
+            Blocking method that returns after the element has been expanded.
+            </summary>
+            <remarks>
+            This API supports the .NET Framework infrastructure and is not 
+            intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#IExpandCollapseProvider#Collapse">
+            <summary>
+            Blocking method that returns after the element has been collapsed.
+            </summary>
+            <remarks>
+            This API supports the .NET Framework infrastructure and is not 
+            intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.RaiseExpandCollapseAutomationEvent(System.Boolean,System.Boolean)">
+            <summary>
+            Raises the ExpandCollapse automation event.
+            </summary>
+            <param name="oldValue">The old value.</param>
+            <param name="newValue">The new value.</param>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#IValueProvider#SetValue(System.String)">
+            <summary>
+            Sets the control's text value.
+            </summary>
+            <param name="value">The string value.</param>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.GetChildrenCore">
+            <summary>
+            Gets the collection of child elements of the AutoCompleteBox that
+            are associated with this AutoCompleteBoxAutomationPeer. This method
+            is called by GetChildren.
+            </summary>
+            <returns>
+            A collection of automation peer elements, or an empty collection
+            if there are no child elements.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#ISelectionProvider#GetSelection">
+            <summary>
+            Retrieves a UI Automation provider for each child element that is
+            selected.
+            </summary>
+            <returns>A collection of UI Automation providers.</returns>
+            <remarks>
+            This API supports the .NET Framework infrastructure and is not 
+            intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.OwnerAutoCompleteBox">
+            <summary>
+            Gets the AutoCompleteBox that owns this
+            AutoCompleteBoxAutomationPeer.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#ISelectionProvider#CanSelectMultiple">
+            <summary>
+            Gets a value indicating whether the UI Automation provider allows
+            more than one child element to be selected concurrently.
+            </summary>
+            <remarks>
+            This API supports the .NET Framework infrastructure and is not 
+            intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#ISelectionProvider#IsSelectionRequired">
+            <summary>
+            Gets a value indicating whether the UI Automation provider requires
+            at least one child element to be selected.
+            </summary>
+            <remarks>
+            This API supports the .NET Framework infrastructure and is not 
+            intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#IExpandCollapseProvider#ExpandCollapseState">
+            <summary>
+            Gets an element's current Collapsed or Expanded state.
+            </summary>
+            <remarks>
+            This API supports the .NET Framework infrastructure and is not 
+            intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="P:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#IValueProvider#IsReadOnly">
+            <summary>
+            Gets a value indicating whether the value is read only.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Automation.Peers.AutoCompleteBoxAutomationPeer.System#Windows#Automation#Provider#IValueProvider#Value">
+            <summary>
+            Gets a string representation of the current text value.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.AutoCompleteSearch">
+            <summary>
+            A predefined set of filter functions for the known, built-in 
+            AutoCompleteSearchMode enumeration values.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.GetFilter(System.Windows.Controls.AutoCompleteSearchMode)">
+            <summary>
+            Index function that retrieves the filter for the provided 
+            AutoCompleteSearchMode.
+            </summary>
+            <param name="searchMode">The built-in search mode.</param>
+            <returns>Returns the string-based comparison function.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.StartsWith(System.String,System.String)">
+            <summary>
+            Check if the string value begins with the text.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.StartsWithCaseSensitive(System.String,System.String)">
+            <summary>
+            Check if the string value begins with the text.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.StartsWithOrdinal(System.String,System.String)">
+            <summary>
+            Check if the string value begins with the text.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.StartsWithOrdinalCaseSensitive(System.String,System.String)">
+            <summary>
+            Check if the string value begins with the text.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.Contains(System.String,System.String)">
+            <summary>
+            Check if the prefix is contained in the string value. The current 
+            culture's case insensitive string comparison operator is used.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.ContainsCaseSensitive(System.String,System.String)">
+            <summary>
+            Check if the prefix is contained in the string value.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.ContainsOrdinal(System.String,System.String)">
+            <summary>
+            Check if the prefix is contained in the string value.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.ContainsOrdinalCaseSensitive(System.String,System.String)">
+            <summary>
+            Check if the prefix is contained in the string value.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.Equals(System.String,System.String)">
+            <summary>
+            Check if the string values are equal.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.EqualsCaseSensitive(System.String,System.String)">
+            <summary>
+            Check if the string values are equal.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.EqualsOrdinal(System.String,System.String)">
+            <summary>
+            Check if the string values are equal.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.AutoCompleteSearch.EqualsOrdinalCaseSensitive(System.String,System.String)">
+            <summary>
+            Check if the string values are equal.
+            </summary>
+            <param name="text">The AutoCompleteBox prefix text.</param>
+            <param name="value">The item's string value.</param>
+            <returns>Returns true if the condition is met.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.AutoCompleteSearchMode">
+            <summary>
+            Represents the different types of built-in search modes available to 
+            the AutoCompleteBox control.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.None">
+            <summary>
+            No search mode, all elements in a collection will be included in 
+            the results. This value would be used for a data source.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.StartsWith">
+            <summary>
+            Matches the text value to start of the string, a current culture 
+            case insensitive comparison is used.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.StartsWithCaseSensitive">
+            <summary>
+            Matches the text value to start of the string, the current culture 
+            comparison is used.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.StartsWithOrdinal">
+            <summary>
+            Matches the text value to start of the string, an ordinal comparison
+            is used.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.StartsWithOrdinalCaseSensitive">
+            <summary>
+            Matches the text value to start of the string, an ordinal, case
+            insensitive comparison is used.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.Contains">
+            <summary>
+            Matches the text value if it is contained inside the string, a case 
+            insensitive comparison is used. Uses the current culture value.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.ContainsCaseSensitive">
+            <summary>
+            Matches the text value if it is contained inside the string. Uses 
+            the current culture, case-sensitive comparison.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.ContainsOrdinal">
+            <summary>
+            Matches the text value if it is contained inside the string. Uses 
+            an ordinal comparison.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.ContainsOrdinalCaseSensitive">
+            <summary>
+            Matches the text value if it is contained inside the string. Uses 
+            an ordinal comparison that is case-sensitive.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.Equals">
+            <summary>
+            Matches that the text if it's value equals the string, the current
+            culture, case insensitive comparison is used.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.EqualsCaseSensitive">
+            <summary>
+            Matches that the text if it's value equals the string using the 
+            current culture's case sensitive comparison operator.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.EqualsOrdinal">
+            <summary>
+            Matches that the text if it's value equals the string using an 
+            ordinal case insensitive comparison operator.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.EqualsOrdinalCaseSensitive">
+            <summary>
+            Matches that the text if it's value equals the string using an 
+            ordinal case sensitive comparison operator.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.AutoCompleteSearchMode.Custom">
+            <summary>
+            Custom search mode: setting any of the item or text delegate 
+            dependency properties and this value will enable non-standard, 
+            custom functions and lambdas to be used.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.AutoCompleteSearchPredicate`1">
+            <summary>
+            Represents a method that filters items and determines whether they are 
+            valid suggestions given the search parameter.
+            </summary>
+            <param name="search">The search string.</param>
+            <param name="item">The string representation of the current item being 
+            evaluated by the predicate.</param>
+            <typeparam name="T">Whether the predicate will operate on object or 
+            string values.</typeparam>
+            <returns>Returns true if the item should be included as a suggestion 
+            given the search term.</returns>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="T:System.Windows.Controls.ISelectionAdapter">
+            <summary>
+            Represents an interface to a control or object that has items and 
+            selection members.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.ISelectionAdapter.HandleKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Provides handling for the KeyDown event that occurs when a key is 
+            pressed while the control has focus.
+            </summary>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.ISelectionAdapter.CreateAutomationPeer">
+            <summary>
+            Creates an automation peer for the selection adapter.
+            </summary>
+            <returns>Returns a new automation peer for the selection adapter, if
+            available.</returns>
+        </member>
+        <member name="P:System.Windows.Controls.ISelectionAdapter.SelectedItem">
+            <summary>
+            Gets or sets the selected item.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.ISelectionAdapter.SelectionChanged">
+            <summary>
+            Occurs when the SelectedItem property value changes.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.ISelectionAdapter.ItemsSource">
+            <summary>
+            Gets or sets a collection that is used to generate the content of 
+            the control.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.ISelectionAdapter.Commit">
+            <summary>
+            Occurs when a selection has occurred and has been committed.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.ISelectionAdapter.Cancel">
+            <summary>
+            Occurs when a selection has occurred and has been canceled.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.PopulatedEventArgs">
+            <summary>
+            Provides data for the AutoCompleteBox Populated event.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.PopulatedEventArgs.#ctor(System.Collections.IEnumerable)">
+            <summary>
+            Initializes a new instance of the PopulatedEventArgs.
+            </summary>
+            <param name="data">The IEnumerable of populated data.</param>
+        </member>
+        <member name="P:System.Windows.Controls.PopulatedEventArgs.Data">
+            <summary>
+            Gets the list of suggestions populated in the AutoCompleteBox selection
+            adapter.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.PopulatedEventHandler">
+            <summary>
+            Represents methods that use the PopulatedEventArgs.
+            </summary>
+            <param name="sender">The object where the event handler is attached.</param>
+            <param name="e">The event arguments.</param>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="T:System.Windows.Controls.PopulatingEventArgs">
+            <summary>
+            Provides data for the AutoCompleteBox Populating event.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.PopulatingEventArgs.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the PopulatingEventArgs.
+            </summary>
+            <param name="parameter">The population parameter, provided to 
+            observers to be used in filtering suggestions.</param>
+        </member>
+        <member name="P:System.Windows.Controls.PopulatingEventArgs.Parameter">
+            <summary>
+            Gets the value of the text parameter used to determine suggestions.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.PopulatingEventArgs.Cancel">
+            <summary>
+            Gets or sets a value indicating whether the changing event should 
+            be canceled.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.PopulatingEventHandler">
+            <summary>
+            Represents the method that will handle the Populating event of an 
+            AutoCompleteBox.
+            </summary>
+            <param name="sender">The object where the event handler is attached.</param>
+            <param name="e">The event arguments.</param>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="T:System.Windows.Controls.SelectorSelectionAdapter">
+            <summary>
+            Used as a wrapper object by AutoCompleteBox to represent a Selector 
+            control.
+            </summary>
+            <QualityBand>Stable</QualityBand>
+        </member>
+        <member name="F:System.Windows.Controls.SelectorSelectionAdapter._selector">
+            <summary>
+            The Selector instance.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.#ctor">
+            <summary>
+            Initializes a new instance of the SelectorSelectionAdapter class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.#ctor(System.Windows.Controls.Primitives.Selector)">
+            <summary>
+            Initializes a new instance of the SelectorSelectionAdapter class.
+            </summary>
+            <param name="selector">A selector control instance.</param>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.ResetScrollViewer">
+            <summary>
+            If the control contains a ScrollViewer, this will reset the viewer 
+            to be scrolled to the top.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.OnSelectorMouseLeftButtonUp(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Handles the mouse left button up event on the selector control.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.OnSelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            Handles the SelectionChanged event on the Selector control.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The selection changed event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.SelectedIndexIncrement">
+            <summary>
+            Increment the selected index, or wrap.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.SelectedIndexDecrement">
+            <summary>
+            Decrement the SelectedIndex, or wrap around, inside the nested 
+            SelectionAdapter's control.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.HandleKeyDown(System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Provides handling for the KeyDown event that occurs when a key is 
+            pressed while the control has focus.
+            </summary>
+            <param name="e">The key event arguments object.</param>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.OnCommit">
+            <summary>
+            Fires the Commit event.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.OnCommit(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Fires the Commit event.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.OnCancel">
+            <summary>
+            Fires the Cancel event.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.OnCancel(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Fires the Cancel event.
+            </summary>
+            <param name="sender">The source object.</param>
+            <param name="e">The event data.</param>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.AfterAdapterAction">
+            <summary>
+            Change the selection after the actions are complete.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.SelectorSelectionAdapter.CreateAutomationPeer">
+            <summary>
+            Creates an automation peer for the selection adapter, included as a 
+            child by the AutoCompleteBox control.
+            </summary>
+            <returns>Returns null or a new instance of the AutomationPeer.</returns>
+        </member>
+        <member name="P:System.Windows.Controls.SelectorSelectionAdapter.IgnoringSelectionChanged">
+            <summary>
+            Gets or sets a value indicating whether the selection change event 
+            should not be fired.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.SelectorSelectionAdapter.SelectorControl">
+            <summary>
+            Gets or sets the underlying Selector control.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.SelectorSelectionAdapter.SelectionChanged">
+            <summary>
+            Occurs when the SelectedItem property value changes.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.SelectorSelectionAdapter.Commit">
+            <summary>
+            Occurs when a selection has occurred and has been committed.
+            </summary>
+        </member>
+        <member name="E:System.Windows.Controls.SelectorSelectionAdapter.Cancel">
+            <summary>
+            Occurs when a selection has occurred and has been canceled.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.SelectorSelectionAdapter.SelectedItem">
+            <summary>
+            Gets or sets the selected item through the adapter.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.SelectorSelectionAdapter.ItemsSource">
+            <summary>
+            Gets or sets a collection that is used to generate the 
+            content of the control.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Extensions">
+            <summary>
+            This set of internal extension methods provide general solutions and 
+            utilities in a small enough number to not warrant a dedicated extension
+            methods class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Extensions.Invert(System.Windows.Media.Matrix,System.Windows.Media.Matrix@)">
+            <summary>
+            Inverts a Matrix. The Invert functionality on the Matrix type is 
+            internal to the framework only. Since Matrix is a struct, an out 
+            parameter must be presented.
+            </summary>
+            <param name="m">The Matrix object.</param>
+            <param name="outputMatrix">The matrix to return by an output 
+            parameter.</param>
+            <returns>Returns a value indicating whether the type was 
+            successfully inverted. If the determinant is 0.0, then it cannot 
+            be inverted and the original instance will remain untouched.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Extensions.Contains(System.String,System.String,System.StringComparison)">
+            <summary>
+            An implementation of the Contains member of string that takes in a 
+            string comparison. The traditional .NET string Contains member uses 
+            StringComparison.Ordinal.
+            </summary>
+            <param name="s">The string.</param>
+            <param name="value">The string value to search for.</param>
+            <param name="comparison">The string comparison type.</param>
+            <returns>Returns true when the substring is found.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.VisualTreeExtensions">
+            <summary>
+            A static class providing methods for working with the visual tree.  
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.VisualTreeExtensions.GetVisualChildren(System.Windows.DependencyObject)">
+            <summary>
+            Retrieves all the visual children of a framework element.
+            </summary>
+            <param name="parent">The parent framework element.</param>
+            <returns>The visual children of the framework element.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.VisualTreeExtensions.GetLogicalChildrenBreadthFirst(System.Windows.FrameworkElement)">
+            <summary>
+            Retrieves all the logical children of a framework element using a 
+            breadth-first search.  A visual element is assumed to be a logical 
+            child of another visual element if they are in the same namescope.
+            For performance reasons this method manually manages the queue 
+            instead of using recursion.
+            </summary>
+            <param name="parent">The parent framework element.</param>
+            <returns>The logical children of the framework element.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.AutoComplete_OnMaxDropDownHeightPropertyChanged_InvalidValue">
+            <summary>
+              Looks up a localized string similar to Invalid maximum drop down height value &apos;{0}&apos;. The value must be greater than or equal to zero..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.AutoComplete_OnMinimumPopulateDelayPropertyChanged_InvalidValue">
+            <summary>
+              Looks up a localized string similar to Invalid MinimumPopulateDelay value &apos;{0}&apos;. The value must be greater than or equal to zero..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.AutoComplete_OnSearchModePropertyChanged_InvalidValue">
+            <summary>
+              Looks up a localized string similar to Invalid SearchMode enumeration value. The value must be one of the defined AutoCompleteSearchMode values to be accepted..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.AutoComplete_OnSearchTextPropertyChanged_InvalidWrite">
+            <summary>
+              Looks up a localized string similar to Cannot set read-only property SearchText..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.AutoComplete_OnSelectedItemPropertyChanged_InvalidWrite">
+            <summary>
+              Looks up a localized string similar to Cannot set read-only property SelectedItem..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Properties.Resources.RoutedPropertyChangingEventArgs_CancelSet_InvalidOperation">
+            <summary>
+              Looks up a localized string similar to The RoutedPropertyChangingEvent cannot be canceled!.
+            </summary>
+        </member>
+    </members>
+</doc>

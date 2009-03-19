@@ -1,0 +1,167 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+    x:Class="System.Windows.Controls.Samples.NestedHierarchicalDataTemplateSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <!-- HierarchicalDataTemplates -->
+            <common:HierarchicalDataTemplate x:Key="songEntry">
+                <StackPanel Orientation="Horizontal">                    
+                    <ContentPresenter Margin="0 0 4 0" Content="{Binding Icon}" />
+                    <TextBlock FontStyle="Italic" Text="{Binding Path=Title}" />                    
+                </StackPanel>
+            </common:HierarchicalDataTemplate>
+
+            <common:HierarchicalDataTemplate x:Key="albumEntry" ItemsSource="{Binding Path=Songs}" ItemTemplate="{StaticResource songEntry}">
+                <StackPanel Orientation="Horizontal">                    
+                    <ContentPresenter Margin="0 0 4 0" Content="{Binding Icon}" />
+                    <TextBlock Text="{Binding Path=Title}" />                    
+                </StackPanel>
+            </common:HierarchicalDataTemplate>
+
+            <common:HierarchicalDataTemplate x:Key="artistEntry" ItemsSource="{Binding Path=Albums}" ItemTemplate="{StaticResource albumEntry}">
+                <StackPanel Orientation="Horizontal">                                        
+                    <ContentPresenter Margin="0 0 4 0" Content="{Binding Icon}" />
+                    <TextBlock FontWeight="Bold" Text="{Binding Path=ArtistName}" />
+                </StackPanel>
+            </common:HierarchicalDataTemplate>
+        </StackPanel.Resources>
+
+        <ContentControl Content="Nesting HierarchicalDataTemplates" Style="{StaticResource Header}" />
+        <TextBlock Style="{StaticResource Information}">
+            This shows how to nest HierarchicalDataTemplates for when you want 
+            each level of your tree to have its own DataTemplate and associated styling.
+        </TextBlock>
+
+        <controls:TreeView x:Name="ArtistTree" ItemTemplate="{StaticResource artistEntry}" />
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="NestedHierarchicalDataTemplateSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+    x:Class="System.Windows.Controls.Samples.NestedHierarchicalDataTemplateSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;!-- HierarchicalDataTemplates --&gt;
+            &lt;common:HierarchicalDataTemplate x:Key="songEntry"&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;                    
+                    &lt;ContentPresenter Margin="0 0 4 0" Content="{Binding Icon}" /&gt;
+                    &lt;TextBlock FontStyle="Italic" Text="{Binding Path=Title}" /&gt;                    
+                &lt;/StackPanel&gt;
+            &lt;/common:HierarchicalDataTemplate&gt;
+
+            &lt;common:HierarchicalDataTemplate x:Key="albumEntry" ItemsSource="{Binding Path=Songs}" ItemTemplate="{StaticResource songEntry}"&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;                    
+                    &lt;ContentPresenter Margin="0 0 4 0" Content="{Binding Icon}" /&gt;
+                    &lt;TextBlock Text="{Binding Path=Title}" /&gt;                    
+                &lt;/StackPanel&gt;
+            &lt;/common:HierarchicalDataTemplate&gt;
+
+            &lt;common:HierarchicalDataTemplate x:Key="artistEntry" ItemsSource="{Binding Path=Albums}" ItemTemplate="{StaticResource albumEntry}"&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;                                        
+                    &lt;ContentPresenter Margin="0 0 4 0" Content="{Binding Icon}" /&gt;
+                    &lt;TextBlock FontWeight="Bold" Text="{Binding Path=ArtistName}" /&gt;
+                &lt;/StackPanel&gt;
+            &lt;/common:HierarchicalDataTemplate&gt;
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;ContentControl Content="Nesting HierarchicalDataTemplates" Style="{StaticResource Header}" /&gt;
+        &lt;TextBlock Style="{StaticResource Information}"&gt;
+            This shows how to nest HierarchicalDataTemplates for when you want 
+            each level of your tree to have its own DataTemplate and associated styling.
+        &lt;/TextBlock&gt;
+
+        &lt;controls:TreeView x:Name="ArtistTree" ItemTemplate="{StaticResource artistEntry}" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="NestedHierarchicalDataTemplateSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// The NestedHierarchicalDataTemplate sample page shows how to nest
+    /// HierarchicalDataTemplate templates with each HierarchicalDataTemplate
+    /// having its own unique template.
+    /// &lt;/summary&gt;
+    [Sample("Nested HierarchicalDataTemplate", DifficultyLevel.Scenario)]
+    [Category("TreeView")]
+    public partial class NestedHierarchicalDataTemplateSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the
+        /// NestedHierarchicalDataTemplateSample class.
+        /// &lt;/summary&gt;
+        public NestedHierarchicalDataTemplateSample()
+        {
+            InitializeComponent();
+            ArtistTree.ItemsSource = Artist.AllArtists;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="NestedHierarchicalDataTemplateSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.Windows.Controls
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' The NestedHierarchicalDataTemplate sample page shows how to nest
+''' HierarchicalDataTemplate templates with each HierarchicalDataTemplate
+''' having its own unique template.
+''' &lt;/summary&gt;
+&lt;Sample("Nested HierarchicalDataTemplate", DifficultyLevel.Scenario), Category("TreeView")&gt; _
+Partial Public Class NestedHierarchicalDataTemplateSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the
+    ''' NestedHierarchicalDataTemplateSample class.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+        ArtistTree.ItemsSource = Artist.AllArtists
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

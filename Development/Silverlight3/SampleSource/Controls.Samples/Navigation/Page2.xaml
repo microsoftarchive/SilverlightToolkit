@@ -1,0 +1,21 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<navigation:Page x:Class="System.Windows.Controls.Samples.Page2" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" 
+           Title="Page2 Page">
+    <StackPanel Background="LightGreen">
+        <ContentControl Style="{StaticResource Header}" Content="Page2 Content" />
+        <TextBlock Margin="4" Text="Any type of content can appear in a page." HorizontalAlignment="Center" />
+        <Button Margin="4" Content="Button" HorizontalAlignment="Center" />
+        <ProgressBar Margin="4" Height="23" Width="75" IsIndeterminate="True" HorizontalAlignment="Center" />
+        <controls:Calendar Margin="4" HorizontalAlignment="Center" />
+    </StackPanel>
+</navigation:Page>

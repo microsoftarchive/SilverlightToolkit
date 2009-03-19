@@ -1,0 +1,693 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Windows.Controls.Theming.Toolkit</name>
+    </assembly>
+    <members>
+        <member name="T:System.Windows.Controls.Theming.DefaultStyleKeyRetriever">
+            <summary>
+            This class retrieves the default style key of a control.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.DefaultStyleKeyRetriever.#ctor">
+            <summary>
+            Initializes a new instance of the DefaultStyleKeyRetriever class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.DefaultStyleKeyRetriever.GetDefaultStyleKey(System.Windows.Controls.Control)">
+            <summary>
+            This method retrieves the default style key of a control.
+            </summary>
+            <param name="control">The control to retrieve the default style key 
+            from.</param>
+            <returns>The default style key of the control.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.BaseMergedStyleDictionary">
+            <summary>
+            A class that defines the behavior of looking for an item recursively up 
+            a chain of dictionaries.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.BaseMergedStyleDictionary.Parent">
+            <summary>
+            Gets or sets the parent of this merged dictionary.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.BaseMergedStyleDictionary.Item(System.String)">
+            <summary>
+            Retrieves an item using a key.  If the item is not found in the 
+            local dictionary a lookup is attempted on the parent.
+            </summary>
+            <param name="key">The key to use to retrieve the item.</param>
+            <returns>A style corresponding to the key.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.FunctionalProgramming">
+            <summary>
+            Collection of functions for functional programming tasks.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.FunctionalProgramming.TraverseDepthFirst``1(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``0}},System.Func{``0,System.Boolean})">
+            <summary>
+            Traverses a tree by accepting an initial value and a function that 
+            retrieves the child nodes of a node.
+            </summary>
+            <typeparam name="T">The type of the stream.</typeparam>
+            <param name="initialNode">The initial node.</param>
+            <param name="getChildNodes">A function that retrieves the child
+            nodes of a node.</param>
+            <param name="traversePredicate">A predicate that evaluates a node
+            and returns a value indicating whether that node and it's children
+            should be traversed.</param>
+            <returns>A stream of nodes.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.FunctionalProgramming.TraverseBreadthFirst``1(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``0}},System.Func{``0,System.Boolean})">
+            <summary>
+            Traverses a tree by accepting an initial value and a function that 
+            retrieves the child nodes of a node.
+            </summary>
+            <typeparam name="T">The type of the stream.</typeparam>
+            <param name="initialNode">The initial node.</param>
+            <param name="getChildNodes">A function that retrieves the child
+            nodes of a node.</param>
+            <param name="traversePredicate">A predicate that evaluates a node
+            and returns a value indicating whether that node and it's children
+            should be traversed.</param>
+            <returns>A stream of nodes.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.FunctionalProgramming.Append``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+            Appends an item to the front of a stream.
+            </summary>
+            <typeparam name="T">The type of the stream.</typeparam>
+            <param name="that">The stream.</param>
+            <param name="value">The value to append to the front of the stream.
+            </param>
+            <returns>A stream with the item appended to the front.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.ImplicitStyleManager">
+            <summary>
+            Encapsulates an attached behavior that propagates styles in a framework 
+            element's associated resource dictionary to its children.  The class 
+            also provides attached properties that allow the resource dictionary to 
+            be loaded from an external source.  Hierarchical styling is supported in
+            a way similar to WPF.
+            </summary>
+            <QualityBand>Preview</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetHasBeenStyled(System.Windows.FrameworkElement)">
+            <summary>
+            Gets the value of the HasBeenStyled attached property for a specified FrameworkElement.
+            </summary>
+            <param name="element">The FrameworkElement from which the property value is read.</param>
+            <returns>The HasBeenStyled property value for the FrameworkElement.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.SetHasBeenStyled(System.Windows.FrameworkElement,System.Boolean)">
+            <summary>
+            Sets the value of the HasBeenStyled attached property to a specified FrameworkElement.
+            </summary>
+            <param name="element">The FrameworkElement to which the attached property is written.</param>
+            <param name="value">The needed HasBeenStyled value.</param>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager.HasBeenStyledProperty">
+            <summary>
+            Identifies the HasBeenStyled dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetApplyMode(System.Windows.FrameworkElement)">
+            <summary>
+            Gets the value of the ImplicitStyleManager.ApplyMode attached property 
+            for a specified framework element. 
+            The value indicates whether the style implicitly applied on descendent
+            framework elements.
+            </summary>
+            <param name="element">The FrameworkElement from which the property value is read.</param>
+            <returns>The ApplyMode property value for the FrameworkElement.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.SetApplyMode(System.Windows.FrameworkElement,System.Windows.Controls.Theming.ImplicitStylesApplyMode)">
+            <summary>
+            Sets the value of the ImplicitStyleManager.ApplyMode attached
+            property on a specified framework element. 
+            This value indicates whether the style should be implicitly applied
+            on descendent framework elements.
+            </summary>
+            <param name="element">The FrameworkElement to which the attached 
+            property is written.</param>
+            <param name="value">The ApplyMode value.</param>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager.ApplyModeProperty">
+            <summary>
+            Identifies the ApplyMode dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.OnApplyModePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            ApplyModeProperty property changed handler.
+            </summary>
+            <param name="dependencyObject">FrameworkElement that changed its 
+            ApplyMode.</param>
+            <param name="eventArgs">Event arguments.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetExternalResourceDictionary(System.Windows.FrameworkElement)">
+            <summary>
+            Gets the value of the ExternalResourceDictionary attached property 
+            for a specified FrameworkElement.
+            </summary>
+            <param name="element">The FrameworkElement from which the property 
+            value is read.</param>
+            <returns>The ExternalResourceDictionary property value for the 
+            FrameworkElement.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.SetExternalResourceDictionary(System.Windows.FrameworkElement,System.Windows.ResourceDictionary)">
+            <summary>
+            Sets the value of the ExternalResourceDictionary attached property 
+            to a specified FrameworkElement.
+            </summary>
+            <param name="element">The FrameworkElement to which the attached 
+            property is written.</param>
+            <param name="value">The needed ExternalResourceDictionary value.
+            </param>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager.ExternalResourceDictionaryProperty">
+            <summary>
+            Identifies the ExternalResourceDictionary dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetLayoutUpdatedHandler(System.Windows.FrameworkElement)">
+            <summary>
+            Gets the value of the LayoutUpdatedHandler attached property for a 
+            specified FrameworkElement.
+            </summary>
+            <param name="element">The FrameworkElement from which the property 
+            value is read.</param>
+            <returns>The LayoutUpdatedHandler property value for the 
+            FrameworkElement.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.SetLayoutUpdatedHandler(System.Windows.FrameworkElement,System.EventHandler)">
+            <summary>
+            Sets the value of the LayoutUpdatedHandler attached property to a 
+            specified FrameworkElement.
+            </summary>
+            <param name="element">The FrameworkElement to which the attached 
+            property is written.</param>
+            <param name="value">The needed LayoutUpdatedHandler value.</param>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager.LayoutUpdatedHandlerProperty">
+            <summary>
+            Identifies the LayoutUpdatedHandler dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetResourceDictionaryUri(System.Windows.FrameworkElement)">
+            <summary>
+            Gets the value of the ImplicitStyleManager.ResourceDictionaryUri 
+            attached property for a specified framework element.
+            The value indicates the URI address for the resource dictionary that 
+            is implicitly applied.
+            </summary>
+            <param name="element">The FrameworkElement from which the property 
+            value is read.</param>
+            <returns>The ResourceDictionaryUri property value for the 
+            FrameworkElement.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.SetResourceDictionaryUri(System.Windows.FrameworkElement,System.Uri)">
+            <summary>
+            Sets the value of the ImplicitStyleManager.ResourceDictionaryUri 
+            attached property for a specified framework element. 
+            The value indicates the URI address for the resource dictionary 
+            that is implicitly applied.
+            </summary>
+            <param name="element">The FrameworkElement to which the attached 
+            property is written.</param>
+            <param name="value">The needed ResourceDictionaryUri value.</param>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager.ResourceDictionaryUriProperty">
+            <summary>
+            Identifies the ResourceDictionaryUri dependency property.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.OnResourceDictionaryUriPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            ResourceDictionaryUriProperty property changed handler.
+            </summary>
+            <param name="dependencyObject">FrameworkElement that changed its 
+            ResourceDictionaryUri.</param>
+            <param name="eventArgs">Event arguments.</param>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager._useApplicationResources">
+            <summary>
+            Gets or sets a value indicating whether to use application
+            resources.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStyleManager._applicationResourceDictionaryUri">
+            <summary>
+            A field that stores a resource dictionary uri which is used to 
+            retrieve resources associated with the application.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.Apply(System.Windows.FrameworkElement)">
+            <summary>
+            Applies implicit styles to an element and its descendents.
+            </summary>
+            <param name="element">The element to apply implicit styles to.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetMergedStyleDictionary(System.Windows.FrameworkElement)">
+            <summary>
+            Retrieves or creates the merged style dictionary of an element.
+            </summary>
+            <param name="styledElement">A styled element.</param>
+            <returns>The merged dictionary of the element.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.GetStyleKey(System.Windows.FrameworkElement)">
+            <summary>
+            Retrieves the style key for a given element by first checking to
+            see if it can retrieve its default style key and then using the
+            full name of its concrete type.
+            </summary>
+            <param name="element">The element to retrieve the style key for.
+            </param>
+            <returns>The style key.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.Parse(System.Uri)">
+            <summary>
+            Retrieves a style collection from a uri of a resource
+            dictionary.
+            </summary>
+            <param name="uri">The uri of a resource dictionary.</param>
+            <returns>A style collection containing the styles in the resource
+            dictionary.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ImplicitStyleManager.PropagateStyles(System.Windows.FrameworkElement,System.Boolean)">
+            <summary>
+            This method propagates the styles in the resources associated with
+            a framework element to its descendents. This results in a  
+            style inheritance that mimics WPF's behavior.
+            </summary>
+            <param name="element">The element that will have its styles 
+            propagated to its children.</param>
+            <param name="recurse">Whether to recurse over styled elements that
+            are set to OneTime and have already been styled.</param>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.ImplicitStyleManager.UseApplicationResources">
+            <summary>
+            Gets or sets a value indicating whether the implicitly applied 
+            styles are based on values from 
+            ImplicitStyleManager.ApplicationResourceDictionaryUri.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.ImplicitStyleManager.ApplicationResourceDictionaryUri">
+            <summary>
+            Gets or sets the ResourceDictionary URI that is implicitly applied 
+            to all FrameworksElements in the Application.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.ImplicitStyleManager.ApplicationExternalResourceDictionary">
+            <summary>
+            Gets or sets the external resource dictionary to use for the 
+            application.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.ImplicitStylesApplyMode">
+            <summary>
+            Specifies the mode in which styles are implicitly applied in 
+            ImplicitStyleManager.
+            </summary>
+            <QualityBand>Preview</QualityBand>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStylesApplyMode.None">
+            <summary>
+            Specifies that the ImplicitStyleManager does not implicitly apply 
+            styles.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStylesApplyMode.OneTime">
+            <summary>
+            Specifies that the ImplicitStyleManager will implicitly apply styles 
+            to the descendent visual tree once and will not attempt refreshes.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ImplicitStylesApplyMode.Auto">
+            <summary>
+            Specifies that the ImplicitStyleManager will implicitly apply styles 
+            to the descendent visual tree once the visual tree changes. 
+            Using this setting may incur a serious performance hit.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.InvalidResourceException">
+            <summary>
+            Exception thrown when resource is not found.
+            </summary>
+            <QualityBand>Preview</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.InvalidResourceException.#ctor">
+            <summary>
+            Initializes a new instance of the InvalidResourceException class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.InvalidResourceException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the InvalidResourceException class.
+            </summary>
+            <param name="message">The exception message.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.InvalidResourceException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the InvalidResourceException class.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.InvalidResourceException.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the InvalidResourceException class.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="uri">The uri of the resource.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.InvalidResourceException.#ctor(System.String,System.Uri,System.Exception)">
+            <summary>
+            Initializes a new instance of the InvalidResourceException class.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="uri">The uri of the resource.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.InvalidResourceException.Uri">
+            <summary>
+            Gets the uri of the resource that could not be found.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.MergedStyleResourceDictionary">
+            <summary>
+            A dictionary that merges a resource dictionary with a parent dictionary.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.MergedStyleResourceDictionary._resourceDictionary">
+            <summary>
+            The resource dictionary to check for a value before checking the 
+            parent.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.MergedStyleResourceDictionary.#ctor(System.Windows.ResourceDictionary,System.Windows.Controls.Theming.BaseMergedStyleDictionary)">
+            <summary>
+            Initializes a new instance of the MergedResourceDictionary class.
+            </summary>
+            <param name="resourceDictionary">A resource dictionary to check for 
+            a value before checking the parent.</param>
+            <param name="parentResourceDictionary">The parent merged resource 
+            dictionary to check if no match is found in the resource 
+            dictionary.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.MergedStyleResourceDictionary.#ctor(System.Windows.ResourceDictionary)">
+            <summary>
+            Initializes a new instance of the MergedResourceDictionary class.
+            </summary>
+            <param name="resourceDictionary">A resource dictionary to check for a value 
+            before checking the parent.</param>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.MergedStyleResourceDictionary.Item(System.String)">
+            <summary>
+            Retrieves an item using a key.  If the item is not found in the 
+            local dictionary a lookup is attempted on the parent.
+            </summary>
+            <param name="key">The key to use to retrieve the item.</param>
+            <returns>A style corresponding to the key.</returns>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.ResourceNotFoundException">
+            <summary>
+            Exception thrown when resource is not found.
+            </summary>
+            <QualityBand>Preview</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceNotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of the ResourceNotFoundException class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the ResourceNotFoundException class.
+            </summary>
+            <param name="message">The exception message.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the ResourceNotFoundException class.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceNotFoundException.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the ResourceNotFoundException class.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="uri">The uri of the resource.</param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceNotFoundException.#ctor(System.String,System.Uri,System.Exception)">
+            <summary>
+            Initializes a new instance of the ResourceNotFoundException class.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="uri">The uri of the resource.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.ResourceNotFoundException.Uri">
+            <summary>
+            Gets the uri of the resource that could not be found.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.VisualTreeExtensions">
+            <summary>
+            A static class providing methods for working with the visual tree.  
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.VisualTreeExtensions.EnsureName(System.Windows.FrameworkElement)">
+            <summary>
+            Ensures that a framework element has a unique name.
+            </summary>
+            <param name="element">The element to set the name of.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.VisualTreeExtensions.GetVisualAncestors(System.Windows.FrameworkElement)">
+            <summary>
+            Returns the visual tree ancestors of an element.
+            </summary>
+            <param name="element">The descendent of the ancestors.</param>
+            <returns>The visual tree ancestors of the element.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.VisualTreeExtensions.GetLogicalChildrenDepthFirst(System.Windows.FrameworkElement)">
+            <summary>
+            Retrieves all the logical children of a framework element using a 
+            depth-first search.  A visual element is assumed to be a logical 
+            child of another visual element if they are in the same namescope.
+            For performance reasons this method manually manages the stack 
+            instead of using recursion.
+            </summary>
+            <param name="parent">The parent framework element.</param>
+            <returns>The logical children of the framework element.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.VisualTreeExtensions.GetVisualChildren(System.Windows.DependencyObject)">
+            <summary>
+            Retrieves all the visual children of a framework element.
+            </summary>
+            <param name="parent">The parent framework element.</param>
+            <returns>The visual children of the framework element.</returns>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.VisualTreeExtensions.UniqueId">
+            <summary>
+            Gets or sets an identity integer that ensures that names are unique.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Properties.Resources.ImplicitStyleManager_Parse_CanOnlyParseXAMLFilesWithResourceDictionaryAsTheRootElement">
+            <summary>
+              Looks up a localized string similar to Cannot parse XAML files which do not have a ResourceDictionary as the root element..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Properties.Resources.ImplicitStyleManager_ResourceNotFound">
+            <summary>
+              Looks up a localized string similar to Resource not found at &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Properties.Resources.InvalidResourceException_UnableToLoadResources">
+            <summary>
+              Looks up a localized string similar to Unable to load resources..
+            </summary>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.ResourceParser">
+            <summary>
+            Parse streams containing theme resources.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ResourceParser.OldXamlNamespace">
+            <summary>
+            The default old XAML namespace.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ResourceParser.NewXamlNamespace">
+            <summary>
+            The default new XAML namespace.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ResourceParser.StyleXaml">
+            <summary>
+            The XAML markup for an empty Style declaration.
+            </summary>
+        </member>
+        <member name="F:System.Windows.Controls.Theming.ResourceParser.StyleXamlWithPrefix">
+            <summary>
+            The XAML markup for an empty Style declaration with a TargetType
+            using an XML prefix.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceParser.IsXamlElement``1(System.String,System.String)">
+            <summary>
+            Determines whether an XML element is a type in the core Silverlight
+            namespace.
+            </summary>
+            <typeparam name="T">The type to check for.</typeparam>
+            <param name="name">The name of the element.</param>
+            <param name="ns">The namespace of the element.</param>
+            <returns>
+            A value indicating whether an the element is the Silverlight type.
+            </returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceParser.Parse(System.IO.Stream,System.Boolean)">
+            <summary>
+            Retrieves a resource dictionary from an input stream.
+            </summary>
+            <param name="stream">
+            A stream containing the XAML for a  resource dictionary.
+            </param>
+            <param name="checkTypes">
+            A value indicating whether styles in the resource dictionary should
+            be filtered to types that have been loaded by the application.
+            </param>
+            <returns>A resource dictionary.</returns>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceParser.ParseResources(System.Xml.XmlReader,System.Xml.XmlWriter,System.Boolean)">
+            <summary>
+            Transform a ResourceDictionary defined in the reader into a
+            ContentControl in the writer and nest all of its resources in
+            ContentControl.Resources.
+            </summary>
+            <param name="reader">Reader with the resources.</param>
+            <param name="writer">Writer with the transformed resources.</param>
+            <param name="checkTypes">
+            A value indicating whether styles in the resource dictionary should
+            be filtered to types that have been loaded by the application.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceParser.ParseElement(System.Xml.XmlReader,System.Xml.XmlWriter,System.Boolean)">
+            <summary>
+            Process an element's opening tag.
+            </summary>
+            <param name="reader">Reader with the resources.</param>
+            <param name="writer">Writer with the transformed resources.</param>
+            <param name="checkTypes">
+            A value indicating whether styles in the resource dictionary should
+            be filtered to types that have been loaded by the application.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.ResourceParser.IsStyleTargetTypeLoaded(System.Xml.XmlReader)">
+            <summary>
+            Determine if the current element in the reader represents a Style
+            whose TargetType has been loaded in the assembly.
+            </summary>
+            <param name="reader">Reader with the resources.</param>
+            <returns>
+            A value indicating whether the element is not a style or it is a
+            Style with a TargetType loaded in this assembly.
+            </returns>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.Theme">
+            <summary>
+            Uses ImplicitStyleManager to implicitly apply a set of styles to all of
+            its descendent FrameworkElements.
+            </summary>
+            <QualityBand>Preview</QualityBand>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.Theme.#ctor">
+            <summary>
+            Initializes a new instance of the Theme class.
+            </summary>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.Theme.#ctor(System.Reflection.Assembly,System.String)">
+            <summary>
+            Initializes a new instance of the Theme class.
+            </summary>
+            <param name="themeAssembly">
+            Assembly with the embedded resource containing the theme to apply.
+            </param>
+            <param name="themeResourceName">
+            Name of the embedded resource containing the theme to apply.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.Theme.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the Theme class.
+            </summary>
+            <param name="themeResourceStream">
+            A resource stream containing the theme to apply.
+            </param>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.Theme.LoadTheme(System.IO.Stream)">
+            <summary>
+            Load a theme from a resource stream.
+            </summary>
+            <param name="themeResourceStream">
+            A resource stream containing the theme to load.
+            </param>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Theme.ApplyMode">
+            <summary>
+            Gets or sets the mode defining how styles in the theme are
+            implicitly applied.
+            </summary>
+            <remarks>
+            The default value is OneTime.
+            </remarks>
+        </member>
+        <member name="T:System.Windows.Controls.Theming.Tuple`2">
+            <summary>
+            A structure that groups two values.
+            </summary>
+            <typeparam name="T0">The type of the first value.</typeparam>
+            <typeparam name="T1">The type of the second value.</typeparam>
+        </member>
+        <member name="M:System.Windows.Controls.Theming.Tuple`2.#ctor(`0,`1)">
+            <summary>
+            Initializes a new instance of the Tuple structure.
+            </summary>
+            <param name="first">The first value.</param>
+            <param name="second">The second value.</param>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Tuple`2.First">
+            <summary>
+            Gets the first value.
+            </summary>
+        </member>
+        <member name="P:System.Windows.Controls.Theming.Tuple`2.Second">
+            <summary>
+            Gets the second value.
+            </summary>
+        </member>
+    </members>
+</doc>
