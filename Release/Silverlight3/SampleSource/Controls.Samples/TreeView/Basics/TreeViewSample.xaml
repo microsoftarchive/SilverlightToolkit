@@ -1,0 +1,244 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:samplesCommon="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
+  x:Class="System.Windows.Controls.Samples.TreeViewSample">
+    <StackPanel>
+        <!-- Basic TreeView -->
+        <ContentControl Content="TreeView" Style="{StaticResource Header}" />
+        <TextBlock Style="{StaticResource Information}">
+            TreeView is a control that displays hierarchical data in a tree
+            structure with items that can expand and collapse.
+        </TextBlock>
+        <controls:TreeView Margin="5">
+            <controls:TreeViewItem Header="Controls">
+                <controls:TreeViewItem Header="AutoCompleteBox" />
+                <controls:TreeViewItem Header="Expander" />
+                <controls:TreeViewItem Header="NumericUpDown" />
+            </controls:TreeViewItem>
+            <controls:TreeViewItem Header="Layout">
+                <controls:TreeViewItem Header="DockPanel" />
+                <controls:TreeViewItem Header="WrapPanel" />
+                <controls:TreeViewItem Header="Viewbox" />
+            </controls:TreeViewItem>
+            <controls:TreeViewItem Header="Charting">
+                <controls:TreeViewItem Header="ColumnSeries" />
+                <controls:TreeViewItem Header="LineSeries" />
+                <controls:TreeViewItem Header="PieSeries" />
+            </controls:TreeViewItem>
+        </controls:TreeView>
+        
+        <!-- TreeViewItems -->
+        <ContentControl Content="TreeViewItem" Style="{StaticResource Header}" />
+        <TextBlock Style="{StaticResource Information}">
+            TreeViews are composed of TreeViewItems which can be added to the
+            TreeView.Items collection or assigned to the TreeView.ItemsSource
+            property.  Objects of any type can be added and will be wrapped with
+            TreeViewItems.
+        </TextBlock>
+        <controls:TreeView Margin="5">
+            <controls:TreeViewItem Header="TreeViewItems">
+                <controls:TreeViewItem Header="Can be nested">
+                    <controls:TreeViewItem Header="To any depth" />
+                </controls:TreeViewItem>
+                <controls:TreeViewItem Header="And disabled" IsEnabled="False" />
+                <controls:TreeViewItem Header="And formatted" Foreground="Purple" FontStyle="Italic" FontSize="12" />
+                <controls:TreeViewItem Header="Or created">
+                    <controls:TreeViewItem Header="From objects">
+                        <system:String>String</system:String>
+                        <system:Int32>42</system:Int32>
+                        <system:Double>3.14159</system:Double>
+                    </controls:TreeViewItem>
+                    <controls:TreeViewItem Header="From UIElements">
+                        <Button Content="Button" />
+                        <CheckBox Content="CheckBox" />
+                        <TextBox Text="TextBox" />
+                    </controls:TreeViewItem>
+                </controls:TreeViewItem>
+            </controls:TreeViewItem>
+            <controls:TreeViewItem Header="Setting Items">
+                <controls:TreeViewItem Header="Via Items">
+                    <system:String>First</system:String>
+                    <system:String>Second</system:String>
+                    <system:String>Third</system:String>
+                </controls:TreeViewItem>
+                <controls:TreeViewItem Header="Via ItemsSource">
+                    <controls:TreeViewItem.ItemsSource>
+                        <toolkit:ObjectCollection>
+                            <system:String>First</system:String>
+                            <system:String>Second</system:String>
+                            <system:String>Third</system:String>
+                        </toolkit:ObjectCollection>
+                    </controls:TreeViewItem.ItemsSource>
+                </controls:TreeViewItem>
+            </controls:TreeViewItem>
+        </controls:TreeView>
+        
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="TreeViewSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:samplesCommon="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
+  x:Class="System.Windows.Controls.Samples.TreeViewSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;!-- Basic TreeView --&gt;
+        &lt;ContentControl Content="TreeView" Style="{StaticResource Header}" /&gt;
+        &lt;TextBlock Style="{StaticResource Information}"&gt;
+            TreeView is a control that displays hierarchical data in a tree
+            structure with items that can expand and collapse.
+        &lt;/TextBlock&gt;
+        &lt;controls:TreeView Margin="5"&gt;
+            &lt;controls:TreeViewItem Header="Controls"&gt;
+                &lt;controls:TreeViewItem Header="AutoCompleteBox" /&gt;
+                &lt;controls:TreeViewItem Header="Expander" /&gt;
+                &lt;controls:TreeViewItem Header="NumericUpDown" /&gt;
+            &lt;/controls:TreeViewItem&gt;
+            &lt;controls:TreeViewItem Header="Layout"&gt;
+                &lt;controls:TreeViewItem Header="DockPanel" /&gt;
+                &lt;controls:TreeViewItem Header="WrapPanel" /&gt;
+                &lt;controls:TreeViewItem Header="Viewbox" /&gt;
+            &lt;/controls:TreeViewItem&gt;
+            &lt;controls:TreeViewItem Header="Charting"&gt;
+                &lt;controls:TreeViewItem Header="ColumnSeries" /&gt;
+                &lt;controls:TreeViewItem Header="LineSeries" /&gt;
+                &lt;controls:TreeViewItem Header="PieSeries" /&gt;
+            &lt;/controls:TreeViewItem&gt;
+        &lt;/controls:TreeView&gt;
+        
+        &lt;!-- TreeViewItems --&gt;
+        &lt;ContentControl Content="TreeViewItem" Style="{StaticResource Header}" /&gt;
+        &lt;TextBlock Style="{StaticResource Information}"&gt;
+            TreeViews are composed of TreeViewItems which can be added to the
+            TreeView.Items collection or assigned to the TreeView.ItemsSource
+            property.  Objects of any type can be added and will be wrapped with
+            TreeViewItems.
+        &lt;/TextBlock&gt;
+        &lt;controls:TreeView Margin="5"&gt;
+            &lt;controls:TreeViewItem Header="TreeViewItems"&gt;
+                &lt;controls:TreeViewItem Header="Can be nested"&gt;
+                    &lt;controls:TreeViewItem Header="To any depth" /&gt;
+                &lt;/controls:TreeViewItem&gt;
+                &lt;controls:TreeViewItem Header="And disabled" IsEnabled="False" /&gt;
+                &lt;controls:TreeViewItem Header="And formatted" Foreground="Purple" FontStyle="Italic" FontSize="12" /&gt;
+                &lt;controls:TreeViewItem Header="Or created"&gt;
+                    &lt;controls:TreeViewItem Header="From objects"&gt;
+                        &lt;system:String&gt;String&lt;/system:String&gt;
+                        &lt;system:Int32&gt;42&lt;/system:Int32&gt;
+                        &lt;system:Double&gt;3.14159&lt;/system:Double&gt;
+                    &lt;/controls:TreeViewItem&gt;
+                    &lt;controls:TreeViewItem Header="From UIElements"&gt;
+                        &lt;Button Content="Button" /&gt;
+                        &lt;CheckBox Content="CheckBox" /&gt;
+                        &lt;TextBox Text="TextBox" /&gt;
+                    &lt;/controls:TreeViewItem&gt;
+                &lt;/controls:TreeViewItem&gt;
+            &lt;/controls:TreeViewItem&gt;
+            &lt;controls:TreeViewItem Header="Setting Items"&gt;
+                &lt;controls:TreeViewItem Header="Via Items"&gt;
+                    &lt;system:String&gt;First&lt;/system:String&gt;
+                    &lt;system:String&gt;Second&lt;/system:String&gt;
+                    &lt;system:String&gt;Third&lt;/system:String&gt;
+                &lt;/controls:TreeViewItem&gt;
+                &lt;controls:TreeViewItem Header="Via ItemsSource"&gt;
+                    &lt;controls:TreeViewItem.ItemsSource&gt;
+                        &lt;toolkit:ObjectCollection&gt;
+                            &lt;system:String&gt;First&lt;/system:String&gt;
+                            &lt;system:String&gt;Second&lt;/system:String&gt;
+                            &lt;system:String&gt;Third&lt;/system:String&gt;
+                        &lt;/toolkit:ObjectCollection&gt;
+                    &lt;/controls:TreeViewItem.ItemsSource&gt;
+                &lt;/controls:TreeViewItem&gt;
+            &lt;/controls:TreeViewItem&gt;
+        &lt;/controls:TreeView&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TreeViewSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Controls;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the TreeView.
+    /// &lt;/summary&gt;
+    [Sample("(0)TreeView", DifficultyLevel.Basic)]
+    [Category("TreeView")]
+    public partial class TreeViewSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the TreeViewSample class.
+        /// &lt;/summary&gt;
+        public TreeViewSample()
+        {
+            InitializeComponent();
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TreeViewSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Diagnostics.CodeAnalysis
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating the TreeView.
+''' &lt;/summary&gt;
+&lt;Sample("(0)TreeView", DifficultyLevel.Basic), Category("TreeView")&gt; _
+Partial Public Class TreeViewSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the TreeViewSample class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,11 @@
+﻿<navigation:Page x:Class="System.Windows.Controls.UnitTests.NavigationCacheModeEnabledPage" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           Title="NavigationCacheModeEnabledPage Page"
+           NavigationCacheMode="Enabled">
+    <StackPanel>
+        <TextBlock Text="This page says its NavigationCacheMode status is Enabled" TextWrapping="Wrap"/>
+        <TextBox x:Name="_textBox"/>
+    </StackPanel>
+</navigation:Page>

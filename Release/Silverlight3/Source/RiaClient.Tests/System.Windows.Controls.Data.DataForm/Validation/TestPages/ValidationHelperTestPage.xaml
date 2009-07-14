@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="System.Windows.Controls.UnitTests.ValidationHelperTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:dctl="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm"  
+    xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"  
+    Width="auto" Height="auto">
+    <Grid x:Name="LayoutRoot">
+        <Grid.Resources>
+            <Style x:Key="sectionBorder" TargetType="Border">
+                <Setter Property="BorderThickness" Value="0, 0, 0, 1" />
+                <Setter Property="BorderBrush" Value="Black" />
+                <Setter Property="Margin" Value="0, 10" />
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="Grid.ColumnSpan" Value="2" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="White" Offset="0.5"/>
+                            <GradientStop Color="#FAFAFF" Offset=".85"/>
+                            <GradientStop Color="#F5F5FF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="sectionText" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontStretch" Value="5" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Foreground" Value="Coral" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Margin" Value="10, 0" />
+            </Style>
+            <Style x:Key="caption" TargetType="ContentControl">
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="Verdana" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Margin" Value="0, 0" />
+            </Style>
+            <Style x:Key="textInputControl" TargetType="TextBox">
+                <Setter Property="Width" Value="180" />
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Grid.Column" Value="2" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Margin" Value="10, 0" />
+            </Style>
+            <ItemsPanelTemplate x:Key="testItemsPanelTemplate">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+            </ItemsPanelTemplate>
+            <Style x:Key="testErrorStyle" TargetType="ListBoxItem" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Button Content="{Binding ErrorMessage}"></Button>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="testWarningStyle" TargetType="ListBoxItem" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Button Content="{Binding}"></Button>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="testDataTemplate">
+                <Button/>
+            </DataTemplate>
+            <Style x:Key="testContentControlStyle" TargetType="ContentControl">
+                <Setter Property="Opacity" Value="8"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#F5F5FF" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <ScrollViewer>
+            <Border BorderBrush="Black" BorderThickness="1, 0" Width="800" Height="auto" HorizontalAlignment="Center" >
+                <Grid x:Name="mainGrid" ShowGridLines="False" Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="550"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="180"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Title -->
+                    <TextBlock FontSize="40" Foreground="DarkSlateGray"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">Silverlight Validation</TextBlock>
+
+                    <!-- Section: Personal Details -->
+                    <Border Grid.Row="2" Style="{StaticResource sectionBorder}">
+                        <TextBlock Style="{StaticResource sectionText}" Text="Personal Details"></TextBlock>
+                    </Border>
+
+                    <!-- Name -->
+                    <ContentControl x:Name="nameContentControl" Grid.Row="3" Style="{StaticResource caption}" />
+                    <TextBox x:Name="nameTextBox" 
+                             Grid.Row="3"
+                             Text="{Binding Name, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" 
+                             Style="{StaticResource textInputControl}" />
+
+                    <!-- Email -->
+                    <ContentControl x:Name="emailContentControl" Grid.Row="4" Style="{StaticResource caption}" />
+                    <TextBox x:Name="emailTextBox" 
+                             Grid.Row="4"
+                             Text="{Binding Email, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" 
+                             Style="{StaticResource textInputControl}" />
+
+                    <!-- Submit -->
+                    <Border Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0, 1, 0, 0" BorderBrush="Black">
+                        <StackPanel Orientation="Horizontal" Width="auto" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Button Content="Submit" Width="120" Height="30" Margin="10, 0" Click="Submit_Click" />
+                            <Button Content="Cancel" Width="120" Height="30" Click="Cancel_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ErrorSummary-->
+                    <dataInput:ErrorSummary x:Name="errorSummary" Grid.Row="6" Width="400" Height="150" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"
+                                 ErrorsSource="{Binding ElementName=mainGrid}" />
+
+                </Grid>
+            </Border>
+
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,175 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{910D6F62-BB80-468B-B03B-9CBEA17339B0}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Testing</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Testing.Theming</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>System.Windows.Controls.Testing.Theming.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>System.Windows.Controls.Testing.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1b331ac6720247d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Reactive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DerivedButton.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ImplicitStyleManager\ImplicitStyleManagerTest.Regressions.cs" />
+    <Compile Include="ImplicitStyleManager\ImplicitStyleManagerTest.cs" />
+    <Compile Include="ImplicitStyleManager\ImplicitStyleManagerTest.Regressions.SL2.cs" />
+    <Compile Include="ImplicitStyleManager\ImplicitStyleManagerTest.SL2.cs" />
+    <Compile Include="ImplicitStyleManager\ResourceNotFoundExceptionTest.cs" />
+    <Compile Include="ImplicitStyleManager\UserControls\BasicScenario.xaml.cs">
+      <DependentUpon>BasicScenario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImplicitStyleManager\UserControls\ContentUserControl.xaml.cs">
+      <DependentUpon>ContentUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImplicitStyleManager\UserControls\ResourcesAboveMode.xaml.cs">
+      <DependentUpon>ResourcesAboveMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImplicitStyleManager\UserControls\SubtreeDifferentMode.xaml.cs">
+      <DependentUpon>SubtreeDifferentMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImplicitStyleManager\UserControls\WithinTemplate.xaml.cs">
+      <DependentUpon>WithinTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagEditor.xaml.cs">
+      <DependentUpon>TagEditor.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImplicitStyleManager\InnerStyleResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="ImplicitStyleManager\OuterStyleResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="ImplicitStyleManager\ListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Resource>
+    <Page Include="ImplicitStyleManager\UserControls\BasicScenario.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="ImplicitStyleManager\UserControls\ContentUserControl.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="ImplicitStyleManager\UserControls\ResourcesAboveMode.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="ImplicitStyleManager\UserControls\SubtreeDifferentMode.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ImplicitStyleManager\UserControls\WithinTemplate.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="TagEditor.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Testing.Common\Controls.Testing.Common.csproj">
+      <Project>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</Project>
+      <Name>Controls.Testing.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Theming.Toolkit\Controls.Theming.Toolkit.csproj">
+      <Project>{94D59978-57A5-4EF9-8659-D33DD73A50C7}</Project>
+      <Name>Controls.Theming.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

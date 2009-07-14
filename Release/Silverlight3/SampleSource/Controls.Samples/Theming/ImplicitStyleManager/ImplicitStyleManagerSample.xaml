@@ -1,0 +1,397 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.ImplicitStyleManagerSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:themingToolkit="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit"
+
+    
+    xmlns:local="clr-namespace:System.Windows.Controls.Samples">
+    <StackPanel>
+        <Grid Background="White">
+            <StackPanel>
+
+                <!-- ISM using element -->
+                <ContentControl Content="Implicit styling applied to elements inside border" Style="{StaticResource Header}" />
+                <StackPanel>
+                    <Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime">
+                        <Border.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Foreground" Value="Green" />
+                            </Style>
+                            <Style  TargetType="TextBox">
+                                <Setter Property="FontSize" Value="10.5"/>
+                                <Setter Property="FontFamily" Value="Trebuchet MS"/>
+                                <Setter Property="Foreground" Value="#FF00FF00" />
+                            </Style>
+                        </Border.Resources>
+                        <StackPanel>
+                            <Button Content="Button inside border" />
+                            <TextBox Text="TextBox inside border"></TextBox>
+                        </StackPanel>
+                    </Border>
+                    <Button Content="Button outside border" />
+                </StackPanel>
+
+                <!-- Nested ISM using Element -->
+                <ContentControl Content="Implicit styling applied to nested borders" Style="{StaticResource Header}" />
+                <StackPanel>
+                    <Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime">
+                        <Border.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Foreground" Value="Green" />
+                            </Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="Green" />
+                            </Style>
+                        </Border.Resources>
+                        <StackPanel>
+                            <Button Content="Outer button styled" />
+                            <TextBlock>Outer textblock styled</TextBlock>
+                            <Border BorderBrush="Red" BorderThickness="2" Padding="5" Margin="5" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime">
+                                <Border.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Foreground" Value="Orange" />
+                                    </Style>
+                                </Border.Resources>
+                                <StackPanel>
+                                    <Button Content="Button using style local to inner border" />
+                                    <TextBlock>TextBlock using outer border style because no inner border style is defined</TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                    <Button Content="Unstyled button outside of all borders" />
+                </StackPanel>
+
+                <!-- Resource Dictionary -->
+                <ContentControl Content="Container styled using resource dictionary retrieved from a resource file" Style="{StaticResource Header}" />
+                <Border
+                BorderBrush="Green"
+                BorderThickness="2"
+                Padding="5"
+                Margin="5"
+                themingToolkit:ImplicitStyleManager.ApplyMode="OneTime"
+                themingToolkit:ImplicitStyleManager.ResourceDictionaryUri="Theming/ImplicitStyleManager/ImplicitStyleManagerTheme.xaml">
+                    <StackPanel>
+                        <Button Foreground="White" Content="This is a button" Width="200" />
+                        <CheckBox></CheckBox>
+                        <TextBox Text="Are you hungry?" />
+                        <ListBox Height="40">
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                            <ListBoxItem Content="This is an item" />
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                <Button Content="Button outside of styled container" />
+
+                <!-- Dynamic styles -->
+                <ContentControl Content="Implicit styling applied to child elements dynamically added to border" Style="{StaticResource Header}" />
+                <Button Content="Add button to container" Click="AddButtonToContainerButton_Click"  />
+                <Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5">
+                    <StackPanel>
+                        <StackPanel themingToolkit:ImplicitStyleManager.ApplyMode="Auto">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="Green" />
+                                </Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="Green" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel x:Name="dynamicContainer">
+                                <Button Content="Button inside border" />
+                                <TextBlock>TextBlock inside border</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Manual apply -->
+                <ContentControl Content="Manually apply styles to children inside a border" Style="{StaticResource Header}" />
+                <Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5">
+                    <StackPanel>
+                        <StackPanel x:Name="manualContainer" themingToolkit:ImplicitStyleManager.ApplyMode="None">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="Green" />
+                                </Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="Green" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel>
+                                <Button Content="Button inside border" />
+                                <TextBlock>TextBlock inside border</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Button Content="Apply styles manually" Click="ApplyStylesManuallyButton_Click" />
+            </StackPanel>
+        </Grid>
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="ImplicitStyleManagerSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.ImplicitStyleManagerSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:themingToolkit="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit"
+
+    
+    xmlns:local="clr-namespace:System.Windows.Controls.Samples"&gt;
+    &lt;StackPanel&gt;
+        &lt;Grid Background="White"&gt;
+            &lt;StackPanel&gt;
+
+                &lt;!-- ISM using element --&gt;
+                &lt;ContentControl Content="Implicit styling applied to elements inside border" Style="{StaticResource Header}" /&gt;
+                &lt;StackPanel&gt;
+                    &lt;Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime"&gt;
+                        &lt;Border.Resources&gt;
+                            &lt;Style TargetType="Button"&gt;
+                                &lt;Setter Property="Foreground" Value="Green" /&gt;
+                            &lt;/Style&gt;
+                            &lt;Style  TargetType="TextBox"&gt;
+                                &lt;Setter Property="FontSize" Value="10.5"/&gt;
+                                &lt;Setter Property="FontFamily" Value="Trebuchet MS"/&gt;
+                                &lt;Setter Property="Foreground" Value="#FF00FF00" /&gt;
+                            &lt;/Style&gt;
+                        &lt;/Border.Resources&gt;
+                        &lt;StackPanel&gt;
+                            &lt;Button Content="Button inside border" /&gt;
+                            &lt;TextBox Text="TextBox inside border"&gt;&lt;/TextBox&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/Border&gt;
+                    &lt;Button Content="Button outside border" /&gt;
+                &lt;/StackPanel&gt;
+
+                &lt;!-- Nested ISM using Element --&gt;
+                &lt;ContentControl Content="Implicit styling applied to nested borders" Style="{StaticResource Header}" /&gt;
+                &lt;StackPanel&gt;
+                    &lt;Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime"&gt;
+                        &lt;Border.Resources&gt;
+                            &lt;Style TargetType="Button"&gt;
+                                &lt;Setter Property="Foreground" Value="Green" /&gt;
+                            &lt;/Style&gt;
+                            &lt;Style TargetType="TextBlock"&gt;
+                                &lt;Setter Property="Foreground" Value="Green" /&gt;
+                            &lt;/Style&gt;
+                        &lt;/Border.Resources&gt;
+                        &lt;StackPanel&gt;
+                            &lt;Button Content="Outer button styled" /&gt;
+                            &lt;TextBlock&gt;Outer textblock styled&lt;/TextBlock&gt;
+                            &lt;Border BorderBrush="Red" BorderThickness="2" Padding="5" Margin="5" themingToolkit:ImplicitStyleManager.ApplyMode="OneTime"&gt;
+                                &lt;Border.Resources&gt;
+                                    &lt;Style TargetType="Button"&gt;
+                                        &lt;Setter Property="Foreground" Value="Orange" /&gt;
+                                    &lt;/Style&gt;
+                                &lt;/Border.Resources&gt;
+                                &lt;StackPanel&gt;
+                                    &lt;Button Content="Button using style local to inner border" /&gt;
+                                    &lt;TextBlock&gt;TextBlock using outer border style because no inner border style is defined&lt;/TextBlock&gt;
+                                &lt;/StackPanel&gt;
+                            &lt;/Border&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/Border&gt;
+                    &lt;Button Content="Unstyled button outside of all borders" /&gt;
+                &lt;/StackPanel&gt;
+
+                &lt;!-- Resource Dictionary --&gt;
+                &lt;ContentControl Content="Container styled using resource dictionary retrieved from a resource file" Style="{StaticResource Header}" /&gt;
+                &lt;Border
+                BorderBrush="Green"
+                BorderThickness="2"
+                Padding="5"
+                Margin="5"
+                themingToolkit:ImplicitStyleManager.ApplyMode="OneTime"
+                themingToolkit:ImplicitStyleManager.ResourceDictionaryUri="Theming/ImplicitStyleManager/ImplicitStyleManagerTheme.xaml"&gt;
+                    &lt;StackPanel&gt;
+                        &lt;Button Foreground="White" Content="This is a button" Width="200" /&gt;
+                        &lt;CheckBox&gt;&lt;/CheckBox&gt;
+                        &lt;TextBox Text="Are you hungry?" /&gt;
+                        &lt;ListBox Height="40"&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                            &lt;ListBoxItem Content="This is an item" /&gt;
+                        &lt;/ListBox&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/Border&gt;
+                &lt;Button Content="Button outside of styled container" /&gt;
+
+                &lt;!-- Dynamic styles --&gt;
+                &lt;ContentControl Content="Implicit styling applied to child elements dynamically added to border" Style="{StaticResource Header}" /&gt;
+                &lt;Button Content="Add button to container" Click="AddButtonToContainerButton_Click"  /&gt;
+                &lt;Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5"&gt;
+                    &lt;StackPanel&gt;
+                        &lt;StackPanel themingToolkit:ImplicitStyleManager.ApplyMode="Auto"&gt;
+                            &lt;StackPanel.Resources&gt;
+                                &lt;Style TargetType="Button"&gt;
+                                    &lt;Setter Property="Foreground" Value="Green" /&gt;
+                                &lt;/Style&gt;
+                                &lt;Style TargetType="TextBlock"&gt;
+                                    &lt;Setter Property="Foreground" Value="Green" /&gt;
+                                &lt;/Style&gt;
+                            &lt;/StackPanel.Resources&gt;
+                            &lt;StackPanel x:Name="dynamicContainer"&gt;
+                                &lt;Button Content="Button inside border" /&gt;
+                                &lt;TextBlock&gt;TextBlock inside border&lt;/TextBlock&gt;
+                            &lt;/StackPanel&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/Border&gt;
+
+                &lt;!-- Manual apply --&gt;
+                &lt;ContentControl Content="Manually apply styles to children inside a border" Style="{StaticResource Header}" /&gt;
+                &lt;Border BorderBrush="Green" BorderThickness="2" Padding="5" Margin="5"&gt;
+                    &lt;StackPanel&gt;
+                        &lt;StackPanel x:Name="manualContainer" themingToolkit:ImplicitStyleManager.ApplyMode="None"&gt;
+                            &lt;StackPanel.Resources&gt;
+                                &lt;Style TargetType="Button"&gt;
+                                    &lt;Setter Property="Foreground" Value="Green" /&gt;
+                                &lt;/Style&gt;
+                                &lt;Style TargetType="TextBlock"&gt;
+                                    &lt;Setter Property="Foreground" Value="Green" /&gt;
+                                &lt;/Style&gt;
+                            &lt;/StackPanel.Resources&gt;
+                            &lt;StackPanel&gt;
+                                &lt;Button Content="Button inside border" /&gt;
+                                &lt;TextBlock&gt;TextBlock inside border&lt;/TextBlock&gt;
+                            &lt;/StackPanel&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/Border&gt;
+                &lt;Button Content="Apply styles manually" Click="ApplyStylesManuallyButton_Click" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ImplicitStyleManagerSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using System.Windows.Controls.Theming;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating StyleHelper control.
+    /// &lt;/summary&gt;
+    [Sample("ImplicitStyleManager", DifficultyLevel.Basic)]
+    [Category("ImplicitStyleManager")]
+    public partial class ImplicitStyleManagerSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Class constructor.
+        /// &lt;/summary&gt;
+        public ImplicitStyleManagerSample()
+        {
+            InitializeComponent();
+        }
+
+        /// &lt;summary&gt;
+        /// Applies styles to a container manually.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The source of the event.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Information about the event.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Xaml uses it.")]
+        private void ApplyStylesManuallyButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ImplicitStyleManager.Apply(manualContainer);
+        }
+
+        /// &lt;summary&gt;
+        /// Adds a button to a container to style it.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The source of the event.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Information about the event.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "XAML uses it.")]
+        private void AddButtonToContainerButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            dynamicContainer.Children.Add(new Button { Content = "New styled button" });
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ImplicitStyleManagerSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.Windows.Controls
+Imports System.Windows.Controls.Theming
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating StyleHelper control.
+''' &lt;/summary&gt;
+&lt;Sample("ImplicitStyleManager", DifficultyLevel.Basic), Category("ImplicitStyleManager")&gt; _
+Partial Public Class ImplicitStyleManagerSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Class constructor.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Applies styles to a container manually.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The source of the event.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Information about the event.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Xaml uses it.")&gt; _
+    Private Sub ApplyStylesManuallyButton_Click(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs)
+        ImplicitStyleManager.Apply(manualContainer)
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Adds a button to a container to style it.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The source of the event.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Information about the event.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="XAML uses it.")&gt; _
+    Private Sub AddButtonToContainerButton_Click(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs)
+        dynamicContainer.Children.Add(New Button With {.Content = "New styled button"})
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

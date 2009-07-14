@@ -1,0 +1,397 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  x:Class="System.Windows.Controls.Samples.HeaderedContentControlSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="DemoButton" TargetType="Button">
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Content" Value="Content" />
+            </Style>
+            <Style x:Key="CenteredContent" TargetType="controlsToolkit:HeaderedContentControl">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Header" Value="Header" />
+                <Setter Property="Content" Value="Content" />
+            </Style>
+        </StackPanel.Resources>
+        
+        <!-- Basic Usage -->
+        <ContentControl Content="Basic Usage" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="string"  FontWeight="Bold"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="button" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="template"/>
+            
+            <controlsToolkit:HeaderedContentControl Grid.Row="1" Grid.Column="0" Style="{StaticResource CenteredContent}">
+            </controlsToolkit:HeaderedContentControl>
+            <controlsToolkit:HeaderedContentControl Grid.Row="1" Grid.Column="1" Style="{StaticResource CenteredContent}">
+                <controlsToolkit:HeaderedContentControl.Header>
+                    <Button Content="{Binding}" Style="{StaticResource DemoButton}"></Button>
+                </controlsToolkit:HeaderedContentControl.Header>
+                <controlsToolkit:HeaderedContentControl.Content>
+                    <Button Content="Content" Style="{StaticResource DemoButton}"></Button>
+                </controlsToolkit:HeaderedContentControl.Content>
+            </controlsToolkit:HeaderedContentControl>
+            <controlsToolkit:HeaderedContentControl Grid.Row="1" Grid.Column="2" Style="{StaticResource CenteredContent}">
+                <controlsToolkit:HeaderedContentControl.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Foreground="Red" Text="{Binding}"></TextBlock>
+                    </DataTemplate>
+                </controlsToolkit:HeaderedContentControl.HeaderTemplate>
+                <controlsToolkit:HeaderedContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource DemoButton}" Content="{Binding}"></Button>
+                    </DataTemplate>
+                </controlsToolkit:HeaderedContentControl.ContentTemplate>
+            </controlsToolkit:HeaderedContentControl>
+        </Grid>
+        
+        <!-- Interactive Usage -->
+        <ContentControl Content="Interactive Usage" Style="{StaticResource Header}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <controlsToolkit:HeaderedContentControl x:Name="HCC" />
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Header:" Grid.Row="0" Grid.Column="0" />
+                <TextBox x:Name="tbHeader" Grid.Row="0" Grid.Column="1" />
+                <TextBlock Text="HeaderTemplate:" Grid.Row="1" Grid.Column="0" />
+                <TextBox x:Name="tbHeaderTemplate" Grid.Row="1" Grid.Column="1" />
+                <TextBlock Text="Content:" Grid.Row="2" Grid.Column="0" />
+                <TextBox x:Name="tbContent" Grid.Row="2" Grid.Column="1" />
+                <TextBlock Text="ContentTemplate:" Grid.Row="3" Grid.Column="0" />
+                <TextBox x:Name="tbContentTemplate" Grid.Row="3" Grid.Column="1" />
+                <Button x:Name="btnChange" Grid.Row="4" Grid.ColumnSpan="2" 
+                        HorizontalAlignment="Center" Content="Change!" />
+            </Grid>
+        </Grid>
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="HeaderedContentControlSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  x:Class="System.Windows.Controls.Samples.HeaderedContentControlSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="DemoButton" TargetType="Button"&gt;
+                &lt;Setter Property="Margin" Value="2" /&gt;
+                &lt;Setter Property="Content" Value="Content" /&gt;
+            &lt;/Style&gt;
+            &lt;Style x:Key="CenteredContent" TargetType="controlsToolkit:HeaderedContentControl"&gt;
+                &lt;Setter Property="HorizontalAlignment" Value="Center" /&gt;
+                &lt;Setter Property="VerticalAlignment" Value="Center" /&gt;
+                &lt;Setter Property="Header" Value="Header" /&gt;
+                &lt;Setter Property="Content" Value="Content" /&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+        
+        &lt;!-- Basic Usage --&gt;
+        &lt;ContentControl Content="Basic Usage" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="*" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+
+            &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="string"  FontWeight="Bold"/&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="button" /&gt;
+            &lt;TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="template"/&gt;
+            
+            &lt;controlsToolkit:HeaderedContentControl Grid.Row="1" Grid.Column="0" Style="{StaticResource CenteredContent}"&gt;
+            &lt;/controlsToolkit:HeaderedContentControl&gt;
+            &lt;controlsToolkit:HeaderedContentControl Grid.Row="1" Grid.Column="1" Style="{StaticResource CenteredContent}"&gt;
+                &lt;controlsToolkit:HeaderedContentControl.Header&gt;
+                    &lt;Button Content="{Binding}" Style="{StaticResource DemoButton}"&gt;&lt;/Button&gt;
+                &lt;/controlsToolkit:HeaderedContentControl.Header&gt;
+                &lt;controlsToolkit:HeaderedContentControl.Content&gt;
+                    &lt;Button Content="Content" Style="{StaticResource DemoButton}"&gt;&lt;/Button&gt;
+                &lt;/controlsToolkit:HeaderedContentControl.Content&gt;
+            &lt;/controlsToolkit:HeaderedContentControl&gt;
+            &lt;controlsToolkit:HeaderedContentControl Grid.Row="1" Grid.Column="2" Style="{StaticResource CenteredContent}"&gt;
+                &lt;controlsToolkit:HeaderedContentControl.HeaderTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextBlock Foreground="Red" Text="{Binding}"&gt;&lt;/TextBlock&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/controlsToolkit:HeaderedContentControl.HeaderTemplate&gt;
+                &lt;controlsToolkit:HeaderedContentControl.ContentTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;Button Style="{StaticResource DemoButton}" Content="{Binding}"&gt;&lt;/Button&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/controlsToolkit:HeaderedContentControl.ContentTemplate&gt;
+            &lt;/controlsToolkit:HeaderedContentControl&gt;
+        &lt;/Grid&gt;
+        
+        &lt;!-- Interactive Usage --&gt;
+        &lt;ContentControl Content="Interactive Usage" Style="{StaticResource Header}" /&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="200" /&gt;
+                &lt;ColumnDefinition Width="*" /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid&gt;
+                &lt;controlsToolkit:HeaderedContentControl x:Name="HCC" /&gt;
+            &lt;/Grid&gt;
+            &lt;Grid Grid.Column="1"&gt;
+                &lt;Grid.ColumnDefinitions&gt;
+                    &lt;ColumnDefinition Width="Auto" /&gt;
+                    &lt;ColumnDefinition Width="*" /&gt;
+                &lt;/Grid.ColumnDefinitions&gt;
+                &lt;Grid.RowDefinitions&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;RowDefinition Height="*" /&gt;
+                &lt;/Grid.RowDefinitions&gt;
+                &lt;TextBlock Text="Header:" Grid.Row="0" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbHeader" Grid.Row="0" Grid.Column="1" /&gt;
+                &lt;TextBlock Text="HeaderTemplate:" Grid.Row="1" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbHeaderTemplate" Grid.Row="1" Grid.Column="1" /&gt;
+                &lt;TextBlock Text="Content:" Grid.Row="2" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbContent" Grid.Row="2" Grid.Column="1" /&gt;
+                &lt;TextBlock Text="ContentTemplate:" Grid.Row="3" Grid.Column="0" /&gt;
+                &lt;TextBox x:Name="tbContentTemplate" Grid.Row="3" Grid.Column="1" /&gt;
+                &lt;Button x:Name="btnChange" Grid.Row="4" Grid.ColumnSpan="2" 
+                        HorizontalAlignment="Center" Content="Change!" /&gt;
+            &lt;/Grid&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="HeaderedContentControlSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Markup;
+using System.Windows.Media;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the HeaderedContentControl.
+    /// &lt;/summary&gt;
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Headered", Justification = "Name of the control")]
+    [Sample("HeaderedContentControl", DifficultyLevel.Basic)]
+    [Category("Expander")]
+    public partial class HeaderedContentControlSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the HeaderedContentControlSample class.
+        /// &lt;/summary&gt;
+        public HeaderedContentControlSample()
+        {
+            InitializeComponent();
+
+            Loaded += OnLoaded;
+        }
+
+        /// &lt;summary&gt;
+        /// Load the demonstration.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sample page.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            btnChange.Click += ChangeSettings;
+        }
+
+        /// &lt;summary&gt;
+        /// Change ContentControl settings (Header, HeaderTemplate, Content, ContentTemplate).
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sender Button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event args.&lt;/param&gt;
+        private void ChangeSettings(object sender, RoutedEventArgs e)
+        {
+            HCC.Header = tbHeader.Text;
+            HCC.Content = tbContent.Text;
+
+            if (String.IsNullOrEmpty(tbHeaderTemplate.Text))
+            {
+                HCC.ClearValue(HeaderedContentControl.HeaderTemplateProperty);
+            }
+            else
+            {
+                try
+                {
+                    HCC.HeaderTemplate = (DataTemplate)XamlReader.Load(AddXmlNS(tbHeaderTemplate.Text));
+                    tbHeaderTemplate.Foreground = new SolidColorBrush(Colors.Black);
+                }
+                catch (XamlParseException)
+                {
+                    tbHeaderTemplate.Foreground = new SolidColorBrush(Colors.Red);
+                }
+            }
+
+            if (string.IsNullOrEmpty(tbContentTemplate.Text))
+            {
+                HCC.ClearValue(HeaderedContentControl.ContentTemplateProperty);
+            }
+            else
+            {
+                try
+                {
+                    HCC.ContentTemplate = (DataTemplate)XamlReader.Load(AddXmlNS(tbContentTemplate.Text));
+                    tbContentTemplate.Foreground = new SolidColorBrush(Colors.Black);
+                }
+                catch (XamlParseException)
+                {
+                    tbContentTemplate.Foreground = new SolidColorBrush(Colors.Red);
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Utility function to add xmlns to user inputed template string.
+        /// &lt;/summary&gt;
+        /// &lt;param name="s"&gt;User input template string.&lt;/param&gt;
+        /// &lt;returns&gt;Well formated xaml with xmlns added.&lt;/returns&gt;
+        private static string AddXmlNS(string s)
+        {
+            string xmlns = @" xmlns=""http://schemas.microsoft.com/client/2007""
+                              xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""
+                              xmlns:controls=""clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"" ";
+            int i = s.IndexOf("&gt;", StringComparison.Ordinal);
+            return (i == -1) ? "&gt;/" : s.Substring(0, i) + xmlns + s.Substring(i);
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="HeaderedContentControlSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Diagnostics.CodeAnalysis
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.Windows.Markup
+Imports System.Windows.Media
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating the HeaderedContentControl.
+''' &lt;/summary&gt;
+&lt;SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId:="Headered", Justification:="Name of the control"), Sample("HeaderedContentControl", DifficultyLevel.Basic), Category("Expander")&gt; _
+Partial Public Class HeaderedContentControlSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the HeaderedContentControlSample class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Change ContentControl settings (Header, HeaderTemplate, Content, ContentTemplate).
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;Sender Button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event args.&lt;/param&gt;
+    Private Sub ChangeSettings(ByVal sender As Object, ByVal e As RoutedEventArgs) Handles btnChange.Click
+        HCC.Header = tbHeader.Text
+        HCC.Content = tbContent.Text
+
+        If String.IsNullOrEmpty(tbHeaderTemplate.Text) Then
+            HCC.ClearValue(HeaderedContentControl.HeaderTemplateProperty)
+        Else
+            Try
+                HCC.HeaderTemplate = CType(XamlReader.Load(AddXmlNS(tbHeaderTemplate.Text)), DataTemplate)
+                tbHeaderTemplate.Foreground = New SolidColorBrush(Colors.Black)
+            Catch e1 As XamlParseException
+                tbHeaderTemplate.Foreground = New SolidColorBrush(Colors.Red)
+            End Try
+        End If
+
+        If String.IsNullOrEmpty(tbContentTemplate.Text) Then
+            HCC.ClearValue(HeaderedContentControl.ContentTemplateProperty)
+        Else
+            Try
+                HCC.ContentTemplate = CType(XamlReader.Load(AddXmlNS(tbContentTemplate.Text)), DataTemplate)
+                tbContentTemplate.Foreground = New SolidColorBrush(Colors.Black)
+            Catch e2 As XamlParseException
+                tbContentTemplate.Foreground = New SolidColorBrush(Colors.Red)
+            End Try
+        End If
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Utility function to add xmlns to user inputed template string.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="s"&gt;User input template string.&lt;/param&gt;
+    ''' &lt;returns&gt;Well formated xaml with xmlns added.&lt;/returns&gt;
+    Private Shared Function AddXmlNS(ByVal s As String) As String
+        Dim xmlns As String = " xmlns=""http://schemas.microsoft.com/client/2007""" &amp; ControlChars.CrLf &amp; _
+        "                              xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""" &amp; ControlChars.CrLf &amp; _
+        "                              xmlns:controls=""clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"" "
+        Dim i As Integer = s.IndexOf("&gt;", StringComparison.Ordinal)
+        Return If((i = -1), "&gt;/", s.Substring(0, i) &amp; xmlns &amp; s.Substring(i))
+    End Function
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,1157 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:toolkitPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Toolkit"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  xmlns:samples="clr-namespace:System.Windows.Controls.Samples"
+  x:Class="System.Windows.Controls.Samples.GlobalCalendarHolidaysSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="BasicDayButtonStyle" TargetType="toolkitPrimitives:GlobalCalendarDayButton">
+                <Setter Property="Background" Value="#FFBADDE9" />
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="MinWidth" Value="5" />
+                <Setter Property="MinHeight" Value="5" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="toolkitPrimitives:GlobalCalendarDayButton">
+                            <Grid>
+                                <vsm:VisualStateManager.VisualStateGroups>
+                                    <vsm:VisualStateGroup x:Name="CommonStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition GeneratedDuration="0:0:0.1" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="Normal" />
+                                        <vsm:VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="Background"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".7"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="Background"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".7"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="Background"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To="0"
+                                                  Duration="0" />
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="Content"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".35"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="SelectionStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition GeneratedDuration="0" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="Unselected" />
+                                        <vsm:VisualState x:Name="Selected">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="SelectedBackground"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".75"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="CalendarButtonFocusStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition GeneratedDuration="0" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="CalendarButtonFocused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames
+                                                  Storyboard.TargetName="FocusVisual"
+                                                  Storyboard.TargetProperty="Visibility"
+                                                  Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="CalendarButtonUnfocused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames
+                                                  Storyboard.TargetName="FocusVisual"
+                                                  Storyboard.TargetProperty="Visibility"
+                                                  Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="ActiveStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition GeneratedDuration="0" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="Active" />
+                                        <vsm:VisualState x:Name="Inactive">
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                  Storyboard.TargetName="RegularDayGradientStart"
+                                                  Storyboard.TargetProperty="Color"
+                                                  To="#FF777777"
+                                                  Duration="0" />
+                                                <ColorAnimation
+                                                  Storyboard.TargetName="RegularDayGradientEnd"
+                                                  Storyboard.TargetProperty="Color"
+                                                  To="#FF777777"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="DayStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition GeneratedDuration="0" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="RegularDay" />
+                                        <vsm:VisualState x:Name="Today">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="TodayBackground"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To="1"
+                                                  Duration="0" />
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="TodayGradientEnd"
+                                                  Storyboard.TargetProperty="Offset"
+                                                  To="1"
+                                                  Duration="0" />
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="RegularDayGradientStart"
+                                                  Storyboard.TargetProperty="Offset"
+                                                  To="1"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="BlackoutDayStates">
+                                        <vsm:VisualStateGroup.Transitions>
+                                            <vsm:VisualTransition GeneratedDuration="0" />
+                                        </vsm:VisualStateGroup.Transitions>
+                                        <vsm:VisualState x:Name="NormalDay" />
+                                        <vsm:VisualState x:Name="BlackoutDay">
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                  Storyboard.TargetName="BlackoutVisual"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".2"
+                                                  Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                </vsm:VisualStateManager.VisualStateGroups>
+
+                                <Rectangle
+                                  x:Name="TodayBackground"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Opacity="0"
+                                  Fill="#FFAAAAAA" />
+                                <Rectangle
+                                  x:Name="SelectedBackground"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Opacity="0"
+                                  Fill="{TemplateBinding Background}" />
+                                <Rectangle
+                                  x:Name="Background"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Opacity=".5"
+                                  Fill="{TemplateBinding Background}" />
+                                <ContentControl
+                                  x:Name="Content"
+                                  IsTabStop="False"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  FontSize="{TemplateBinding FontSize}"
+                                  Margin="5,1,5,1">
+                                    <ContentControl.Foreground>
+                                        <LinearGradientBrush>
+                                            <GradientStop x:Name="TodayGradientStart" Offset="0" Color="#FFFFFFFF" />
+                                            <GradientStop x:Name="TodayGradientEnd" Offset="0" Color="#FFFFFFFF" />
+                                            <GradientStop x:Name="RegularDayGradientStart" Offset="0" Color="#FF333333" />
+                                            <GradientStop x:Name="RegularDayGradientEnd" Offset="1" Color="#FF333333" />
+                                        </LinearGradientBrush>
+                                    </ContentControl.Foreground>
+                                </ContentControl>
+
+                                <Path
+                                  x:Name="BlackoutVisual"
+                                  Opacity="0"
+                                  Margin="3"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  RenderTransformOrigin="0.5,0.5"
+                                  Fill="#FF000000"
+                                  Stretch="Fill"
+                                  Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z" />
+                                <Rectangle
+                                  x:Name="FocusVisual"
+                                  Visibility="Collapsed"
+                                  IsHitTestVisible="false"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Stroke="#FF6DBDD1" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </StackPanel.Resources>
+
+        <TextBlock Text="U.S. Federal Holidays: " />
+        <toolkit:GlobalCalendar SelectionMode="MultipleRange">
+            <toolkit:GlobalCalendar.CalendarDayButtonStyleSelector>
+                <samples:HolidayDayButtonStyleSelector>
+                    <samples:HolidayDayButtonStyleSelector.HolidayStyle>
+                        <Style
+                          TargetType="toolkitPrimitives:GlobalCalendarDayButton"
+                          BasedOn="{StaticResource BasicDayButtonStyle}">
+                            <Setter Property="Background" Value="LightGreen" />
+                        </Style>
+                    </samples:HolidayDayButtonStyleSelector.HolidayStyle>
+                    <samples:HolidayDayButtonStyleSelector.Holidays>
+                        <samples:ExactHoliday Title="New Year's Day" Date="01/01/2009" />
+                        <samples:RelativeHoliday Title="Birthday of Martin Luther King, Jr." Month="1" DayOfWeek="Monday" DayOfWeekNumber="3" />
+                        <samples:RelativeHoliday Title="Washington’s Birthday" Month="2" DayOfWeek="Monday" DayOfWeekNumber="3" />
+                        <samples:RelativeHoliday Title="Memorial Day" Month="5" DayOfWeek="Monday" DayOfWeekNumber="-1" />
+                        <samples:ExactHoliday Title="Independence Day" Date="07/04/2009" />
+                        <samples:RelativeHoliday Title="Labor Day" Month="9" DayOfWeek="Monday" DayOfWeekNumber="1" />
+                        <samples:RelativeHoliday Title="Columbus Day" Month="10" DayOfWeek="Monday" DayOfWeekNumber="2" />
+                        <samples:ExactHoliday Title="Verterans Day" Date="11/11/2009" />
+                        <samples:RelativeHoliday Title="Thanksgiving Day" Month="11" DayOfWeek="Thursday" DayOfWeekNumber="4" />
+                        <samples:ExactHoliday Title="Christmas Day" Date="12/25/2009" />
+                    </samples:HolidayDayButtonStyleSelector.Holidays>
+                </samples:HolidayDayButtonStyleSelector>
+            </toolkit:GlobalCalendar.CalendarDayButtonStyleSelector>
+        </toolkit:GlobalCalendar>
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="GlobalCalendarHolidaysSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:toolkitPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Toolkit"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  xmlns:samples="clr-namespace:System.Windows.Controls.Samples"
+  x:Class="System.Windows.Controls.Samples.GlobalCalendarHolidaysSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="BasicDayButtonStyle" TargetType="toolkitPrimitives:GlobalCalendarDayButton"&gt;
+                &lt;Setter Property="Background" Value="#FFBADDE9" /&gt;
+                &lt;Setter Property="FontSize" Value="10" /&gt;
+                &lt;Setter Property="HorizontalContentAlignment" Value="Center" /&gt;
+                &lt;Setter Property="VerticalContentAlignment" Value="Center" /&gt;
+                &lt;Setter Property="MinWidth" Value="5" /&gt;
+                &lt;Setter Property="MinHeight" Value="5" /&gt;
+                &lt;Setter Property="Template"&gt;
+                    &lt;Setter.Value&gt;
+                        &lt;ControlTemplate TargetType="toolkitPrimitives:GlobalCalendarDayButton"&gt;
+                            &lt;Grid&gt;
+                                &lt;vsm:VisualStateManager.VisualStateGroups&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="CommonStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition GeneratedDuration="0:0:0.1" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="Normal" /&gt;
+                                        &lt;vsm:VisualState x:Name="MouseOver"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="Background"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".7"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Pressed"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="Background"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".7"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="Disabled"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="Background"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To="0"
+                                                  Duration="0" /&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="Content"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".35"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="SelectionStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition GeneratedDuration="0" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="Unselected" /&gt;
+                                        &lt;vsm:VisualState x:Name="Selected"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="SelectedBackground"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".75"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="CalendarButtonFocusStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition GeneratedDuration="0" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="CalendarButtonFocused"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ObjectAnimationUsingKeyFrames
+                                                  Storyboard.TargetName="FocusVisual"
+                                                  Storyboard.TargetProperty="Visibility"
+                                                  Duration="0"&gt;
+                                                    &lt;DiscreteObjectKeyFrame KeyTime="0" Value="Visible" /&gt;
+                                                &lt;/ObjectAnimationUsingKeyFrames&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                        &lt;vsm:VisualState x:Name="CalendarButtonUnfocused"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ObjectAnimationUsingKeyFrames
+                                                  Storyboard.TargetName="FocusVisual"
+                                                  Storyboard.TargetProperty="Visibility"
+                                                  Duration="0"&gt;
+                                                    &lt;DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" /&gt;
+                                                &lt;/ObjectAnimationUsingKeyFrames&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="ActiveStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition GeneratedDuration="0" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="Active" /&gt;
+                                        &lt;vsm:VisualState x:Name="Inactive"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;ColorAnimation
+                                                  Storyboard.TargetName="RegularDayGradientStart"
+                                                  Storyboard.TargetProperty="Color"
+                                                  To="#FF777777"
+                                                  Duration="0" /&gt;
+                                                &lt;ColorAnimation
+                                                  Storyboard.TargetName="RegularDayGradientEnd"
+                                                  Storyboard.TargetProperty="Color"
+                                                  To="#FF777777"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="DayStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition GeneratedDuration="0" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="RegularDay" /&gt;
+                                        &lt;vsm:VisualState x:Name="Today"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="TodayBackground"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To="1"
+                                                  Duration="0" /&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="TodayGradientEnd"
+                                                  Storyboard.TargetProperty="Offset"
+                                                  To="1"
+                                                  Duration="0" /&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="RegularDayGradientStart"
+                                                  Storyboard.TargetProperty="Offset"
+                                                  To="1"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                    &lt;vsm:VisualStateGroup x:Name="BlackoutDayStates"&gt;
+                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                            &lt;vsm:VisualTransition GeneratedDuration="0" /&gt;
+                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                        &lt;vsm:VisualState x:Name="NormalDay" /&gt;
+                                        &lt;vsm:VisualState x:Name="BlackoutDay"&gt;
+                                            &lt;Storyboard&gt;
+                                                &lt;DoubleAnimation
+                                                  Storyboard.TargetName="BlackoutVisual"
+                                                  Storyboard.TargetProperty="Opacity"
+                                                  To=".2"
+                                                  Duration="0" /&gt;
+                                            &lt;/Storyboard&gt;
+                                        &lt;/vsm:VisualState&gt;
+                                    &lt;/vsm:VisualStateGroup&gt;
+                                &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
+
+                                &lt;Rectangle
+                                  x:Name="TodayBackground"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Opacity="0"
+                                  Fill="#FFAAAAAA" /&gt;
+                                &lt;Rectangle
+                                  x:Name="SelectedBackground"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Opacity="0"
+                                  Fill="{TemplateBinding Background}" /&gt;
+                                &lt;Rectangle
+                                  x:Name="Background"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Opacity=".5"
+                                  Fill="{TemplateBinding Background}" /&gt;
+                                &lt;ContentControl
+                                  x:Name="Content"
+                                  IsTabStop="False"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  FontSize="{TemplateBinding FontSize}"
+                                  Margin="5,1,5,1"&gt;
+                                    &lt;ContentControl.Foreground&gt;
+                                        &lt;LinearGradientBrush&gt;
+                                            &lt;GradientStop x:Name="TodayGradientStart" Offset="0" Color="#FFFFFFFF" /&gt;
+                                            &lt;GradientStop x:Name="TodayGradientEnd" Offset="0" Color="#FFFFFFFF" /&gt;
+                                            &lt;GradientStop x:Name="RegularDayGradientStart" Offset="0" Color="#FF333333" /&gt;
+                                            &lt;GradientStop x:Name="RegularDayGradientEnd" Offset="1" Color="#FF333333" /&gt;
+                                        &lt;/LinearGradientBrush&gt;
+                                    &lt;/ContentControl.Foreground&gt;
+                                &lt;/ContentControl&gt;
+
+                                &lt;Path
+                                  x:Name="BlackoutVisual"
+                                  Opacity="0"
+                                  Margin="3"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  RenderTransformOrigin="0.5,0.5"
+                                  Fill="#FF000000"
+                                  Stretch="Fill"
+                                  Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z" /&gt;
+                                &lt;Rectangle
+                                  x:Name="FocusVisual"
+                                  Visibility="Collapsed"
+                                  IsHitTestVisible="false"
+                                  RadiusX="1"
+                                  RadiusY="1"
+                                  Stroke="#FF6DBDD1" /&gt;
+                            &lt;/Grid&gt;
+                        &lt;/ControlTemplate&gt;
+                    &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;TextBlock Text="U.S. Federal Holidays: " /&gt;
+        &lt;toolkit:GlobalCalendar SelectionMode="MultipleRange"&gt;
+            &lt;toolkit:GlobalCalendar.CalendarDayButtonStyleSelector&gt;
+                &lt;samples:HolidayDayButtonStyleSelector&gt;
+                    &lt;samples:HolidayDayButtonStyleSelector.HolidayStyle&gt;
+                        &lt;Style
+                          TargetType="toolkitPrimitives:GlobalCalendarDayButton"
+                          BasedOn="{StaticResource BasicDayButtonStyle}"&gt;
+                            &lt;Setter Property="Background" Value="LightGreen" /&gt;
+                        &lt;/Style&gt;
+                    &lt;/samples:HolidayDayButtonStyleSelector.HolidayStyle&gt;
+                    &lt;samples:HolidayDayButtonStyleSelector.Holidays&gt;
+                        &lt;samples:ExactHoliday Title="New Year's Day" Date="01/01/2009" /&gt;
+                        &lt;samples:RelativeHoliday Title="Birthday of Martin Luther King, Jr." Month="1" DayOfWeek="Monday" DayOfWeekNumber="3" /&gt;
+                        &lt;samples:RelativeHoliday Title="Washington’s Birthday" Month="2" DayOfWeek="Monday" DayOfWeekNumber="3" /&gt;
+                        &lt;samples:RelativeHoliday Title="Memorial Day" Month="5" DayOfWeek="Monday" DayOfWeekNumber="-1" /&gt;
+                        &lt;samples:ExactHoliday Title="Independence Day" Date="07/04/2009" /&gt;
+                        &lt;samples:RelativeHoliday Title="Labor Day" Month="9" DayOfWeek="Monday" DayOfWeekNumber="1" /&gt;
+                        &lt;samples:RelativeHoliday Title="Columbus Day" Month="10" DayOfWeek="Monday" DayOfWeekNumber="2" /&gt;
+                        &lt;samples:ExactHoliday Title="Verterans Day" Date="11/11/2009" /&gt;
+                        &lt;samples:RelativeHoliday Title="Thanksgiving Day" Month="11" DayOfWeek="Thursday" DayOfWeekNumber="4" /&gt;
+                        &lt;samples:ExactHoliday Title="Christmas Day" Date="12/25/2009" /&gt;
+                    &lt;/samples:HolidayDayButtonStyleSelector.Holidays&gt;
+                &lt;/samples:HolidayDayButtonStyleSelector&gt;
+            &lt;/toolkit:GlobalCalendar.CalendarDayButtonStyleSelector&gt;
+        &lt;/toolkit:GlobalCalendar&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="GlobalCalendarHolidaysSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the CalendarDayButtonStyleSelector with
+    /// holidays.
+    /// &lt;/summary&gt;
+    [Sample("(3)Holidays", DifficultyLevel.Basic)]
+    [Category("GlobalCalendar")]
+    public partial class GlobalCalendarHolidaysSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the GlobalCalendarHolidaysSample
+        /// class.
+        /// &lt;/summary&gt;
+        public GlobalCalendarHolidaysSample()
+        {
+            InitializeComponent();
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="GlobalCalendarHolidaysSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.ComponentModel
+Imports System.Windows
+Imports System.Windows.Controls
+
+''' &lt;summary&gt;
+''' Sample page demonstrating the CalendarDayButtonStyleSelector with
+''' holidays.
+''' &lt;/summary&gt;
+&lt;Sample("(3)Holidays", DifficultyLevel.Basic)&gt; _
+&lt;Category("GlobalCalendar")&gt; _
+Partial Public Class GlobalCalendarHolidaysSample
+    Inherits UserControl
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the GlobalCalendarHolidaysSample
+    ''' class.
+    ''' &lt;/summary&gt;
+    Sub New()
+        InitializeComponent()
+    End Sub
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="HolidayDayButtonStyleSelector.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Controls.Primitives;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Provides a way to apply different styles for holidays and normal days.
+    /// &lt;/summary&gt;
+    public class HolidayDayButtonStyleSelector : CalendarDayButtonStyleSelector
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the style for normal days.
+        /// &lt;/summary&gt;
+        public Style NormalStyle { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the style for holidays.
+        /// &lt;/summary&gt;
+        public Style HolidayStyle { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets a collection of Holidays.
+        /// &lt;/summary&gt;
+        public Collection&lt;Holiday&gt; Holidays { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the HolidayDayButtonStyleSelector
+        /// class.
+        /// &lt;/summary&gt;
+        public HolidayDayButtonStyleSelector()
+        {
+            Holidays = new Collection&lt;Holiday&gt;();
+        }
+
+        /// &lt;summary&gt;
+        /// Returns a GlobalCalendarDayButton Style based on whether the day is
+        /// a holiday.
+        /// &lt;/summary&gt;
+        /// &lt;param name="day"&gt;The day to select a Style for.&lt;/param&gt;
+        /// &lt;param name="container"&gt;The GlobalCalendarDayButton.&lt;/param&gt;
+        /// &lt;returns&gt;A Style for the GlobalCalendarDayButton.&lt;/returns&gt;
+        public override Style SelectStyle(DateTime day, GlobalCalendarDayButton container)
+        {
+            Holiday holiday = Holidays.Where(h =&gt; h.FallsOn(day)).FirstOrDefault();
+
+            // Use the Holiday.Title as the Tooltip
+            string title = holiday != null ? holiday.Title : null;
+            ToolTipService.SetToolTip(container, title);
+
+            return (holiday != null) ?
+                HolidayStyle :
+                NormalStyle;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="HolidayDayButtonStyleSelector.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Collections.ObjectModel
+Imports System.Linq
+Imports System.Windows.Controls
+Imports System.Windows.Controls.Primitives
+
+
+''' &lt;summary&gt;
+''' Provides a way to apply different styles for holidays and normal days.
+''' &lt;/summary&gt;
+Partial Public Class HolidayDayButtonStyleSelector
+    Inherits CalendarDayButtonStyleSelector
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets the style for normal days.
+    ''' &lt;/summary&gt;
+    Private _normalStyle As Style
+    Public Property NormalStyle() As Style
+        Get
+            Return _normalStyle
+        End Get
+        Set(ByVal value As Style)
+            _normalStyle = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets the style for holidays.
+    ''' &lt;/summary&gt;
+    Private _holidayStyle As Style
+    Public Property HolidayStyle() As Style
+        Get
+            Return _holidayStyle
+        End Get
+        Set(ByVal value As Style)
+            _holidayStyle = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Gets a collection of Holidays.
+    ''' &lt;/summary&gt;
+    Private _holidays As Collection(Of Holiday)
+    Public ReadOnly Property Holidays() As Collection(Of Holiday)
+        Get
+            Return _holidays
+        End Get
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the HolidayDayButtonStyleSelector
+    ''' class.
+    ''' &lt;/summary&gt;
+    Sub New()
+        _holidays = New Collection(Of Holiday)()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Returns a GlobalCalendarDayButton Style based on whether the day is
+    ''' a holiday.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="day"&gt;The day to select a Style for.&lt;/param&gt;
+    ''' &lt;param name="container"&gt;The GlobalCalendarDayButton.&lt;/param&gt;
+    ''' &lt;returns&gt;A Style for the GlobalCalendarDayButton.&lt;/returns&gt;
+    Public Overrides Function SelectStyle(ByVal day As Date, ByVal container As GlobalCalendarDayButton) As Style
+        ' Get the current holiday
+        Dim holiday As Holiday = Nothing
+        For Each h As Holiday In Holidays
+            If h.FallsOn(day) Then
+                holiday = h
+                Exit For
+            End If
+        Next
+
+        ' Use the Holiday.Title as the Tooltip
+        Dim title As String = Nothing
+        If holiday IsNot Nothing Then
+            title = holiday.Title
+        End If
+        ToolTipService.SetToolTip(container, title)
+
+        If holiday IsNot Nothing Then
+            Return HolidayStyle
+        Else
+            Return NormalStyle
+        End If
+    End Function
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Holiday.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Represents a holiday to be marked on the GlobalCalendar.
+    /// &lt;/summary&gt;
+    public abstract partial class Holiday
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the title of the holiday.
+        /// &lt;/summary&gt;
+        public string Title { get; set; }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the Holiday class.
+        /// &lt;/summary&gt;
+        protected Holiday()
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Determine if this holiday falls on a specific date.
+        /// &lt;/summary&gt;
+        /// &lt;param name="day"&gt;The date to check.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value indicating whether this holiday falls on a specific date.
+        /// &lt;/returns&gt;
+        public abstract bool FallsOn(DateTime day);
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Holiday.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Represents a holiday to be marked on the GlobalCalendar.
+''' &lt;/summary&gt;
+Partial Public MustInherit Class Holiday
+    ''' &lt;summary&gt;
+    ''' Gets or sets the title of the holiday.
+    ''' &lt;/summary&gt;
+    Private _title As String
+    Public Property Title() As String
+        Get
+            Return _title
+        End Get
+        Set(ByVal value As String)
+            _title = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the Holiday class.
+    ''' &lt;/summary&gt;
+    Protected Sub New()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Determine if this holiday falls on a specific date.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="day"&gt;The date to check.&lt;/param&gt;
+    ''' &lt;returns&gt;
+    ''' A value indicating whether this holiday falls on a specific date.
+    ''' &lt;/returns&gt;
+    Public MustOverride Function FallsOn(ByVal day As Date) As Boolean
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ExactHoliday.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Represents a holiday to be marked on the GlobalCalendar that occurs on
+    /// the exact date every year.
+    /// &lt;/summary&gt;
+    public partial class ExactHoliday : Holiday
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the date of the holiday.
+        /// &lt;/summary&gt;
+        [TypeConverter(typeof(DateTimeTypeConverter))]
+        public DateTime Date { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether the holiday occurs annually
+        /// on the same date.
+        /// &lt;/summary&gt;
+        public bool IsAnnual { get; set; }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ExactHoliday class.
+        /// &lt;/summary&gt;
+        public ExactHoliday()
+        {
+            IsAnnual = true;
+        }
+
+        /// &lt;summary&gt;
+        /// Determine if this holiday falls on a specific date.
+        /// &lt;/summary&gt;
+        /// &lt;param name="day"&gt;The date to check.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value indicating whether this holiday falls on a specific date.
+        /// &lt;/returns&gt;
+        public override bool FallsOn(DateTime day)
+        {
+            return IsAnnual ?
+                (day.Day == Date.Day &amp;&amp; day.Month == Date.Month) :
+                day == Date;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ExactHoliday.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Represents a holiday to be marked on the GlobalCalendar that occurs on
+''' the exact date every year.
+''' &lt;/summary&gt;
+Partial Public Class ExactHoliday
+    Inherits Holiday
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets the date of the holiday.
+    ''' &lt;/summary&gt;
+    Private _date As Date
+    &lt;TypeConverter(GetType(DateTimeTypeConverter))&gt; _
+    Public Property [Date]() As Date
+        Get
+            Return _date
+        End Get
+        Set(ByVal value As Date)
+            _date = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets a value indicating whether the holiday occurs annually
+    ''' on the same date.
+    ''' &lt;/summary&gt;
+    Private _isAnnual As Boolean
+    Public Property IsAnnual() As Boolean
+        Get
+            Return _isAnnual
+        End Get
+        Set(ByVal value As Boolean)
+            _isAnnual = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the ExactHoliday class.
+    ''' &lt;/summary&gt;
+    Sub New()
+        IsAnnual = True
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Determine if this holiday falls on a specific date.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="day"&gt;The date to check.&lt;/param&gt;
+    ''' &lt;returns&gt;
+    ''' A value indicating whether this holiday falls on a specific date.
+    ''' &lt;/returns&gt;
+    Public Overrides Function FallsOn(ByVal day As Date) As Boolean
+        If IsAnnual Then
+            Return day.Day = [Date].Day AndAlso day.Month = [Date].Month
+        Else
+            Return day = [Date]
+        End If
+    End Function
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="RelativeHoliday.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Represents a holiday to be marked on the GlobalCalendar that occurs on
+    /// the same day of the same week every year (i.e., Thanksgiving in the
+    /// United States falls on the fourth Thursday in November).
+    /// &lt;/summary&gt;
+    public partial class RelativeHoliday : Holiday
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the month of the holiday.
+        /// &lt;/summary&gt;
+        public int Month { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the day of the holiday.
+        /// &lt;/summary&gt;
+        public DayOfWeek DayOfWeek { get; set; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets a value that specifies the nth day of week in the
+        /// month.  Negative values start from the end of the month (which is
+        /// used to specify relative holidays like the last Monday in May).
+        /// &lt;/summary&gt;
+        public int DayOfWeekNumber { get; set; }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the RelativeHoliday class.
+        /// &lt;/summary&gt;
+        public RelativeHoliday()
+        {
+        }
+
+        /// &lt;summary&gt;
+        /// Determine if this holiday falls on a specific date.
+        /// &lt;/summary&gt;
+        /// &lt;param name="day"&gt;The date to check.&lt;/param&gt;
+        /// &lt;returns&gt;
+        /// A value indicating whether this holiday falls on a specific date.
+        /// &lt;/returns&gt;
+        public override bool FallsOn(DateTime day)
+        {
+            // Short circuit on the month or day
+            if (day.Month != Month || day.DayOfWeek != DayOfWeek)
+            {
+                return false;
+            }
+
+            // Trim off anything but the date
+            day = new DateTime(day.Year, day.Month, day.Day);
+
+            // Loop through all of the dates in the month to count how many days
+            // are occurences of DayOfWeek.
+            int occurences = 0;
+            int dateOccurenceNumber = 0;
+            for (DateTime d = new DateTime(day.Year, day.Month, 1); d.Month == day.Month; d = d.AddDays(1))
+            {
+                if (d.DayOfWeek == DayOfWeek)
+                {
+                    occurences++;
+
+                    if (d &lt;= day)
+                    {
+                        dateOccurenceNumber++;
+                    }
+                }
+            }
+
+            return DayOfWeekNumber &gt;= 0 ?
+                (DayOfWeekNumber == dateOccurenceNumber) :
+                (occurences + DayOfWeekNumber + 1 == dateOccurenceNumber);
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="RelativeHoliday.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Represents a holiday to be marked on the GlobalCalendar that occurs on
+''' the same day of the same week every year (i.e., Thanksgiving in the
+''' United States falls on the fourth Thursday in November).
+''' &lt;/summary&gt;
+Partial Public Class RelativeHoliday
+    Inherits Holiday
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets the month of the holiday.
+    ''' &lt;/summary&gt;
+    Private _month As Integer
+    Public Property Month() As Integer
+        Get
+            Return _month
+        End Get
+        Set(ByVal value As Integer)
+            _month = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets the day of the holiday.
+    ''' &lt;/summary&gt;
+    Private _dayOfWeek As DayOfWeek
+    Public Property DayOfWeek() As DayOfWeek
+        Get
+            Return _dayOfWeek
+        End Get
+        Set(ByVal value As DayOfWeek)
+            _dayOfWeek = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Gets or sets a value that specifies the nth day of week in the
+    ''' month.  Negative values start from the end of the month (which is
+    ''' used to specify relative holidays like the last Monday in May).
+    ''' &lt;/summary&gt;
+    Private _dayOfWeekNumber As Integer
+    Public Property DayOfWeekNumber() As Integer
+        Get
+            Return _dayOfWeekNumber
+        End Get
+        Set(ByVal value As Integer)
+            _dayOfWeekNumber = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the RelativeHoliday class.
+    ''' &lt;/summary&gt;
+    Sub New()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Determine if this holiday falls on a specific date.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="day"&gt;The date to check.&lt;/param&gt;
+    ''' &lt;returns&gt;
+    ''' A value indicating whether this holiday falls on a specific date.
+    ''' &lt;/returns&gt;
+    Public Overrides Function FallsOn(ByVal day As Date) As Boolean
+        ' Short circuit on the month or day
+        If day.Month &lt;&gt; Month Or day.DayOfWeek &lt;&gt; DayOfWeek Then
+            Return False
+        End If
+
+        ' Trim off anything but the date
+        day = New Date(day.Year, day.Month, day.Day)
+
+        ' Loop through all of the dates in the month to count how many days
+        ' are occurences of DayOfWeek.
+        Dim occurences As Integer = 0
+        Dim dateOccurenceNumber As Integer = 0
+        Dim d As Date = New Date(day.Year, day.Month, 1)
+        While d.Month = day.Month
+            If d.DayOfWeek = DayOfWeek Then
+                occurences = occurences + 1
+
+                If d &lt;= day Then
+                    dateOccurenceNumber = dateOccurenceNumber + 1
+                End If
+            End If
+
+            d = d.AddDays(1)
+        End While
+
+        If DayOfWeekNumber &gt;= 0 Then
+            Return DayOfWeekNumber = dateOccurenceNumber
+        Else
+            Return occurences + DayOfWeekNumber + 1 = dateOccurenceNumber
+        End If
+    End Function
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

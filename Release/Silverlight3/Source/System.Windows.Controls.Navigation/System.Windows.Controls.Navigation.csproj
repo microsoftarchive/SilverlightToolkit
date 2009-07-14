@@ -1,0 +1,116 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{969E33FE-1289-4BC2-863A-C848BB476CC0}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Navigation</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Navigation</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\RiaClient.snk</AssemblyOriginatorKeyFile>
+    <OutputPath>..\Binaries\$(Configuration)\Silverlight\</OutputPath>
+    <DocumentationFile>$(SolutionDir)Binaries\$(Configuration)\Silverlight\System.Windows.Controls.Navigation.XML</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'CodeCov|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;CODECOV</DefineConstants>
+    <IsSilverlight>true</IsSilverlight>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="System\Windows\Controls\Common\DependencyObjectExtensions.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationCacheMode.cs" />
+    <Compile Include="System\Windows\Navigation\FragmentNavigationEventArgs.cs" />
+    <Compile Include="System\Windows\Navigation\Guard.cs" />
+    <Compile Include="System\Windows\Navigation\NavigatingCancelEventArgs.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationCache.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationContext.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationDelegates.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationEventArgs.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationFailedEventArgs.cs" />
+    <Compile Include="System\Windows\Controls\Frame.cs" />
+    <Compile Include="System\Windows\Controls\FrameAutomationPeer.cs" />
+    <Compile Include="System\Windows\Controls\Page.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="System\Windows\Navigation\ContentLoaderBase.cs" />
+    <Compile Include="System\Windows\Navigation\PageResourceContentLoader.cs" />
+    <Compile Include="System\Windows\Navigation\Journal.cs" />
+    <Compile Include="System\Windows\Navigation\JournalEntry.cs" />
+    <Compile Include="System\Windows\Navigation\JournalEventArgs.cs" />
+    <Compile Include="System\Windows\Navigation\JournalOwnership.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationMode.cs" />
+    <Compile Include="System\Windows\Navigation\NavigationService.cs" />
+    <Compile Include="System\Windows\Navigation\UriMapperBase.cs" />
+    <Compile Include="System\Windows\Navigation\UriMapper.cs" />
+    <Compile Include="System\Windows\Navigation\UriMapping.cs" />
+    <Compile Include="System\Windows\Navigation\UriParsingHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>System.Windows.Navigation</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="themes\generic.xaml">
+      <Generator>MSBuild:CompileXaml</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="System.Windows.Controls.UnitTests.DataFormApp_FieldsWithPropertyPath"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:datacontrols="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm"
+    xmlns:swc="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:local="clr-namespace:System.Windows.Controls.UnitTests"
+    >
+    <UserControl.Resources>
+        <local:IntCollection x:Key="intCollection" />
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <datacontrols:DataForm x:Name="dataForm" AutoGenerateFields="False">
+            <datacontrols:DataForm.EditTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <datacontrols:DataField PropertyPath="StringProperty">
+                            <TextBox Text="test string" />
+                        </datacontrols:DataField>
+                    </StackPanel>
+                </DataTemplate>
+            </datacontrols:DataForm.EditTemplate>
+        </datacontrols:DataForm>
+    </Grid>
+</UserControl>

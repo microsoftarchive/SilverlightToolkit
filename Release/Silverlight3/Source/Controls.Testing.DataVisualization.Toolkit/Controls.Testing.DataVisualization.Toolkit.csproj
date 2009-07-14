@@ -1,0 +1,187 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DCB9FB07-B604-4E50-9339-9837E911D516}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Testing</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Testing.DataVisualization.Toolkit</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>System.Windows.Controls.Testing.DataVisualization.Toolkit.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>System.Windows.Controls.Testing.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Controls.DataVisualization.Toolkit\Collections\LeftLeaningRedBlackTree.cs">
+      <Link>InternalClasses\LeftLeaningRedBlackTree.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.DataVisualization.Toolkit\TreeMap\Layout\SquaringAlgorithm.cs">
+      <Link>TreeMap\Layout\SquaringAlgorithm.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.DataVisualization.Toolkit\TreeMap\Layout\TreeMapNode.cs">
+      <Link>TreeMap\Layout\TreeMapNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.DataVisualization.Toolkit\Tuple.cs">
+      <Link>InternalClasses\Tuple.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.Toolkit\Common\WeakEventListener.cs">
+      <Link>InternalClasses\WeakEventListener.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyTest.cs" />
+    <Compile Include="Charting\AreaDataPointTest.cs" />
+    <Compile Include="Charting\AreaSeriesTest.cs" />
+    <Compile Include="Charting\BarDataPointTest.cs" />
+    <Compile Include="Charting\AxisBase.cs" />
+    <Compile Include="Charting\CategoryAxisTest.cs" />
+    <Compile Include="Charting\ChartTest.cs" />
+    <Compile Include="Charting\ChartTestUtilities.cs" />
+    <Compile Include="Charting\ColumnDataPointTest.cs" />
+    <Compile Include="Charting\ColumnSeriesTest.cs" />
+    <Compile Include="Charting\BarSeriesTest.cs" />
+    <Compile Include="Charting\BarColumnSeriesBase.cs" />
+    <Compile Include="Charting\BubbleSeriesTest.cs" />
+    <Compile Include="Charting\BubbleDataPointTest.cs" />
+    <Compile Include="Charting\DateTimeAxisTest.cs" />
+    <Compile Include="Charting\DisplayAxisBase.cs" />
+    <Compile Include="Charting\LinearAxisTest.cs" />
+    <Compile Include="Charting\NumericAxisBase.cs" />
+    <Compile Include="Charting\RangeAxisBase.cs" />
+    <Compile Include="Charting\ScatterDataPointTest.cs" />
+    <Compile Include="Charting\LineDataPointTest.cs" />
+    <Compile Include="Charting\LineScatterSeriesBase.cs" />
+    <Compile Include="Charting\PieDataPointTest.cs" />
+    <Compile Include="Charting\DataPointSeriesWithAxesBase.cs" />
+    <Compile Include="Charting\DataPointSeriesBase.cs" />
+    <Compile Include="Charting\LineSeriesTest.cs" />
+    <Compile Include="Charting\PieSeriesTest.cs" />
+    <Compile Include="Charting\ScatterSeriesTest.cs" />
+    <Compile Include="Charting\DataPointBase.cs" />
+    <Compile Include="Charting\SeriesBase.cs" />
+    <Compile Include="Charting\DataPointSingleSeriesWithAxesBase.cs" />
+    <Compile Include="Collections\LeftLeaningRedBlackTreeTest.cs" />
+    <Compile Include="NotifyingDataObject.cs" />
+    <Compile Include="DataObject.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagEditor.xaml.cs">
+      <DependentUpon>TagEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\CustomTemplateSelector.cs" />
+    <Compile Include="TreeMap\DoubleInterpolatorTest.cs" />
+    <Compile Include="TreeMap\InheritedTreeMap.cs" />
+    <Compile Include="TreeMap\TreeMapItemDefinitionTest.cs" />
+    <Compile Include="TreeMap\OverriddenTreeMap.cs" />
+    <Compile Include="TreeMap\OverriddenTreeMapItemDefinitionSelector.cs" />
+    <Compile Include="TreeMap\SolidColorBrushInterpolatorTest.cs" />
+    <Compile Include="TreeMap\SimpleNode.cs" />
+    <Compile Include="TreeMap\SquaringAlgorithmTest.cs" />
+    <Compile Include="TreeMap\TreeMapTest.cs" />
+    <Compile Include="Visualization\LegendTest.cs" />
+    <Compile Include="Visualization\TitleTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj">
+      <Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project>
+      <Name>Controls.DataVisualization.Toolkit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Testing.Common\Controls.Testing.Common.csproj">
+      <Project>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</Project>
+      <Name>Controls.Testing.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj">
+      <Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project>
+      <Name>Controls.Toolkit</Name>
+    </ProjectReference>
+    <Reference Include="System.Windows.Controls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="TagEditor.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <!-- Disable warning SA1401 because violating it gives a 40% reduction in execution time for LeftLeaningRedBlackTree -->
+  <PropertyGroup>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

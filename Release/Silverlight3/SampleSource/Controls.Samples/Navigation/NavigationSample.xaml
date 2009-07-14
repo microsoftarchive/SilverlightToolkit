@@ -1,0 +1,311 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.NavigationSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation">
+    <StackPanel Background="White">
+        <StackPanel>
+            <ContentControl Content="Navigation" Style="{StaticResource Header}" />
+            <TextBlock Style="{StaticResource Information}" Margin="4">
+                Try clicking the navigation buttons below, then use the browser's back and forward buttons to change the page.
+            </TextBlock>
+            <ContentControl Content="Links" Style="{StaticResource Header}" />
+            <StackPanel Orientation="Horizontal">
+                <HyperlinkButton Content="Welcome" Margin="4" TargetName="navFrame" NavigateUri="/Welcome.xaml" />
+                <HyperlinkButton Content="Page1" Margin="4" TargetName="navFrame" NavigateUri="/Navigation/Page1.xaml" />
+                <HyperlinkButton Content="Page2" Margin="4" TargetName="navFrame" NavigateUri="/Navigation/Page2.xaml" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="4">
+            <TextBlock Text="Current Url: " />
+            <TextBlock Text="{Binding Source, ElementName=navFrame}" />
+        </StackPanel>
+        <ContentControl Content="Frame" Style="{StaticResource Header}" />
+        <Grid Width="600" Height="400" HorizontalAlignment="Left">
+            <Rectangle Stroke="Black" StrokeThickness="2" />
+            <navigation:Frame x:Name="navFrame" Source="/Welcome.xaml" Margin="2" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" UriMapper="{StaticResource UriMapper}" />
+        </Grid>
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="NavigationSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.NavigationSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"&gt;
+    &lt;StackPanel Background="White"&gt;
+        &lt;StackPanel&gt;
+            &lt;ContentControl Content="Navigation" Style="{StaticResource Header}" /&gt;
+            &lt;TextBlock Style="{StaticResource Information}" Margin="4"&gt;
+                Try clicking the navigation buttons below, then use the browser's back and forward buttons to change the page.
+            &lt;/TextBlock&gt;
+            &lt;ContentControl Content="Links" Style="{StaticResource Header}" /&gt;
+            &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;HyperlinkButton Content="Welcome" Margin="4" TargetName="navFrame" NavigateUri="/Welcome.xaml" /&gt;
+                &lt;HyperlinkButton Content="Page1" Margin="4" TargetName="navFrame" NavigateUri="/Navigation/Page1.xaml" /&gt;
+                &lt;HyperlinkButton Content="Page2" Margin="4" TargetName="navFrame" NavigateUri="/Navigation/Page2.xaml" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation="Horizontal" Margin="4"&gt;
+            &lt;TextBlock Text="Current Url: " /&gt;
+            &lt;TextBlock Text="{Binding Source, ElementName=navFrame}" /&gt;
+        &lt;/StackPanel&gt;
+        &lt;ContentControl Content="Frame" Style="{StaticResource Header}" /&gt;
+        &lt;Grid Width="600" Height="400" HorizontalAlignment="Left"&gt;
+            &lt;Rectangle Stroke="Black" StrokeThickness="2" /&gt;
+            &lt;navigation:Frame x:Name="navFrame" Source="/Welcome.xaml" Margin="2" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" UriMapper="{StaticResource UriMapper}" /&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="NavigationSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating navigation using Pages and a Frame.
+    /// &lt;/summary&gt;
+    [Sample("(0)Navigation", DifficultyLevel.Basic)]
+    [Category("Navigation")]
+    public partial class NavigationSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a NavigationSample.
+        /// &lt;/summary&gt;
+        public NavigationSample()
+        {
+            InitializeComponent();
+        }
+
+        /// &lt;summary&gt;
+        /// Causes navigation when a button is clicked.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The clicked button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used by event defined in Xaml.")]
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            navFrame.Navigate(new Uri(((Button)sender).Tag.ToString(), UriKind.Relative));
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="NavigationSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating navigation with mapped URIs.
+''' &lt;/summary&gt;
+&lt;Sample("(0)Navigation", DifficultyLevel.Basic)&gt; _
+&lt;Category("Navigation")&gt; _
+Partial Public Class NavigationSample
+    Inherits UserControl
+
+    ''' &lt;summary&gt;
+    ''' Initializes a MappingNavigationSample.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Causes navigation when a page button is clicked.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The clicked button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Used by event defined in Xaml.")&gt; _
+    Private Sub Button_Click(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        navFrame.Navigate(New Uri(DirectCast(sender, Button).Tag.ToString(), UriKind.Relative))
+    End Sub
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Page1.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;navigation:Page x:Class="System.Windows.Controls.Samples.Page1" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           Title="Page1 Page"&gt;
+    &lt;StackPanel Background="LightBlue"&gt;
+        &lt;ContentControl Style="{StaticResource Header}" Content="Page1 Content" /&gt;
+        &lt;ContentControl Content="{Binding}" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/navigation:Page&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Page1.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Linq;
+using System.Windows.Navigation;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// A Page that displays an image to which a frame can navigate.
+    /// &lt;/summary&gt;
+    public partial class Page1 : Page
+    {
+        /// &lt;summary&gt;
+        /// Initializes a Page1.
+        /// &lt;/summary&gt;
+        public Page1()
+        {
+            InitializeComponent();
+
+            DataContext = Photograph.GetPhotographs().First().Image;
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Page1.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports System.Linq
+
+''' &lt;summary&gt;
+''' A Page that displays an image to which a frame can navigate.
+''' &lt;/summary&gt;
+Public Class Page1
+    Inherits Page
+
+    ''' &lt;summary&gt;
+    ''' Initializes a Page1.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+        DataContext = Photograph.GetPhotographs().First().Image
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Page2.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+    
+&lt;navigation:Page x:Class="System.Windows.Controls.Samples.Page2" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" 
+           Title="Page2 Page"&gt;
+    &lt;StackPanel Background="LightGreen"&gt;
+        &lt;ContentControl Style="{StaticResource Header}" Content="Page2 Content" /&gt;
+        &lt;TextBlock Margin="4" Text="Any type of content can appear in a page." HorizontalAlignment="Center" /&gt;
+        &lt;Button Margin="4" Content="Button" HorizontalAlignment="Center" /&gt;
+        &lt;ProgressBar Margin="4" Height="23" Width="75" IsIndeterminate="True" HorizontalAlignment="Center" /&gt;
+        &lt;controls:Calendar Margin="4" HorizontalAlignment="Center" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/navigation:Page&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Page2.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Navigation;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// A Page that displays a variety of controls to which a frame can navigate.
+    /// &lt;/summary&gt;
+    public partial class Page2 : Page
+    {
+        /// &lt;summary&gt;
+        /// Initializes a Page2.
+        /// &lt;/summary&gt;
+        public Page2()
+        {
+            InitializeComponent();
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="Page2.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+''' &lt;summary&gt;
+''' A Page that displays a variety of controls to which a frame can navigate.
+''' &lt;/summary&gt;
+Public Class Page2
+    Inherits Page
+
+    ''' &lt;summary&gt;
+    ''' Initializes a Page2.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

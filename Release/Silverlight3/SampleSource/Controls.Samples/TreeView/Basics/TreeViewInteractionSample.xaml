@@ -1,0 +1,186 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+  x:Class="System.Windows.Controls.Samples.TreeViewInteractionSample">
+    <StackPanel>
+        <!-- Interaction Description -->
+        <ContentControl Content="TreeView Interaction" Style="{StaticResource Header}" />
+        <TextBlock Text="Mouse Interaction" Style="{StaticResource Information}" FontWeight="Bold" Foreground="#FF555555" Padding="2 5 0 0"  />
+        <TextBlock Text="Click a TreeViewItem to select it." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Click a TreeViewItem's expand button to expand or collapse it." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Double-click a TreeViewItem to expand or collapse it." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Keyboard Interaction" Style="{StaticResource Information}" FontWeight="Bold" Foreground="#FF555555" Padding="2 8 0 3" />
+        <TextBlock Text="Press the Up or Down arrow keys to navigate to the previous or next visible TreeViewItem." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Press the Right arrow key to expand the selected item if collapsed or navigate to the selected item's first child if expanded." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Press the Left arrow key to collapse the selected item if expanded or to collapse to the selected item's parent if the item is collapsed." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Press the Home or End keys to select the first or last visible items in the TreeView." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Press the Page Up or Page Down keys to select the first item on the previous page or the last item on the next page when scrolling." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Press the Add or Subtract keys to expand or collapse the TreeViewItem." Style="{StaticResource Information}" Padding="7 0 0 3" />
+        <TextBlock Text="Press the Ctrl key and a navigation key (Up, Down, Left, Right, Home, End, Page Up, or Page Down) to physically scroll the TreeView." Style="{StaticResource Information}" Padding="7 0 0 12" />
+
+        <!-- Interaction Sample -->
+        <controls:TreeView x:Name="TreeOfLife" HorizontalAlignment="Left" Width="300" Height="300">
+            <controls:TreeView.ItemTemplate>
+                <common:HierarchicalDataTemplate ItemsSource="{Binding Subclasses}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Rank}" FontSize="8" FontStyle="Italic" Foreground="Gray" Margin="0 0 0 -5" />
+                        <TextBlock Text="{Binding Classification}" />
+                    </StackPanel>
+                </common:HierarchicalDataTemplate>
+            </controls:TreeView.ItemTemplate>
+        </controls:TreeView>
+        <Button Content="Expand All" Click="OnExpandAll" HorizontalAlignment="Left" Margin="0 5 0 0" />
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="TreeViewInteractionSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+  x:Class="System.Windows.Controls.Samples.TreeViewInteractionSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;!-- Interaction Description --&gt;
+        &lt;ContentControl Content="TreeView Interaction" Style="{StaticResource Header}" /&gt;
+        &lt;TextBlock Text="Mouse Interaction" Style="{StaticResource Information}" FontWeight="Bold" Foreground="#FF555555" Padding="2 5 0 0"  /&gt;
+        &lt;TextBlock Text="Click a TreeViewItem to select it." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Click a TreeViewItem's expand button to expand or collapse it." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Double-click a TreeViewItem to expand or collapse it." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Keyboard Interaction" Style="{StaticResource Information}" FontWeight="Bold" Foreground="#FF555555" Padding="2 8 0 3" /&gt;
+        &lt;TextBlock Text="Press the Up or Down arrow keys to navigate to the previous or next visible TreeViewItem." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Press the Right arrow key to expand the selected item if collapsed or navigate to the selected item's first child if expanded." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Press the Left arrow key to collapse the selected item if expanded or to collapse to the selected item's parent if the item is collapsed." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Press the Home or End keys to select the first or last visible items in the TreeView." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Press the Page Up or Page Down keys to select the first item on the previous page or the last item on the next page when scrolling." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Press the Add or Subtract keys to expand or collapse the TreeViewItem." Style="{StaticResource Information}" Padding="7 0 0 3" /&gt;
+        &lt;TextBlock Text="Press the Ctrl key and a navigation key (Up, Down, Left, Right, Home, End, Page Up, or Page Down) to physically scroll the TreeView." Style="{StaticResource Information}" Padding="7 0 0 12" /&gt;
+
+        &lt;!-- Interaction Sample --&gt;
+        &lt;controls:TreeView x:Name="TreeOfLife" HorizontalAlignment="Left" Width="300" Height="300"&gt;
+            &lt;controls:TreeView.ItemTemplate&gt;
+                &lt;common:HierarchicalDataTemplate ItemsSource="{Binding Subclasses}"&gt;
+                    &lt;StackPanel&gt;
+                        &lt;TextBlock Text="{Binding Rank}" FontSize="8" FontStyle="Italic" Foreground="Gray" Margin="0 0 0 -5" /&gt;
+                        &lt;TextBlock Text="{Binding Classification}" /&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/common:HierarchicalDataTemplate&gt;
+            &lt;/controls:TreeView.ItemTemplate&gt;
+        &lt;/controls:TreeView&gt;
+        &lt;Button Content="Expand All" Click="OnExpandAll" HorizontalAlignment="Left" Margin="0 5 0 0" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TreeViewInteractionSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Controls;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample demonstrating TreeView user interaction.
+    /// &lt;/summary&gt;
+    [Sample("(1)Interaction", DifficultyLevel.Basic)]
+    [Category("TreeView")]
+    public partial class TreeViewInteractionSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the TreeViewInteractionSample class.
+        /// &lt;/summary&gt;
+        public TreeViewInteractionSample()
+        {
+            InitializeComponent();
+
+            // Fill the tree with data
+            TreeOfLife.ItemsSource = Taxonomy.Life;
+        }
+
+        /// &lt;summary&gt;
+        /// Expand all of the TreeOfLife TreeViewItems.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Expand All Button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached as an event handler in XAML")]
+        private void OnExpandAll(object sender, RoutedEventArgs e)
+        {
+            // Use the TreeViewExtensions.ExpandAll helper
+            TreeOfLife.ExpandAll();
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TreeViewInteractionSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Diagnostics.CodeAnalysis
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample demonstrating TreeView user interaction.
+''' &lt;/summary&gt;
+&lt;Sample("(1)Interaction", DifficultyLevel.Basic), Category("TreeView")&gt; _
+Partial Public Class TreeViewInteractionSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the TreeViewInteractionSample class.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+
+        ' Fill the tree with data
+        TreeOfLife.ItemsSource = Taxonomy.Life
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Expand all of the TreeOfLife TreeViewItems.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;Expand All Button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    &lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Attached as an event handler in XAML")&gt; _
+    Private Sub OnExpandAll(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        ' Use the TreeViewExtensions.ExpandAll helper
+        TreeOfLife.ExpandAll()
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

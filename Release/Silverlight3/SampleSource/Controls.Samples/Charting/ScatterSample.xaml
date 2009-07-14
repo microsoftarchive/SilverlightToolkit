@@ -1,0 +1,193 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  xmlns:samplesCommon="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common"
+  x:Class="System.Windows.Controls.Samples.ScatterSample">
+    <StackPanel>
+
+        <!-- Scenarios -->
+        <ContentControl Content="Scenarios" Style="{StaticResource Header}"/>
+
+        <controlsToolkit:WrapPanel>
+
+            <!-- Typical Use -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="Typical Use">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:ScatterSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}" />
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Grid>
+
+            <!-- Typical Use -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="Scatter Series on a Category Axis">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:ScatterSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}" />
+                    </chartingToolkit:Chart.Series>
+                    <chartingToolkit:Chart.Axes>
+                        <chartingToolkit:CategoryAxis Orientation="X" />
+                    </chartingToolkit:Chart.Axes>
+                </chartingToolkit:Chart>
+            </Grid>
+
+        </controlsToolkit:WrapPanel>
+
+        <!-- Generated Charts -->
+        <ContentControl Content="Generated Charts" Style="{StaticResource Header}"/>
+        <controlsToolkit:WrapPanel x:Name="GeneratedChartsPanel"/>
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="ScatterSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  xmlns:samplesCommon="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common"
+  x:Class="System.Windows.Controls.Samples.ScatterSample"&gt;
+    &lt;StackPanel&gt;
+
+        &lt;!-- Scenarios --&gt;
+        &lt;ContentControl Content="Scenarios" Style="{StaticResource Header}"/&gt;
+
+        &lt;controlsToolkit:WrapPanel&gt;
+
+            &lt;!-- Typical Use --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="Typical Use"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:ScatterSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}" /&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Typical Use --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="Scatter Series on a Category Axis"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:ScatterSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}" /&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                    &lt;chartingToolkit:Chart.Axes&gt;
+                        &lt;chartingToolkit:CategoryAxis Orientation="X" /&gt;
+                    &lt;/chartingToolkit:Chart.Axes&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+        &lt;/controlsToolkit:WrapPanel&gt;
+
+        &lt;!-- Generated Charts --&gt;
+        &lt;ContentControl Content="Generated Charts" Style="{StaticResource Header}"/&gt;
+        &lt;controlsToolkit:WrapPanel x:Name="GeneratedChartsPanel"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ScatterSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization.Charting;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating ScatterSeries.
+    /// &lt;/summary&gt;
+    [Sample("(1)Scatter Series", DifficultyLevel.Basic)]
+    [Category("Scatter Series")]
+    public partial class ScatterSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ScatterSample class.
+        /// &lt;/summary&gt;
+        public ScatterSample()
+        {
+            InitializeComponent();
+
+            SampleGenerators.GenerateNumericSeriesSamples(GeneratedChartsPanel, () =&gt; new ScatterSeries(), true);
+            SampleGenerators.GenerateDateTimeValueSeriesSamples(GeneratedChartsPanel, () =&gt; new ScatterSeries());
+            SampleGenerators.GenerateValueValueSeriesSamples(GeneratedChartsPanel, () =&gt; new ScatterSeries());
+            SampleGenerators.GenerateMultipleValueSeriesSamples(GeneratedChartsPanel, () =&gt; new ScatterSeries(), true);
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="ScatterSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.Windows.Controls
+Imports System.Windows.Controls.DataVisualization.Charting
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating ScatterSeries.
+''' &lt;/summary&gt;
+&lt;Sample("(1)Scatter Series", DifficultyLevel.Basic), Category("Scatter Series")&gt; _
+Partial Public Class ScatterSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the ScatterSample class.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+
+        SampleGenerators.GenerateNumericSeriesSamples(GeneratedChartsPanel, Function() New ScatterSeries(), True)
+        SampleGenerators.GenerateDateTimeValueSeriesSamples(GeneratedChartsPanel, Function() New ScatterSeries())
+        SampleGenerators.GenerateValueValueSeriesSamples(GeneratedChartsPanel, Function() New ScatterSeries())
+        SampleGenerators.GenerateMultipleValueSeriesSamples(GeneratedChartsPanel, Function() New ScatterSeries(), True)
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

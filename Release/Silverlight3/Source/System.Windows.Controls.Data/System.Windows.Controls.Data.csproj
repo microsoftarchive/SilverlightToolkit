@@ -1,0 +1,188 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3888C686-FC29-4CCB-A754-3500146D8815}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Data</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\RiaClient.snk</AssemblyOriginatorKeyFile>
+    <OutputPath>..\Binaries\$(Configuration)\Silverlight\</OutputPath>
+    <DocumentationFile>$(SolutionDir)Binaries\$(Configuration)\Silverlight\System.Windows.Controls.Data.XML</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'CodeCov|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;CODECOV</DefineConstants>
+    <IsSilverlight>true</IsSilverlight>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataGrid\Automation\DataGridAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridCellAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridColumnHeaderAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridColumnHeadersPresenterAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridDetailsPresenterAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridGroupItemAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridItemAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridRowAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridRowGroupHeaderAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridRowHeaderAutomationPeer.cs" />
+    <Compile Include="DataGrid\Automation\DataGridRowsPresenterAutomationPeer.cs" />
+    <Compile Include="DataGrid\DataGridBeginningEditEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridCellEditEndedEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridCellEditEndingEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridFrozenGrid.cs" />
+    <Compile Include="DataGrid\DataGridRowEditEndedEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridRowEditEndingEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridRowEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridRowGroupHeader.cs" />
+    <Compile Include="DataGrid\DataGridRowGroupHeaderEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridRowGroupInfo.cs" />
+    <Compile Include="DataGrid\DataGridValueConverter.cs" />
+    <Compile Include="DataGrid\TestHooks\DataGridCellInternalTestHook.cs" />
+    <Compile Include="DataGrid\TestHooks\DataGridColumnHeaderInternalTestHook.cs" />
+    <Compile Include="DataGrid\TestHooks\DataGridInternalTestHook.cs" />
+    <Compile Include="DataGrid\DataGridLength.cs" />
+    <Compile Include="DataGrid\DataGridLengthConverter.cs" />
+    <Compile Include="DataGrid\DataGridColumnReorderingEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridCellsPresenter.cs" />
+    <Compile Include="DataGrid\DataGridCheckBoxColumn.cs" />
+    <Compile Include="DataGrid\DataGridColumnHeadersPresenter.cs" />
+    <Compile Include="DataGrid\DataGridRowDetailsEventArgs.cs" />
+    <Compile Include="DataGrid\TestHooks\DataGridRowInternalTestHook.cs" />
+    <Compile Include="DataGrid\DataGridRowsPresenter.cs" />
+    <Compile Include="DataGrid\DataGridColumnHeader.xaml.cs" />
+    <Compile Include="DataGrid\DataGridRowHeader.xaml.cs" />
+    <Compile Include="DataGrid\DataGrid.xaml.cs" />
+    <Compile Include="DataGrid\DataGridAutoGeneratingColumnEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridBoundColumn.cs" />
+    <Compile Include="DataGrid\DataGridCell.cs" />
+    <Compile Include="DataGrid\DataGridCellCollection.cs" />
+    <Compile Include="DataGrid\DataGridCellCoordinates.cs" />
+    <Compile Include="DataGrid\DataGridCellEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridColumn.cs" />
+    <Compile Include="DataGrid\DataGridColumnCollection.cs" />
+    <Compile Include="DataGrid\DataGridColumnEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridColumns.cs" />
+    <Compile Include="DataGrid\DataGridDataConnection.cs" />
+    <Compile Include="DataGrid\DataGridDetailsPresenter.cs" />
+    <Compile Include="DataGrid\DataGridDisplayData.cs" />
+    <Compile Include="DataGrid\DataGridEnumerations.cs" />
+    <Compile Include="DataGrid\DataGridFillerColumn.cs" />
+    <Compile Include="DataGrid\DataGridPreparingCellForEditEventArgs.cs" />
+    <Compile Include="DataGrid\DataGridRow.xaml.cs" />
+    <Compile Include="DataGrid\DataGridRows.cs" />
+    <Compile Include="DataGrid\DataGridSelectedItemsCollection.cs" />
+    <Compile Include="DataGrid\DataGridTemplateColumn.cs" />
+    <Compile Include="DataGrid\DataGridTextColumn.cs" />
+    <Compile Include="DataGrid\IndexToValueTable.cs" />
+    <Compile Include="DataGrid\KeyboardHelper.cs" />
+    <Compile Include="DataGrid\Range.cs" />
+    <Compile Include="DataGrid\TypeHelper.cs" />
+    <Compile Include="DataPager\DataPager.cs" />
+    <Compile Include="DataPager\DataPagerAutomationPeer.cs" />
+    <Compile Include="DataPager\PagerDisplayMode.cs" />
+    <Compile Include="DataPager\PagerResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PagerResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="DoubleUtil.cs" />
+    <Compile Include="DataGrid\DataGridError.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InvalidEnumArgumentException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ValidationUtil.cs" />
+    <Compile Include="VisualStates.cs" />
+    <Compile Include="WeakEventListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataGrid\ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="themes\generic.xaml">
+      <Generator>MSBuild:CompileXaml</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataPager\PagerResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PagerResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>System.Windows.Controls</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.ComponentModel.DataAnnotations\System.ComponentModel.DataAnnotations.csproj">
+      <Project>{01C0998A-866C-4267-8E1D-D7228CC3D7E7}</Project>
+      <Name>System.ComponentModel.DataAnnotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Data\System.Windows.Data.csproj">
+      <Project>{5507CD5D-7272-4539-BBDE-745640AE7BE1}</Project>
+      <Name>System.Windows.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Controls.Data.Input\System.Windows.Controls.Data.Input.csproj">
+      <Project>{80182170-B5A7-47C5-825D-F0ECC7EB4663}</Project>
+      <Name>System.Windows.Controls.Data.Input</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="System.Windows.Controls.UnitTests.DataFormApp_TemplatesWithBinding"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:datacontrols="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit"
+    xmlns:local="clr-namespace:System.Windows.Controls.UnitTests"
+    >
+    <Grid x:Name="LayoutRoot" Background="White">
+        <datacontrols:DataForm x:Name="dataForm" AutoEdit="False" AutoGenerateFields="False">
+            <datacontrols:DataForm.ReadOnlyTemplate>
+                <DataTemplate>
+                    <TextBox Text="{Binding StringProperty}" />
+                </DataTemplate>
+            </datacontrols:DataForm.ReadOnlyTemplate>
+            <datacontrols:DataForm.EditTemplate>
+                <DataTemplate>
+                    <TextBox Text="{Binding StringProperty, Mode=TwoWay}" />
+                </DataTemplate>
+            </datacontrols:DataForm.EditTemplate>
+            <datacontrols:DataForm.NewItemTemplate>
+                <DataTemplate>
+                    <TextBox Text="{Binding StringProperty, Mode=TwoWay}" />
+                </DataTemplate>
+            </datacontrols:DataForm.NewItemTemplate>
+        </datacontrols:DataForm>
+    </Grid>
+</UserControl>
