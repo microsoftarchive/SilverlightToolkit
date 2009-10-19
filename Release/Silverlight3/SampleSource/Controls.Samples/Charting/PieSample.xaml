@@ -48,18 +48,22 @@
                                     <samples:Pair First="Doesn't resemble it" Second="2"/>
                                 </toolkit:ObjectCollection>
                             </chartingToolkit:PieSeries.ItemsSource>
-                            <chartingToolkit:PieSeries.StylePalette>
-                                <visualizationToolkit:StylePalette>
-                                    <Style TargetType="Control">
-                                        <Setter Property="Background" Value="Yellow"/>
-                                        <Setter Property="BorderBrush" Value="Black"/>
-                                    </Style>
-                                    <Style TargetType="Control">
-                                        <Setter Property="Background" Value="Purple"/>
-                                        <Setter Property="BorderBrush" Value="Black"/>
-                                    </Style>
-                                </visualizationToolkit:StylePalette>
-                            </chartingToolkit:PieSeries.StylePalette>
+                            <chartingToolkit:PieSeries.Palette>
+                                <visualizationToolkit:ResourceDictionaryCollection>
+                                    <ResourceDictionary>
+                                        <Style x:Key="DataPointStyle" TargetType="Control">
+                                            <Setter Property="Background" Value="Yellow"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Style>
+                                    </ResourceDictionary>
+                                    <ResourceDictionary>
+                                        <Style x:Key="DataPointStyle" TargetType="Control">
+                                            <Setter Property="Background" Value="Purple"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Style>
+                                    </ResourceDictionary>
+                                </visualizationToolkit:ResourceDictionaryCollection>
+                            </chartingToolkit:PieSeries.Palette>
                             <chartingToolkit:PieSeries.Template>
                                 <ControlTemplate TargetType="chartingToolkit:PieSeries">
                                     <Canvas x:Name="PlotArea" RenderTransformOrigin="0.5,0.5">
@@ -184,18 +188,22 @@
                                     &lt;samples:Pair First="Doesn't resemble it" Second="2"/&gt;
                                 &lt;/toolkit:ObjectCollection&gt;
                             &lt;/chartingToolkit:PieSeries.ItemsSource&gt;
-                            &lt;chartingToolkit:PieSeries.StylePalette&gt;
-                                &lt;visualizationToolkit:StylePalette&gt;
-                                    &lt;Style TargetType="Control"&gt;
-                                        &lt;Setter Property="Background" Value="Yellow"/&gt;
-                                        &lt;Setter Property="BorderBrush" Value="Black"/&gt;
-                                    &lt;/Style&gt;
-                                    &lt;Style TargetType="Control"&gt;
-                                        &lt;Setter Property="Background" Value="Purple"/&gt;
-                                        &lt;Setter Property="BorderBrush" Value="Black"/&gt;
-                                    &lt;/Style&gt;
-                                &lt;/visualizationToolkit:StylePalette&gt;
-                            &lt;/chartingToolkit:PieSeries.StylePalette&gt;
+                            &lt;chartingToolkit:PieSeries.Palette&gt;
+                                &lt;visualizationToolkit:ResourceDictionaryCollection&gt;
+                                    &lt;ResourceDictionary&gt;
+                                        &lt;Style x:Key="DataPointStyle" TargetType="Control"&gt;
+                                            &lt;Setter Property="Background" Value="Yellow"/&gt;
+                                            &lt;Setter Property="BorderBrush" Value="Black"/&gt;
+                                        &lt;/Style&gt;
+                                    &lt;/ResourceDictionary&gt;
+                                    &lt;ResourceDictionary&gt;
+                                        &lt;Style x:Key="DataPointStyle" TargetType="Control"&gt;
+                                            &lt;Setter Property="Background" Value="Purple"/&gt;
+                                            &lt;Setter Property="BorderBrush" Value="Black"/&gt;
+                                        &lt;/Style&gt;
+                                    &lt;/ResourceDictionary&gt;
+                                &lt;/visualizationToolkit:ResourceDictionaryCollection&gt;
+                            &lt;/chartingToolkit:PieSeries.Palette&gt;
                             &lt;chartingToolkit:PieSeries.Template&gt;
                                 &lt;ControlTemplate TargetType="chartingToolkit:PieSeries"&gt;
                                     &lt;Canvas x:Name="PlotArea" RenderTransformOrigin="0.5,0.5"&gt;

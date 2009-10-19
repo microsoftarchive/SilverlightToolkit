@@ -380,5 +380,75 @@ namespace System.Windows.Controls.Testing
                 () => ChartTestUtilities.GetDataPointsForSeries(series).Where(dp => items[1] == (Point)dp.DataContext).Single().IsSelectionEnabled = false,
                 () => Assert.AreEqual(null, series.SelectedItem));
         }
+
+        /// <summary>
+        /// Contains a simple DataPointStyle without VSM states or a complex element tree.
+        /// </summary>
+        private const string SimpleDataPointStyle =
+            @"<Style
+                xmlns=""http://schemas.microsoft.com/client/2007""
+                xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml""
+                xmlns:charting=""clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit""
+                TargetType=""charting:DataPoint"">
+                <Setter Property=""Template"">
+                    <Setter.Value>
+                        <ControlTemplate TargetType=""charting:DataPoint"">
+                            <Grid Background=""{TemplateBinding Background}""/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>";
+
+        /// <summary>
+        /// Changes the state of DataPoint objects that do not define any VSM states.
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Description("Changes the state of DataPoint objects that do not define any VSM states.")]
+        [Bug("535616: DataPoint should skip animations if none are found and set state directly", Fixed = true)]
+        [Bug("557085: Exception from UpdatePointsCollection when removing all points on LineSeries (axis refactoring consequence)", Fixed = true)]
+        [Bug("532925: Datapoints are not removed after a refresh", Fixed = true)]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vsm", Justification = "Standard abbreviation of Visual State Manager")]
+        [Priority(0)]
+        public void ChangeStateOfDataPointsWithoutVsmStates()
+        {
+            Chart chart = new Chart();
+            DataPointSeries series = DefaultDataPointSeriesToTest;
+            series.IndependentValueBinding = new Binding();
+            ObservableCollection<int> itemsSource = new ObservableCollection<int> { 1, 2, 3 };
+            series.ItemsSource = itemsSource;
+            series.DataPointStyle = (Style)XamlReader.Load(SimpleDataPointStyle);
+            chart.Series.Add(series);
+            TestAsync(
+                chart,
+                () => Assert.AreEqual(3, ChartTestUtilities.GetDataPointsForSeries(series).Count),
+                () => itemsSource.Clear(),
+                () => Assert.AreEqual(0, ChartTestUtilities.GetDataPointsForSeries(series).Count));
+        }
+
+        /// <summary>
+        /// Verifies that removing and updating values in the items source results in correct behavior.
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Description("Verifies that removing and updating values in the items source results in correct behavior.")]
+        public void RemoveAndUpdateCollectionValues()
+        {
+            Chart chart = new Chart();
+            DataPointSeries series = DefaultDataPointSeriesToTest;
+            series.IndependentValueBinding = new Binding();
+            ObservableCollection<int> itemsSource = new ObservableCollection<int> { 1, 2, 3, 4 };
+            series.ItemsSource = itemsSource;
+            series.DataPointStyle = (Style)XamlReader.Load(SimpleDataPointStyle);
+            chart.Series.Add(series);
+            TestAsync(
+                chart,
+                () => Assert.AreEqual(4, ChartTestUtilities.GetDataPointsForSeries(series).Count),
+                () => itemsSource.RemoveAt(3),
+                () => Assert.AreEqual(3, ChartTestUtilities.GetDataPointsForSeries(series).Count),
+                () => itemsSource[2] = 4,
+                () => itemsSource.RemoveAt(2),
+                () => Assert.AreEqual(2, ChartTestUtilities.GetDataPointsForSeries(series).Count));
+        }
     }
 }

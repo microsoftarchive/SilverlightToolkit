@@ -31,6 +31,8 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWCP.DatePickerTextBox>(x => x.Watermark),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute("Text"));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
 #endif

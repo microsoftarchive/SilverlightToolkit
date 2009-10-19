@@ -571,9 +571,9 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 {
                     selector = (dataPoint) => (IComparable)dataPoint.ActualDependentValue;
 
-                    Nullable<Tuple<DataPoint, DataPoint>> largestAndSmallestValues = this.DataPointsByActualDependentValue.GetLargestAndSmallestValues();
-                    minimumPoint = largestAndSmallestValues.Value.First;
-                    maximumPoint = largestAndSmallestValues.Value.Second;
+                    Tuple<DataPoint, DataPoint> largestAndSmallestValues = this.DataPointsByActualDependentValue.GetLargestAndSmallestValues();
+                    minimumPoint = largestAndSmallestValues.Item1;
+                    maximumPoint = largestAndSmallestValues.Item2;
                     margin = minimumPoint.GetActualMargin(this.InternalActualDependentAxis);
                 }
                 

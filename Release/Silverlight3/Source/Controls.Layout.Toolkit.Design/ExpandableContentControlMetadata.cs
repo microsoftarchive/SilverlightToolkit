@@ -28,6 +28,9 @@ namespace System.Windows.Controls.Layout.Design
                 typeof(SSWCP.ExpandableContentControl),
                 b =>
                 {
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWCP.ExpandableContentControl>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
 #endif

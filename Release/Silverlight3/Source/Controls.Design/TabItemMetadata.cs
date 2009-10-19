@@ -34,6 +34,8 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.TabItem>(x => x.IsSelected),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute("Header"));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
 #endif

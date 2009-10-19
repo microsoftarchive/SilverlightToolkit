@@ -20,4 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("b3a89968-1fdb-45bf-bf90-7610bc707f2a")]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.30701.2345")]
+[assembly: AssemblyFileVersion("3.0.31016.2307")]

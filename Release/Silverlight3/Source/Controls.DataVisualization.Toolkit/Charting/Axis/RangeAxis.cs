@@ -193,7 +193,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <param name="value">The value to return the plot area coordinate
         /// for.</param>
         /// <returns>The plot area coordinate of the given value.</returns>
-        public override UnitValue? GetPlotAreaCoordinate(object value)
+        public override UnitValue GetPlotAreaCoordinate(object value)
         {
             return GetPlotAreaCoordinate(value, ActualRange, ActualLength);
         }
@@ -207,7 +207,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// the plot area coordinate.</param>
         /// <param name="length">The length of the axis.</param>
         /// <returns>The plot area coordinate of the given value.</returns>
-        protected abstract UnitValue? GetPlotAreaCoordinate(object value, Range<IComparable> currentRange, double length);
+        protected abstract UnitValue GetPlotAreaCoordinate(object value, Range<IComparable> currentRange, double length);
 
         /// <summary>
         /// Overrides the data range.
@@ -354,13 +354,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                         UnitValue? coordinate = GetPlotAreaCoordinate(axisValue, ActualRange, length);
                         if (coordinate.HasValue)
                         {
-                            Control axisLabel = CreateAxisLabel();
-                            ////Control axisLabel = _labelPool.Next();
-                            ////if (OrientedPanel.Children.Contains(axisLabel))
-                            ////{
-                            ////    System.Diagnostics.Debug.WriteLine("removed.");
-                            ////    OrientedPanel.Children.Remove(axisLabel);
-                            ////}
+                            Control axisLabel = _labelPool.Next();
                             PrepareAxisLabel(axisLabel, axisValue);
                             OrientedPanel.SetCenterCoordinate(axisLabel, coordinate.Value.Value);
                             OrientedPanel.SetPriority(axisLabel, count + 1);
@@ -394,7 +388,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <returns>A sequence of the major grid line coordinates.</returns>
         protected override IEnumerable<UnitValue> GetMajorGridLineCoordinates(Size availableSize)
         {
-            return GetMajorTickMarkValues(availableSize).Select(value => GetPlotAreaCoordinate(value)).Where(value => value.HasValue).Select(value => value.Value);
+            return GetMajorTickMarkValues(availableSize).Select(value => GetPlotAreaCoordinate(value)).Where(value => ValueHelper.CanGraph(value.Value));
         }
 
         /// <summary>
@@ -492,7 +486,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                                 .Select(
                                     valueMargin =>
                                     {
-                                        double coordinate = GetPlotAreaCoordinate(valueMargin.Value).Value.Value;
+                                        double coordinate = GetPlotAreaCoordinate(valueMargin.Value).Value;
                                         return new Range<double>(coordinate - valueMargin.LowMargin, coordinate + valueMargin.HighMargin);
                                     })
                                 .Where(range => range.Minimum < 0 || range.Maximum > this.ActualLength)
@@ -557,7 +551,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
             for (int count = 0; count < valueMarginsCount; count++)
             {
                 ValueMarginCoordinateAndOverlap item = valueMargins[count];
-                item.Coordinate = GetPlotAreaCoordinate(item.ValueMargin.Value, comparableRange, actualLength).Value.Value;
+                item.Coordinate = GetPlotAreaCoordinate(item.ValueMargin.Value, comparableRange, actualLength).Value;
                 item.LeftOverlap = -(item.Coordinate - item.ValueMargin.LowMargin);
                 item.RightOverlap = (item.Coordinate + item.ValueMargin.HighMargin) - actualLength;
             }

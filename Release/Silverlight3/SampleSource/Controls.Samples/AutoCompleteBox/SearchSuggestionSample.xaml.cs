@@ -93,18 +93,22 @@ namespace System.Windows.Controls.Samples
                 List<string> data = new List<string>();
                 try
                 {
-                    JsonObject jso = ((JsonObject)JsonObject.Parse(e.Result))["SearchSuggestion"] as JsonObject;
-                    string originalSearchString = jso["Query"];
-                    if (originalSearchString == autoComplete.SearchText)
+                    JsonArray result = (JsonArray)JsonArray.Parse(e.Result);
+                    if (result.Count > 1)
                     {
-                        foreach (JsonObject suggestion in (JsonArray)jso["Section"])
+                        string originalSearchString = result[0];
+                        if (originalSearchString == autoComplete.SearchText)
                         {
-                            data.Add(suggestion.Values.First());
-                        }
+                            JsonArray suggestions = (JsonArray)result[1];
+                            foreach (JsonPrimitive suggestion in suggestions)
+                            {
+                                data.Add(suggestion);
+                            }
 
-                        // Diplay the AutoCompleteBox drop down with any suggestions
-                        autoComplete.ItemsSource = data;
-                        autoComplete.PopulateComplete();
+                            // Diplay the AutoCompleteBox drop down with any suggestions
+                            autoComplete.ItemsSource = data;
+                            autoComplete.PopulateComplete();
+                        }
                     }
                 }
                 catch

@@ -84,6 +84,10 @@ namespace System.Windows.Controls.Input.Design
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.TimePicker>(x => x.Value),
                         new PropertyOrderAttribute(PropertyOrder.CreateAfter(PropertyOrder.Early)));
+
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.TimePicker>(x => x.Value)));
+
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.TimePicker>(x => x.Popup),

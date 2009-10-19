@@ -19,9 +19,26 @@ namespace System.Windows.Controls.Samples
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Gets or sets the the type of expense.
+        /// The type of expense.
         /// </summary>
-        public string ExpenseType { get; set; }
+        private string _expenseType;
+
+        /// <summary>
+        /// Gets or sets the type of expense.
+        /// </summary>
+        public string ExpenseType
+        {
+            get { return _expenseType; }
+            set
+            {
+                _expenseType = value;
+                int year;
+                if (int.TryParse(value, out year))
+                {
+                    Date = new DateTime(year, 1, 1);
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the Volume (used for bubble chart).

@@ -68,7 +68,7 @@ namespace System.Windows.Controls.Samples
             DepartureDate.SelectedDate = DateTime.UtcNow + TimeSpan.FromDays(7);
             ArrivalDate.SelectedDate = DateTime.UtcNow + TimeSpan.FromDays(14);
 
-            // Navigate to Farecast
+            // Navigate to Bing Travel
             BookFlight.Click += BookFlight_Click;
         }
 
@@ -85,8 +85,8 @@ namespace System.Windows.Controls.Samples
             DateTime ad = (DateTime)ArrivalDate.SelectedDate;
             int p = (int)Passengers.Value;
 
-            Uri farecast = WebServiceHelper.CreateAirfareSearchUri(d, a, dd, ad, p);
-            HtmlPage.Window.Navigate(farecast, "_new");
+            Uri travel = WebServiceHelper.CreateAirfareSearchUri(d, a, dd, ad, p);
+            HtmlPage.Window.Navigate(travel, "_new");
         }
 
         /// <summary>

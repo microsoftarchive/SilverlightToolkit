@@ -194,6 +194,10 @@
     </Compile>
     <Compile Include="DomainUpDown\Month.vb" />
     <Compile Include="DomainUpDown\MonthToStringConverter.vb" />
+    <Compile Include="DragAndDrop\CurrencyConverter.vb" />
+    <Compile Include="DragAndDrop\DragAndDropSample.xaml.vb">
+      <DependentUpon>DragAndDropSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Expander\ExpanderSample.xaml.vb">
       <DependentUpon>ExpanderSample.xaml</DependentUpon>
     </Compile>
@@ -218,6 +222,9 @@
     <Compile Include="GridSplitter\GridSplitterSample.xaml.vb">
       <DependentUpon>GridSplitterSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LayoutTransformer\LayoutTransformerSample.xaml.vb">
+      <DependentUpon>LayoutTransformerSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="Navigation\MappingNavigationSample.xaml.vb">
       <DependentUpon>MappingNavigationSample.xaml</DependentUpon>
@@ -241,6 +248,7 @@
     <Compile Include="Rating\RatingSample.xaml.vb">
       <DependentUpon>RatingSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SampleHelpers.vb" />
     <Compile Include="TabControl\TabControlSample.xaml.vb">
       <DependentUpon>TabControlSample.xaml</DependentUpon>
     </Compile>
@@ -286,6 +294,25 @@
       <DependentUpon>TransitioningContentControlSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="TransitioningContentControl\TransitioningDomainUpDown.vb" />
+    <Compile Include="TreeMap\AlternatingItemDefinitionSelector.vb" />
+    <Compile Include="TreeMap\FlexibleTemplateSample.xaml.vb">
+      <DependentUpon>FlexibleTemplateSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\InterpolatorsSample.xaml.vb">
+      <DependentUpon>InterpolatorsSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\RichSample.xaml.vb">
+      <DependentUpon>RichSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\SalesData.vb" />
+    <Compile Include="TreeMap\SegmentedSample.xaml.vb">
+      <DependentUpon>SegmentedSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\SegmentItemDefinitionSelector.vb" />
+    <Compile Include="TreeMap\SegmentNode.vb" />
+    <Compile Include="TreeMap\TreeMapSample.xaml.vb">
+      <DependentUpon>TreeMapSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeView\Basics\TreeViewDataBindingSample.xaml.vb">
       <DependentUpon>TreeViewDataBindingSample.xaml</DependentUpon>
     </Compile>
@@ -509,6 +536,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DragAndDrop\DragAndDropSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Expander\ExpanderSample.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -530,6 +561,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GridSplitter\GridSplitterSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LayoutTransformer\LayoutTransformerSample.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -654,6 +689,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TransitioningContentControl\TransitioningContentControlSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\FlexibleTemplateSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\InterpolatorsSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\RichSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\SegmentedSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\TreeMapSample.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -809,13 +864,17 @@
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj"><Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project><Name>Controls.Samples.Common</Name></ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="AutoCompleteBox\Venice.jpg" />
     <Resource Include="Charting\Images\Abstract Glow.jpg" />
     <Resource Include="Rating\Images\Casablanca.jpg" />
+    <Resource Include="AutoCompleteBox\Bing.png" />
     <Content Include="Silverlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj">
+      <Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project>
+      <Name>Controls.Samples.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

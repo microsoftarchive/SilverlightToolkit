@@ -3,20 +3,17 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Collections;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+#if !SILVERLIGHT
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -30,6 +27,21 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// The name of the template part with the plot area.
         /// </summary>
         protected const string PlotAreaName = "PlotArea";
+
+        /// <summary>
+        /// The name of the DataPointStyle property and ResourceDictionary entry.
+        /// </summary>
+        protected const string DataPointStyleName = "DataPointStyle";
+
+        /// <summary>
+        /// The name of the LegendItemStyle property and ResourceDictionary entry.
+        /// </summary>
+        protected const string LegendItemStyleName = "LegendItemStyle";
+
+        /// <summary>
+        /// The name of the ActualLegendItemStyle property.
+        /// </summary>
+        protected internal const string ActualLegendItemStyleName = "ActualLegendItemStyle";
 
 #if !SILVERLIGHT
         /// <summary>
@@ -503,6 +515,53 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         private bool TemplateApplied { get; set; }
 
+        #region public Style DataPointStyle
+        /// <summary>
+        /// Gets or sets the style to use for the data points.
+        /// </summary>
+        public Style DataPointStyle
+        {
+            get { return GetValue(DataPointStyleProperty) as Style; }
+            set { SetValue(DataPointStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the DataPointStyle dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DataPointStyleProperty =
+            DependencyProperty.Register(
+                DataPointStyleName,
+                typeof(Style),
+                typeof(DataPointSeries),
+                new PropertyMetadata(null, OnDataPointStylePropertyChanged));
+
+        /// <summary>
+        /// DataPointStyleProperty property changed handler.
+        /// </summary>
+        /// <param name="d">DataPointSingleSeriesWithAxes that changed its DataPointStyle.</param>
+        /// <param name="e">Event arguments.</param>
+        private static void OnDataPointStylePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((DataPointSeries)d).OnDataPointStylePropertyChanged((Style)e.OldValue, (Style)e.NewValue);
+        }
+
+        /// <summary>
+        /// DataPointStyleProperty property changed handler.
+        /// </summary>
+        /// <param name="oldValue">Old value.</param>
+        /// <param name="newValue">New value.</param>
+        protected virtual void OnDataPointStylePropertyChanged(Style oldValue, Style newValue)
+        {
+            foreach (LegendItem legendItem in LegendItems.OfType<LegendItem>())
+            {
+                // Silverlight requires the following to pick up the new Style for the LegendItem marker
+                object dataContext = legendItem.DataContext;
+                legendItem.DataContext = null;
+                legendItem.DataContext = dataContext;
+            }
+        }
+        #endregion public Style DataPointStyle
+
         #region public Style LegendItemStyle
         /// <summary>
         /// Gets or sets the style to use for the legend items.
@@ -518,7 +577,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         public static readonly DependencyProperty LegendItemStyleProperty =
             DependencyProperty.Register(
-                "LegendItemStyle",
+                LegendItemStyleName,
                 typeof(Style),
                 typeof(DataPointSeries),
                 new PropertyMetadata(null, OnLegendItemStylePropertyChanged));
@@ -530,7 +589,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <param name="e">Event arguments.</param>
         private static void OnLegendItemStylePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DataPointSeries source = d as DataPointSeries;
+            DataPointSeries source = (DataPointSeries)d;
             source.OnLegendItemStylePropertyChanged((Style)e.OldValue, (Style)e.NewValue);
         }
 
@@ -541,10 +600,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <param name="newValue">New value.</param>
         protected virtual void OnLegendItemStylePropertyChanged(Style oldValue, Style newValue)
         {
-            foreach (LegendItem legendItem in LegendItems.OfType<LegendItem>())
-            {
-                legendItem.SetStyle(newValue);
-            }
         }
         #endregion public Style LegendItemStyle
 
@@ -706,11 +761,12 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         /// <returns>A legend item for insertion in the legend items collection.
         /// </returns>
-        protected virtual LegendItem CreateLegendItem()
+        /// <param name="owner">The owner of the new LegendItem.</param>
+        protected virtual LegendItem CreateLegendItem(DataPointSeries owner)
         {
-            LegendItem legendItem = new LegendItem();
-            legendItem.SetStyle(LegendItemStyle);
-
+            LegendItem legendItem = new LegendItem() { Owner = owner };
+            legendItem.SetBinding(LegendItem.StyleProperty, new Binding(ActualLegendItemStyleName) { Source = this });
+            legendItem.SetBinding(LegendItem.ContentProperty, new Binding(TitleName) { Source = this });
             return legendItem;
         }
 
@@ -920,7 +976,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// Refreshes data from data source and renders the series.
         /// </summary>
-        public override void Refresh()
+        public void Refresh()
         {
             try
             {
@@ -1314,6 +1370,29 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <param name="newValue">The new value.</param>
         protected virtual void OnDataPointIndependentValueChanged(DataPoint dataPoint, object oldValue, object newValue)
         {
+        }
+
+        /// <summary>
+        /// Returns a ResourceDictionaryEnumerator that returns ResourceDictionaries with a
+        /// DataPointStyle having the specified TargetType or with a TargetType that is an
+        /// ancestor of the specified type.
+        /// </summary>
+        /// <param name="dispenser">The ResourceDictionaryDispenser.</param>
+        /// <param name="targetType">The TargetType.</param>
+        /// <param name="takeAncestors">A value indicating whether to accept ancestors of the TargetType.</param>
+        /// <returns>A ResourceDictionary enumerator.</returns>
+        internal static IEnumerator<ResourceDictionary> GetResourceDictionaryWithTargetType(IResourceDictionaryDispenser dispenser, Type targetType, bool takeAncestors)
+        {
+            return dispenser.GetResourceDictionariesWhere(dictionary =>
+            {
+                Style style = dictionary[DataPointStyleName] as Style;
+                if (null != style)
+                {
+                    return (null != style.TargetType) &&
+                           ((targetType == style.TargetType) || (takeAncestors && style.TargetType.IsAssignableFrom(targetType)));
+                }
+                return false;
+            });
         }
     }
 }

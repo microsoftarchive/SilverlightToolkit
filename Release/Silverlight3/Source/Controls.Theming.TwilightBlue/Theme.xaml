@@ -6033,31 +6033,45 @@
         <Setter Property="Padding" Value="5" />
         <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="StylePalette">
+        <Setter Property="Palette">
             <Setter.Value>
-                <visualizationToolkit:StylePalette>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush1}" />
-                    </Style>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush2}" />
-                    </Style>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush3}" />
-                    </Style>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush4}" />
-                    </Style>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush5}" />
-                    </Style>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush6}" />
-                    </Style>
-                    <Style TargetType="Control">
-                        <Setter Property="Background" Value="{StaticResource ChartBrush7}" />
-                    </Style>
-                </visualizationToolkit:StylePalette>
+                <visualizationToolkit:ResourceDictionaryCollection>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush1}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush2}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush3}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush4}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush5}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush6}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                            <Setter Property="Background" Value="{StaticResource ChartBrush7}" />
+                        </Style>
+                    </ResourceDictionary>
+                </visualizationToolkit:ResourceDictionaryCollection>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">

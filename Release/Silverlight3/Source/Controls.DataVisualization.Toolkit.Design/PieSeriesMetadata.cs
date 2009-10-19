@@ -27,7 +27,7 @@ namespace System.Windows.Controls.DataVisualization.Design
                 b =>
                 {
                     b.AddCustomAttributes(
-                        Extensions.GetMemberName<SSWCDC.PieSeries>(x => x.StylePalette),
+                        Extensions.GetMemberName<SSWCDC.PieSeries>(x => x.Palette),
                         new CategoryAttribute(Properties.Resources.DataVisualizationStyling));
                 });
         }

@@ -329,5 +329,80 @@ namespace System.Windows.Controls.Primitives
                 };
             element.LayoutUpdated += handler;
         }
+
+        /// <summary>
+        /// Retrieves all the logical children of a framework element using a 
+        /// breadth-first search. For performance reasons this method manually 
+        /// manages the stack instead of using recursion.
+        /// </summary>
+        /// <param name="parent">The parent framework element.</param>
+        /// <returns>The logical children of the framework element.</returns>
+        internal static IEnumerable<FrameworkElement> GetLogicalChildren(this FrameworkElement parent)
+        {
+            Debug.Assert(parent != null, "The parent cannot be null.");
+
+            Popup popup = parent as Popup;
+            if (popup != null)
+            {
+                FrameworkElement popupChild = popup.Child as FrameworkElement;
+                if (popupChild != null)
+                {
+                    yield return popupChild;
+                }
+            }
+
+            // If control is an items control return all children using the 
+            // Item container generator.
+            ItemsControl itemsControl = parent as ItemsControl;
+            if (itemsControl != null)
+            {
+                foreach (FrameworkElement logicalChild in
+                    Enumerable
+                        .Range(0, itemsControl.Items.Count)
+                        .Select(index => itemsControl.ItemContainerGenerator.ContainerFromIndex(index))
+                        .OfType<FrameworkElement>())
+                {
+                    yield return logicalChild;
+                }
+            }
+
+            string parentName = parent.Name;
+            Queue<FrameworkElement> queue =
+                new Queue<FrameworkElement>(parent.GetVisualChildren().OfType<FrameworkElement>());
+
+            while (queue.Count > 0)
+            {
+                FrameworkElement element = queue.Dequeue();
+                if (element.Parent == parent || element is UserControl)
+                {
+                    yield return element;
+                }
+                else
+                {
+                    foreach (FrameworkElement visualChild in element.GetVisualChildren().OfType<FrameworkElement>())
+                    {
+                        queue.Enqueue(visualChild);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all the logical descendents of a framework element using a 
+        /// breadth-first search. For performance reasons this method manually 
+        /// manages the stack instead of using recursion.
+        /// </summary>
+        /// <param name="parent">The parent framework element.</param>
+        /// <returns>The logical children of the framework element.</returns>
+        internal static IEnumerable<FrameworkElement> GetLogicalDescendents(this FrameworkElement parent)
+        {
+            Debug.Assert(parent != null, "The parent cannot be null.");
+
+            return 
+                FunctionalProgramming.TraverseBreadthFirst(
+                    parent,
+                    node => node.GetLogicalChildren(),
+                    node => true);
+        }
     }
 }

@@ -16,7 +16,7 @@ using System.Windows.Media.Animation;
 namespace System.Windows.Controls.DataVisualization.Charting
 {
     /// <summary>
-    /// Represents a data point used for pie charts.
+    /// Represents a data point used for a pie series.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
     [TemplatePart(Name = SliceName, Type = typeof(UIElement))]
@@ -26,12 +26,17 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [TemplateVisualState(Name = DataPoint.StateSelectionSelected, GroupName = DataPoint.GroupSelectionStates)]
     [TemplateVisualState(Name = DataPoint.StateRevealShown, GroupName = DataPoint.GroupRevealStates)]
     [TemplateVisualState(Name = DataPoint.StateRevealHidden, GroupName = DataPoint.GroupRevealStates)]
-    public sealed class PieDataPoint : DataPoint
+    public class PieDataPoint : DataPoint
     {
         /// <summary>
         /// The name of the slice template part.
         /// </summary>
         private const string SliceName = "Slice";
+
+        /// <summary>
+        /// Name of the ActualDataPointStyle property.
+        /// </summary>
+        internal const string ActualDataPointStyleName = "ActualDataPointStyle";
 
         #region public Geometry Geometry
         /// <summary>
@@ -52,16 +57,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 "Geometry",
                 typeof(Geometry),
                 typeof(PieDataPoint),
-                new PropertyMetadata(OnGeometryPropertyChanged));
-
-        /// <summary>
-        /// Called when the value of the Geometry property changes.
-        /// </summary>
-        /// <param name="d">Control that changed its Geometry.</param>
-        /// <param name="e">Event arguments.</param>
-        private static void OnGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-        }
+                null);
         #endregion public Geometry Geometry
 
         // GeometrySelection and GeometryHighlight exist on Silverlight because
@@ -431,6 +427,53 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
         #endregion public string RatioStringFormat
 
+        #region internal Style ActualDataPointStyle
+        /// <summary>
+        /// Gets or sets the actual style used for the data points.
+        /// </summary>
+        internal Style ActualDataPointStyle
+        {
+            get { return GetValue(ActualDataPointStyleProperty) as Style; }
+            set { SetValue(ActualDataPointStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the ActualDataPointStyle dependency property.
+        /// </summary>
+        internal static readonly DependencyProperty ActualDataPointStyleProperty =
+            DependencyProperty.Register(
+                ActualDataPointStyleName,
+                typeof(Style),
+                typeof(PieDataPoint),
+                null);
+        #endregion internal Style ActualDataPointStyle
+
+        #region internal Style ActualLegendItemStyle
+        /// <summary>
+        /// Gets or sets the actual style used for the legend item.
+        /// </summary>
+        internal Style ActualLegendItemStyle
+        {
+            get { return GetValue(ActualLegendItemStyleProperty) as Style; }
+            set { SetValue(ActualLegendItemStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the ActualLegendItemStyle dependency property.
+        /// </summary>
+        internal static readonly DependencyProperty ActualLegendItemStyleProperty =
+            DependencyProperty.Register(
+                DataPointSeries.ActualLegendItemStyleName,
+                typeof(Style),
+                typeof(PieDataPoint),
+                null);
+        #endregion protected Style ActualLegendItemStyle
+
+        /// <summary>
+        /// Gets the Palette-dispensed ResourceDictionary for the Series.
+        /// </summary>
+        protected internal ResourceDictionary PaletteResources { get; internal set; }
+
         /// <summary>
         /// Gets or sets the element that represents the pie slice.
         /// </summary>
@@ -448,7 +491,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
 
 #endif
         /// <summary>
-        /// Initializes a new instance of the PieDataPoint.
+        /// Initializes a new instance of the PieDataPoint class.
         /// </summary>
         public PieDataPoint()
         {

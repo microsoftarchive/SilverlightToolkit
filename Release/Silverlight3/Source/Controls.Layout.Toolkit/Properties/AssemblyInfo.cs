@@ -21,7 +21,7 @@ using System.Windows.Markup;
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.30701.2345")]
+[assembly: AssemblyFileVersion("3.0.31016.2255")]
 [assembly: CLSCompliant(true)]
 [assembly: XmlnsPrefix("clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit", "layoutToolkit")]
 [assembly: XmlnsDefinitionAttribute("clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit", "System.Windows.Controls")]

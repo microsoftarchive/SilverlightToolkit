@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Observable\ActionSubject.cs" />
     <Compile Include="ContentControl\ContentControlTest.cs" />
     <Compile Include="ContentControl\IOverriddenContentControl.cs" />

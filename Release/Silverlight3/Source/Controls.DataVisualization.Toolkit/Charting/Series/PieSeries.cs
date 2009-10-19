@@ -3,13 +3,11 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace System.Windows.Controls.DataVisualization.Charting
@@ -19,58 +17,58 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// format.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
+    [StyleTypedProperty(Property = DataPointStyleName, StyleTargetType = typeof(PieDataPoint))]
     [StyleTypedProperty(Property = "LegendItemStyle", StyleTargetType = typeof(LegendItem))]
     [TemplatePart(Name = DataPointSeries.PlotAreaName, Type = typeof(Canvas))]
-    public sealed partial class PieSeries : DataPointSeries, IStyleDispenser, IRequireGlobalSeriesIndex
+    public partial class PieSeries : DataPointSeries, IResourceDictionaryDispenser, IRequireGlobalSeriesIndex
     {
-        #region public Collection<Style> StylePalette
+        #region public Collection<ResourceDictionary> Palette
         /// <summary>
-        /// Gets or sets a palette of styles used by the pie series.
+        /// Gets or sets a palette of ResourceDictionaries used by the series.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Want to allow this to be set from XAML.")]
-        public Collection<Style> StylePalette
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Want to allow this to be set from XAML.")]
+        public Collection<ResourceDictionary> Palette
         {
-            get { return GetValue(StylePaletteProperty) as Collection<Style>; }
-            set { SetValue(StylePaletteProperty, value); }
+            get { return GetValue(PaletteProperty) as Collection<ResourceDictionary>; }
+            set { SetValue(PaletteProperty, value); }
         }
 
         /// <summary>
-        /// Identifies the StylePalette dependency property.
+        /// Identifies the Palette dependency property.
         /// </summary>
-        public static readonly DependencyProperty StylePaletteProperty =
+        public static readonly DependencyProperty PaletteProperty =
             DependencyProperty.Register(
-                "StylePalette",
-                typeof(Collection<Style>),
+                "Palette",
+                typeof(Collection<ResourceDictionary>),
                 typeof(Series),
-                new PropertyMetadata(OnStylePalettePropertyChanged));
+                new PropertyMetadata(OnPalettePropertyChanged));
 
         /// <summary>
-        /// StylePaletteProperty property changed handler.
+        /// PaletteProperty property changed handler.
         /// </summary>
-        /// <param name="d">Parent that changed its StylePalette.</param>
+        /// <param name="d">Parent that changed its Palette.</param>
         /// <param name="e">Event arguments.</param>
-        private static void OnStylePalettePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPalettePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PieSeries source = d as PieSeries;
-            Collection<Style> newValue = e.NewValue as Collection<Style>;
-            source.OnStylePalettePropertyChanged(newValue);
+            Collection<ResourceDictionary> newValue = e.NewValue as Collection<ResourceDictionary>;
+            source.OnPalettePropertyChanged(newValue);
         }
 
         /// <summary>
-        /// StylePaletteProperty property changed handler.
+        /// PaletteProperty property changed handler.
         /// </summary>
         /// <param name="newValue">New value.</param>
-        private void OnStylePalettePropertyChanged(Collection<Style> newValue)
+        private void OnPalettePropertyChanged(Collection<ResourceDictionary> newValue)
         {
-            StyleDispenser.Styles = newValue;
-            RefreshStyles();
+            ResourceDictionaryDispenser.ResourceDictionaries = newValue;
         }
-        #endregion public Collection<Style> StylePalette
+        #endregion public Collection<ResourceDictionary> Palette
 
         /// <summary>
         /// The pie data point style enumerator.
         /// </summary>
-        private IEnumerator<Style> _styleEnumerator;
+        private IEnumerator<ResourceDictionary> _resourceDictionaryEnumerator;
 
 #if !SILVERLIGHT
         /// <summary>
@@ -90,7 +88,28 @@ namespace System.Windows.Controls.DataVisualization.Charting
 #if SILVERLIGHT
             this.DefaultStyleKey = typeof(PieSeries);
 #endif
-            this.StyleDispenser = new StyleDispenser();
+            this.ResourceDictionaryDispenser = new ResourceDictionaryDispenser();
+            ResourceDictionaryDispenser.ResourceDictionariesChanged += delegate
+            {
+                OnResourceDictionariesChanged(EventArgs.Empty);
+            };
+        }
+
+        /// <summary>
+        /// Invokes the ResourceDictionariesChanged event.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnResourceDictionariesChanged(EventArgs e)
+        {
+            // Update with new styles
+            Refresh();
+
+            // Forward event on to listeners
+            EventHandler handler = ResourceDictionariesChanged;
+            if (null != handler)
+            {
+                handler.Invoke(this, e);
+            }
         }
 
         /// <summary>
@@ -119,22 +138,37 @@ namespace System.Windows.Controls.DataVisualization.Charting
         protected override void AddDataPoint(DataPoint dataPoint)
         {
             base.AddDataPoint(dataPoint);
+            PieDataPoint pieDataPoint = (PieDataPoint)dataPoint;
 
             int index = ActiveDataPoints.IndexOf(dataPoint) + 1;
+            LegendItem legendItem = CreatePieLegendItem(dataPoint, index);
 
             // Grab a style enumerator if we don't have one already.
-            if (_styleEnumerator == null)
+            if (_resourceDictionaryEnumerator == null)
             {
-                _styleEnumerator = this.GetStylesWithTargetType(typeof(PieDataPoint), true);
+                _resourceDictionaryEnumerator = GetResourceDictionaryWithTargetType(this, typeof(PieDataPoint), true);
             }
 
-            if (_styleEnumerator.MoveNext())
+            if (_resourceDictionaryEnumerator.MoveNext())
             {
-                Style style = _styleEnumerator.Current;
-                dataPoint.SetStyle(style);
+                ResourceDictionary paletteResources =
+#if SILVERLIGHT
+                    _resourceDictionaryEnumerator.Current.ShallowCopy();
+#else
+                    _resourceDictionaryEnumerator.Current;
+#endif
+                pieDataPoint.PaletteResources = paletteResources;
+                pieDataPoint.Resources.MergedDictionaries.Add(paletteResources);
             }
+            else
+            {
+                pieDataPoint.PaletteResources = null;
+            }
+            pieDataPoint.ActualDataPointStyle = DataPointStyle ?? pieDataPoint.Resources[DataPointStyleName] as Style;
+            pieDataPoint.SetBinding(PieDataPoint.StyleProperty, new Binding(PieDataPoint.ActualDataPointStyleName) { Source = pieDataPoint });
+            pieDataPoint.ActualLegendItemStyle = LegendItemStyle ?? (pieDataPoint.Resources[LegendItemStyleName] as Style);
+            legendItem.SetBinding(LegendItem.StyleProperty, new Binding(ActualLegendItemStyleName) { Source = pieDataPoint });
 
-            LegendItem legendItem = CreatePieLegendItem(dataPoint, index);
             _dataPointLegendItems[dataPoint] = legendItem;
             LegendItems.Add(legendItem);
             UpdateLegendItemIndexes();
@@ -334,9 +368,9 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <param name="dataPoint">The data point to use to create the legend item.</param>
         /// <param name="index">The 1-based index of the Control.</param>
         /// <returns>The series host legend item.</returns>
-        private LegendItem CreatePieLegendItem(DataPoint dataPoint, int index)
+        protected virtual LegendItem CreatePieLegendItem(DataPoint dataPoint, int index)
         {
-            LegendItem legendItem = CreateLegendItem();
+            LegendItem legendItem = CreateLegendItem(this);
             // Set the Content of the LegendItem
             legendItem.Content = dataPoint.IndependentValue ?? index;
             // Create a representative DataPoint for access to styled properties
@@ -348,7 +382,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 PlotArea.Children.Add(legendDataPoint);
                 PlotArea.Children.Remove(legendDataPoint);
             }
-            legendDataPoint.SetStyle(dataPoint.Style);
+            legendDataPoint.SetBinding(DataPoint.StyleProperty, new Binding(PieDataPoint.ActualDataPointStyleName) { Source = dataPoint });
             legendItem.DataContext = legendDataPoint;
             return legendItem;
         }
@@ -468,57 +502,96 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// Gets or sets an object used to dispense styles from the style 
         /// palette.
         /// </summary>
-        private StyleDispenser StyleDispenser { get; set; }
+        private ResourceDictionaryDispenser ResourceDictionaryDispenser { get; set; }
 
         /// <summary>
-        /// Returns a rotating enumerator of Style objects that coordinates with 
-        /// the style dispenser object to ensure that no two enumerators are
-        /// currently on the same style if possible.  If the style
-        /// dispenser is reset or its collection of styles is changed then
-        /// the enumerators will also be reset.
+        /// Event that is invoked when the ResourceDictionaryDispenser's collection has changed.
         /// </summary>
-        /// <param name="stylePredicate">A predicate that returns a value
-        /// indicating whether to return a style.</param>
-        /// <returns>An enumerator of styles.</returns>
-        public IEnumerator<Style> GetStylesWhere(Func<Style, bool> stylePredicate)
+        public event EventHandler ResourceDictionariesChanged;
+
+        /// <summary>
+        /// Returns a rotating enumerator of ResourceDictionary objects that coordinates
+        /// with the dispenser object to ensure that no two enumerators are on the same
+        /// item. If the dispenser is reset or its collection is changed then the
+        /// enumerators are also reset.
+        /// </summary>
+        /// <param name="predicate">A predicate that returns a value indicating
+        /// whether to return an item.</param>
+        /// <returns>An enumerator of ResourceDictionaries.</returns>
+        public IEnumerator<ResourceDictionary> GetResourceDictionariesWhere(Func<ResourceDictionary, bool> predicate)
         {
-            return StyleDispenser.GetStylesWhere(stylePredicate);
+            return ResourceDictionaryDispenser.GetResourceDictionariesWhere(predicate);
         }
 
         /// <summary>
-        /// Resets the styles dispensed by the series.
+        /// Called when the value of the SeriesHost property changes.
         /// </summary>
-        public void ResetStyles()
-        {
-            StyleDispenser.ResetStyles();
-        }
-
-        /// <summary>
-        /// Sets the new series host to be the parent style dispenser of the
-        /// local style dispenser object.
-        /// </summary>
-        /// <param name="oldValue">The new series host value.</param>
-        /// <param name="newValue">The old series host value.</param>
+        /// <param name="oldValue">The value to be replaced.</param>
+        /// <param name="newValue">The new series host value.</param>
         protected override void OnSeriesHostPropertyChanged(ISeriesHost oldValue, ISeriesHost newValue)
         {
             base.OnSeriesHostPropertyChanged(oldValue, newValue);
-            
-            // Disposing of the style enumerator.
-            if ((newValue == null) && (null != _styleEnumerator))
+
+            if (null != oldValue)
             {
-                _styleEnumerator.Dispose();
-                _styleEnumerator = null;
+                oldValue.ResourceDictionariesChanged -= new EventHandler(SeriesHostResourceDictionariesChanged);
             }
 
-            this.StyleDispenser.Parent = newValue;
+            if (null != newValue)
+            {
+                newValue.ResourceDictionariesChanged += new EventHandler(SeriesHostResourceDictionariesChanged);
+            }
+            else
+            {
+                // Dispose of the enumerator.
+                if (null != _resourceDictionaryEnumerator)
+                {
+                    _resourceDictionaryEnumerator.Dispose();
+                    _resourceDictionaryEnumerator = null;
+                }
+            }
+
+            this.ResourceDictionaryDispenser.Parent = newValue;
         }
 
         /// <summary>
-        /// Refreshes styles in the pie series.
+        /// Handles the SeriesHost's ResourceDictionariesChanged event.
         /// </summary>
-        public override void RefreshStyles()
+        /// <param name="sender">ISeriesHost instance.</param>
+        /// <param name="e">Event args.</param>
+        private void SeriesHostResourceDictionariesChanged(object sender, EventArgs e)
         {
             Refresh();
+        }
+
+        /// <summary>
+        /// DataPointStyleProperty property changed handler.
+        /// </summary>
+        /// <param name="oldValue">Old value.</param>
+        /// <param name="newValue">New value.</param>
+        protected override void OnDataPointStylePropertyChanged(Style oldValue, Style newValue)
+        {
+            // Propagate change
+            foreach (PieDataPoint pieDataPoint in ActiveDataPoints)
+            {
+                pieDataPoint.ActualDataPointStyle = newValue ?? (pieDataPoint.Resources[DataPointStyleName] as Style);
+            }
+            base.OnDataPointStylePropertyChanged(oldValue, newValue);
+        }
+
+        /// <summary>
+        /// Called when the value of the LegendItemStyle property changes.
+        /// </summary>
+        /// <param name="oldValue">Old value.</param>
+        /// <param name="newValue">New value.</param>
+        protected override void OnLegendItemStylePropertyChanged(Style oldValue, Style newValue)
+        {
+            // Propagate change
+            foreach (PieDataPoint pieDataPoint in ActiveDataPoints)
+            {
+                pieDataPoint.ActualLegendItemStyle = newValue ?? (pieDataPoint.Resources[LegendItemStyleName] as Style);
+            }
+            base.OnLegendItemStylePropertyChanged(oldValue, newValue);
         }
     }
 }

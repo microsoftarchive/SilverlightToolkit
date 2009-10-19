@@ -37,6 +37,27 @@ namespace System.Windows.Controls.Input.Design
 
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.Controls, true));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ValueMemberPath),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ItemsSource),
+                            true));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ValueMemberBinding),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ItemsSource),
+                            true));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ItemTemplate),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ItemsSource),
+                            true));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.CurrentIndex),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.DomainUpDown>(x => x.ItemsSource),
+                            true));
 #endif
                 });
         }

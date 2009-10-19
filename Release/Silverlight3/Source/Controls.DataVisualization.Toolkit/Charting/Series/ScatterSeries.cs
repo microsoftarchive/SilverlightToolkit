@@ -3,12 +3,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -16,10 +11,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// Represents a control that contains a data series to be rendered in X/Y scatter format.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
-    [StyleTypedProperty(Property = "DataPointStyle", StyleTargetType = typeof(ScatterDataPoint))]
+    [StyleTypedProperty(Property = DataPointStyleName, StyleTargetType = typeof(ScatterDataPoint))]
     [StyleTypedProperty(Property = "LegendItemStyle", StyleTargetType = typeof(LegendItem))]
     [TemplatePart(Name = DataPointSeries.PlotAreaName, Type = typeof(Canvas))]
-    public sealed partial class ScatterSeries : DataPointSingleSeriesWithAxes
+    public partial class ScatterSeries : DataPointSingleSeriesWithAxes
     {
         /// <summary>
         /// Initializes a new instance of the ScatterSeries class.
@@ -68,7 +63,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// DependentRangeAxisProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnDependentRangeAxisPropertyChanged(IRangeAxis newValue)
         {
             this.InternalDependentAxis = (IAxis)newValue;
@@ -115,7 +110,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// IndependentAxisProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnIndependentAxisPropertyChanged(IAxis newValue)
         {
             this.InternalIndependentAxis = (IAxis)newValue;
@@ -165,14 +160,14 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Returns the style enumerator used to retrieve a style to use for 
-        /// all data points.
+        /// Returns the custom ResourceDictionary to use for necessary resources.
         /// </summary>
-        /// <returns>The style enumerator used to retrieve a style to use for 
-        /// all data points.</returns>
-        protected override IEnumerator<Style> GetStyleEnumeratorFromHost()
+        /// <returns>
+        /// ResourceDictionary to use for necessary resources.
+        /// </returns>
+        protected override IEnumerator<ResourceDictionary> GetResourceDictionaryEnumeratorFromHost()
         {
-            return SeriesHost.GetStylesWithTargetType(typeof(ScatterDataPoint), true);
+            return GetResourceDictionaryWithTargetType(SeriesHost, typeof(ScatterDataPoint), true);
         }
 
         /// <summary>
@@ -181,12 +176,14 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <param name="dataPoint">The data point to update.</param>
         protected override void UpdateDataPoint(DataPoint dataPoint)
         {
-            double PlotAreaHeight = ActualDependentRangeAxis.GetPlotAreaCoordinate(ActualDependentRangeAxis.Range.Maximum).Value.Value;
-            double dataPointX = ActualIndependentAxis.GetPlotAreaCoordinate(dataPoint.ActualIndependentValue).Value.Value;
-            double dataPointY = ActualDependentRangeAxis.GetPlotAreaCoordinate(dataPoint.ActualDependentValue).Value.Value;
+            double PlotAreaHeight = ActualDependentRangeAxis.GetPlotAreaCoordinate(ActualDependentRangeAxis.Range.Maximum).Value;
+            double dataPointX = ActualIndependentAxis.GetPlotAreaCoordinate(dataPoint.ActualIndependentValue).Value;
+            double dataPointY = ActualDependentRangeAxis.GetPlotAreaCoordinate(dataPoint.ActualDependentValue).Value;
 
             if (ValueHelper.CanGraph(dataPointX) && ValueHelper.CanGraph(dataPointY))
             {
+                dataPoint.Visibility = Visibility.Visible;
+
                 // Set the Position
                 Canvas.SetLeft(
                     dataPoint,
@@ -194,6 +191,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 Canvas.SetTop(
                     dataPoint,
                     Math.Round(PlotAreaHeight - (dataPointY + (dataPoint.ActualHeight / 2))));
+            }
+            else
+            {
+                dataPoint.Visibility = Visibility.Collapsed;
             }
         }
     }

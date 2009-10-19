@@ -102,16 +102,18 @@ Partial Public Class SearchSuggestionSample
         If autoComplete IsNot Nothing AndAlso e.Error Is Nothing AndAlso (Not e.Cancelled) AndAlso (Not String.IsNullOrEmpty(e.Result)) Then
             Dim data As List(Of String) = New List(Of String)()
             Try
-                Dim jso As JsonObject = TryCast((CType(JsonObject.Parse(e.Result), JsonObject))("SearchSuggestion"), JsonObject)
-                Dim originalSearchString As String = jso("Query")
-                If originalSearchString = autoComplete.SearchText Then
-                    For Each suggestion As JsonObject In CType(jso("Section"), JsonArray)
-                        data.Add(suggestion.Values.First())
-                    Next suggestion
+                Dim result As JsonArray = TryCast((CType(JsonArray.Parse(e.Result), JsonArray)), JsonArray)
+                If result.Count > 1 Then
+                    Dim originalSearchString As String = result(0)
+                    If originalSearchString = autoComplete.SearchText Then
+                        For Each suggestion As JsonPrimitive In CType(result(1), JsonArray)
+                            data.Add(suggestion)
+                        Next suggestion
 
-                    ' Diplay the AutoCompleteBox drop down with any suggestions
-                    autoComplete.ItemsSource = data
-                    autoComplete.PopulateComplete()
+                        ' Diplay the AutoCompleteBox drop down with any suggestions
+                        autoComplete.ItemsSource = data
+                        autoComplete.PopulateComplete()
+                    End If
                 End If
             Catch
             End Try

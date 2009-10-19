@@ -524,12 +524,12 @@ namespace System.Windows.Controls.DataVisualization
 
                 foreach (Tuple<int, int> priorityPair in priorityPairs)
                 {
-                    IEnumerable<UIElement> currentPriorityChildren = Children.Cast<UIElement>().Where(child => GetPriority(child) == priorityPair.First).ToList();
+                    IEnumerable<UIElement> currentPriorityChildren = Children.Cast<UIElement>().Where(child => GetPriority(child) == priorityPair.Item1).ToList();
 
                     IEnumerable<Range<double>> currentPriorityRanges =
                         GetRanges(currentPriorityChildren, lengthSelector);
                     
-                    IEnumerable<UIElement> nextPriorityChildren = Children.Cast<UIElement>().Where(child => GetPriority(child) == priorityPair.Second).ToList();
+                    IEnumerable<UIElement> nextPriorityChildren = Children.Cast<UIElement>().Where(child => GetPriority(child) == priorityPair.Item2).ToList();
 
                     IEnumerable<Range<double>> nextPriorityRanges =
                         GetRanges(nextPriorityChildren, lengthSelector);
@@ -549,7 +549,7 @@ namespace System.Windows.Controls.DataVisualization
 
                         offset += maxCurrentPriorityChildOffset + OffsetPadding;
                     }
-                    PriorityOffsets[priorityPair.Second] = offset;
+                    PriorityOffsets[priorityPair.Item2] = offset;
                 }
 
                 offset =

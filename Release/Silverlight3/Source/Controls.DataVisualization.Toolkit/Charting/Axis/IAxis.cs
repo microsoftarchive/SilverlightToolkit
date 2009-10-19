@@ -3,18 +3,12 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Windows;
-using System.Windows.Controls;
 using System.Collections.ObjectModel;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
     /// <summary>
-    /// An axis class used to determine the plot area coordinate of values.
+    /// An axis interface used to determine the plot area coordinate of values.
     /// </summary>
     public interface IAxis
     {
@@ -39,10 +33,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// The plot area coordinate of a value.
         /// </summary>
-        /// <param name="value">The value for which to retrieve the plot area 
+        /// <param name="value">The value for which to retrieve the plot area
         /// coordinate.</param>
         /// <returns>The plot area coordinate.</returns>
-        UnitValue? GetPlotAreaCoordinate(object value);
+        UnitValue GetPlotAreaCoordinate(object value);
 
         /// <summary>
         /// Gets the registered IAxisListeners.

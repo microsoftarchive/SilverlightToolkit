@@ -3,13 +3,7 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -17,8 +11,13 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// Represents a control that contains a data series.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
-    public abstract partial class Series : Control, IRequireSeriesHost
+    public abstract partial class Series : Control, ISeries, IRequireSeriesHost
     {
+        /// <summary>
+        /// The name of the Title property.
+        /// </summary>
+        protected const string TitleName = "Title";
+
         #region public ISeriesHost SeriesHost
         /// <summary>
         /// Gets or sets the parent instance the Series belongs to.
@@ -56,10 +55,12 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
         #endregion public ISeriesHost SeriesHost
 
+        #region public ObservableCollection<UIElement> LegendItems
         /// <summary>
         /// Gets the legend items to be added to the legend.
         /// </summary>
         public ObservableCollection<UIElement> LegendItems { get; private set; }
+        #endregion public ObservableCollection<UIElement> LegendItems
 
         #region public object Title
         /// <summary>
@@ -76,7 +77,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(
-                "Title",
+                TitleName,
                 typeof(object),
                 typeof(Series),
                 new PropertyMetadata(OnTitleChanged));
@@ -99,7 +100,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
         protected virtual void OnTitleChanged(object oldValue, object newValue)
         {
         }
-
         #endregion public object Title
 
         /// <summary>
@@ -108,18 +108,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
         protected Series()
         {
             LegendItems = new NoResetObservableCollection<UIElement>();
-        }
-
-        /// <summary>
-        /// Refreshes data from data source and renders the series.
-        /// </summary>
-        public abstract void Refresh();
-
-        /// <summary>
-        /// Refreshes styles from style dispenser and renders the series.
-        /// </summary>
-        public virtual void RefreshStyles()
-        {
         }
     }
 }

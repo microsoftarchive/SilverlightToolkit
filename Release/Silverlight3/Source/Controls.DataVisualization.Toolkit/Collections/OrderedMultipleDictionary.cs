@@ -53,7 +53,7 @@ namespace System.Windows.Controls.DataVisualization.Collections
         /// Gets the largest and smallest key's extreme values from the dictionary.
         /// </summary>
         /// <returns>Tuple of the largest and smallest values.</returns>
-        public Nullable<Tuple<TValue, TValue>> GetLargestAndSmallestValues()
+        public Tuple<TValue, TValue> GetLargestAndSmallestValues()
         {
             if (0 < BinaryTree.Count)
             {

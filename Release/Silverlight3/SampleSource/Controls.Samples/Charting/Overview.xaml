@@ -110,16 +110,20 @@
             <!-- Custom Colors -->
             <Grid Style="{StaticResource OverviewWrapperStyle}">
                 <chartingToolkit:Chart Title="Custom Colors">
-                    <chartingToolkit:Chart.StylePalette>
-                        <visualizationToolkit:StylePalette>
-                            <Style TargetType="Control">
-                                <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/>
-                            </Style>
-                            <Style TargetType="Control">
-                                <Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/>
-                            </Style>
-                        </visualizationToolkit:StylePalette>
-                    </chartingToolkit:Chart.StylePalette>
+                    <chartingToolkit:Chart.Palette>
+                        <visualizationToolkit:ResourceDictionaryCollection>
+                            <ResourceDictionary>
+                                <Style x:Key="DataPointStyle" TargetType="Control">
+                                    <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/>
+                                </Style>
+                            </ResourceDictionary>
+                            <ResourceDictionary>
+                                <Style x:Key="DataPointStyle" TargetType="Control">
+                                    <Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </visualizationToolkit:ResourceDictionaryCollection>
+                    </chartingToolkit:Chart.Palette>
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:ColumnSeries>
                             <chartingToolkit:ColumnSeries.ItemsSource>
@@ -148,132 +152,134 @@
             <!-- Custom Template -->
             <Grid Style="{StaticResource OverviewWrapperStyle}">
                 <chartingToolkit:Chart Title="Custom Template">
-                    <chartingToolkit:Chart.StylePalette>
-                        <visualizationToolkit:StylePalette>
-                            <Style TargetType="chartingToolkit:DataPoint">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FFD2D2D2"/>
-                                            <GradientStop Color="#FFA3A3A3" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="BorderBrush" Value="Black"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="IsTabStop" Value="False"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="chartingToolkit:DataPoint">
-                                            <Border  Width="40" x:Name="Root" Opacity="0" BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
-                                                <vsm:VisualStateManager.VisualStateGroups>
-                                                    <vsm:VisualStateGroup x:Name="CommonStates">
-                                                        <vsm:VisualStateGroup.Transitions>
-                                                            <vsm:VisualTransition GeneratedDuration="0:0:0.1"/>
-                                                        </vsm:VisualStateGroup.Transitions>
-                                                        <vsm:VisualState x:Name="Normal"/>
-                                                        <vsm:VisualState x:Name="MouseOver">
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetName="glow"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="0.6"
-                                                                    Duration="0"/>
-                                                            </Storyboard>
-                                                        </vsm:VisualState>
-                                                    </vsm:VisualStateGroup>
-                                                    <vsm:VisualStateGroup x:Name="SelectionStates">
-                                                        <vsm:VisualStateGroup.Transitions>
-                                                            <vsm:VisualTransition GeneratedDuration="0:0:0.1"/>
-                                                        </vsm:VisualStateGroup.Transitions>
-                                                        <vsm:VisualState x:Name="Unselected"/>
-                                                        <vsm:VisualState x:Name="Selected">
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetName="Root"
-                                                                    Storyboard.TargetProperty="BorderThickness"
-                                                                    To="4.0"
-                                                                    Duration="0"/>
-                                                            </Storyboard>
-                                                        </vsm:VisualState>
-                                                    </vsm:VisualStateGroup>
-                                                    <vsm:VisualStateGroup x:Name="RevealStates">
-                                                        <vsm:VisualStateGroup.Transitions>
-                                                            <vsm:VisualTransition GeneratedDuration="0:0:0.5"/>
-                                                        </vsm:VisualStateGroup.Transitions>
-                                                        <vsm:VisualState x:Name="Shown">
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetName="Root"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="1"
-                                                                    Duration="0"/>
-                                                            </Storyboard>
-                                                        </vsm:VisualState>
-                                                        <vsm:VisualState x:Name="Hidden">
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetName="Root"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="0"
-                                                                    Duration="0"/>
-                                                            </Storyboard>
-                                                        </vsm:VisualState>
-                                                    </vsm:VisualStateGroup>
-                                                </vsm:VisualStateManager.VisualStateGroups>
-                                                <ToolTipService.ToolTip>
-                                                    <ContentControl Content="{TemplateBinding FormattedDependentValue}"/>
-                                                </ToolTipService.ToolTip>
-                                                <Border  BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" >
-                                                    <Border Background="DarkGray" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
-                                                        <Grid Width="40">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="10"/>
-                                                                <RowDefinition Height="5"/>
-                                                                <RowDefinition Height="*"/>
-                                                            </Grid.RowDefinitions>
-                                                            <Border Margin="0,0,0,0" Grid.Row="0" Grid.RowSpan="3" CornerRadius="4,4,4,4"  x:Name="glow" Opacity="0">
-                                                                <Border.Background>
-                                                                    <RadialGradientBrush GradientOrigin="0.504,0.459">
-                                                                        <RadialGradientBrush.RelativeTransform>
-                                                                            <TransformGroup>
-                                                                                <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="-2.516" ScaleY="-2.2"/>
-                                                                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                                                                <RotateTransform CenterX="0.5" CenterY="0.5"/>
-                                                                                <TranslateTransform X="0.149" Y="0.448"/>
-                                                                            </TransformGroup>
-                                                                        </RadialGradientBrush.RelativeTransform>
-                                                                        <GradientStop Color="#372DE6"/>
-                                                                        <GradientStop Color="#EE4646" Offset="1"/>
-                                                                    </RadialGradientBrush>
-                                                                </Border.Background>
-                                                            </Border>
-                                                            <Border Grid.RowSpan="1" CornerRadius="4,4,0,0" x:Name="shine" Margin="0,0,0,0" Height="Auto" VerticalAlignment="Stretch" Grid.Row="0">
-                                                                <Border.Background>
-                                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                                        <GradientStop Color="#99FFFFFF"/>
-                                                                        <GradientStop Color="#66FFFFFF" Offset="1"/>
-                                                                    </LinearGradientBrush>
-                                                                </Border.Background>
-                                                            </Border>
-                                                            <Path Height="5" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="Fill" Stroke="{x:Null}" Grid.Row="1" Data="M0.5,0.5 L189.5,0.5 L189.5,4.5 L169.85396,3.7 L133.79474,3.5 L96.989479,3.3 L58.940792,3.3 L26.114473,3.5 L0.5,4.5 z">
-                                                                <Path.Fill>
-                                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                                        <GradientStop Color="#66FFFFFF"/>
-                                                                        <GradientStop Color="#33FFFFFF" Offset="1"/>
-                                                                    </LinearGradientBrush>
-                                                                </Path.Fill>
-                                                            </Path>
-                                                        </Grid>
+                    <chartingToolkit:Chart.Palette>
+                        <visualizationToolkit:ResourceDictionaryCollection>
+                            <ResourceDictionary>
+                                <Style x:Key="DataPointStyle" TargetType="chartingToolkit:DataPoint">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FFD2D2D2"/>
+                                                <GradientStop Color="#FFA3A3A3" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="chartingToolkit:DataPoint">
+                                                <Border  Width="40" x:Name="Root" Opacity="0" BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                                                    <vsm:VisualStateManager.VisualStateGroups>
+                                                        <vsm:VisualStateGroup x:Name="CommonStates">
+                                                            <vsm:VisualStateGroup.Transitions>
+                                                                <vsm:VisualTransition GeneratedDuration="0:0:0.1"/>
+                                                            </vsm:VisualStateGroup.Transitions>
+                                                            <vsm:VisualState x:Name="Normal"/>
+                                                            <vsm:VisualState x:Name="MouseOver">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation
+                                                                        Storyboard.TargetName="glow"
+                                                                        Storyboard.TargetProperty="Opacity"
+                                                                        To="0.6"
+                                                                        Duration="0"/>
+                                                                </Storyboard>
+                                                            </vsm:VisualState>
+                                                        </vsm:VisualStateGroup>
+                                                        <vsm:VisualStateGroup x:Name="SelectionStates">
+                                                            <vsm:VisualStateGroup.Transitions>
+                                                                <vsm:VisualTransition GeneratedDuration="0:0:0.1"/>
+                                                            </vsm:VisualStateGroup.Transitions>
+                                                            <vsm:VisualState x:Name="Unselected"/>
+                                                            <vsm:VisualState x:Name="Selected">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation
+                                                                        Storyboard.TargetName="Root"
+                                                                        Storyboard.TargetProperty="BorderThickness"
+                                                                        To="4.0"
+                                                                        Duration="0"/>
+                                                                </Storyboard>
+                                                            </vsm:VisualState>
+                                                        </vsm:VisualStateGroup>
+                                                        <vsm:VisualStateGroup x:Name="RevealStates">
+                                                            <vsm:VisualStateGroup.Transitions>
+                                                                <vsm:VisualTransition GeneratedDuration="0:0:0.5"/>
+                                                            </vsm:VisualStateGroup.Transitions>
+                                                            <vsm:VisualState x:Name="Shown">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation
+                                                                        Storyboard.TargetName="Root"
+                                                                        Storyboard.TargetProperty="Opacity"
+                                                                        To="1"
+                                                                        Duration="0"/>
+                                                                </Storyboard>
+                                                            </vsm:VisualState>
+                                                            <vsm:VisualState x:Name="Hidden">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation
+                                                                        Storyboard.TargetName="Root"
+                                                                        Storyboard.TargetProperty="Opacity"
+                                                                        To="0"
+                                                                        Duration="0"/>
+                                                                </Storyboard>
+                                                            </vsm:VisualState>
+                                                        </vsm:VisualStateGroup>
+                                                    </vsm:VisualStateManager.VisualStateGroups>
+                                                    <ToolTipService.ToolTip>
+                                                        <ContentControl Content="{TemplateBinding FormattedDependentValue}"/>
+                                                    </ToolTipService.ToolTip>
+                                                    <Border  BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" >
+                                                        <Border Background="DarkGray" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                                                            <Grid Width="40">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="10"/>
+                                                                    <RowDefinition Height="5"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Border Margin="0,0,0,0" Grid.Row="0" Grid.RowSpan="3" CornerRadius="4,4,4,4"  x:Name="glow" Opacity="0">
+                                                                    <Border.Background>
+                                                                        <RadialGradientBrush GradientOrigin="0.504,0.459">
+                                                                            <RadialGradientBrush.RelativeTransform>
+                                                                                <TransformGroup>
+                                                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="-2.516" ScaleY="-2.2"/>
+                                                                                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                                                                    <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                                                                                    <TranslateTransform X="0.149" Y="0.448"/>
+                                                                                </TransformGroup>
+                                                                            </RadialGradientBrush.RelativeTransform>
+                                                                            <GradientStop Color="#372DE6"/>
+                                                                            <GradientStop Color="#EE4646" Offset="1"/>
+                                                                        </RadialGradientBrush>
+                                                                    </Border.Background>
+                                                                </Border>
+                                                                <Border Grid.RowSpan="1" CornerRadius="4,4,0,0" x:Name="shine" Margin="0,0,0,0" Height="Auto" VerticalAlignment="Stretch" Grid.Row="0">
+                                                                    <Border.Background>
+                                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                                            <GradientStop Color="#99FFFFFF"/>
+                                                                            <GradientStop Color="#66FFFFFF" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Border.Background>
+                                                                </Border>
+                                                                <Path Height="5" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="Fill" Stroke="{x:Null}" Grid.Row="1" Data="M0.5,0.5 L189.5,0.5 L189.5,4.5 L169.85396,3.7 L133.79474,3.5 L96.989479,3.3 L58.940792,3.3 L26.114473,3.5 L0.5,4.5 z">
+                                                                    <Path.Fill>
+                                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                                            <GradientStop Color="#66FFFFFF"/>
+                                                                            <GradientStop Color="#33FFFFFF" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Path.Fill>
+                                                                </Path>
+                                                            </Grid>
+                                                        </Border>
                                                     </Border>
                                                 </Border>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </visualizationToolkit:StylePalette>
-                    </chartingToolkit:Chart.StylePalette>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ResourceDictionary>
+                        </visualizationToolkit:ResourceDictionaryCollection>
+                    </chartingToolkit:Chart.Palette>
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:ColumnSeries>
                             <chartingToolkit:ColumnSeries.ItemsSource>
@@ -415,16 +421,20 @@
             &lt;!-- Custom Colors --&gt;
             &lt;Grid Style="{StaticResource OverviewWrapperStyle}"&gt;
                 &lt;chartingToolkit:Chart Title="Custom Colors"&gt;
-                    &lt;chartingToolkit:Chart.StylePalette&gt;
-                        &lt;visualizationToolkit:StylePalette&gt;
-                            &lt;Style TargetType="Control"&gt;
-                                &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/&gt;
-                            &lt;/Style&gt;
-                            &lt;Style TargetType="Control"&gt;
-                                &lt;Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/&gt;
-                            &lt;/Style&gt;
-                        &lt;/visualizationToolkit:StylePalette&gt;
-                    &lt;/chartingToolkit:Chart.StylePalette&gt;
+                    &lt;chartingToolkit:Chart.Palette&gt;
+                        &lt;visualizationToolkit:ResourceDictionaryCollection&gt;
+                            &lt;ResourceDictionary&gt;
+                                &lt;Style x:Key="DataPointStyle" TargetType="Control"&gt;
+                                    &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/&gt;
+                                &lt;/Style&gt;
+                            &lt;/ResourceDictionary&gt;
+                            &lt;ResourceDictionary&gt;
+                                &lt;Style x:Key="DataPointStyle" TargetType="Control"&gt;
+                                    &lt;Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/&gt;
+                                &lt;/Style&gt;
+                            &lt;/ResourceDictionary&gt;
+                        &lt;/visualizationToolkit:ResourceDictionaryCollection&gt;
+                    &lt;/chartingToolkit:Chart.Palette&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:ColumnSeries&gt;
                             &lt;chartingToolkit:ColumnSeries.ItemsSource&gt;
@@ -453,132 +463,134 @@
             &lt;!-- Custom Template --&gt;
             &lt;Grid Style="{StaticResource OverviewWrapperStyle}"&gt;
                 &lt;chartingToolkit:Chart Title="Custom Template"&gt;
-                    &lt;chartingToolkit:Chart.StylePalette&gt;
-                        &lt;visualizationToolkit:StylePalette&gt;
-                            &lt;Style TargetType="chartingToolkit:DataPoint"&gt;
-                                &lt;Setter Property="Background"&gt;
-                                    &lt;Setter.Value&gt;
-                                        &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
-                                            &lt;GradientStop Color="#FFD2D2D2"/&gt;
-                                            &lt;GradientStop Color="#FFA3A3A3" Offset="1"/&gt;
-                                        &lt;/LinearGradientBrush&gt;
-                                    &lt;/Setter.Value&gt;
-                                &lt;/Setter&gt;
-                                &lt;Setter Property="BorderBrush" Value="Black"/&gt;
-                                &lt;Setter Property="BorderThickness" Value="1"/&gt;
-                                &lt;Setter Property="IsTabStop" Value="False"/&gt;
-                                &lt;Setter Property="Template"&gt;
-                                    &lt;Setter.Value&gt;
-                                        &lt;ControlTemplate TargetType="chartingToolkit:DataPoint"&gt;
-                                            &lt;Border  Width="40" x:Name="Root" Opacity="0" BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4"&gt;
-                                                &lt;vsm:VisualStateManager.VisualStateGroups&gt;
-                                                    &lt;vsm:VisualStateGroup x:Name="CommonStates"&gt;
-                                                        &lt;vsm:VisualStateGroup.Transitions&gt;
-                                                            &lt;vsm:VisualTransition GeneratedDuration="0:0:0.1"/&gt;
-                                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
-                                                        &lt;vsm:VisualState x:Name="Normal"/&gt;
-                                                        &lt;vsm:VisualState x:Name="MouseOver"&gt;
-                                                            &lt;Storyboard&gt;
-                                                                &lt;DoubleAnimation
-                                                                    Storyboard.TargetName="glow"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="0.6"
-                                                                    Duration="0"/&gt;
-                                                            &lt;/Storyboard&gt;
-                                                        &lt;/vsm:VisualState&gt;
-                                                    &lt;/vsm:VisualStateGroup&gt;
-                                                    &lt;vsm:VisualStateGroup x:Name="SelectionStates"&gt;
-                                                        &lt;vsm:VisualStateGroup.Transitions&gt;
-                                                            &lt;vsm:VisualTransition GeneratedDuration="0:0:0.1"/&gt;
-                                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
-                                                        &lt;vsm:VisualState x:Name="Unselected"/&gt;
-                                                        &lt;vsm:VisualState x:Name="Selected"&gt;
-                                                            &lt;Storyboard&gt;
-                                                                &lt;DoubleAnimation
-                                                                    Storyboard.TargetName="Root"
-                                                                    Storyboard.TargetProperty="BorderThickness"
-                                                                    To="4.0"
-                                                                    Duration="0"/&gt;
-                                                            &lt;/Storyboard&gt;
-                                                        &lt;/vsm:VisualState&gt;
-                                                    &lt;/vsm:VisualStateGroup&gt;
-                                                    &lt;vsm:VisualStateGroup x:Name="RevealStates"&gt;
-                                                        &lt;vsm:VisualStateGroup.Transitions&gt;
-                                                            &lt;vsm:VisualTransition GeneratedDuration="0:0:0.5"/&gt;
-                                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
-                                                        &lt;vsm:VisualState x:Name="Shown"&gt;
-                                                            &lt;Storyboard&gt;
-                                                                &lt;DoubleAnimation
-                                                                    Storyboard.TargetName="Root"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="1"
-                                                                    Duration="0"/&gt;
-                                                            &lt;/Storyboard&gt;
-                                                        &lt;/vsm:VisualState&gt;
-                                                        &lt;vsm:VisualState x:Name="Hidden"&gt;
-                                                            &lt;Storyboard&gt;
-                                                                &lt;DoubleAnimation
-                                                                    Storyboard.TargetName="Root"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="0"
-                                                                    Duration="0"/&gt;
-                                                            &lt;/Storyboard&gt;
-                                                        &lt;/vsm:VisualState&gt;
-                                                    &lt;/vsm:VisualStateGroup&gt;
-                                                &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
-                                                &lt;ToolTipService.ToolTip&gt;
-                                                    &lt;ContentControl Content="{TemplateBinding FormattedDependentValue}"/&gt;
-                                                &lt;/ToolTipService.ToolTip&gt;
-                                                &lt;Border  BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" &gt;
-                                                    &lt;Border Background="DarkGray" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4"&gt;
-                                                        &lt;Grid Width="40"&gt;
-                                                            &lt;Grid.RowDefinitions&gt;
-                                                                &lt;RowDefinition Height="10"/&gt;
-                                                                &lt;RowDefinition Height="5"/&gt;
-                                                                &lt;RowDefinition Height="*"/&gt;
-                                                            &lt;/Grid.RowDefinitions&gt;
-                                                            &lt;Border Margin="0,0,0,0" Grid.Row="0" Grid.RowSpan="3" CornerRadius="4,4,4,4"  x:Name="glow" Opacity="0"&gt;
-                                                                &lt;Border.Background&gt;
-                                                                    &lt;RadialGradientBrush GradientOrigin="0.504,0.459"&gt;
-                                                                        &lt;RadialGradientBrush.RelativeTransform&gt;
-                                                                            &lt;TransformGroup&gt;
-                                                                                &lt;ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="-2.516" ScaleY="-2.2"/&gt;
-                                                                                &lt;SkewTransform CenterX="0.5" CenterY="0.5"/&gt;
-                                                                                &lt;RotateTransform CenterX="0.5" CenterY="0.5"/&gt;
-                                                                                &lt;TranslateTransform X="0.149" Y="0.448"/&gt;
-                                                                            &lt;/TransformGroup&gt;
-                                                                        &lt;/RadialGradientBrush.RelativeTransform&gt;
-                                                                        &lt;GradientStop Color="#372DE6"/&gt;
-                                                                        &lt;GradientStop Color="#EE4646" Offset="1"/&gt;
-                                                                    &lt;/RadialGradientBrush&gt;
-                                                                &lt;/Border.Background&gt;
-                                                            &lt;/Border&gt;
-                                                            &lt;Border Grid.RowSpan="1" CornerRadius="4,4,0,0" x:Name="shine" Margin="0,0,0,0" Height="Auto" VerticalAlignment="Stretch" Grid.Row="0"&gt;
-                                                                &lt;Border.Background&gt;
-                                                                    &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
-                                                                        &lt;GradientStop Color="#99FFFFFF"/&gt;
-                                                                        &lt;GradientStop Color="#66FFFFFF" Offset="1"/&gt;
-                                                                    &lt;/LinearGradientBrush&gt;
-                                                                &lt;/Border.Background&gt;
-                                                            &lt;/Border&gt;
-                                                            &lt;Path Height="5" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="Fill" Stroke="{x:Null}" Grid.Row="1" Data="M0.5,0.5 L189.5,0.5 L189.5,4.5 L169.85396,3.7 L133.79474,3.5 L96.989479,3.3 L58.940792,3.3 L26.114473,3.5 L0.5,4.5 z"&gt;
-                                                                &lt;Path.Fill&gt;
-                                                                    &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
-                                                                        &lt;GradientStop Color="#66FFFFFF"/&gt;
-                                                                        &lt;GradientStop Color="#33FFFFFF" Offset="1"/&gt;
-                                                                    &lt;/LinearGradientBrush&gt;
-                                                                &lt;/Path.Fill&gt;
-                                                            &lt;/Path&gt;
-                                                        &lt;/Grid&gt;
+                    &lt;chartingToolkit:Chart.Palette&gt;
+                        &lt;visualizationToolkit:ResourceDictionaryCollection&gt;
+                            &lt;ResourceDictionary&gt;
+                                &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:DataPoint"&gt;
+                                    &lt;Setter Property="Background"&gt;
+                                        &lt;Setter.Value&gt;
+                                            &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                &lt;GradientStop Color="#FFD2D2D2"/&gt;
+                                                &lt;GradientStop Color="#FFA3A3A3" Offset="1"/&gt;
+                                            &lt;/LinearGradientBrush&gt;
+                                        &lt;/Setter.Value&gt;
+                                    &lt;/Setter&gt;
+                                    &lt;Setter Property="BorderBrush" Value="Black"/&gt;
+                                    &lt;Setter Property="BorderThickness" Value="1"/&gt;
+                                    &lt;Setter Property="IsTabStop" Value="False"/&gt;
+                                    &lt;Setter Property="Template"&gt;
+                                        &lt;Setter.Value&gt;
+                                            &lt;ControlTemplate TargetType="chartingToolkit:DataPoint"&gt;
+                                                &lt;Border  Width="40" x:Name="Root" Opacity="0" BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4"&gt;
+                                                    &lt;vsm:VisualStateManager.VisualStateGroups&gt;
+                                                        &lt;vsm:VisualStateGroup x:Name="CommonStates"&gt;
+                                                            &lt;vsm:VisualStateGroup.Transitions&gt;
+                                                                &lt;vsm:VisualTransition GeneratedDuration="0:0:0.1"/&gt;
+                                                            &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                                            &lt;vsm:VisualState x:Name="Normal"/&gt;
+                                                            &lt;vsm:VisualState x:Name="MouseOver"&gt;
+                                                                &lt;Storyboard&gt;
+                                                                    &lt;DoubleAnimation
+                                                                        Storyboard.TargetName="glow"
+                                                                        Storyboard.TargetProperty="Opacity"
+                                                                        To="0.6"
+                                                                        Duration="0"/&gt;
+                                                                &lt;/Storyboard&gt;
+                                                            &lt;/vsm:VisualState&gt;
+                                                        &lt;/vsm:VisualStateGroup&gt;
+                                                        &lt;vsm:VisualStateGroup x:Name="SelectionStates"&gt;
+                                                            &lt;vsm:VisualStateGroup.Transitions&gt;
+                                                                &lt;vsm:VisualTransition GeneratedDuration="0:0:0.1"/&gt;
+                                                            &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                                            &lt;vsm:VisualState x:Name="Unselected"/&gt;
+                                                            &lt;vsm:VisualState x:Name="Selected"&gt;
+                                                                &lt;Storyboard&gt;
+                                                                    &lt;DoubleAnimation
+                                                                        Storyboard.TargetName="Root"
+                                                                        Storyboard.TargetProperty="BorderThickness"
+                                                                        To="4.0"
+                                                                        Duration="0"/&gt;
+                                                                &lt;/Storyboard&gt;
+                                                            &lt;/vsm:VisualState&gt;
+                                                        &lt;/vsm:VisualStateGroup&gt;
+                                                        &lt;vsm:VisualStateGroup x:Name="RevealStates"&gt;
+                                                            &lt;vsm:VisualStateGroup.Transitions&gt;
+                                                                &lt;vsm:VisualTransition GeneratedDuration="0:0:0.5"/&gt;
+                                                            &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                                            &lt;vsm:VisualState x:Name="Shown"&gt;
+                                                                &lt;Storyboard&gt;
+                                                                    &lt;DoubleAnimation
+                                                                        Storyboard.TargetName="Root"
+                                                                        Storyboard.TargetProperty="Opacity"
+                                                                        To="1"
+                                                                        Duration="0"/&gt;
+                                                                &lt;/Storyboard&gt;
+                                                            &lt;/vsm:VisualState&gt;
+                                                            &lt;vsm:VisualState x:Name="Hidden"&gt;
+                                                                &lt;Storyboard&gt;
+                                                                    &lt;DoubleAnimation
+                                                                        Storyboard.TargetName="Root"
+                                                                        Storyboard.TargetProperty="Opacity"
+                                                                        To="0"
+                                                                        Duration="0"/&gt;
+                                                                &lt;/Storyboard&gt;
+                                                            &lt;/vsm:VisualState&gt;
+                                                        &lt;/vsm:VisualStateGroup&gt;
+                                                    &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
+                                                    &lt;ToolTipService.ToolTip&gt;
+                                                        &lt;ContentControl Content="{TemplateBinding FormattedDependentValue}"/&gt;
+                                                    &lt;/ToolTipService.ToolTip&gt;
+                                                    &lt;Border  BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" &gt;
+                                                        &lt;Border Background="DarkGray" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4"&gt;
+                                                            &lt;Grid Width="40"&gt;
+                                                                &lt;Grid.RowDefinitions&gt;
+                                                                    &lt;RowDefinition Height="10"/&gt;
+                                                                    &lt;RowDefinition Height="5"/&gt;
+                                                                    &lt;RowDefinition Height="*"/&gt;
+                                                                &lt;/Grid.RowDefinitions&gt;
+                                                                &lt;Border Margin="0,0,0,0" Grid.Row="0" Grid.RowSpan="3" CornerRadius="4,4,4,4"  x:Name="glow" Opacity="0"&gt;
+                                                                    &lt;Border.Background&gt;
+                                                                        &lt;RadialGradientBrush GradientOrigin="0.504,0.459"&gt;
+                                                                            &lt;RadialGradientBrush.RelativeTransform&gt;
+                                                                                &lt;TransformGroup&gt;
+                                                                                    &lt;ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="-2.516" ScaleY="-2.2"/&gt;
+                                                                                    &lt;SkewTransform CenterX="0.5" CenterY="0.5"/&gt;
+                                                                                    &lt;RotateTransform CenterX="0.5" CenterY="0.5"/&gt;
+                                                                                    &lt;TranslateTransform X="0.149" Y="0.448"/&gt;
+                                                                                &lt;/TransformGroup&gt;
+                                                                            &lt;/RadialGradientBrush.RelativeTransform&gt;
+                                                                            &lt;GradientStop Color="#372DE6"/&gt;
+                                                                            &lt;GradientStop Color="#EE4646" Offset="1"/&gt;
+                                                                        &lt;/RadialGradientBrush&gt;
+                                                                    &lt;/Border.Background&gt;
+                                                                &lt;/Border&gt;
+                                                                &lt;Border Grid.RowSpan="1" CornerRadius="4,4,0,0" x:Name="shine" Margin="0,0,0,0" Height="Auto" VerticalAlignment="Stretch" Grid.Row="0"&gt;
+                                                                    &lt;Border.Background&gt;
+                                                                        &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                                            &lt;GradientStop Color="#99FFFFFF"/&gt;
+                                                                            &lt;GradientStop Color="#66FFFFFF" Offset="1"/&gt;
+                                                                        &lt;/LinearGradientBrush&gt;
+                                                                    &lt;/Border.Background&gt;
+                                                                &lt;/Border&gt;
+                                                                &lt;Path Height="5" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="Fill" Stroke="{x:Null}" Grid.Row="1" Data="M0.5,0.5 L189.5,0.5 L189.5,4.5 L169.85396,3.7 L133.79474,3.5 L96.989479,3.3 L58.940792,3.3 L26.114473,3.5 L0.5,4.5 z"&gt;
+                                                                    &lt;Path.Fill&gt;
+                                                                        &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                                            &lt;GradientStop Color="#66FFFFFF"/&gt;
+                                                                            &lt;GradientStop Color="#33FFFFFF" Offset="1"/&gt;
+                                                                        &lt;/LinearGradientBrush&gt;
+                                                                    &lt;/Path.Fill&gt;
+                                                                &lt;/Path&gt;
+                                                            &lt;/Grid&gt;
+                                                        &lt;/Border&gt;
                                                     &lt;/Border&gt;
                                                 &lt;/Border&gt;
-                                            &lt;/Border&gt;
-                                        &lt;/ControlTemplate&gt;
-                                    &lt;/Setter.Value&gt;
-                                &lt;/Setter&gt;
-                            &lt;/Style&gt;
-                        &lt;/visualizationToolkit:StylePalette&gt;
-                    &lt;/chartingToolkit:Chart.StylePalette&gt;
+                                            &lt;/ControlTemplate&gt;
+                                        &lt;/Setter.Value&gt;
+                                    &lt;/Setter&gt;
+                                &lt;/Style&gt;
+                            &lt;/ResourceDictionary&gt;
+                        &lt;/visualizationToolkit:ResourceDictionaryCollection&gt;
+                    &lt;/chartingToolkit:Chart.Palette&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:ColumnSeries&gt;
                             &lt;chartingToolkit:ColumnSeries.ItemsSource&gt;

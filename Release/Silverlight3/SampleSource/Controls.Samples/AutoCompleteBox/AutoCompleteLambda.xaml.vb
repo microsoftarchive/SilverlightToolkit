@@ -73,8 +73,8 @@ Partial Public Class AutoCompleteLambda
         Dim ad As DateTime = CDate(ArrivalDate.SelectedDate)
         Dim p As Integer = CInt(Fix(Passengers.Value))
 
-        Dim farecast As Uri = WebServiceHelper.CreateAirfareSearchUri(d, a, dd, ad, p)
-        HtmlPage.Window.Navigate(farecast, "_new")
+        Dim travel As Uri = WebServiceHelper.CreateAirfareSearchUri(d, a, dd, ad, p)
+        HtmlPage.Window.Navigate(travel, "_new")
     End Sub
 
     ''' <summary>

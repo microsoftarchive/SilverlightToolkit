@@ -6,6 +6,7 @@
 extern alias Silverlight;
 using System.ComponentModel;
 using System.Windows.Controls.Design.Common;
+using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
 using Microsoft.Windows.Design.PropertyEditing;
 using SSWCDC = Silverlight::System.Windows.Controls.DataVisualization.Charting;
@@ -65,6 +66,17 @@ namespace System.Windows.Controls.DataVisualization.Design
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWCDC.BubbleSeries>(x => x.IndependentAxis),
                         new AlternateContentPropertyAttribute());
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCDC.BubbleSeries>(x => x.SizeValuePath),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWCDC.BubbleSeries>(x => x.ItemsSource),
+                            true));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCDC.BubbleSeries>(x => x.SizeValueBinding),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWCDC.BubbleSeries>(x => x.ItemsSource),
+                            true));
 #endif
                 });
         }

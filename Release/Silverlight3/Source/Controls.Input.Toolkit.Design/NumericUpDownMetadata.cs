@@ -40,6 +40,9 @@ namespace System.Windows.Controls.Input.Design
                         Extensions.GetMemberName<SSWC.NumericUpDown>(x => x.Value),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.NumericUpDown>(x => x.Value)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.Controls, true));
 #endif

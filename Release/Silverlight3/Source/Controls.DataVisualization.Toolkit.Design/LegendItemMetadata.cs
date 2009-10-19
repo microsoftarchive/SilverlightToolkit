@@ -28,6 +28,9 @@ namespace System.Windows.Controls.DataVisualization.Design
                 typeof(SSWCDC.LegendItem),
                 b =>
                 {
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWCDC.LegendItem>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.DataVisualizationControlParts, false));
 #endif

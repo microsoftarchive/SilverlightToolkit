@@ -142,6 +142,7 @@ namespace System.Windows.Controls.Testing
         [TestMethod]
         [Asynchronous]
         [Description("Try to get the ItemsHost when there are no items.")]
+        [Bug("79921: Toolkit test GetItemsHost is failing due to Silverlight behavioral difference vs. WPF")]
         public virtual void GetItemsHostWithNoItems()
         {
             ListBox control = new ListBox();
@@ -288,6 +289,7 @@ namespace System.Windows.Controls.Testing
         [TestMethod]
         [Asynchronous]
         [Description("Try to get the ScrollHost when there are no items.")]
+        [Bug("79921: Toolkit test GetItemsHost is failing due to Silverlight behavioral difference vs. WPF")]
         public virtual void GetScrollHostWithNoItems()
         {
             ListBox control = new ListBox();

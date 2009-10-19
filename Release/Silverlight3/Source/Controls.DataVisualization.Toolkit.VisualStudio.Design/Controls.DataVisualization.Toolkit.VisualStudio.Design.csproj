@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Windows.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>True</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.Windows.Design.Extensibility, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"/>
     <Reference Include="PresentationCore">
@@ -183,11 +183,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj">
-      <Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project>
-      <Name>Controls.DataVisualization.Toolkit</Name>
-      <Aliases>Silverlight</Aliases>
-    </ProjectReference>
+    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj"><Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project><Name>Controls.DataVisualization.Toolkit</Name><Aliases>Silverlight</Aliases></ProjectReference>
+    <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj"><Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project><Name>Controls.Toolkit</Name></ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="System.Windows.Controls.DataVisualization.Charting\AreaSeries.bmp" />

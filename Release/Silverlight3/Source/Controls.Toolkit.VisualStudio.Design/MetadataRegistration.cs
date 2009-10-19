@@ -7,6 +7,7 @@ extern alias Silverlight;
 using System.Windows.Controls.Design.Common;
 using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
+using SSWC = Silverlight::System.Windows.Controls;
 using SSWCP = Silverlight::System.Windows.Controls.Primitives;
 
 namespace System.Windows.Controls.VisualStudio.Design
@@ -49,6 +50,17 @@ namespace System.Windows.Controls.VisualStudio.Design
             builder.AddCallback(
                 typeof(SSWCP.GlobalCalendarItem),
                 b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+
+            builder.AddCallback(
+               typeof(SSWC.TreeViewItemCheckBox),
+               b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+
+            builder.AddCallback(
+               typeof(SSWC.ListBoxDragDropTarget),
+               b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+            builder.AddCallback(
+               typeof(SSWC.TreeViewDragDropTarget),
+               b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
         }
     }
 }

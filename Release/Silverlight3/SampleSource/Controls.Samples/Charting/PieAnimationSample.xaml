@@ -75,48 +75,66 @@
                     </Path>
                 </ControlTemplate>
 
-                <visualizationToolkit:StylePalette x:Key="GrowPieDataPointPalette">
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="{StaticResource GrayRadialBrush}"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkRed}"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="Blue"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="Red"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="Green"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="Pink"/>
-                    </Style>
-                    <Style TargetType="chartingToolkit:PieDataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
-                        <Setter Property="Background" Value="Cyan"/>
-                    </Style>
-                </visualizationToolkit:StylePalette>
+                <visualizationToolkit:ResourceDictionaryCollection x:Key="GrowPieDataPointPalette">
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource GrayRadialBrush}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkRed}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Blue"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Red"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Green"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Pink"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Cyan"/>
+                        </Style>
+                    </ResourceDictionary>
+                </visualizationToolkit:ResourceDictionaryCollection>
             </controlsToolkit:WrapPanel.Resources>
 
             <Grid Style="{StaticResource WrapperStyle}">
-                <chartingToolkit:Chart Title="AnimationSequence = Simultaneous" StylePalette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                <chartingToolkit:Chart Title="AnimationSequence = Simultaneous" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:PieSeries
                             ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
@@ -127,7 +145,7 @@
             </Grid>
 
             <Grid Style="{StaticResource WrapperStyle}">
-                <chartingToolkit:Chart Title="AnimationSequence = FirstToLast" StylePalette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                <chartingToolkit:Chart Title="AnimationSequence = FirstToLast" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:PieSeries
                             ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
@@ -138,7 +156,7 @@
             </Grid>
 
             <Grid Style="{StaticResource WrapperStyle}">
-                <chartingToolkit:Chart Title="AnimationSequence = LastToFirst" StylePalette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                <chartingToolkit:Chart Title="AnimationSequence = LastToFirst" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:PieSeries
                             ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
@@ -229,48 +247,66 @@
                     &lt;/Path&gt;
                 &lt;/ControlTemplate&gt;
 
-                &lt;visualizationToolkit:StylePalette x:Key="GrowPieDataPointPalette"&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="{StaticResource GrayRadialBrush}"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkRed}"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="Blue"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="Red"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="Green"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="Pink"/&gt;
-                    &lt;/Style&gt;
-                    &lt;Style TargetType="chartingToolkit:PieDataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
-                        &lt;Setter Property="Background" Value="Cyan"/&gt;
-                    &lt;/Style&gt;
-                &lt;/visualizationToolkit:StylePalette&gt;
+                &lt;visualizationToolkit:ResourceDictionaryCollection x:Key="GrowPieDataPointPalette"&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource GrayRadialBrush}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkRed}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Blue"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Red"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Green"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Pink"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Cyan"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                &lt;/visualizationToolkit:ResourceDictionaryCollection&gt;
             &lt;/controlsToolkit:WrapPanel.Resources&gt;
 
             &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
-                &lt;chartingToolkit:Chart Title="AnimationSequence = Simultaneous" StylePalette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = Simultaneous" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:PieSeries
                             ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
@@ -281,7 +317,7 @@
             &lt;/Grid&gt;
 
             &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
-                &lt;chartingToolkit:Chart Title="AnimationSequence = FirstToLast" StylePalette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = FirstToLast" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:PieSeries
                             ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
@@ -292,7 +328,7 @@
             &lt;/Grid&gt;
 
             &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
-                &lt;chartingToolkit:Chart Title="AnimationSequence = LastToFirst" StylePalette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = LastToFirst" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:PieSeries
                             ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"

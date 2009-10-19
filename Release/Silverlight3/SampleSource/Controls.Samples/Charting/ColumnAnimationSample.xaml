@@ -125,15 +125,17 @@
                     </Border>
                 </ControlTemplate>
 
-                <visualizationToolkit:StylePalette x:Key="GrowDataPointPalette">
-                    <Style TargetType="chartingToolkit:DataPoint">
-                        <Setter Property="Template" Value="{StaticResource GrowDataPoint}"/>
-                    </Style>
-                </visualizationToolkit:StylePalette>
+                <visualizationToolkit:ResourceDictionaryCollection x:Key="GrowDataPointPalette">
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:DataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowDataPoint}"/>
+                        </Style>
+                    </ResourceDictionary>
+                </visualizationToolkit:ResourceDictionaryCollection>
             </controlsToolkit:WrapPanel.Resources>
 
             <Grid Style="{StaticResource WrapperStyle}">
-                <chartingToolkit:Chart Title="AnimationSequence = Simultaneous" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                <chartingToolkit:Chart Title="AnimationSequence = Simultaneous" Palette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="Simultaneous"/>
                     </chartingToolkit:Chart.Series>
@@ -141,7 +143,7 @@
             </Grid>
 
             <Grid Style="{StaticResource WrapperStyle}">
-                <chartingToolkit:Chart Title="AnimationSequence = FirstToLast" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                <chartingToolkit:Chart Title="AnimationSequence = FirstToLast" Palette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="FirstToLast"/>
                     </chartingToolkit:Chart.Series>
@@ -149,7 +151,7 @@
             </Grid>
 
             <Grid Style="{StaticResource WrapperStyle}">
-                <chartingToolkit:Chart Title="AnimationSequence = LastToFirst" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                <chartingToolkit:Chart Title="AnimationSequence = LastToFirst" Palette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="LastToFirst"/>
                     </chartingToolkit:Chart.Series>
@@ -286,15 +288,17 @@
                     &lt;/Border&gt;
                 &lt;/ControlTemplate&gt;
 
-                &lt;visualizationToolkit:StylePalette x:Key="GrowDataPointPalette"&gt;
-                    &lt;Style TargetType="chartingToolkit:DataPoint"&gt;
-                        &lt;Setter Property="Template" Value="{StaticResource GrowDataPoint}"/&gt;
-                    &lt;/Style&gt;
-                &lt;/visualizationToolkit:StylePalette&gt;
+                &lt;visualizationToolkit:ResourceDictionaryCollection x:Key="GrowDataPointPalette"&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:DataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowDataPoint}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                &lt;/visualizationToolkit:ResourceDictionaryCollection&gt;
             &lt;/controlsToolkit:WrapPanel.Resources&gt;
 
             &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
-                &lt;chartingToolkit:Chart Title="AnimationSequence = Simultaneous" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = Simultaneous" Palette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="Simultaneous"/&gt;
                     &lt;/chartingToolkit:Chart.Series&gt;
@@ -302,7 +306,7 @@
             &lt;/Grid&gt;
 
             &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
-                &lt;chartingToolkit:Chart Title="AnimationSequence = FirstToLast" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = FirstToLast" Palette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="FirstToLast"/&gt;
                     &lt;/chartingToolkit:Chart.Series&gt;
@@ -310,7 +314,7 @@
             &lt;/Grid&gt;
 
             &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
-                &lt;chartingToolkit:Chart Title="AnimationSequence = LastToFirst" StylePalette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = LastToFirst" Palette="{StaticResource GrowDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
                     &lt;chartingToolkit:Chart.Series&gt;
                         &lt;chartingToolkit:ColumnSeries Title="Popularity" ItemsSource="{StaticResource GizmoPopularity}" DependentValueBinding="{Binding Percent}" AnimationSequence="LastToFirst"/&gt;
                     &lt;/chartingToolkit:Chart.Series&gt;

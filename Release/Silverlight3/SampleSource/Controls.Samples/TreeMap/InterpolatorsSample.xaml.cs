@@ -38,7 +38,7 @@ namespace System.Windows.Controls.Samples
             // Sample browser-specific layout change
             SampleHelpers.ChangeSampleAlignmentToStretch(this);
 
-            treeMapControl.ItemsSource = DataHelper.LoadDefaultFile();
+            treeMapControl.ItemsSource = NhlDataHelper.LoadDefaultFile();
         }
     }
 }

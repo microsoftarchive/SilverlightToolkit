@@ -8,6 +8,7 @@ using System.Windows.Controls.Design.Common;
 using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
 using SSWC = Silverlight::System.Windows.Controls;
+using SSWCP = Silverlight::System.Windows.Controls.Primitives;
 
 namespace System.Windows.Controls.Input.VisualStudio.Design
 {
@@ -41,11 +42,20 @@ namespace System.Windows.Controls.Input.VisualStudio.Design
         protected override void AddAttributes(AttributeTableBuilder builder)
         {
             // duplicated from .Design
+            builder.AddCallback(
+                typeof(SSWCP.LinearClipper),
+                b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
 
             // .VisualStudio.Design's own stuff
             builder.AddCallback(
                 typeof(SSWC.ButtonSpinner),
                 b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+            builder.AddCallback(
+                typeof(SSWC.RatingItem),
+                b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+            builder.AddCallback(
+              typeof(SSWC.TimePickerPopup),
+              b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
         }
     }
 }

@@ -77,6 +77,9 @@ namespace System.Windows.Controls.Input.Design
                         Extensions.GetMemberName<SSWC.TimeUpDown>(x => x.Value),
                         new PropertyOrderAttribute(PropertyOrder.CreateAfter(PropertyOrder.Early)));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.TimeUpDown>(x => x.Value)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, true));
 #endif

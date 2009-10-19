@@ -92,6 +92,10 @@ namespace System.Windows.Controls.DataVisualization.VisualStudio.Design
             builder.AddCallback(
                 typeof(SSWCDC.LegendItem),
                 b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+
+            builder.AddCallback(
+                typeof(SSWCDC.DataPointSeriesDragDropTarget),
+                b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
         }
     }
 }

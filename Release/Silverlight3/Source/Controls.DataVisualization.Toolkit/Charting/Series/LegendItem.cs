@@ -3,11 +3,6 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Controls;
-
 namespace System.Windows.Controls.DataVisualization.Charting
 {
     /// <summary>
@@ -16,6 +11,11 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// <QualityBand>Preview</QualityBand>
     public class LegendItem : ContentControl
     {
+        /// <summary>
+        /// Gets or sets the owner of the LegendItem.
+        /// </summary>
+        public object Owner { get; set; }
+
 #if !SILVERLIGHT
         /// <summary>
         /// Initializes the static members of the LegendItem class.

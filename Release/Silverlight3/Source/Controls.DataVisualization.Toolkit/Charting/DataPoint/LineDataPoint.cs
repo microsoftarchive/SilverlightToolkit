@@ -3,13 +3,10 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System.Collections.Generic;
-using System.Windows;
-
 namespace System.Windows.Controls.DataVisualization.Charting
 {
     /// <summary>
-    /// Represents a data point used for line series.
+    /// Represents a data point used for a line series.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
     [TemplateVisualState(Name = DataPoint.StateCommonNormal, GroupName = DataPoint.GroupCommonStates)]
@@ -18,7 +15,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [TemplateVisualState(Name = DataPoint.StateSelectionSelected, GroupName = DataPoint.GroupSelectionStates)]
     [TemplateVisualState(Name = DataPoint.StateRevealShown, GroupName = DataPoint.GroupRevealStates)]
     [TemplateVisualState(Name = DataPoint.StateRevealHidden, GroupName = DataPoint.GroupRevealStates)]
-    public sealed partial class LineDataPoint : DataPoint
+    public partial class LineDataPoint : DataPoint
     {
 #if !SILVERLIGHT
         /// <summary>

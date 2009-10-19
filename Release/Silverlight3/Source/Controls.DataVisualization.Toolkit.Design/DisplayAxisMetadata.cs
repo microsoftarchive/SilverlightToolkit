@@ -6,6 +6,7 @@
 extern alias Silverlight;
 using System.ComponentModel;
 using System.Windows.Controls.Design.Common;
+using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
 using Microsoft.Windows.Design.PropertyEditing;
 using SSWCDC = Silverlight::System.Windows.Controls.DataVisualization.Charting;
@@ -54,6 +55,14 @@ namespace System.Windows.Controls.DataVisualization.Design
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWCDC.DisplayAxis>(x => x.Title),
                         PropertyValueEditor.CreateEditorAttribute(typeof(TextBoxEditor)));
+
+#if MWD40
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCDC.DisplayAxis>(x => x.TitleStyle),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWCDC.DisplayAxis>(x => x.Title),
+                            false));
+#endif 
                 });
         }
     }

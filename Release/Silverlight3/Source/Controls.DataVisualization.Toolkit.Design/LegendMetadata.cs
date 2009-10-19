@@ -10,6 +10,7 @@ using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
 using Microsoft.Windows.Design.PropertyEditing;
 using SSWCD = Silverlight::System.Windows.Controls.DataVisualization;
+using SSWCDC = Silverlight::System.Windows.Controls.DataVisualization.Charting;
 
 namespace System.Windows.Controls.DataVisualization.Design
 {
@@ -47,12 +48,25 @@ namespace System.Windows.Controls.DataVisualization.Design
                         Extensions.GetMemberName<SSWCD.Legend>(x => x.Title),
                         PropertyValueEditor.CreateEditorAttribute(typeof(TextBoxEditor)));
 
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCD.Legend>(x => x.Items),
+                        new NewItemTypesAttribute(typeof(SSWCDC.LegendItem)));
+
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWCD.Legend>(x => x.Items)));
+
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWCD.Legend>(x => x.Title),
                         new AlternateContentPropertyAttribute());
 
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.DataVisualizationControlParts, false));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCD.Legend>(x => x.TitleStyle),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWCD.Legend>(x => x.Title),
+                            false));
 #endif
                 });
         }

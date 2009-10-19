@@ -48,14 +48,25 @@
     <DocumentationFile>$(SolutionDir)Binaries\System.Windows.Controls.DataVisualization.Toolkit.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.Reactive, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1b331ac6720247d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Reactive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Controls.Toolkit\Common\CollectionHelper.cs">
+      <Link>Charting\CollectionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Controls.Toolkit\Common\DesignerProperties.cs">
       <Link>DesignerProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.Toolkit\Common\EnumerableExtensions.cs">
+      <Link>EnumerableExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Controls.Toolkit\Common\WeakEventListener.cs">
       <Link>WeakEventListener.cs</Link>
@@ -63,6 +74,7 @@
     <Compile Include="AggregatedObservableCollection.cs" />
     <Compile Include="AssemblyInfoShared.cs" />
     <Compile Include="Charting\Axis\IAnchoredToOrigin.cs" />
+    <Compile Include="Charting\DataPointSeriesDragDropTarget.cs" />
     <Compile Include="Charting\DataPoint\AreaDataPoint.cs" />
     <Compile Include="Charting\FrameworkElementExtensions.cs" />
     <Compile Include="Charting\Primitives\Edge.cs" />
@@ -101,9 +113,10 @@
     <Compile Include="Charting\ISeriesHostExtensions.cs" />
     <Compile Include="Charting\Chart\SeriesHostAxesCollection.cs" />
     <Compile Include="Charting\Series\AreaSeries.cs" />
+    <Compile Include="Charting\Series\ISeries.cs" />
     <Compile Include="Charting\Series\LineAreaBaseSeries.cs" />
-    <Compile Include="Charting\StyleDispensedEventArgs.cs" />
-    <Compile Include="Charting\StyleEnumerator.cs" />
+    <Compile Include="Charting\ResourceDictionaryDispensedEventArgs.cs" />
+    <Compile Include="Charting\ResourceDictionaryEnumerator.cs" />
     <Compile Include="Charting\ValueMarginCoordinateAndOverlap.cs" />
     <Compile Include="Collections\LeftLeaningRedBlackTree.cs" />
     <Compile Include="Collections\MultipleDictionary.cs" />
@@ -119,6 +132,7 @@
     <Compile Include="ObservableCollectionListAdapter.cs" />
     <Compile Include="OrientedPanel.cs" />
     <Compile Include="ReadOnlyObservableCollection.cs" />
+    <Compile Include="ResourceDictionaryExtensions.cs" />
     <Compile Include="StoryboardQueue.cs" />
     <Compile Include="Charting\Axis\AxisOrientation.cs" />
     <Compile Include="Charting\Axis\AxisIntervalType.cs" />
@@ -136,7 +150,6 @@
     <Compile Include="Charting\Series\DataPointSeriesWithAxes.cs" />
     <Compile Include="Charting\Series\DataPointSingleSeriesWithAxes.cs" />
     <Compile Include="StringFormatConverter.cs" />
-    <Compile Include="StyleDispenserExtensions.cs" />
     <Compile Include="TreeMap\BindingExtractor.cs" />
     <Compile Include="TreeMap\Interpolators\InterpolationMode.cs" />
     <Compile Include="TreeMap\Interpolators\SolidColorBrushInterpolator.cs" />
@@ -160,12 +173,12 @@
     <Compile Include="Charting\Series\PieSeries.cs" />
     <Compile Include="Charting\Series\Series.cs" />
     <Compile Include="Charting\Series\DataPointSeries.cs" />
-    <Compile Include="IStyleDispenser.cs" />
-    <Compile Include="Charting\StyleDispenser.cs" />
+    <Compile Include="IResourceDictionaryDispenser.cs" />
+    <Compile Include="Charting\ResourceDictionaryDispenser.cs" />
     <Compile Include="EnumerableFunctions.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="RangeEnumerableFunctions.cs" />
-    <Compile Include="StylePalette.cs" />
+    <Compile Include="ResourceDictionaryCollection.cs" />
     <Compile Include="Title\Title.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -312,6 +325,16 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Charting\DataPointSeriesDragDropTarget.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj"><Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project><Name>Controls.Toolkit</Name></ProjectReference>
+    <Reference Include="System.Windows.Controls" />
   </ItemGroup>
   <!-- Disable warning SA1401 because violating it gives a 40% reduction in execution time for LeftLeaningRedBlackTree -->
   <PropertyGroup>

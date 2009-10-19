@@ -236,7 +236,7 @@ namespace System.Windows.Controls.Samples
         /// <summary>
         /// Refreshes data from data source and renders the series.
         /// </summary>
-        public override void Refresh()
+        private void Refresh()
         {
             if (SeriesHost == null || ActualWidth == 0)
             {
@@ -317,10 +317,10 @@ namespace System.Windows.Controls.Samples
 
             // Map the actual values into coordinate values
             return new Point(
-                independent.GetPlotAreaCoordinate(x).Value.Value,
+                independent.GetPlotAreaCoordinate(x).Value,
                 Math.Min(
                     Math.Max(
-                        ActualHeight - dependent.GetPlotAreaCoordinate(y).Value.Value,
+                        ActualHeight - dependent.GetPlotAreaCoordinate(y).Value,
                         -1),
                     ActualHeight + 1));
         }

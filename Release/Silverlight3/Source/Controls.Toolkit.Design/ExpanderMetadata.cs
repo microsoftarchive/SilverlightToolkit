@@ -39,6 +39,9 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.Expander>(x => x.IsExpanded),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.Expander>(x => x.Header)));
+
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.Expander>(x => x.Content),

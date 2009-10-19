@@ -43,6 +43,22 @@ namespace System.Windows.Controls.Layout.Design
 
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.Controls, true));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.Accordion>(x => x.SelectedItem),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.Accordion>(x => x.ItemsSource),
+                            true));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.Accordion>(x => x.ItemContainerStyle),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.Accordion>(x => x.ItemsSource),
+                            true));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.Accordion>(x => x.ContentTemplate),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.Accordion>(x => x.ItemsSource),
+                            true));
 #endif
                 });
         }

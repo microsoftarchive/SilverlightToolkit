@@ -50,6 +50,9 @@ namespace System.Windows.Controls.Layout.Design
                         Extensions.GetMemberName<SSWC.LayoutTransformer>(x => x.Template),
                         new BrowsableAttribute(false));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.LayoutTransformer>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new FeatureAttribute(typeof(EmptyDefaultInitializer)));
 

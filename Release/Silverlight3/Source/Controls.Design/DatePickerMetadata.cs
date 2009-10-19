@@ -61,6 +61,8 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.DatePicker>(x => x.Text),
                         new CategoryAttribute(Properties.Resources.DatePicker));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute("SelectedDate"));
+
 #if MWD40
                     b.AddCustomAttributes(
                         "BlackoutDates",

@@ -274,7 +274,7 @@ Partial Public NotInheritable Class FunctionSeries
     ''' <summary>
     ''' Refreshes data from data source and renders the series.
     ''' </summary>
-    Public Overrides Sub Refresh()
+    Private Sub Refresh()
         If SeriesHost Is Nothing OrElse ActualWidth = 0 Then
             Return
         End If
@@ -345,10 +345,10 @@ Partial Public NotInheritable Class FunctionSeries
 
         ' Map the actual values into coordinate values
         Return New Point( _
-            independent.GetPlotAreaCoordinate(x).Value.Value, _
+            independent.GetPlotAreaCoordinate(x).Value, _
             Math.Min( _
                 Math.Max( _
-                    ActualHeight - dependent.GetPlotAreaCoordinate(y).Value.Value, _
+                    ActualHeight - dependent.GetPlotAreaCoordinate(y).Value, _
                     -1), _
                 ActualHeight + 1))
     End Function

@@ -62,6 +62,7 @@
             </samplesCommon:SampleTreeItem>
             <samplesCommon:SampleTreeItem TreeItemName="Layout">
                 <samplesCommon:SampleTreeItem TreeItemName="Accordion" IconResourceName="Accordion.png" />
+                <samplesCommon:SampleTreeItem TreeItemName="LayoutTransformer" IconResourceName="LayoutTransformer.png" />
                 <samplesCommon:SampleTreeItem TreeItemName="TransitioningContentControl" IconResourceName="TransitioningContentControl.png" />
             </samplesCommon:SampleTreeItem>
             <samplesCommon:SampleTreeItem TreeItemName="Navigation">
@@ -73,6 +74,7 @@
             </samplesCommon:SampleTreeItem>
             <samplesCommon:SampleTreeItem TreeItemName="Toolkit">
                 <samplesCommon:SampleTreeItem TreeItemName="DockPanel" IconResourceName="DockPanel.png" />
+                <samplesCommon:SampleTreeItem TreeItemName="Drag and Drop" IconResourceName="DragAndDrop.png" />
                 <samplesCommon:SampleTreeItem TreeItemName="Expander" IconResourceName="Expander.png" />
                 <samplesCommon:SampleTreeItem TreeItemName="GlobalCalendar" IconResourceName="Calendar.png"/>
                 <samplesCommon:SampleTreeItem TreeItemName="Viewbox" IconResourceName="ViewBox.png" />

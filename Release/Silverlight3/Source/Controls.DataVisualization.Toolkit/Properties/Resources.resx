@@ -205,8 +205,8 @@
     <value>Cannot determine the size of an axis without an orientation.</value>
     <comment>Exception message.</comment>
   </data>
-  <data name="StyleEnumerator_CantResetEnumeratorResetStyleDispenserInstead" xml:space="preserve">
-    <value>Cannot reset a style enumerator.  Reset style dispenser instead.</value>
+  <data name="ResourceDictionaryEnumerator_CantResetEnumeratorResetDispenserInstead" xml:space="preserve">
+    <value>Cannot reset a ResourceDictionaryEnumerator; reset the ResourceDictionaryDispenser instead.</value>
     <comment>Exception message.</comment>
   </data>
   <data name="TreeMap_BuildTreeMapTree_TemplateNotSet" xml:space="preserve">
@@ -224,5 +224,9 @@
   <data name="TreeMap_Interpolators_SetterNotSupported" xml:space="preserve">
     <value>Changing the TreeMap's Interpolators Property is not supported; changes to the collection should be made with its .Add/.Remove methods instead.</value>
     <comment>Setter is public to work around a limitation with the XAML editing tools.</comment>
+  </data>
+  <data name="DataPointSeriesDropTarget_set_Content_ContentMustBeAChart" xml:space="preserve">
+    <value>The content property must be set to a Chart object.</value>
+    <comment>Exception message.</comment>
   </data>
 </root>

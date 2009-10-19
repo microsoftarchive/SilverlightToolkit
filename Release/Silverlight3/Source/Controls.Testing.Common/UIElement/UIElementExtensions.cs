@@ -151,5 +151,27 @@ namespace System.Windows.Controls.Testing
         {
             return Observable.FromEvent<RoutedEventArgs>(that, "GotFocus");
         }
+
+        /// <summary>
+        /// Gets an observable sequence based on the MouseLeftButtonDown event.
+        /// </summary>
+        /// <param name="that">The element.</param>
+        /// <returns>An observable sequence based on the MouseLeftButtonDown event.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Rx observables based on events are implemented this way.")]
+        public static IObservable<Event<MouseButtonEventArgs>> GetMouseLeftButtonDown(this UIElement that)
+        {
+            return Observable.FromEvent<MouseButtonEventArgs>(that, "MouseLeftButtonDown");
+        }
+
+        /// <summary>
+        /// Gets an observable sequence based on the MouseLeftButtonUp event.
+        /// </summary>
+        /// <param name="that">The element.</param>
+        /// <returns>An observable sequence based on the MouseLeftButtonUp event.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Rx observables based on events are implemented this way.")]
+        public static IObservable<Event<MouseButtonEventArgs>> GetMouseLeftButtonUp(this UIElement that)
+        {
+            return Observable.FromEvent<MouseButtonEventArgs>(that, "MouseLeftButtonUp");
+        }
     }
 }

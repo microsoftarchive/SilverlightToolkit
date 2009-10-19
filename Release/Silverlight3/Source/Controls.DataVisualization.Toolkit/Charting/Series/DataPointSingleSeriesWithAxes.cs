@@ -3,12 +3,10 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -20,51 +18,106 @@ namespace System.Windows.Controls.DataVisualization.Charting
     public abstract class DataPointSingleSeriesWithAxes : DataPointSeriesWithAxes, IRequireGlobalSeriesIndex
     {
         /// <summary>
+        /// Name of the ActualDataPointStyle property.
+        /// </summary>
+        protected const string ActualDataPointStyleName = "ActualDataPointStyle";
+
+        /// <summary>
         /// Gets the single legend item associated with the series.
         /// </summary>
         protected LegendItem LegendItem
         {
             get
             {
-                if (LegendItems.Count == 0)
+                if (null == _legendItem)
                 {
-                    this.LegendItems.Add(CreateLegendItem());
+                    _legendItem = CreateLegendItem(this);
+                    LegendItems.Add(_legendItem);
                 }
-                return this.LegendItems[0] as LegendItem;
+                return _legendItem;
             }
         }
+
+        /// <summary>
+        /// Stores the LegendItem for the series.
+        /// </summary>
+        private LegendItem _legendItem;
+
+        /// <summary>
+        /// Gets the Palette-dispensed ResourceDictionary for the Series.
+        /// </summary>
+        protected ResourceDictionary PaletteResources { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a custom title is in use.
         /// </summary>
         private bool CustomTitleInUse { get; set; }
 
-        #region public Style DataPointStyle
         /// <summary>
-        /// Gets or sets the style to use for the data points.
+        /// DataPointStyleProperty property changed handler.
         /// </summary>
-        public Style DataPointStyle
+        /// <param name="oldValue">Old value.</param>
+        /// <param name="newValue">New value.</param>
+        protected override void OnDataPointStylePropertyChanged(Style oldValue, Style newValue)
         {
-            get { return GetValue(DataPointStyleProperty) as Style; }
-            set { SetValue(DataPointStyleProperty, value); }
+            // Propagate change
+            ActualDataPointStyle = newValue;
+            base.OnDataPointStylePropertyChanged(oldValue, newValue);
+        }
+
+        #region protected Style ActualDataPointStyle
+        /// <summary>
+        /// Gets or sets the actual style used for the data points.
+        /// </summary>
+        protected Style ActualDataPointStyle
+        {
+            get { return GetValue(ActualDataPointStyleProperty) as Style; }
+            set { SetValue(ActualDataPointStyleProperty, value); }
         }
 
         /// <summary>
-        /// Identifies the DataPointStyle dependency property.
+        /// Identifies the ActualDataPointStyle dependency property.
         /// </summary>
-        public static readonly DependencyProperty DataPointStyleProperty =
+        protected static readonly DependencyProperty ActualDataPointStyleProperty =
             DependencyProperty.Register(
-                "DataPointStyle",
+                ActualDataPointStyleName,
                 typeof(Style),
                 typeof(DataPointSingleSeriesWithAxes),
                 null);
+        #endregion protected Style ActualDataPointStyle
 
-        #endregion public Style DataPointStyle
+        #region protected Style ActualLegendItemStyle
+        /// <summary>
+        /// Gets or sets the actual style used for the legend item.
+        /// </summary>
+        protected Style ActualLegendItemStyle
+        {
+            get { return GetValue(ActualLegendItemStyleProperty) as Style; }
+            set { SetValue(ActualLegendItemStyleProperty, value); }
+        }
 
         /// <summary>
-        /// Gets or sets the actual style of used for the data points.
+        /// Identifies the ActualLegendItemStyle dependency property.
         /// </summary>
-        protected Style ActualDataPointStyle { get; set; }
+        protected static readonly DependencyProperty ActualLegendItemStyleProperty =
+            DependencyProperty.Register(
+                ActualLegendItemStyleName,
+                typeof(Style),
+                typeof(DataPointSeries),
+                null);
+        #endregion protected Style ActualLegendItemStyle
+
+        /// <summary>
+        /// Called when the value of the LegendItemStyle property changes.
+        /// </summary>
+        /// <param name="oldValue">Old value.</param>
+        /// <param name="newValue">New value.</param>
+        protected override void OnLegendItemStylePropertyChanged(Style oldValue, Style newValue)
+        {
+            // Propagate change
+            ActualLegendItemStyle = newValue;
+            base.OnLegendItemStylePropertyChanged(oldValue, newValue);
+        }
 
         #region public int? GlobalSeriesIndex
         /// <summary>
@@ -104,11 +157,9 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         /// <param name="oldValue">Old value.</param>
         /// <param name="newValue">New value.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "newValue+1", Justification = "Impractical to add as many Series as it would take to overflow.")]
+        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "newValue+1", Justification = "Impractical to add as many Series as it would take to overflow.")]
         protected virtual void OnGlobalSeriesIndexPropertyChanged(int? oldValue, int? newValue)
         {
-            LegendItem.Content = Title;
-
             if (!CustomTitleInUse && (null == GetBindingExpression(TitleProperty)))
             {
                 Title = newValue.HasValue ? string.Format(CultureInfo.CurrentCulture, Properties.Resources.Series_OnGlobalSeriesIndexPropertyChanged_UntitledSeriesFormatString, newValue.Value + 1) : null;
@@ -127,7 +178,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
         {
             // Title property is being set, so a custom Title is in use
             CustomTitleInUse = true;
-            LegendItem.Content = Title;
         }
 
         /// <summary>
@@ -138,13 +188,13 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Returns the data point style to use for all data points in the 
-        /// series.
+        /// Returns the custom ResourceDictionary to use for necessary resources.
         /// </summary>
-        /// <returns>The data point style to use for all charts in the series.
+        /// <returns>
+        /// ResourceDictionary to use for necessary resources.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This property does more work than get functions typically do.")]
-        protected abstract IEnumerator<Style> GetStyleEnumeratorFromHost();
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This property does more work than get functions typically do.")]
+        protected abstract IEnumerator<ResourceDictionary> GetResourceDictionaryEnumeratorFromHost();
 
         /// <summary>
         /// Insert grid containing data point used for legend item into the 
@@ -171,17 +221,16 @@ namespace System.Windows.Controls.DataVisualization.Charting
         {
             base.OnSeriesHostPropertyChanged(oldValue, newValue);
 
+            if (oldValue != null)
+            {
+                oldValue.ResourceDictionariesChanged -= new EventHandler(SeriesHostResourceDictionariesChanged);
+            }
+
             if (newValue != null)
             {
-                using (IEnumerator<Style> styleEnumerator = GetStyleEnumeratorFromHost())
-                {
-                    if (styleEnumerator.MoveNext())
-                    {
-                        ActualDataPointStyle = DataPointStyle ?? styleEnumerator.Current;
-                    }
-                }
+                newValue.ResourceDictionariesChanged += new EventHandler(SeriesHostResourceDictionariesChanged);
 
-                CreateLegendItemDataPoint();
+                DispensedResourcesChanging();
             }
         }
 
@@ -197,15 +246,25 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 PlotArea.Children.Add(dataPoint);
                 PlotArea.Children.Remove(dataPoint);
             }
-            dataPoint.SetStyle(ActualDataPointStyle);
-            LegendItem.Content = Title;
+            dataPoint.SetBinding(DataPoint.StyleProperty, new Binding(ActualDataPointStyleName) { Source = this });
             // Start DataContext null to avoid Binding warnings in the output window
             LegendItem.DataContext = null;
-            LegendItem.Loaded += delegate
+#if !SILVERLIGHT
+            if (null == LegendItem.Parent)
             {
-                // Wait for Loaded to set the DataPoint
+#endif
+                LegendItem.Loaded += delegate
+                {
+                    // Wait for Loaded to set the DataPoint
+                    LegendItem.DataContext = dataPoint;
+                };
+#if !SILVERLIGHT
+            }
+            else
+            {
                 LegendItem.DataContext = dataPoint;
-            };
+            }
+#endif
         }
 
         /// <summary>
@@ -238,7 +297,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </param>
         protected override void PrepareDataPoint(DataPoint dataPoint, object dataContext)
         {
-            dataPoint.SetStyle(ActualDataPointStyle);
+            dataPoint.SetBinding(DataPoint.StyleProperty, new Binding(ActualDataPointStyleName) { Source = this });
             base.PrepareDataPoint(dataPoint, dataContext);
         }
 
@@ -252,22 +311,42 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Refreshes the styles in the series.
+        /// Handles the SeriesHost's ResourceDictionariesChanged event.
         /// </summary>
-        public override void RefreshStyles()
+        /// <param name="sender">ISeriesHost instance.</param>
+        /// <param name="e">Event args.</param>
+        private void SeriesHostResourceDictionariesChanged(object sender, EventArgs e)
         {
-            if (this.SeriesHost != null)
+            DispensedResourcesChanging();
+        }
+
+        /// <summary>
+        /// Processes the change of the DispensedResources property.
+        /// </summary>
+        private void DispensedResourcesChanging()
+        {
+            if (null != PaletteResources)
             {
-                using (IEnumerator<Style> styleEnumerator = GetStyleEnumeratorFromHost())
-                {
-                    if (styleEnumerator.MoveNext())
-                    {
-                        ActualDataPointStyle = DataPointStyle ?? styleEnumerator.Current;
-                    }
-                }
-                CreateLegendItemDataPoint();
-                Refresh();
+                Resources.MergedDictionaries.Remove(PaletteResources);
+                PaletteResources = null;
             }
+            using (IEnumerator<ResourceDictionary> enumerator = GetResourceDictionaryEnumeratorFromHost())
+            {
+                if (enumerator.MoveNext())
+                {
+                    PaletteResources =
+#if SILVERLIGHT
+                        enumerator.Current.ShallowCopy();
+#else
+                        enumerator.Current;
+#endif
+                    Resources.MergedDictionaries.Add(PaletteResources);
+                }
+            }
+            CreateLegendItemDataPoint();
+            ActualDataPointStyle = DataPointStyle ?? (Resources[DataPointStyleName] as Style);
+            ActualLegendItemStyle = LegendItemStyle ?? (Resources[LegendItemStyleName] as Style);
+            Refresh();
         }
     }
 }

@@ -5,6 +5,7 @@
 
 extern alias Silverlight;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls.Design.Common;
 using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Features;
@@ -22,6 +23,7 @@ namespace System.Windows.Controls.DataVisualization.Design
         /// <summary>
         /// To register design time metadata for SSWCDC.Chart.
         /// </summary>
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "By design.")]
         public ChartMetadata()
             : base()
         {
@@ -66,7 +68,7 @@ namespace System.Windows.Controls.DataVisualization.Design
                         Extensions.GetMemberName<SSWCDC.Chart>(x => x.PlotAreaStyle),
                         new CategoryAttribute(Properties.Resources.DataVisualizationStyling));
                     b.AddCustomAttributes(
-                        Extensions.GetMemberName<SSWCDC.Chart>(x => x.StylePalette),
+                        Extensions.GetMemberName<SSWCDC.Chart>(x => x.Palette),
                         new CategoryAttribute(Properties.Resources.DataVisualizationStyling));
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWCDC.Chart>(x => x.TitleStyle),
@@ -78,6 +80,22 @@ namespace System.Windows.Controls.DataVisualization.Design
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWCDC.Chart>(x => x.Title),
                         PropertyValueEditor.CreateEditorAttribute(typeof(TextBoxEditor)));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCDC.Chart>(x => x.Axes),
+                        new NewItemTypesAttribute(typeof(SSWCDC.CategoryAxis)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.LinearAxis)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.DateTimeAxis)));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCDC.Chart>(x => x.Series),
+                        new NewItemTypesAttribute(typeof(SSWCDC.AreaSeries)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.BubbleSeries)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.BarSeries)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.LineSeries)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.PieSeries)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.ScatterSeries)),
+                        new NewItemTypesAttribute(typeof(SSWCDC.ColumnSeries)));
 
 #if MWD40
                     b.AddCustomAttributes(
@@ -97,6 +115,12 @@ namespace System.Windows.Controls.DataVisualization.Design
                     b.AddCustomAttributes(new FeatureAttribute(typeof(ChartDefaultInitializer)));
 
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.DataVisualization, true));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWCDC.Chart>(x => x.TitleStyle),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWCDC.Chart>(x => x.Title),
+                            false));
 #endif
                 });
         }

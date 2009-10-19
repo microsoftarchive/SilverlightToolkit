@@ -13,4 +13,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Design", "CA1003:UseGenericEventHandlerInstances", Scope = "type", Target = "System.Windows.Navigation.NavigationStoppedEventHandler", Justification = "This EventHandler type is being used for WPF compat.")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1003:UseGenericEventHandlerInstances", Scope = "type", Target = "System.Windows.Navigation.FragmentNavigationEventHandler", Justification = "This EventHandler type is being used for WPF compat.")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "URIs", Scope = "resource", Target = "System.Windows.Navigation.Resource.resources", Justification = "This is a common acronym used throughout the web.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("General", "SWC1001:XmlDocumentationCommentShouldBeSpelledCorrectly", MessageId = "URIs")]
+[assembly: SuppressMessage("General", "SWC1001:XmlDocumentationCommentShouldBeSpelledCorrectly", MessageId = "URIs", Justification = "This is a common acronym used throughout the web.")]

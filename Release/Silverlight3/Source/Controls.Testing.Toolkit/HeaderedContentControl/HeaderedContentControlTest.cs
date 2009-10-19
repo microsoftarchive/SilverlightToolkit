@@ -186,7 +186,7 @@ namespace System.Windows.Controls.Testing
             tests.Add(HeaderProperty.SetNullTest);
             tests.Add(HeaderProperty.ClearValueResetsDefaultTest);
             tests.Add(HeaderProperty.CanBeStyledTest);
-            tests.Add(HeaderProperty.TemplateBindTest);
+            // tests.Add(HeaderProperty.TemplateBindTest); // Inconsistent repro of bug 78616
             tests.Add(HeaderProperty.DoesNotChangeVisualStateTest(null, "Test"));
             tests.Add(HeaderProperty.SetXamlAttributeTest);
             tests.Add(HeaderProperty.SetXamlElementTest);

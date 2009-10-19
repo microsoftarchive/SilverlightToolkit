@@ -180,9 +180,17 @@
     <value>Invalid Dock value '{0}'.</value>
     <comment>Exception thrown when the Dock attached property is provided an invalid value.</comment>
   </data>
+  <data name="DragDropTarget_RemoveItemAtIndex_RemovalByIndexNotSupported" xml:space="preserve">
+    <value>Removal by index is not supported.</value>
+    <comment>Exception thrown when an attempt is made to remove an item by index and the item parent does not support removal by index.</comment>
+  </data>
   <data name="Expander_OnExpandDirectionPropertyChanged_InvalidValue" xml:space="preserve">
     <value>Invalid ExpandDirection value '{0}'.</value>
     <comment>Exception thrown when the ExpandDirection property is provided an invalid value.</comment>
+  </data>
+  <data name="ListBoxDragDropTarget_OnContentChanged_ContentMustBeAListBox" xml:space="preserve">
+    <value>The content property must be a ListBox.</value>
+    <comment>An exception thrown when the Content property of a ListBoxDragDropTarget is set to a value that is not a ListBox.</comment>
   </data>
   <data name="ParameterCollection_EnsureCanChangeCollection_IsReadOnly" xml:space="preserve">
     <value>ConstructorParameters cannot be changed because ObjectDataProvider is using a user-assigned ObjectInstance.</value>
@@ -191,6 +199,10 @@
   <data name="ResolveElementNameEventArgs_ctor_ElementNameEmpty" xml:space="preserve">
     <value>The elementName should not be empty.</value>
     <comment>Exception thrown when an empty elementName is provided.</comment>
+  </data>
+  <data name="TreeViewDragDropTarget_set_Content_ContentMustBeATreeView" xml:space="preserve">
+    <value>The content property must of type TreeView.</value>
+    <comment>Exception thrown when the Content property of a TreeViewDragDropBehavior is not a TreeView.</comment>
   </data>
   <data name="TreeViewExtensions_GetDepth_NotInTreeView" xml:space="preserve">
     <value>The item is not in a TreeView.</value>
@@ -203,6 +215,18 @@
   <data name="TypeConverters_Convert_CannotConvert" xml:space="preserve">
     <value>'{0}' is unable to convert '{1}' to '{2}'.</value>
     <comment>Exception thrown when a type converter fails to convert a value to another type.</comment>
+  </data>
+  <data name="UIElementExtendedRoutedEventExtensions_TypeOfHandlerMustBeDragEventHandler" xml:space="preserve">
+    <value>Type of the event handler must be DragEventHandler.</value>
+    <comment>Exception thrown when handler for a target event is passed to AddHandler and the handler is not of type DragEventHandler.</comment>
+  </data>
+  <data name="UIElementExtendedRoutedEventExtensions_TypeOfHandlerMustBeGiveFeedbackEventHandler" xml:space="preserve">
+    <value>Type of the event handler must be GiveFeedbackEventHandler.</value>
+    <comment>Exception thrown when handler for a target event is passed to AddHandler and the handler is not of type GiveFeedbackHandler.</comment>
+  </data>
+  <data name="UIElementExtendedRoutedEventExtensions_TypeOfHandlerMustBeQueryContinueDragEventHandler" xml:space="preserve">
+    <value>Type of the event handler must be QueryContinueDragEventHandler.</value>
+    <comment>Exception thrown when handler for a target event is passed to AddHandler and the handler is not of type QueryContinueDragEventHandler.</comment>
   </data>
   <data name="Viewbox_OnApplyTemplate_OnlyOnce" xml:space="preserve">
     <value>The template can only be applied one time.</value>

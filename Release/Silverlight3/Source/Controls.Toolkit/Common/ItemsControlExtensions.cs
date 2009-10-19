@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -39,11 +40,22 @@ namespace System.Windows.Controls
 
             // Get the first live container
             DependencyObject container = control.ItemContainerGenerator.ContainerFromIndex(0);
-            
-            // Get the parent of the container
-            return (container != null) ?
-                VisualTreeHelper.GetParent(container) as Panel :
-                null;
+
+            if (container != null)
+            {
+                return VisualTreeHelper.GetParent(container) as Panel;
+            }
+
+            FrameworkElement rootVisual = control.GetVisualChildren().FirstOrDefault() as FrameworkElement;
+            if (rootVisual != null)
+            {
+                ItemsPresenter presenter = rootVisual.GetLogicalDescendents().OfType<ItemsPresenter>().FirstOrDefault();
+                if (presenter != null && VisualTreeHelper.GetChildrenCount(presenter) > 0)
+                {
+                    return VisualTreeHelper.GetChild(presenter, 0) as Panel;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -214,5 +226,127 @@ namespace System.Windows.Controls
             }
         }
         #endregion GetItemsAndContainers
+
+        /// <summary>
+        /// Returns a value indicating whether an item can be added to an
+        /// ItemsControl.
+        /// </summary>
+        /// <param name="that">The ItemsControl instance.</param>
+        /// <param name="item">The item to be added.</param>
+        /// <returns>A value Indicating whether an item can be added to an
+        /// ItemsControl.</returns>
+        internal static bool CanAddItem(this ItemsControl that, object item)
+        {
+            if (that.ItemsSource == null)
+            {
+                return true;
+            }
+            else
+            {
+                return that.ItemsSource.CanInsert(item);
+            }
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether an item can be removed from the
+        /// ItemsControl.
+        /// </summary>
+        /// <param name="that">The items control.</param>
+        /// <returns>A value indicating whether an item can be removed from the
+        /// ItemsControl.</returns>
+        internal static bool CanRemoveItem(this ItemsControl that)
+        {
+            if (that.ItemsSource != null)
+            {
+                return !that.ItemsSource.IsReadOnly() && that.ItemsSource is INotifyCollectionChanged;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Inserts an item into an ItemsControl.
+        /// </summary>
+        /// <param name="that">The ItemsControl instance.</param>
+        /// <param name="index">The index at which to insert the item.</param>
+        /// <param name="item">The item to be inserted.</param>
+        internal static void InsertItem(this ItemsControl that, int index, object item)
+        {
+            if (that.ItemsSource == null)
+            {
+                that.Items.Insert(index, item);
+            }
+            else
+            {
+                that.ItemsSource.Insert(index, item);
+            }
+        }
+
+        /// <summary>
+        /// Adds an item to an ItemsControl.
+        /// </summary>
+        /// <param name="that">The ItemsControl instance.</param>
+        /// <param name="item">The item to be inserted.</param>
+        internal static void AddItem(this ItemsControl that, object item)
+        {
+            if (that.ItemsSource == null)
+            {
+                that.InsertItem(that.Items.Count, item);
+            }
+            else
+            {
+                that.ItemsSource.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Removes an item from an ItemsControl.
+        /// </summary>
+        /// <param name="that">The ItemsControl instance.</param>
+        /// <param name="item">The item to be removed.</param>
+        internal static void RemoveItem(this ItemsControl that, object item)
+        {
+            if (that.ItemsSource == null)
+            {
+                that.Items.Remove(item);
+            }
+            else
+            {
+                that.ItemsSource.Remove(item);
+            }
+        }
+
+        /// <summary>
+        /// Removes an item from an ItemsControl.
+        /// </summary>
+        /// <param name="that">The ItemsControl instance.</param>
+        /// <param name="index">The index of the item to be removed.</param>
+        internal static void RemoveItemAtIndex(this ItemsControl that, int index)
+        {
+            if (that.ItemsSource == null)
+            {
+                that.Items.RemoveAt(index);
+            }
+            else
+            {
+                that.ItemsSource.RemoveAt(index);
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of items in an ItemsControl.
+        /// </summary>
+        /// <param name="that">The ItemsControl instance.</param>
+        /// <returns>The number of items in the ItemsControl.</returns>
+        internal static int GetItemCount(this ItemsControl that)
+        {
+            if (that.ItemsSource == null)
+            {
+                return that.Items.Count;
+            }
+            else
+            {
+                return that.ItemsSource.Count();
+            }
+        }
     }
 }

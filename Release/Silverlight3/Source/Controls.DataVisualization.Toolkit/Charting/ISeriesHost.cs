@@ -15,7 +15,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// collection of Series objects.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
-    public interface ISeriesHost : IRequireSeriesHost, IStyleDispenser
+    public interface ISeriesHost : IRequireSeriesHost, IResourceDictionaryDispenser
     {
         /// <summary>
         /// Gets the collection of axes the series host has available.
@@ -25,7 +25,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// Gets the collection of series the series host has available.
         /// </summary>
-        ObservableCollection<Series> Series { get; }
+        ObservableCollection<ISeries> Series { get; }
 
         /// <summary>
         /// Gets the foreground elements.
@@ -36,10 +36,5 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// Gets the background elements.
         /// </summary>
         ObservableCollection<UIElement> BackgroundElements { get; }
-
-        /// <summary>
-        /// Occurs when the series descendents in the series host have changed.
-        /// </summary>
-        event RoutedEventHandler GlobalSeriesIndexesInvalidated;
     }
 }

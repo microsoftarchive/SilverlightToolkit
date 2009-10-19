@@ -47,6 +47,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Layout.Toolkit.Exp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Layout.Toolkit.VisualStudio.Design", "Controls.Layout.Toolkit.VisualStudio.Design\Controls.Layout.Toolkit.VisualStudio.Design.csproj", "{1B8741B5-3328-491F-9384-0C74B4CCE062}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.DataVisualization.Toolkit.VisualStudio.Design.4.0", "Controls.DataVisualization.Toolkit.VisualStudio.Design.4.0\Controls.DataVisualization.Toolkit.VisualStudio.Design.4.0.csproj", "{7A9270E4-518B-47AC-A519-B5F8425D0E36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Input.Toolkit.VisualStudio.Design.4.0", "Controls.Input.Toolkit.VisualStudio.Design.4.0\Controls.Input.Toolkit.VisualStudio.Design.4.0.csproj", "{58A1C792-A5FB-4565-B7EB-C11EB60B6693}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Input.VisualStudio.Design.4.0", "Controls.Input.VisualStudio.Design.4.0\Controls.Input.VisualStudio.Design.4.0.csproj", "{4B5AB3E2-F768-4CFD-8CA9-764FE23ABF1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Layout.Toolkit.VisualStudio.Design.4.0", "Controls.Layout.Toolkit.VisualStudio.Design.4.0\Controls.Layout.Toolkit.VisualStudio.Design.4.0.csproj", "{A7CB8380-83AE-40E4-A128-68DAF1D3DD8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Theming.Toolkit.VisualStudio.Design.4.0", "Controls.Theming.Toolkit.VisualStudio.Design.4.0\Controls.Theming.Toolkit.VisualStudio.Design.4.0.csproj", "{11CA2640-F275-46A6-9795-16A95061108D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Toolkit.VisualStudio.Design.4.0", "Controls.Toolkit.VisualStudio.Design.4.0\Controls.Toolkit.VisualStudio.Design.4.0.csproj", "{A3714629-59C1-4A64-A4FD-DF911907A1D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.VisualStudio.Design.4.0", "Controls.VisualStudio.Design.4.0\Controls.VisualStudio.Design.4.0.csproj", "{C96F54C3-8267-45BC-8166-6A2AFCE4E928}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Toolkit.Design", "Controls.Toolkit.Design\Controls.Toolkit.Design.csproj", "{C5911C51-8CEA-4233-8A93-709860615678}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Toolkit.Expression.Design", "Controls.Toolkit.Expression.Design\Controls.Toolkit.Expression.Design.csproj", "{6E8B88D1-138C-4BBA-BF45-1A52E9FBF7C2}"
@@ -131,19 +145,33 @@ Global
 		{1B8741B5-3328-491F-9384-0C74B4CCE062}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B8741B5-3328-491F-9384-0C74B4CCE062}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B8741B5-3328-491F-9384-0C74B4CCE062}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A9270E4-518B-47AC-A519-B5F8425D0E36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A9270E4-518B-47AC-A519-B5F8425D0E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A9270E4-518B-47AC-A519-B5F8425D0E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A9270E4-518B-47AC-A519-B5F8425D0E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A1C792-A5FB-4565-B7EB-C11EB60B6693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58A1C792-A5FB-4565-B7EB-C11EB60B6693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A1C792-A5FB-4565-B7EB-C11EB60B6693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A1C792-A5FB-4565-B7EB-C11EB60B6693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B5AB3E2-F768-4CFD-8CA9-764FE23ABF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B5AB3E2-F768-4CFD-8CA9-764FE23ABF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B5AB3E2-F768-4CFD-8CA9-764FE23ABF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B5AB3E2-F768-4CFD-8CA9-764FE23ABF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CB8380-83AE-40E4-A128-68DAF1D3DD8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7CB8380-83AE-40E4-A128-68DAF1D3DD8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CB8380-83AE-40E4-A128-68DAF1D3DD8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7CB8380-83AE-40E4-A128-68DAF1D3DD8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11CA2640-F275-46A6-9795-16A95061108D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11CA2640-F275-46A6-9795-16A95061108D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11CA2640-F275-46A6-9795-16A95061108D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11CA2640-F275-46A6-9795-16A95061108D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3714629-59C1-4A64-A4FD-DF911907A1D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3714629-59C1-4A64-A4FD-DF911907A1D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3714629-59C1-4A64-A4FD-DF911907A1D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3714629-59C1-4A64-A4FD-DF911907A1D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C96F54C3-8267-45BC-8166-6A2AFCE4E928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C96F54C3-8267-45BC-8166-6A2AFCE4E928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96F54C3-8267-45BC-8166-6A2AFCE4E928}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C96F54C3-8267-45BC-8166-6A2AFCE4E928}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5911C51-8CEA-4233-8A93-709860615678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5911C51-8CEA-4233-8A93-709860615678}.Debug|Any CPU.Build.0 = Debug|Any CPU

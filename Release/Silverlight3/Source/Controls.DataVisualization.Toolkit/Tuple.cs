@@ -6,31 +6,31 @@
 namespace System.Windows.Controls.DataVisualization
 {
     /// <summary>
-    /// A structure that groups two values.
+    /// Represents a 2-tuple, or pair.
     /// </summary>
-    /// <typeparam name="T0">The type of the first value.</typeparam>
-    /// <typeparam name="T1">The type of the second value.</typeparam>
-    internal struct Tuple<T0, T1>
+    /// <typeparam name="T1">The type of the tuple's first component.</typeparam>
+    /// <typeparam name="T2">The type of the tuple's second component.</typeparam>
+    internal class Tuple<T1, T2>
     {
         /// <summary>
-        /// Gets the first value.
+        /// Gets the value of the current Tuple(T1, T2) object's first component.
         /// </summary>
-        public T0 First { get; private set; }
+        public T1 Item1 { get; private set; }
 
         /// <summary>
-        /// Gets the second value.
+        /// Gets the value of the current Tuple(T1, T2) object's second component.
         /// </summary>
-        public T1 Second { get; private set; }
+        public T2 Item2 { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the Tuple structure.
+        /// Initializes a new instance of the Tuple(T1, T2) class.
         /// </summary>
-        /// <param name="first">The first value.</param>
-        /// <param name="second">The second value.</param>
-        public Tuple(T0 first, T1 second) : this()
+        /// <param name="item1">The value of the tuple's first component.</param>
+        /// <param name="item2">The value of the tuple's second component.</param>
+        public Tuple(T1 item1, T2 item2)
         {
-            First = first;
-            Second = second;
+            Item1 = item1;
+            Item2 = item2;
         }
     }
 }

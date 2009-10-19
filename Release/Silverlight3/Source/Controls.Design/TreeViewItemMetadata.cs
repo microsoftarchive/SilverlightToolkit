@@ -39,6 +39,10 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.TreeViewItem>(x => x.IsSelected),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.TreeViewItem>(x => x.Items),
+                        new NewItemTypesAttribute(typeof(SSWC.TreeViewItem)));
+
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.TreeViewItem>(x => x.Header),

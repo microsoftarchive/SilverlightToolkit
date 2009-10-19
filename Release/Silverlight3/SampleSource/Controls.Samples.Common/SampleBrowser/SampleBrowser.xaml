@@ -1815,7 +1815,7 @@
                                 <!-- Bug report link -->
                                 <HyperlinkButton 
                                   Content="Report bugs, ask questions, request features on"
-                                  NavigateUri="http://codeplex.com/silverlight"
+                                  NavigateUri="http://silverlight.codeplex.com/"
                                   TargetName="_blank"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
@@ -1823,7 +1823,7 @@
                                   Foreground="#FFFFFF"/>
                                 <!-- code plex logo link -->
                                 <HyperlinkButton
-                                  NavigateUri="http://codeplex.com/silverlight"
+                                  NavigateUri="http://silverlight.codeplex.com/"
                                   TargetName="_blank"
                                   HorizontalAlignment="Right"
                                         VerticalAlignment="Center"

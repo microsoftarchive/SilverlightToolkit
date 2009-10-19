@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Controls.DataVisualization;
 using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SWCDV = System.Windows.Controls.DataVisualization;
 
 namespace System.Windows.Controls.Testing
 {
@@ -42,7 +43,7 @@ namespace System.Windows.Controls.Testing
                 Children = null
             };
 
-            IEnumerable<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IEnumerable<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
             Assert.IsFalse(result.Any());
         }
@@ -64,7 +65,7 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
             Assert.IsFalse(result.Any());
         }
@@ -88,7 +89,7 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 80, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 80, 100), node, NoThickness).ToArray();
 
             Assert.AreEqual(1, result.Count);
         }
@@ -110,11 +111,11 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(100, result[0].First.Width, DELTA);
-            Assert.AreEqual(100, result[0].First.Height, DELTA);
+            Assert.AreEqual(100, result[0].Item1.Width, DELTA);
+            Assert.AreEqual(100, result[0].Item1.Height, DELTA);
         }
 
         /// <summary>
@@ -135,11 +136,11 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual(9000, result[0].First.Width * result[0].First.Height, DELTA);
-            Assert.AreEqual(1000, result[1].First.Width * result[1].First.Height, DELTA);
+            Assert.AreEqual(9000, result[0].Item1.Width * result[0].Item1.Height, DELTA);
+            Assert.AreEqual(1000, result[1].Item1.Width * result[1].Item1.Height, DELTA);
         }
 
         /// <summary>
@@ -160,11 +161,11 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual(9000, result[0].First.Width * result[0].First.Height, DELTA);
-            Assert.AreEqual(1000, result[1].First.Width * result[1].First.Height, DELTA);
+            Assert.AreEqual(9000, result[0].Item1.Width * result[0].Item1.Height, DELTA);
+            Assert.AreEqual(1000, result[1].Item1.Width * result[1].Item1.Height, DELTA);
         }
 
         /// <summary>
@@ -185,11 +186,11 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual(result[0].First.Width * result[0].First.Height, 1999, 2001);
-            Assert.AreEqual(result[1].First.Width * result[1].First.Height, 999, 1001);
+            Assert.AreEqual(result[0].Item1.Width * result[0].Item1.Height, 1999, 2001);
+            Assert.AreEqual(result[1].Item1.Width * result[1].Item1.Height, 999, 1001);
         }
 
         /// <summary>
@@ -217,8 +218,8 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
-            Assert.AreEqual(new Rect(0, 0, 100, 100), result[0].First);
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            Assert.AreEqual(new Rect(0, 0, 100, 100), result[0].Item1);
         }
 
         /// <summary>
@@ -239,9 +240,9 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
-            Assert.IsTrue(Object.ReferenceEquals(node.Children.First(), result[1].Second));
+            Assert.IsTrue(Object.ReferenceEquals(node.Children.First(), result[1].Item2));
         }
 
         /// <summary>
@@ -262,12 +263,12 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 100), node, NoThickness).ToArray();
 
-            Assert.AreEqual(0, result[0].First.Top, DELTA);
-            Assert.AreEqual(90, result[0].First.Bottom, DELTA);
-            Assert.AreEqual(90, result[1].First.Top, DELTA);
-            Assert.AreEqual(100, result[1].First.Bottom, DELTA);
+            Assert.AreEqual(0, result[0].Item1.Top, DELTA);
+            Assert.AreEqual(90, result[0].Item1.Bottom, DELTA);
+            Assert.AreEqual(90, result[1].Item1.Top, DELTA);
+            Assert.AreEqual(100, result[1].Item1.Bottom, DELTA);
         }
 
         /// <summary>
@@ -288,12 +289,12 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 150), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(0, 0, 100, 150), node, NoThickness).ToArray();
 
-            Assert.AreEqual(0, result[0].First.Left, DELTA);
-            Assert.AreEqual(100, result[0].First.Right, DELTA);
-            Assert.AreEqual(0, result[1].First.Left, DELTA);
-            Assert.AreEqual(100, result[1].First.Right, DELTA);
+            Assert.AreEqual(0, result[0].Item1.Left, DELTA);
+            Assert.AreEqual(100, result[0].Item1.Right, DELTA);
+            Assert.AreEqual(0, result[1].Item1.Left, DELTA);
+            Assert.AreEqual(100, result[1].Item1.Right, DELTA);
         }
 
         /// <summary>
@@ -314,16 +315,16 @@ namespace System.Windows.Controls.Testing
                 }
             };
 
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(50, 50, 80, 100), node, NoThickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(50, 50, 80, 100), node, NoThickness).ToArray();
 
-            Assert.AreEqual(50, result[0].First.Top, DELTA);
-            Assert.AreEqual(140, result[0].First.Bottom, DELTA);
-            Assert.AreEqual(140, result[1].First.Top, DELTA);
-            Assert.AreEqual(150, result[1].First.Bottom, DELTA);
-            Assert.AreEqual(50, result[0].First.Left, DELTA);
-            Assert.AreEqual(130, result[0].First.Right,  DELTA);
-            Assert.AreEqual(50, result[1].First.Left, DELTA);
-            Assert.AreEqual(130, result[1].First.Right, DELTA);
+            Assert.AreEqual(50, result[0].Item1.Top, DELTA);
+            Assert.AreEqual(140, result[0].Item1.Bottom, DELTA);
+            Assert.AreEqual(140, result[1].Item1.Top, DELTA);
+            Assert.AreEqual(150, result[1].Item1.Bottom, DELTA);
+            Assert.AreEqual(50, result[0].Item1.Left, DELTA);
+            Assert.AreEqual(130, result[0].Item1.Right,  DELTA);
+            Assert.AreEqual(50, result[1].Item1.Left, DELTA);
+            Assert.AreEqual(130, result[1].Item1.Right, DELTA);
         }
 
         /// <summary>
@@ -344,11 +345,11 @@ namespace System.Windows.Controls.Testing
                 }
             };
             Thickness thickness = new Thickness(10, 30, 20, 40);
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(10, 30, 130, 170), node, thickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(10, 30, 130, 170), node, thickness).ToArray();
 
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual(9000, result[0].First.Width * result[0].First.Height);
-            Assert.AreEqual(1000, result[1].First.Width * result[1].First.Height);
+            Assert.AreEqual(9000, result[0].Item1.Width * result[0].Item1.Height);
+            Assert.AreEqual(1000, result[1].Item1.Width * result[1].Item1.Height);
         }
 
         /// <summary>
@@ -370,16 +371,16 @@ namespace System.Windows.Controls.Testing
             };
 
             Thickness thickness = new Thickness(10, 30, 20, 40);
-            IList<Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(40, 20, 110, 170), node, thickness).ToArray();
+            IList<SWCDV::Tuple<Rect, TreeMapNode>> result = rect.Split(new Rect(40, 20, 110, 170), node, thickness).ToArray();
 
-            Assert.AreEqual(50, result[0].First.Top, DELTA);
-            Assert.AreEqual(140, result[0].First.Bottom, DELTA);
-            Assert.AreEqual(140, result[1].First.Top, DELTA);
-            Assert.AreEqual(150, result[1].First.Bottom, DELTA);
-            Assert.AreEqual(50, result[0].First.Left, DELTA);
-            Assert.AreEqual(130, result[0].First.Right, DELTA);
-            Assert.AreEqual(50, result[1].First.Left, DELTA);
-            Assert.AreEqual(130, result[1].First.Right, DELTA);
+            Assert.AreEqual(50, result[0].Item1.Top, DELTA);
+            Assert.AreEqual(140, result[0].Item1.Bottom, DELTA);
+            Assert.AreEqual(140, result[1].Item1.Top, DELTA);
+            Assert.AreEqual(150, result[1].Item1.Bottom, DELTA);
+            Assert.AreEqual(50, result[0].Item1.Left, DELTA);
+            Assert.AreEqual(130, result[0].Item1.Right, DELTA);
+            Assert.AreEqual(50, result[1].Item1.Left, DELTA);
+            Assert.AreEqual(130, result[1].Item1.Right, DELTA);
         }
     }
 }

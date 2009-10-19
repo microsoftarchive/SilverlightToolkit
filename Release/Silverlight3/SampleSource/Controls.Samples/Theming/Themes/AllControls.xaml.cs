@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Windows.Controls.DataVisualization.Charting;
 using System.Collections;
 using System.Linq;
+using System.Windows.Data;
 
 namespace System.Windows.Controls.Samples
 {
@@ -40,6 +41,11 @@ namespace System.Windows.Controls.Samples
 
             SampleDataGrid.ItemsSource = Employee.Executives;
             SampleAutoComplete.ItemsSource = Catalog.VacationMediaItems;
+            SampleDataForm.ItemsSource = Employee.Executives;
+
+            PagedCollectionView pcv = new PagedCollectionView(Employee.Executives);
+            pcv.PageSize = 1;
+            DataContext = pcv;
         }
 
         /// <summary>

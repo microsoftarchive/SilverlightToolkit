@@ -310,18 +310,12 @@ namespace System.Windows.Controls
             switch (e.Key)
             {
                 case Key.Up:
-                    if (Spinner == null || (Spinner.ValidSpinDirection & ValidSpinDirections.Increase) == ValidSpinDirections.Increase)
-                    {
-                        OnIncrement();
-                    }
-                    e.Handled = true;   
+                    DoIncrement();
+                    e.Handled = true;
                     break;
 
                 case Key.Down:
-                    if (Spinner == null || (Spinner.ValidSpinDirection & ValidSpinDirections.Decrease) == ValidSpinDirections.Decrease)
-                    {
-                        OnDecrement();
-                    }
+                    DoDecrement();
                     e.Handled = true;
                     break;
 
@@ -329,6 +323,53 @@ namespace System.Windows.Controls
                     ProcessUserInput();
                     e.Handled = true;
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Provides handling for the MouseWheel event.
+        /// </summary>
+        /// <param name="e">Mouse wheel event args.</param>
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnMouseWheel(e);
+
+            if (!e.Handled)
+            {
+                if (e.Delta < 0)
+                {
+                    DoDecrement();
+                }
+                else if (0 < e.Delta)
+                {
+                    DoIncrement();
+                }
+
+                e.Handled = true;
+            }
+        }
+        #endregion
+
+        #region private methods
+        /// <summary>
+        /// Performs an increment if conditions allow it.
+        /// </summary>
+        private void DoDecrement()
+        {
+            if (Spinner == null || (Spinner.ValidSpinDirection & ValidSpinDirections.Decrease) == ValidSpinDirections.Decrease)
+            {
+                OnDecrement();
+            }
+        }
+
+        /// <summary>
+        /// Performs a decrement if conditions allow it.
+        /// </summary>
+        private void DoIncrement()
+        {
+            if (Spinner == null || (Spinner.ValidSpinDirection & ValidSpinDirections.Increase) == ValidSpinDirections.Increase)
+            {
+                OnIncrement();
             }
         }
         #endregion
@@ -521,17 +562,11 @@ namespace System.Windows.Controls
 
             if (e.Direction == SpinDirection.Increase)
             {
-                if (Spinner == null || (Spinner.ValidSpinDirection & ValidSpinDirections.Increase) == ValidSpinDirections.Increase)
-                {
-                    OnIncrement();
-                }
+                DoIncrement();
             }
             else
             {
-                if (Spinner == null || (Spinner.ValidSpinDirection & ValidSpinDirections.Decrease) == ValidSpinDirections.Decrease)
-                {
-                    OnDecrement();
-                }
+                DoDecrement();
             }
         }
 

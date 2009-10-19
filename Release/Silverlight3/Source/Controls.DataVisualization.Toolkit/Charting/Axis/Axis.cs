@@ -161,10 +161,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// The plot area coordinate of a value.
         /// </summary>
-        /// <param name="value">The value for which to retrieve the plot area 
+        /// <param name="value">The value for which to retrieve the plot area
         /// coordinate.</param>
         /// <returns>The plot area coordinate.</returns>
-        public abstract UnitValue? GetPlotAreaCoordinate(object value);
+        public abstract UnitValue GetPlotAreaCoordinate(object value);
 
         /// <summary>
         /// Instantiates a new instance of the Axis class.

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows.Controls.Design.Common;
 using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
+using Microsoft.Windows.Design.PropertyEditing;
 using SSWC = Silverlight::System.Windows.Controls;
 
 namespace System.Windows.Controls.Design
@@ -56,6 +57,15 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.Calendar>(x => x.IsTodayHighlighted),
                         new CategoryAttribute(Properties.Resources.Calendar));
 
+                    b.AddCustomAttributes(
+                        "SelectedDates",
+                        new NewItemTypesAttribute(typeof(DateTime)));
+                    b.AddCustomAttributes(
+                        "BlackoutDates",
+                        new NewItemTypesAttribute(typeof(DateTime)));
+
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.Calendar>(x => x.SelectedDate)));
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.Controls, true));
 #endif

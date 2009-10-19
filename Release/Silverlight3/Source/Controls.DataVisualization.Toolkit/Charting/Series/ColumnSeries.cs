@@ -3,14 +3,9 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -19,97 +14,11 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
     [SuppressMessage("Microsoft.Maintainability", "CA1501:AvoidExcessiveInheritance", Justification = "Depth of hierarchy is necessary to avoid code duplication.")]
-    [StyleTypedProperty(Property = "DataPointStyle", StyleTargetType = typeof(ColumnDataPoint))]
+    [StyleTypedProperty(Property = DataPointStyleName, StyleTargetType = typeof(ColumnDataPoint))]
     [StyleTypedProperty(Property = "LegendItemStyle", StyleTargetType = typeof(LegendItem))]
     [TemplatePart(Name = DataPointSeries.PlotAreaName, Type = typeof(Canvas))]
-    public sealed partial class ColumnSeries : ColumnBarBaseSeries<ColumnDataPoint>
+    public partial class ColumnSeries : ColumnBarBaseSeries<ColumnDataPoint>
     {
-        #region public IRangeAxis DependentRangeAxis
-        /// <summary>
-        /// Gets or sets the dependent range axis.
-        /// </summary>
-        public IRangeAxis DependentRangeAxis
-        {
-            get { return GetValue(DependentRangeAxisProperty) as IRangeAxis; }
-            set { SetValue(DependentRangeAxisProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the DependentRangeAxis dependency property.
-        /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = "This member is necessary because the base classes need to share this dependency property.")]
-        public static readonly DependencyProperty DependentRangeAxisProperty =
-            DependencyProperty.Register(
-                "DependentRangeAxis",
-                typeof(IRangeAxis),
-                typeof(ColumnSeries),
-                new PropertyMetadata(null, OnDependentRangeAxisPropertyChanged));
-
-        /// <summary>
-        /// DependentRangeAxisProperty property changed handler.
-        /// </summary>
-        /// <param name="d">ColumnBarBaseSeries that changed its DependentRangeAxis.</param>
-        /// <param name="e">Event arguments.</param>
-        private static void OnDependentRangeAxisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ColumnSeries source = (ColumnSeries)d;
-            IRangeAxis newValue = (IRangeAxis)e.NewValue;
-            source.OnDependentRangeAxisPropertyChanged(newValue);
-        }
-
-        /// <summary>
-        /// DependentRangeAxisProperty property changed handler.
-        /// </summary>
-        /// <param name="newValue">New value.</param>
-        private void OnDependentRangeAxisPropertyChanged(IRangeAxis newValue)
-        {
-            this.InternalDependentAxis = (IAxis)newValue;
-        }
-        #endregion public IRangeAxis DependentRangeAxis
-
-        #region public IAxis IndependentAxis
-        /// <summary>
-        /// Gets or sets the independent category axis.
-        /// </summary>
-        public IAxis IndependentAxis
-        {
-            get { return GetValue(IndependentAxisProperty) as IAxis; }
-            set { SetValue(IndependentAxisProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the IndependentAxis dependency property.
-        /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = "This member is necessary because the base classes need to share this dependency property.")]
-        public static readonly DependencyProperty IndependentAxisProperty =
-            DependencyProperty.Register(
-                "IndependentAxis",
-                typeof(IAxis),
-                typeof(ColumnSeries),
-                new PropertyMetadata(null, OnIndependentAxisPropertyChanged));
-
-        /// <summary>
-        /// IndependentAxisProperty property changed handler.
-        /// </summary>
-        /// <param name="d">ColumnBarBaseSeries that changed its IndependentAxis.</param>
-        /// <param name="e">Event arguments.</param>
-        private static void OnIndependentAxisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ColumnSeries source = (ColumnSeries)d;
-            IAxis newValue = (IAxis)e.NewValue;
-            source.OnIndependentAxisPropertyChanged(newValue);
-        }
-
-        /// <summary>
-        /// IndependentAxisProperty property changed handler.
-        /// </summary>
-        /// <param name="newValue">New value.</param>
-        private void OnIndependentAxisPropertyChanged(IAxis newValue)
-        {
-            this.InternalIndependentAxis = (IAxis)newValue;
-        }
-        #endregion public IAxis IndependentAxis
-
         /// <summary>
         /// Initializes a new instance of the ColumnSeries class.
         /// </summary>
@@ -162,6 +71,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
 
             object category = dataPoint.ActualIndependentValue ?? (this.ActiveDataPoints.IndexOf(dataPoint) + 1);
             Range<UnitValue> coordinateRange = GetCategoryRange(category);
+
             if (!coordinateRange.HasData)
             {
                 return;
@@ -174,7 +84,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
             double minimum = (double)coordinateRange.Minimum.Value;
             double maximum = (double)coordinateRange.Maximum.Value;
 
-            double plotAreaHeight = ActualDependentRangeAxis.GetPlotAreaCoordinate(ActualDependentRangeAxis.Range.Maximum).Value.Value;
+            double plotAreaHeight = ActualDependentRangeAxis.GetPlotAreaCoordinate(ActualDependentRangeAxis.Range.Maximum).Value;
             IEnumerable<ColumnSeries> columnSeries = SeriesHost.Series.OfType<ColumnSeries>().Where(series => series.ActualIndependentAxis == ActualIndependentAxis);
             int numberOfSeries = columnSeries.Count();
             double coordinateRangeWidth = (maximum - minimum);
@@ -182,8 +92,8 @@ namespace System.Windows.Controls.DataVisualization.Charting
             double columnWidth = segmentWidth / numberOfSeries;
             int seriesIndex = columnSeries.IndexOf(this);
 
-            double dataPointY = ActualDependentRangeAxis.GetPlotAreaCoordinate(ValueHelper.ToDouble(dataPoint.ActualDependentValue)).Value.Value;
-            double zeroPointY = ActualDependentRangeAxis.GetPlotAreaCoordinate(ActualDependentRangeAxis.Origin).Value.Value;
+            double dataPointY = ActualDependentRangeAxis.GetPlotAreaCoordinate(ValueHelper.ToDouble(dataPoint.ActualDependentValue)).Value;
+            double zeroPointY = ActualDependentRangeAxis.GetPlotAreaCoordinate(ActualDependentRangeAxis.Origin).Value;
 
             double offset = seriesIndex * Math.Round(columnWidth) + coordinateRangeWidth * 0.1;
             double dataPointX = minimum + offset;
@@ -200,6 +110,8 @@ namespace System.Windows.Controls.DataVisualization.Charting
 
             if (ValueHelper.CanGraph(dataPointY) && ValueHelper.CanGraph(dataPointX) && ValueHelper.CanGraph(zeroPointY))
             {
+                dataPoint.Visibility = Visibility.Visible;
+
                 double left = Math.Round(dataPointX);
                 double width = Math.Round(columnWidth);
 
@@ -211,6 +123,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 Canvas.SetTop(dataPoint, top);
                 dataPoint.Width = width;
                 dataPoint.Height = height;
+            }
+            else
+            {
+                dataPoint.Visibility = Visibility.Collapsed;
             }
         }
     }

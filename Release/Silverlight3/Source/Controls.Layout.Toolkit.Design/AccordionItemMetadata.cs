@@ -39,6 +39,9 @@ namespace System.Windows.Controls.Layout.Design
                         Extensions.GetMemberName<SSWC.AccordionItem>(x => x.IsSelected),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.AccordionItem>(x => x.Header)));
+
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.AccordionItem>(x => x.Content),

@@ -80,7 +80,7 @@
                                 DependentValueBinding="{Binding Percent}">
                                 <chartingToolkit:LineSeries.DataPointStyle>
                                     <Style TargetType="Control">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="Template" Value="{x:Null}"/>
                                     </Style>
                                 </chartingToolkit:LineSeries.DataPointStyle>
                             </chartingToolkit:LineSeries>
@@ -193,7 +193,7 @@
                                 DependentValueBinding="{Binding Percent}"&gt;
                                 &lt;chartingToolkit:LineSeries.DataPointStyle&gt;
                                     &lt;Style TargetType="Control"&gt;
-                                        &lt;Setter Property="Visibility" Value="Collapsed"/&gt;
+                                        &lt;Setter Property="Template" Value="{x:Null}"/&gt;
                                     &lt;/Style&gt;
                                 &lt;/chartingToolkit:LineSeries.DataPointStyle&gt;
                             &lt;/chartingToolkit:LineSeries&gt;

@@ -127,7 +127,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromDays(10 * 365));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromDays(10 * 31));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromDays(10 * 7));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromDays(10));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromMinutes(10));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromSeconds(10));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace System.Windows.Controls.Testing
             Chart chart = CreateDateTimeAxisWithIntervalChart(TimeSpan.FromMilliseconds(10));
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>

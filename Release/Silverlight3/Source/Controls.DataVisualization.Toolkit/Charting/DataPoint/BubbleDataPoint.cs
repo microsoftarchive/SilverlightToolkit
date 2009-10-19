@@ -4,13 +4,11 @@
 // All other rights reserved.
 
 using System.Diagnostics.CodeAnalysis;
-using System.Windows;
-using System.Windows.Controls.DataVisualization.Charting;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
     /// <summary>
-    /// Represents a data point used for bar series.
+    /// Represents a data point used for a bubble series.
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
     [TemplateVisualState(Name = DataPoint.StateCommonNormal, GroupName = DataPoint.GroupCommonStates)]
@@ -19,7 +17,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [TemplateVisualState(Name = DataPoint.StateSelectionSelected, GroupName = DataPoint.GroupSelectionStates)]
     [TemplateVisualState(Name = DataPoint.StateRevealShown, GroupName = DataPoint.GroupRevealStates)]
     [TemplateVisualState(Name = DataPoint.StateRevealHidden, GroupName = DataPoint.GroupRevealStates)]
-    public sealed class BubbleDataPoint : DataPoint
+    public class BubbleDataPoint : DataPoint
     {
         #region public double Size
         /// <summary>
@@ -58,7 +56,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// SizeProperty property changed handler.
         /// </summary>
         /// <param name="oldValue">Old value.</param>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnSizePropertyChanged(double oldValue, double newValue)
         {
             RoutedPropertyChangedEventHandler<double> handler = SizePropertyChanged;
@@ -117,7 +115,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// ActualSizeProperty property changed handler.
         /// </summary>
         /// <param name="oldValue">Old value.</param>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnActualSizePropertyChanged(double oldValue, double newValue)
         {
             RoutedPropertyChangedEventHandler<double> handler = ActualSizePropertyChanged;
@@ -133,6 +131,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         internal event RoutedPropertyChangedEventHandler<double> ActualSizePropertyChanged;
 
         #endregion public double ActualSize
+
 #if !SILVERLIGHT
         /// <summary>
         /// Initializes the static members of the BubbleDataPoint class.

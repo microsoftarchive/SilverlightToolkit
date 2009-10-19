@@ -3,12 +3,9 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -128,7 +125,7 @@ namespace System.Windows.Controls.Testing
                 () => Assert.AreEqual(0, chart.Series.Count),
                 () => Assert.IsNotNull(chart.LegendItems),
                 () => Assert.AreEqual(0, (new ObjectCollection(chart.LegendItems)).Count),
-                () => Assert.IsNotNull(chart.StylePalette),
+                () => Assert.IsNotNull(chart.Palette),
                 () => Assert.IsNotNull(chart.TitleStyle),
                 () => Assert.IsNotNull(chart.LegendStyle),
                 () => Assert.IsNotNull(chart.ChartAreaStyle),
@@ -350,9 +347,9 @@ namespace System.Windows.Controls.Testing
         public void SetSeriesStyles()
         {
             Chart chart = new Chart();
-            Collection<Style> seriesStyles = new Collection<Style> { new Style(typeof(Control)), new Style(typeof(Series)) };
-            chart.StylePalette = seriesStyles;
-            Assert.AreSame(seriesStyles, chart.StylePalette);
+            Collection<ResourceDictionary> seriesStyles = new Collection<ResourceDictionary> { new ResourceDictionary(), new ResourceDictionary() };
+            chart.Palette = seriesStyles;
+            Assert.AreSame(seriesStyles, chart.Palette);
         }
 
         /// <summary>
@@ -377,39 +374,6 @@ namespace System.Windows.Controls.Testing
         }
 
         /// <summary>
-        /// Calls Refresh with no Series present.
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        [Description("Calls Refresh with no Series present.")]
-        public void RefreshNoSeries()
-        {
-            Chart chart = new Chart();
-            TestAsync(
-                chart,
-                () => chart.Refresh(),
-                () => AssertSeriesCorrect(chart));
-        }
-
-        /// <summary>
-        /// Calls Refresh with one Series present.
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        [Description("Calls Refresh with one Series present.")]
-        public void RefreshOneSeries()
-        {
-            Chart chart = new Chart();
-            DataPointSeries series = new ColumnSeries();
-            series.ItemsSource = new int[] { 0 };
-            chart.Series.Add(series);
-            TestAsync(
-                chart,
-                () => chart.Refresh(),
-                () => AssertSeriesCorrect(chart, series));
-        }
-
-        /// <summary>
         /// Creates a ISeriesHost with a LineSeries that uses an Axis from the ISeriesHost's Axis collection.
         /// </summary>
         [TestMethod]
@@ -431,7 +395,7 @@ namespace System.Windows.Controls.Testing
             chart.Series.Add(series);
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -457,7 +421,7 @@ namespace System.Windows.Controls.Testing
         public void SeriesSetterNotSupported()
         {
             Chart chart = new Chart();
-            chart.Series = new Collection<Series>();
+            chart.Series = new Collection<ISeries>();
         }
 
         /// <summary>
@@ -498,7 +462,7 @@ namespace System.Windows.Controls.Testing
             chart.Series.Add(columnSeries);
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
         }
 
         /// <summary>
@@ -525,7 +489,128 @@ namespace System.Windows.Controls.Testing
             chart.Series.Add(lineSeries);
             TestAsync(
                 chart,
-                () => chart.Refresh());
+                () => chart.UpdateLayout());
+        }
+
+        /// <summary>
+        /// Verifies the ability to add a simple ISeries implementation to the Series collection.
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Description("Verifies the ability to add a simple ISeries implementation to the Series collection.")]
+        public void AddSimpleISeries()
+        {
+            Chart chart = new Chart();
+            SimpleISeries simpleISeries = new SimpleISeries();
+            TestAsync(
+                chart,
+                () => chart.Series.Add(simpleISeries),
+                () => Assert.IsNotNull(simpleISeries.SeriesHost),
+                () => chart.Series.Remove(simpleISeries),
+                () => Assert.IsNull(simpleISeries.SeriesHost));
+        }
+
+        /// <summary>
+        /// Simple ISeries implementation.
+        /// </summary>
+        internal class SimpleISeries : ISeries
+        {
+            /// <summary>
+            /// Gets an empty collection of legend items.
+            /// </summary>
+            public ObservableCollection<UIElement> LegendItems
+            {
+                get { return new ObservableCollection<UIElement>(); }
+            }
+
+            /// <summary>
+            /// Gets or sets the SeriesHost.
+            /// </summary>
+            public ISeriesHost SeriesHost { get; set; }
+        }
+
+        /// <summary>
+        /// Verifies the ability to add a simple IAxis implementation to the Axis collection.
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Description("Verifies the ability to add a simple IAxis implementation to the Axis collection.")]
+        public void AddSimpleIAxis()
+        {
+            Chart chart = new Chart();
+            SimpleIAxis simpleIAxis = new SimpleIAxis();
+            TestAsync(
+                chart,
+                () => chart.Axes.Add(simpleIAxis),
+                () => Assert.IsTrue(chart.ActualAxes.Contains(simpleIAxis)),
+                () => chart.Axes.Remove(simpleIAxis),
+                () => Assert.IsFalse(chart.ActualAxes.Contains(simpleIAxis)));
+        }
+
+        /// <summary>
+        /// Simple IAxis implementation.
+        /// </summary>
+        internal class SimpleIAxis : IAxis
+        {
+            /// <summary>
+            /// Gets or sets the orientation.
+            /// </summary>
+            public AxisOrientation Orientation
+            {
+                get
+                {
+                    return AxisOrientation.None;
+                }
+                set
+                {
+                    RoutedPropertyChangedEventHandler<AxisOrientation> handler = OrientationChanged;
+                    if (null != handler)
+                    {
+                        handler.Invoke(this, new RoutedPropertyChangedEventArgs<AxisOrientation>(AxisOrientation.None, AxisOrientation.None));
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Event that is invoked when the Orientation property is changed.
+            /// </summary>
+            public event RoutedPropertyChangedEventHandler<AxisOrientation> OrientationChanged;
+
+            /// <summary>
+            /// Indicates the ability to plot the specified value.
+            /// </summary>
+            /// <param name="value">Specified value.</param>
+            /// <returns>True if it can be plotted.</returns>
+            public bool CanPlot(object value)
+            {
+                return false;
+            }
+
+            /// <summary>
+            /// Returns the plot area coordinate of the specified value.
+            /// </summary>
+            /// <param name="value">Specified value.</param>
+            /// <returns>Plot area coordinate.</returns>
+            public UnitValue GetPlotAreaCoordinate(object value)
+            {
+                return UnitValue.NaN();
+            }
+
+            /// <summary>
+            /// Gets a collection of the registerd listeners.
+            /// </summary>
+            public ObservableCollection<IAxisListener> RegisteredListeners
+            {
+                get { return new ObservableCollection<IAxisListener>(); }
+            }
+
+            /// <summary>
+            /// Gets a collection of the dependent axes.
+            /// </summary>
+            public ObservableCollection<IAxis> DependentAxes
+            {
+                get { return new ObservableCollection<IAxis>(); }
+            }
         }
 
         /// <summary>

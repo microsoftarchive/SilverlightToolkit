@@ -27,14 +27,10 @@
               x:Name="WelcomeText">
                 <LineBreak />
 
-                This is the sample application project, {SAMPLE_ASSEMBLY}, part 
-                of the Microsoft Silverlight Toolkit.
-                <LineBreak /><LineBreak />
-                    
                 To the left you'll find the list of controls included in 
-                this release within the {ASSEMBLY} control library. Many of the 
-                nodes expand to reveal basic control information, properties, 
-                and scenarios.
+                this release of the Silverlight Toolkit and the Silverlight SDK.
+                Many of the nodes expand to reveal basic control information,
+                properties, and scenarios.
                 <LineBreak /><LineBreak />
                 
                 Each sample page also includes the ability to view and copy 
@@ -47,16 +43,16 @@
                     
                 Thank you, and enjoy,
                 <LineBreak /><LineBreak />
-                    
-                    Silverlight Toolkit Team
-            </TextBlock>
+
+                <Run FontStyle="Italic">The Silverlight Team</Run>
+        </TextBlock>
 
             <!-- Link to the CodePlex site -->
             <HyperlinkButton 
               Foreground="#FF1F3269" 
               Grid.Row="2"
-              Content="http://www.codeplex.com/silverlight/" 
-              NavigateUri="http://www.codeplex.com/silverlight/" 
+              Content="http://silverlight.codeplex.com/" 
+              NavigateUri="http://silverlight.codeplex.com/" 
               FontSize="12" 
               Margin="2,0,0,0" />
     </Grid>

@@ -442,13 +442,13 @@ namespace System.Windows.Controls.DataVisualization
                 // Position everything
                 foreach (Tuple<Rect, TreeMapNode> rectangle in measuredRectangles)
                 {
-                    FrameworkElement element = rectangle.Second.Element;
+                    FrameworkElement element = rectangle.Item2.Element;
                     if (element != null)
                     {
-                        double roundedTop = Math.Round(rectangle.First.Top);
-                        double roundedLeft = Math.Round(rectangle.First.Left);
-                        double height = Math.Round(rectangle.First.Height + rectangle.First.Top) - roundedTop;
-                        double width = Math.Round(rectangle.First.Width + rectangle.First.Left) - roundedLeft;
+                        double roundedTop = Math.Round(rectangle.Item1.Top);
+                        double roundedLeft = Math.Round(rectangle.Item1.Left);
+                        double height = Math.Round(rectangle.Item1.Height + rectangle.Item1.Top) - roundedTop;
+                        double width = Math.Round(rectangle.Item1.Width + rectangle.Item1.Left) - roundedLeft;
 
                         // Fully specify element location/size (setting size is required on WPF)
                         Canvas.SetLeft(element, roundedLeft);
@@ -530,7 +530,7 @@ namespace System.Windows.Controls.DataVisualization
                 yield return currentParent;
 
                 foreach (Tuple<Rect, TreeMapNode> rectangle in
-                    algorithm.Split(currentParent.First, currentParent.Second, currentParent.Second.ChildItemPadding))
+                    algorithm.Split(currentParent.Item1, currentParent.Item2, currentParent.Item2.ChildItemPadding))
                 {
                     treeQueue.Enqueue(rectangle);
                 }

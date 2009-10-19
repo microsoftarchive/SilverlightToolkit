@@ -33,7 +33,7 @@ namespace System.Windows.Controls.Design
             // must be the same as runtime assembly's main namespace (t.Namespace)
             // plus .Design. This is to ease the move of controls from toolkit to sdk.
 
-            Type t = typeof(SSWC.Viewbox);
+            Type t = typeof(SSWC.DockPanel);
             AssemblyName an = t.Assembly.GetName();
             AssemblyFullName = ", " + an.FullName;
             XmlResourceName = t.Namespace + ".Design." + an.Name + ".XML";

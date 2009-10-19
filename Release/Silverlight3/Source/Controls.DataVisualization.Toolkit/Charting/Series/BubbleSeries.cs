@@ -3,12 +3,8 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.DataVisualization;
 using System.Windows.Data;
 
 namespace System.Windows.Controls.DataVisualization.Charting
@@ -19,9 +15,9 @@ namespace System.Windows.Controls.DataVisualization.Charting
     /// </summary>
     /// <QualityBand>Preview</QualityBand>
     [TemplatePart(Name = DataPointSeries.PlotAreaName, Type = typeof(Canvas))]
-    [StyleTypedProperty(Property = "DataPointStyle", StyleTargetType = typeof(BubbleDataPoint))]
+    [StyleTypedProperty(Property = DataPointStyleName, StyleTargetType = typeof(BubbleDataPoint))]
     [StyleTypedProperty(Property = "LegendItemStyle", StyleTargetType = typeof(LegendItem))]
-    public sealed class BubbleSeries : DataPointSingleSeriesWithAxes
+    public class BubbleSeries : DataPointSingleSeriesWithAxes
     {
         /// <summary>
         /// The maximum bubble size as a ratio of the smallest dimension.
@@ -96,14 +92,14 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Returns the style enumerator used to retrieve a style to use for 
-        /// all data points.
+        /// Returns the custom ResourceDictionary to use for necessary resources.
         /// </summary>
-        /// <returns>The style enumerator used to retrieve a style to use for 
-        /// all data points.</returns>
-        protected override IEnumerator<Style> GetStyleEnumeratorFromHost()
+        /// <returns>
+        /// ResourceDictionary to use for necessary resources.
+        /// </returns>
+        protected override IEnumerator<ResourceDictionary> GetResourceDictionaryEnumeratorFromHost()
         {
-            return SeriesHost.GetStylesWithTargetType(typeof(BubbleDataPoint), true);
+            return GetResourceDictionaryWithTargetType(SeriesHost, typeof(BubbleDataPoint), true);
         }
 
         /// <summary>
@@ -255,18 +251,24 @@ namespace System.Windows.Controls.DataVisualization.Charting
             bubbleDataPoint.Height = ratioOfLargestBubble * maximumDiameter;
 
             double left =
-                (ActualIndependentAxis.GetPlotAreaCoordinate(bubbleDataPoint.ActualIndependentValue)).Value.Value
+                (ActualIndependentAxis.GetPlotAreaCoordinate(bubbleDataPoint.ActualIndependentValue)).Value
                     - (bubbleDataPoint.Width / 2.0);
 
             double top =
                 (PlotAreaSize.Height
                     - (bubbleDataPoint.Height / 2.0))
-                    - ActualDependentRangeAxis.GetPlotAreaCoordinate(bubbleDataPoint.ActualDependentValue).Value.Value;
+                    - ActualDependentRangeAxis.GetPlotAreaCoordinate(bubbleDataPoint.ActualDependentValue).Value;
 
             if (ValueHelper.CanGraph(left) && ValueHelper.CanGraph(top))
             {
+                dataPoint.Visibility = Visibility.Visible;
+
                 Canvas.SetLeft(bubbleDataPoint, left);
                 Canvas.SetTop(bubbleDataPoint, top);
+            }
+            else
+            {
+                dataPoint.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -333,7 +335,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// DependentRangeAxisProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnDependentRangeAxisPropertyChanged(IRangeAxis newValue)
         {
             this.InternalDependentAxis = (IAxis)newValue;
@@ -380,7 +382,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// IndependentAxisProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnIndependentAxisPropertyChanged(IAxis newValue)
         {
             this.InternalIndependentAxis = (IAxis)newValue;

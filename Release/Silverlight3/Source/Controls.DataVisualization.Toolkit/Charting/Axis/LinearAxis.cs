@@ -23,7 +23,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [StyleTypedProperty(Property = "TitleStyle", StyleTargetType = typeof(Title))]
     [TemplatePart(Name = AxisGridName, Type = typeof(Grid))]
     [TemplatePart(Name = AxisTitleName, Type = typeof(Title))]
-    public sealed class LinearAxis : NumericAxis
+    public class LinearAxis : NumericAxis
     {
         #region public double? Interval
         /// <summary>
@@ -99,20 +99,20 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// Returns the plot area coordinate of a value.
         /// </summary>
         /// <param name="value">The value to plot.</param>
-        /// <param name="range">The range of values.</param>
+        /// <param name="currentRange">The range of values.</param>
         /// <param name="length">The length of axis.</param>
         /// <returns>The plot area coordinate of a value.</returns>
-        protected override UnitValue? GetPlotAreaCoordinate(object value, Range<IComparable> range, double length)
+        protected override UnitValue GetPlotAreaCoordinate(object value, Range<IComparable> currentRange, double length)
         {
             if (value == null)
             {
                 throw new ArgumentNullException("value");
             }
 
-            if (range.HasData)
+            if (currentRange.HasData)
             {
                 double doubleValue = ValueHelper.ToDouble(value);
-                Range<double> actualDoubleRange = range.ToDoubleRange();
+                Range<double> actualDoubleRange = currentRange.ToDoubleRange();
 
                 double pixelLength = Math.Max(length - 1, 0);
                 double rangelength = actualDoubleRange.Maximum - actualDoubleRange.Minimum;
@@ -120,7 +120,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 return new UnitValue((doubleValue - actualDoubleRange.Minimum) * (pixelLength / rangelength), Unit.Pixels);
             }
 
-            return new UnitValue?();
+            return UnitValue.NaN();
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <returns>Actual interval to use to determine which values are 
         /// displayed in the axis.
         /// </returns>
-        private double CalculateActualInterval(Size availableSize)
+        protected virtual double CalculateActualInterval(Size availableSize)
         {
             if (Interval != null)
             {

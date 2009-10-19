@@ -334,8 +334,16 @@ namespace System.Windows.Controls.Data.Test
         } 
 
         public static DateTime RandomDateTime()
-        { 
-            return new DateTime(random.Next(1800, 3000), random.Next(1, 12), random.Next(1, 28));
+        {
+            System.Globalization.Calendar currentCalendar = CultureInfo.CurrentCulture.Calendar;
+            int year = random.Next(currentCalendar.MinSupportedDateTime.Year + 1, currentCalendar.MaxSupportedDateTime.Year - 1);
+            DateTime date;
+            do
+            {
+                date = new DateTime(year, random.Next(1, 13), random.Next(1, 29));
+            }
+            while (date < currentCalendar.MinSupportedDateTime || date > currentCalendar.MaxSupportedDateTime);
+            return date;
         }
  
         public static T RandomEnum<T>() 

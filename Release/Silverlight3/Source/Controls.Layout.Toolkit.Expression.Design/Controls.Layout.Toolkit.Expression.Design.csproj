@@ -69,9 +69,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Controls.Design.Common\Extensions.cs">
+      <Link>Controls.Design.Common\Extensions.cs</Link>
+    </Compile>
     <Compile Include="..\Controls.Design.Common\MetadataBase.cs">
       <Link>Controls.Design.Common\MetadataBase.cs</Link>
     </Compile>
+    <Compile Include="AccordionMetadata.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

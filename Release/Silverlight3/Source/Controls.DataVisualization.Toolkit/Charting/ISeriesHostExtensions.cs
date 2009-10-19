@@ -18,18 +18,18 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         /// <param name="rootSeriesHost">The root series host.</param>
         /// <returns>A sequence of series.</returns>
-        public static IEnumerable<Series> GetDescendentSeries(this ISeriesHost rootSeriesHost)
+        public static IEnumerable<ISeries> GetDescendentSeries(this ISeriesHost rootSeriesHost)
         {
-            Queue<Series> series = new Queue<Series>(rootSeriesHost.Series);
+            Queue<ISeries> series = new Queue<ISeries>(rootSeriesHost.Series);
             while (series.Count != 0)
             {
-                Series currentSeries = series.Dequeue();
+                ISeries currentSeries = series.Dequeue();
                 yield return currentSeries;
 
                 ISeriesHost seriesHost = currentSeries as ISeriesHost;
                 if (seriesHost != null)
                 {
-                    foreach (Series childSeries in seriesHost.Series)
+                    foreach (ISeries childSeries in seriesHost.Series)
                     {
                         series.Enqueue(childSeries);
                     }
@@ -48,7 +48,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// host.</returns>
         public static bool IsUsedByASeries(this ISeriesHost that, IAxis axis)
         {
-            return axis.RegisteredListeners.OfType<Series>().Intersect(that.Series).Any();
+            return axis.RegisteredListeners.OfType<ISeries>().Intersect(that.Series).Any();
         }
     }
 }

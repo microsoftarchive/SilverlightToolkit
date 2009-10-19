@@ -31,12 +31,24 @@ namespace System.Windows.Controls.Design
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.Header),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.Items),
+                        new NewItemTypesAttribute(typeof(SSWC.ContentPresenter)));
 
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.Header),
                         new AlternateContentPropertyAttribute());
-
+                    b.AddCustomAttributes(
+                    Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.HeaderTemplate),
+                    new DataContextValueSourceAttribute(
+                        Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.Header),
+                        false));
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.ItemContainerStyle),
+                        new DataContextValueSourceAttribute(
+                        Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.ItemsSource),
+                        true));
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
 #endif
                 });

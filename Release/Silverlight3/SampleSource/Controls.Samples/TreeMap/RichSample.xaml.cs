@@ -45,7 +45,7 @@ namespace System.Windows.Controls.Samples
             sizeMetric.SelectedIndex = 1;
             colorMetric.SelectedIndex = 0;
 
-            _dataSource = DataHelper.LoadDefaultFile();
+            _dataSource = NhlDataHelper.LoadDefaultFile();
 
             RefreshDataSource();
         }

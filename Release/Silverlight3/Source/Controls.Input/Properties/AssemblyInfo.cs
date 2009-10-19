@@ -21,7 +21,7 @@ using System.Windows.Markup;
 [assembly: Guid("400be16e-cf6e-4c5f-b55c-3bea95ab6ead")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.30701.2344")]
+[assembly: AssemblyFileVersion("3.0.31016.2248")]
 [assembly: CLSCompliant(true)]
 [assembly: XmlnsPrefix("clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input", "input")]
 [assembly: XmlnsDefinitionAttribute("clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input", "System.Windows.Controls")]

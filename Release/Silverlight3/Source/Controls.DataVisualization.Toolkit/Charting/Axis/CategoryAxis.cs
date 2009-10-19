@@ -3,14 +3,10 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Shapes;
-using System.Collections.Specialized;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -23,7 +19,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [StyleTypedProperty(Property = "TitleStyle", StyleTargetType = typeof(Title))]
     [TemplatePart(Name = AxisGridName, Type = typeof(Grid))]
     [TemplatePart(Name = AxisTitleName, Type = typeof(Title))]
-    public sealed class CategoryAxis : DisplayAxis, ICategoryAxis
+    public class CategoryAxis : DisplayAxis, ICategoryAxis
     {
         /// <summary>
         /// A pool of major tick marks.
@@ -34,7 +30,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// A pool of labels.
         /// </summary>
         private ObjectPool<Control> _labelPool;
-             
+
         #region public CategorySortOrder SortOrder
         /// <summary>
         /// Gets or sets the sort order used for the categories.
@@ -95,14 +91,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
             this._majorTickMarkPool = new ObjectPool<Line>(() => CreateMajorTickMark());
             this.Categories = new List<object>();
             this.GridLineCoordinatesToDisplay = new List<UnitValue>();
-        }
-
-        /// <summary>
-        /// Child axes collection changed.
-        /// </summary>
-        protected override void OnDependentAxesCollectionChanged()
-        {
-            base.OnDependentAxesCollectionChanged();
         }
 
         /// <summary>
@@ -168,7 +156,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
             {
                 double startingAngle = 270.0;
                 double angleOffset = 360 / this.Categories.Count;
-                double halfAngleOffset = angleOffset / 2.0;                       
+                double halfAngleOffset = angleOffset / 2.0;
                 int categoryIndex = this.Categories.IndexOf(category);
                 double angle = startingAngle + (categoryIndex * angleOffset);
 
@@ -262,10 +250,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// The plot area coordinate of a value.
         /// </summary>
-        /// <param name="value">The value for which to retrieve the plot area 
+        /// <param name="value">The value for which to retrieve the plot area
         /// coordinate.</param>
         /// <returns>The plot area coordinate.</returns>
-        public override UnitValue? GetPlotAreaCoordinate(object value)
+        public override UnitValue GetPlotAreaCoordinate(object value)
         {
             Range<UnitValue> range = GetPlotAreaCoordinateRange(value);
             if (range.HasData)
@@ -276,7 +264,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
             }
             else
             {
-                return new UnitValue?();
+                return UnitValue.NaN();
             }
         }
 

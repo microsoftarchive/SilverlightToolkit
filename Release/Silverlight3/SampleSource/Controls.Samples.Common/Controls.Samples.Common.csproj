@@ -98,6 +98,7 @@
     <Compile Include="BusinessObjects\Contact.cs" />
     <Compile Include="BusinessObjects\Customer.cs" />
     <Compile Include="BusinessObjects\CustomerList.cs" />
+    <Compile Include="BusinessObjects\NhlData\NhlDataHelper.cs" />
     <Compile Include="BusinessObjects\Department.cs" />
     <Compile Include="BusinessObjects\Feature.cs" />
     <Compile Include="BusinessObjects\GizmoPopularityPollCollection.cs" />
@@ -105,9 +106,11 @@
     <Compile Include="BusinessObjects\Music\Album.cs" />
     <Compile Include="BusinessObjects\Music\Artist.cs" />
     <Compile Include="BusinessObjects\Music\Song.cs" />
+    <Compile Include="BusinessObjects\NhlData\NhlNode.cs" />
     <Compile Include="BusinessObjects\ParticulateLevel.cs" />
     <Compile Include="BusinessObjects\Employee.cs" />
     <Compile Include="BusinessObjects\PopularityPoll.cs" />
+    <Compile Include="BusinessObjects\TechEmployee.cs" />
     <Compile Include="BusinessObjects\WidgetPopularityPollCollection.cs" />
     <Compile Include="BusinessObjects\Taxonomy\Class.cs" />
     <Compile Include="BusinessObjects\Taxonomy\Domain.cs" />
@@ -307,6 +310,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icons\TreeMap.png" />
+    <EmbeddedResource Include="Icons\DragAndDrop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LayoutTransformer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BusinessObjects\NhlData\NhlData.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

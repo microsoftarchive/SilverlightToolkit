@@ -392,7 +392,7 @@ namespace System.Windows.Controls.Samples
             sizeMetric.SelectedIndex = 1;
             colorMetric.SelectedIndex = 0;
 
-            _dataSource = DataHelper.LoadDefaultFile();
+            _dataSource = NhlDataHelper.LoadDefaultFile();
 
             RefreshDataSource();
         }
@@ -463,98 +463,112 @@ namespace System.Windows.Controls.Samples
 </sys:String>
     </src:SourceFile.Source>
   </src:SourceFile>
-  <src:SourceFile Path="NhlNode.cs">
+  <src:SourceFile Path="RichSample.xaml.vb">
     <src:SourceFile.Source>
-      <sys:String>// (c) Copyright Microsoft Corporation.
-// This source is subject to the Microsoft Public License (Ms-PL).
-// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
-// All other rights reserved.
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
 
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
-namespace System.Windows.Controls.Samples
-{
-    /// &lt;summary&gt;
-    /// Represents the statistics for a team, division, conference, or the league as a whole.
-    /// &lt;/summary&gt;
-    public class NhlNode
-    {
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the rank of the node in its level (team, division, etc).
-        /// &lt;/summary&gt;
-        public int Rank { get; set; }
+Imports Microsoft.VisualBasic
+Imports System.Collections.Generic
+Imports System.ComponentModel
+Imports System.Diagnostics.CodeAnalysis
+Imports System.Windows.Data
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the name of the entity (team, division, etc).
-        /// &lt;/summary&gt;
-        public string Name { get; set; }
+&lt;Assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope := "member", Target := "System.Windows.Controls.Samples.RichSample.#itemContainer")&gt;
+''' &lt;summary&gt;
+''' Sample showing the TreeMap with richer visuals and functionality.
+''' &lt;/summary&gt;
+&lt;Sample("(5)Rich sample", DifficultyLevel.Intermediate), Category("TreeMap")&gt; _
+Partial Public Class RichSample
+	Inherits UserControl
+	''' &lt;summary&gt;
+	''' Internal cache of the data source, used when refreshing the TreeMap.
+	''' &lt;/summary&gt;
+	Private _dataSource As IList(Of NhlNode)
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the number of points either for a single team in the case of a leaf, 
-        /// or the aggregate sum of the children for a parent node.
-        /// &lt;/summary&gt;
-        public int Points { get; set; }
+	''' &lt;summary&gt;
+	''' Initializes a new instance of the RichSample class.
+	''' &lt;/summary&gt;
+	Public Sub New()
+		InitializeComponent()
+		AddHandler Loaded, AddressOf RichSample_Loaded
+	End Sub
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the number of wins either for a single team in the case of a leaf, 
-        /// or the aggregate sum of the children for a parent node.
-        /// &lt;/summary&gt;
-        public int Wins { get; set; }
+	''' &lt;summary&gt;
+	''' Loads the XML sample data and populates the TreeMap.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	Private Sub RichSample_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+		' Sample browser-specific layout change
+		SampleHelpers.ChangeSampleAlignmentToStretch(Me)
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the number of losses either for a single team in the case of a leaf, 
-        /// or the aggregate sum of the children for a parent node.
-        /// &lt;/summary&gt;
-        public int Losses { get; set; }
+		sizeMetric.SelectedIndex = 1
+		colorMetric.SelectedIndex = 0
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the number of goals earned in the season either for a single team in the case of a leaf, 
-        /// or the aggregate sum of the children for a parent node.
-        /// &lt;/summary&gt;
-        public int GoalsFor { get; set; }
+        _dataSource = NhlDataHelper.LoadDefaultFile()
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the number of goals against accrued either for a single team in the case of a leaf, 
-        /// or the aggregate sum of the children for a parent node.
-        /// &lt;/summary&gt;
-        public int GoalsAgainst { get; set; }
+		RefreshDataSource()
+	End Sub
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the number of penalty minutes accrued either for a single team in the case of a leaf, 
-        /// or the aggregate sum of the children for a parent node.
-        /// &lt;/summary&gt;
-        public int PenaltyMinutes { get; set; }
+	''' &lt;summary&gt;
+	''' Helper to force the TreeMap to refresh its data.
+	''' &lt;/summary&gt;
+	Private Sub RefreshDataSource()
+		treeMapControl.ItemsSource = Nothing
+		treeMapControl.ItemsSource = _dataSource
+	End Sub
 
-        /// &lt;summary&gt;
-        /// Gets or sets a value representing the children of this division, conference, or league. Empty for teams.
-        /// &lt;/summary&gt;
-        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Simplifies samples.")]
-        public IList&lt;NhlNode&gt; Children { get; set; }
+	''' &lt;summary&gt;
+	''' Changes the property used to generate sizes for rectangles.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	&lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification := "Attached as an event handler in XAML")&gt; _
+	Private Sub OnSizeMetricSelectionChanged(ByVal sender As Object, ByVal e As SelectionChangedEventArgs)
+		If e.AddedItems.Count &gt; 0 Then
+			Dim item As ComboBoxItem = TryCast(e.AddedItems(0), ComboBoxItem)
+			treeMapControl.ItemDefinition.ValueBinding = New Binding(TryCast(item.Tag, String))
 
-        /// &lt;summary&gt;
-        /// Gets the desired tooltip content.
-        /// &lt;/summary&gt;
-        public string ToolTip
-        {
-            get
-            {
-                StringBuilder outStr = new StringBuilder();
-                outStr.Append(Name);
-                outStr.Append("\nRank: ").Append(Rank);
-                outStr.Append("\nPoints: ").Append(Points);
-                outStr.Append("\nWins: ").Append(Wins);
-                outStr.Append("\nLosses: ").Append(Losses);
-                outStr.Append("\nGoals For: ").Append(GoalsFor);
-                outStr.Append("\nGoals Against: ").Append(GoalsAgainst);
-                outStr.Append("\nPenalty Minutes: ").Append(PenaltyMinutes);
+			RefreshDataSource()
+		End If
+	End Sub
 
-                return outStr.ToString();
-            }
-        }
-    }
-}
+	''' &lt;summary&gt;
+	''' Changes the property used to set the background color on rectangles.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	&lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification := "Attached as an event handler in XAML")&gt; _
+	Private Sub OnColorMetricSelectionChanged(ByVal sender As Object, ByVal e As SelectionChangedEventArgs)
+		If e.AddedItems.Count &gt; 0 Then
+			Dim item As ComboBoxItem = TryCast(e.AddedItems(0), ComboBoxItem)
+			treeMapControl.Interpolators(0).DataRangeBinding = New Binding(TryCast(item.Tag, String))
+
+			RefreshDataSource()
+		End If
+	End Sub
+
+	''' &lt;summary&gt;
+	''' This is a workaround for the ToolTip behavior - when tooltip is a 
+	''' nested element, DataContext is not inherited.
+	''' It is not a TreeMap specific workaround.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;Sending UI element - Border in our case.&lt;/param&gt;
+	''' &lt;param name="e"&gt;Events - irrelevant in our case.&lt;/param&gt;
+	&lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification := "Attached as an event handler in XAML")&gt; _
+	Private Sub ItemContainer_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+		Dim border As Border = TryCast(sender, Border)
+
+		' see summary
+		If border IsNot Nothing Then
+			CType(ToolTipService.GetToolTip(border), FrameworkElement).DataContext = border.DataContext
+		End If
+	End Sub
+End Class
 </sys:String>
     </src:SourceFile.Source>
   </src:SourceFile>

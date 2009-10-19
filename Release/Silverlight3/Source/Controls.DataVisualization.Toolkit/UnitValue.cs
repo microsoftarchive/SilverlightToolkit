@@ -13,6 +13,15 @@ namespace System.Windows.Controls.DataVisualization
     public struct UnitValue : IComparable
     {
         /// <summary>
+        /// Returns a UnitValue representing an invalid value.
+        /// </summary>
+        /// <returns>UnitValue instance.</returns>
+        public static UnitValue NaN()
+        {
+            return new UnitValue { Value = double.NaN };
+        }
+
+        /// <summary>
         /// Instantiates a new instance of the UnitValue struct.
         /// </summary>
         /// <param name="value">The value associated with the units.</param>

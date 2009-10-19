@@ -4,6 +4,7 @@
 // All other rights reserved.
 
 extern alias Silverlight;
+using System.ComponentModel;
 using System.Windows.Controls.Design.Common;
 using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
@@ -38,6 +39,22 @@ namespace System.Windows.Controls.Expression.Design
             builder.AddCallback(
                 typeof(SSWC.Primitives.TabPanel),
                 b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(true)));
+
+            builder.AddCallback(
+                typeof(SSWC.TabControl),
+                b => b.AddCustomAttributes(new DefaultBindingPropertyAttribute(String.Empty)));
+            builder.AddCallback(
+                typeof(SSWC.TreeView),
+                b => b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                    Extensions.GetMemberName<SSWC.TreeView>(x => x.ItemsSource))));
+            builder.AddCallback(
+                typeof(SSWC.TreeViewItem),
+                b => b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                    Extensions.GetMemberName<SSWC.TreeViewItem>(x => x.ItemsSource))));
+            builder.AddCallback(
+                typeof(SSWC.HeaderedItemsControl),
+                b => b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                    Extensions.GetMemberName<SSWC.HeaderedItemsControl>(x => x.Items))));
         }
     }
 }

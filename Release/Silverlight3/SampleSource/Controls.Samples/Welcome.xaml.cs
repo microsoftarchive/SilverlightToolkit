@@ -22,57 +22,11 @@ namespace System.Windows.Controls.Samples
     public partial class Welcome : UserControl
     {
         /// <summary>
-        /// A token used for replacement of the assembly name.
-        /// </summary>
-        private const string AssemblyToken = "{ASSEMBLY}";
-
-        /// <summary>
-        /// A token used for replacement of the sample assembly name.
-        /// </summary>
-        private const string SampleAssemblyToken = "{SAMPLE_ASSEMBLY}";
-
-        /// <summary>
         /// Initializes a new instance of the Welcome sample page.
         /// </summary>
         public Welcome()
         {
             InitializeComponent();
-
-            // Replace the text tokens if the sample assembly token is found
-            Loaded += new RoutedEventHandler(Welcome_Loaded);
-        }
-
-        /// <summary>
-        /// The loaded event.
-        /// </summary>
-        /// <param name="sender">The source object.</param>
-        /// <param name="e">The event data.</param>
-        private void Welcome_Loaded(object sender, RoutedEventArgs e)
-        {
-            string welcome = WelcomeText.Text;
-            if (welcome.Contains(SampleAssemblyToken))
-            {
-                // Extract the sample assembly name
-                Assembly me = typeof(Welcome).Assembly;
-                string friendlyAssembly = me.FullName;
-                int comma = friendlyAssembly.IndexOf(',');
-                if (comma >= 0)
-                {
-                    friendlyAssembly = friendlyAssembly.Substring(0, comma);
-                }
-
-                // Update the text value
-                welcome = welcome.Replace(SampleAssemblyToken, friendlyAssembly);
-
-                // Extract and set the sample assembly name
-                if (welcome.Contains(AssemblyToken))
-                {
-                    string assembly = friendlyAssembly.Replace(".Samples", "");
-                    welcome = welcome.Replace(AssemblyToken, assembly);
-                }
-
-                WelcomeText.Text = welcome;
-            }
         }
     }
 }

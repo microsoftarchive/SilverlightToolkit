@@ -3,12 +3,9 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
-using System.Windows;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -19,6 +16,92 @@ namespace System.Windows.Controls.DataVisualization.Charting
     public abstract class ColumnBarBaseSeries<T> : DataPointSingleSeriesWithAxes, IAnchoredToOrigin
         where T : DataPoint, new()
     {
+        #region public IRangeAxis DependentRangeAxis
+        /// <summary>
+        /// Gets or sets the dependent range axis.
+        /// </summary>
+        public IRangeAxis DependentRangeAxis
+        {
+            get { return GetValue(DependentRangeAxisProperty) as IRangeAxis; }
+            set { SetValue(DependentRangeAxisProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the DependentRangeAxis dependency property.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = "This member is necessary because child classes need to share this dependency property.")]
+        public static readonly DependencyProperty DependentRangeAxisProperty =
+            DependencyProperty.Register(
+                "DependentRangeAxis",
+                typeof(IRangeAxis),
+                typeof(ColumnBarBaseSeries<T>),
+                new PropertyMetadata(null, OnDependentRangeAxisPropertyChanged));
+
+        /// <summary>
+        /// DependentRangeAxisProperty property changed handler.
+        /// </summary>
+        /// <param name="d">ColumnBarBaseSeries that changed its DependentRangeAxis.</param>
+        /// <param name="e">Event arguments.</param>
+        private static void OnDependentRangeAxisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColumnBarBaseSeries<T> source = (ColumnBarBaseSeries<T>)d;
+            IRangeAxis newValue = (IRangeAxis)e.NewValue;
+            source.OnDependentRangeAxisPropertyChanged(newValue);
+        }
+
+        /// <summary>
+        /// DependentRangeAxisProperty property changed handler.
+        /// </summary>
+        /// <param name="newValue">New value.</param>
+        private void OnDependentRangeAxisPropertyChanged(IRangeAxis newValue)
+        {
+            InternalDependentAxis = (IAxis)newValue;
+        }
+        #endregion public IRangeAxis DependentRangeAxis
+
+        #region public IAxis IndependentAxis
+        /// <summary>
+        /// Gets or sets the independent category axis.
+        /// </summary>
+        public IAxis IndependentAxis
+        {
+            get { return GetValue(IndependentAxisProperty) as IAxis; }
+            set { SetValue(IndependentAxisProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the IndependentAxis dependency property.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = "This member is necessary because child classes need to share this dependency property.")]
+        public static readonly DependencyProperty IndependentAxisProperty =
+            DependencyProperty.Register(
+                "IndependentAxis",
+                typeof(IAxis),
+                typeof(ColumnBarBaseSeries<T>),
+                new PropertyMetadata(null, OnIndependentAxisPropertyChanged));
+
+        /// <summary>
+        /// IndependentAxisProperty property changed handler.
+        /// </summary>
+        /// <param name="d">ColumnBarBaseSeries that changed its IndependentAxis.</param>
+        /// <param name="e">Event arguments.</param>
+        private static void OnIndependentAxisPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColumnBarBaseSeries<T> source = (ColumnBarBaseSeries<T>)d;
+            IAxis newValue = (IAxis)e.NewValue;
+            source.OnIndependentAxisPropertyChanged(newValue);
+        }
+
+        /// <summary>
+        /// IndependentAxisProperty property changed handler.
+        /// </summary>
+        /// <param name="newValue">New value.</param>
+        private void OnIndependentAxisPropertyChanged(IAxis newValue)
+        {
+            InternalIndependentAxis = (IAxis)newValue;
+        }
+        #endregion public IAxis IndependentAxis
+
         /// <summary>
         /// Keeps a list of DataPoints that share the same category.
         /// </summary>
@@ -88,14 +171,14 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Returns the style enumerator used to retrieve a style to use for 
-        /// all data points.
+        /// Returns the custom ResourceDictionary to use for necessary resources.
         /// </summary>
-        /// <returns>The style enumerator used to retrieve a style to use for 
-        /// all data points.</returns>
-        protected override IEnumerator<Style> GetStyleEnumeratorFromHost()
+        /// <returns>
+        /// ResourceDictionary to use for necessary resources.
+        /// </returns>
+        protected override IEnumerator<ResourceDictionary> GetResourceDictionaryEnumeratorFromHost()
         {
-            return SeriesHost.GetStylesWithTargetType(typeof(T), true);
+            return GetResourceDictionaryWithTargetType(SeriesHost, typeof(T), true);
         }
 
         /// <summary>
@@ -175,10 +258,10 @@ namespace System.Windows.Controls.DataVisualization.Charting
         {
             if (!(ActualIndependentAxis is ICategoryAxis))
             {
-                IEnumerable<UnitValue?> values =
+                IEnumerable<UnitValue> values =
                     ActiveDataPoints
                         .Select(dataPoint => ActualIndependentAxis.GetPlotAreaCoordinate(dataPoint.ActualIndependentValue))
-                        .Where(value => value.HasValue)
+                        .Where(value => ValueHelper.CanGraph(value.Value))
                         .OrderBy(value => value.Value)
                         .ToList();
 
@@ -186,7 +269,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                     EnumerableFunctions.Zip(
                         values,
                         values.Skip(1),
-                        (left, right) => new Range<double>(left.Value.Value, right.Value.Value))
+                        (left, right) => new Range<double>(left.Value, right.Value))
                         .Select(range => range.Maximum - range.Minimum)
                         .MinOrNullable();
             }

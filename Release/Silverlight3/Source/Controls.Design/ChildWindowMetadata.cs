@@ -29,6 +29,8 @@ namespace System.Windows.Controls.Design
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.ChildWindow>(x => x.Title),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
+
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute("Title"));
                 });
         }
     }

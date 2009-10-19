@@ -25,7 +25,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [StyleTypedProperty(Property = "TitleStyle", StyleTargetType = typeof(Title))]
     [TemplatePart(Name = AxisGridName, Type = typeof(Grid))]
     [TemplatePart(Name = AxisTitleName, Type = typeof(Title))]
-    public sealed class DateTimeAxis : RangeAxis
+    public class DateTimeAxis : RangeAxis
     {
         #region public DateTime? ActualMaximum
         /// <summary>
@@ -46,7 +46,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 typeof(DateTime?),
                 typeof(DateTimeAxis),
                 null);
-
         #endregion public DateTime? ActualMaximum
 
         #region public DateTime? ActualMinimum
@@ -68,7 +67,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 typeof(DateTime?),
                 typeof(DateTimeAxis),
                 null);
-
         #endregion public DateTime? ActualMinimum
 
         #region public DateTime? Maximum
@@ -107,7 +105,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// MaximumProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnMaximumPropertyChanged(DateTime? newValue)
         {
             this.ProtectedMaximum = newValue;
@@ -150,7 +148,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// MinimumProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnMinimumPropertyChanged(DateTime? newValue)
         {
             this.ProtectedMinimum = newValue;
@@ -255,7 +253,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// IntervalTypeProperty property changed handler.
         /// </summary>
-        /// <param name="newValue">New value.</param>        
+        /// <param name="newValue">New value.</param>
         private void OnIntervalTypePropertyChanged(DateTimeIntervalType newValue)
         {
             this.ActualIntervalType = newValue;
@@ -384,21 +382,21 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// Returns the plot area coordinate of a value.
         /// </summary>
         /// <param name="value">The value to plot.</param>
-        /// <param name="range">The range to use determine the coordinate.</param>
+        /// <param name="currentRange">The range to use determine the coordinate.</param>
         /// <param name="length">The length of the axis.</param>
         /// <returns>The plot area coordinate of a value.</returns>
-        protected override UnitValue? GetPlotAreaCoordinate(object value, Range<IComparable> range, double length)
+        protected override UnitValue GetPlotAreaCoordinate(object value, Range<IComparable> currentRange, double length)
         {
             if (value == null)
             {
                 throw new ArgumentNullException("value");
             }
 
-            if (range.HasData)
+            if (currentRange.HasData)
             {
                 DateTime dateTimeValue = ValueHelper.ToDateTime(value);
 
-                Range<DateTime> actualDateTimeRange = ToDateTimeRange(range);
+                Range<DateTime> actualDateTimeRange = ToDateTimeRange(currentRange);
 
                 double rangelength = actualDateTimeRange.Maximum.ToOADate() - actualDateTimeRange.Minimum.ToOADate();
                 double pixelLength = Math.Max(length - 1, 0);
@@ -406,7 +404,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 return new UnitValue((dateTimeValue.ToOADate() - actualDateTimeRange.Minimum.ToOADate()) * (pixelLength / rangelength), Unit.Pixels);
             }
 
-            return new UnitValue?();
+            return UnitValue.NaN();
         }
 
         /// <summary>
@@ -437,7 +435,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         /// <param name="availableSize">The available size.</param>
         /// <returns>A sequence of major values.</returns>
-        private IEnumerable<DateTime> GetMajorAxisValues(Size availableSize)
+        protected virtual IEnumerable<DateTime> GetMajorAxisValues(Size availableSize)
         {
             if (!ActualRange.HasData || ValueHelper.Compare(ActualRange.Minimum, ActualRange.Maximum) == 0 || GetLength(availableSize) == 0.0)
             {

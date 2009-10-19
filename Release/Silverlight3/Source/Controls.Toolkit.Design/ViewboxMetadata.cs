@@ -60,6 +60,9 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.Viewbox>(x => x.StretchDirection),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.Viewbox>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new FeatureAttribute(typeof(EmptyDefaultInitializer)));
 

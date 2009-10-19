@@ -1130,7 +1130,7 @@ namespace System.Windows.Controls.Samples
         /// &lt;summary&gt;
         /// Refreshes data from data source and renders the series.
         /// &lt;/summary&gt;
-        public override void Refresh()
+        private void Refresh()
         {
             if (SeriesHost == null || ActualWidth == 0)
             {
@@ -1211,10 +1211,10 @@ namespace System.Windows.Controls.Samples
 
             // Map the actual values into coordinate values
             return new Point(
-                independent.GetPlotAreaCoordinate(x).Value.Value,
+                independent.GetPlotAreaCoordinate(x).Value,
                 Math.Min(
                     Math.Max(
-                        ActualHeight - dependent.GetPlotAreaCoordinate(y).Value.Value,
+                        ActualHeight - dependent.GetPlotAreaCoordinate(y).Value,
                         -1),
                     ActualHeight + 1));
         }
@@ -1659,7 +1659,7 @@ Partial Public NotInheritable Class FunctionSeries
     ''' &lt;summary&gt;
     ''' Refreshes data from data source and renders the series.
     ''' &lt;/summary&gt;
-    Public Overrides Sub Refresh()
+    Private Sub Refresh()
         If SeriesHost Is Nothing OrElse ActualWidth = 0 Then
             Return
         End If
@@ -1730,10 +1730,10 @@ Partial Public NotInheritable Class FunctionSeries
 
         ' Map the actual values into coordinate values
         Return New Point( _
-            independent.GetPlotAreaCoordinate(x).Value.Value, _
+            independent.GetPlotAreaCoordinate(x).Value, _
             Math.Min( _
                 Math.Max( _
-                    ActualHeight - dependent.GetPlotAreaCoordinate(y).Value.Value, _
+                    ActualHeight - dependent.GetPlotAreaCoordinate(y).Value, _
                     -1), _
                 ActualHeight + 1))
     End Function

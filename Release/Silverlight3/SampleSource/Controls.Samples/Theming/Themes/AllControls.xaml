@@ -18,27 +18,37 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples"
-    x:Class="System.Windows.Controls.Samples.AllControls">
+    x:Class="System.Windows.Controls.Samples.AllControls"  
+    xmlns:basics="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:dataForm="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit"
+    xmlns:inputPrimitivesToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input"
+    xmlns:inputToolkitPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Input.Toolkit"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    xmlns:layoutPrimitivesToolkit="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:layoutToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:theming="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit"
+  >
 
     <Grid x:Name="Root">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition />
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical" Margin="10">
-            <Button Content="Button" Margin="5" />
-            <ToggleButton Content="ToggleButton" Margin="5" IsThreeState="True"/>
-            <ComboBox Margin="5">
+        <StackPanel Orientation="Vertical" Margin="5" >
+            <Button Content="Button" Margin="3" />
+            <ToggleButton Content="ToggleButton" Margin="3" IsThreeState="True"/>
+            <ComboBox Margin="3">
                 <ComboBoxItem Content="ComboBoxItem 1" />
                 <ComboBoxItem Content="ComboBoxItem 2" />
                 <ComboBoxItem Content="ComboBoxItem 3" />
             </ComboBox>
-            <TextBox Margin="5" Text="Textbox" />
+            <TextBox Margin="3" Text="Textbox" />
             <input:AutoCompleteBox x:Name="SampleAutoComplete" Margin="5,5,5,5"/>
-            <PasswordBox Margin="5" Password="password" />
-            <inputToolkit:NumericUpDown Margin="5" />
+            <PasswordBox Margin="3" Password="password" />
+            <inputToolkit:NumericUpDown Margin="3" />
             <RadioButton Content="RadioButton 1" Margin="5" IsChecked="false" IsThreeState="True"/>
             <RadioButton Content="RadioButton 2" Margin="5" IsChecked="true" IsThreeState="True"/>
             <RadioButton Content="RadioButton 3" Margin="5" IsChecked="{x:Null}" IsThreeState="True"/>
@@ -52,7 +62,68 @@
                 <ListBoxItem Height="25" Content="ListBoxItem 4" />
             </ListBox>
         </StackPanel>
-        <StackPanel Grid.Column="1" Margin="10">
+        <StackPanel Grid.Column="1" Margin="5">
+            <layoutToolkit:Accordion BorderBrush="{x:Null}" HorizontalAlignment="Stretch" SelectionMode="ZeroOrMore" Margin="5" >
+                <layoutToolkit:AccordionItem Header="AccordionItem1" HorizontalAlignment="Stretch" >
+                    <StackPanel Margin="10,10,0,10">
+                        <CheckBox Content="Chelsea"/>
+                        <CheckBox Content="Manchester"/>
+                        <CheckBox Content="Tottenham"/>
+                    </StackPanel>
+                </layoutToolkit:AccordionItem>
+                <layoutToolkit:AccordionItem Header="AccordionItem2" HorizontalAlignment="Stretch" >
+                    <StackPanel Margin="10,10,0,10">
+                        <CheckBox Content="Arsenal"/>
+                        <CheckBox Content="Liverpool"/>
+                        <CheckBox Content="Aston Villa"/>
+                    </StackPanel>
+                </layoutToolkit:AccordionItem>
+                <layoutToolkit:AccordionItem Header="AccordionItem3" HorizontalAlignment="Stretch" >
+                    <StackPanel Margin="10,10,0,10">
+                        <CheckBox Content="Sunderland"/>
+                        <CheckBox Content="West Ham"/>
+                        <CheckBox Content="Blackburn"/>
+                    </StackPanel>
+                </layoutToolkit:AccordionItem>
+            </layoutToolkit:Accordion>
+            <controls:ChildWindow Title="ChildWindow" Width="Auto" Height="100" Content="Lorem ipsum dolor sit amet" Margin="10,0,10,0" />
+            <data:DataPager Source="{Binding}" Margin="10" />
+            <dataForm:DataForm Margin="10" x:Name="SampleDataForm" />
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <Rectangle Grid.Row="0" Grid.Column="0" Fill="#19FFFFFF" Stroke="#B2FFFFFF"/>
+                <Rectangle Grid.Row="0" Grid.Column="2" Fill="#19FFFFFF" Stroke="#B2FFFFFF"/>
+                <Rectangle Grid.Row="2" Grid.Column="0" Fill="#19FFFFFF" Stroke="#B2FFFFFF"/>
+                <Rectangle Grid.Row="2" Grid.Column="2" Fill="#33FFFFFF" Stroke="#B2FFFFFF"/>
+
+                <controls:GridSplitter
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                    ShowsPreview="True" />
+                <controls:GridSplitter
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  Grid.RowSpan="3"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" 
+                    ShowsPreview="True" 
+                    />
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="5">
             <controls:TreeView Margin="5">
                 <controls:TreeViewItem Header="TreeViewItem 1">
                     <controls:TreeViewItem Header="TreeViewItem 2" />
@@ -85,13 +156,13 @@
                 </data:DataGrid.Columns>
             </data:DataGrid>
         </StackPanel>
-        <StackPanel Grid.Column="2">
+        <StackPanel Grid.Column="3" Margin="5">
             <chartingToolkit:Chart Margin="5" Height="200" Title="Bar Graph">
                 <chartingToolkit:BarSeries Title="Jared" IndependentValueBinding="{Binding ExpenseType}"
                                         DependentValueBinding="{Binding ExpenseValue}">
                     <chartingToolkit:BarSeries.ItemsSource>
                         <toolkit:ObjectCollection>
-                            <local:Budget ExpenseType="Air Fair" ExpenseValue="150"/>
+                            <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
                             <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
                             <local:Budget ExpenseType="Food" ExpenseValue="20"/>
                             <local:Budget ExpenseType="Shows" ExpenseValue="30"/>
@@ -104,7 +175,7 @@
                                         DependentValueBinding="{Binding ExpenseValue}" >
                     <chartingToolkit:ColumnSeries.ItemsSource>
                         <toolkit:ObjectCollection>
-                            <local:Budget ExpenseType="Air Fair" ExpenseValue="150"/>
+                            <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
                             <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
                             <local:Budget ExpenseType="Food" ExpenseValue="20"/>
                             <local:Budget ExpenseType="Shows" ExpenseValue="30"/>
@@ -120,15 +191,15 @@
                                         DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
                         <chartingToolkit:PieSeries.ItemsSource>
                             <toolkit:ObjectCollection>
-                                <local:Budget ExpenseType="Air Fair" ExpenseValue="150"/>
+                                <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
                                 <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
                                 <local:Budget ExpenseType="Food" ExpenseValue="20"/>
                                 <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
-                                <local:Budget ExpenseType="Air Fair" ExpenseValue="150"/>
+                                <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
                                 <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
                                 <local:Budget ExpenseType="Food" ExpenseValue="20"/>
                                 <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
-                                <local:Budget ExpenseType="Air Fair" ExpenseValue="150"/>
+                                <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
                                 <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
                                 <local:Budget ExpenseType="Food" ExpenseValue="20"/>
                                 <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
@@ -138,7 +209,7 @@
                 </chartingToolkit:Chart.Series>
             </chartingToolkit:Chart>
         </StackPanel>
-        <StackPanel Grid.Column="3">
+        <StackPanel Grid.Column="4" Margin="5">
             <chartingToolkit:Chart Margin="5" Height="200" Title="Line Graph">
                 <chartingToolkit:LineSeries Title="Jared" IndependentValueBinding="{Binding Date}"
                                         DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
@@ -176,7 +247,7 @@
             <chartingToolkit:Chart Margin="5" Height="200" Title="Bubble Graph">
                 <chartingToolkit:BubbleSeries Title="Bubbles" IndependentValueBinding="{Binding Date}"
                                         DependentValueBinding="{Binding ExpenseValue}" 
-										   SizeValueBinding="{Binding Volume}">
+                                        SizeValueBinding="{Binding Volume}">
                     <chartingToolkit:BubbleSeries.ItemsSource>
                         <toolkit:ObjectCollection>
                             <local:Budget ExpenseType="2000" ExpenseValue="150" Volume="15.2"/>

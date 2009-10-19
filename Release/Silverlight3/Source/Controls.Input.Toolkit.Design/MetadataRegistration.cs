@@ -6,8 +6,10 @@
 extern alias Silverlight;
 using System.Reflection;
 using System.Windows.Controls.Design.Common;
+using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
 using SSWC = Silverlight::System.Windows.Controls;
+using SSWCP = Silverlight::System.Windows.Controls.Primitives;
 
 [assembly: ProvideMetadata(typeof(System.Windows.Controls.Input.Design.MetadataRegistration))]
 
@@ -56,6 +58,9 @@ namespace System.Windows.Controls.Input.Design
         protected override void AddAttributes(AttributeTableBuilder builder)
         {
             // Note: everything added here must be duplicated in VisualStudio.Design as well!
+            builder.AddCallback(
+                typeof(SSWCP.LinearClipper),
+                b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
         }
     }
 }

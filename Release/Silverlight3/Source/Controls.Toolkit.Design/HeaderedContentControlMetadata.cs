@@ -32,6 +32,9 @@ namespace System.Windows.Controls.Design
                         Extensions.GetMemberName<SSWC.HeaderedContentControl>(x => x.Header),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.HeaderedContentControl>(x => x.Header)));
+
 #if MWD40
                     b.AddCustomAttributes(
                         Extensions.GetMemberName<SSWC.HeaderedContentControl>(x => x.Content),
@@ -41,6 +44,12 @@ namespace System.Windows.Controls.Design
                         new AlternateContentPropertyAttribute());
 
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
+
+                    b.AddCustomAttributes(
+                        Extensions.GetMemberName<SSWC.HeaderedContentControl>(x => x.HeaderTemplate),
+                        new DataContextValueSourceAttribute(
+                            Extensions.GetMemberName<SSWC.HeaderedContentControl>(x => x.Header),
+                            false));
 #endif
                 });
         }

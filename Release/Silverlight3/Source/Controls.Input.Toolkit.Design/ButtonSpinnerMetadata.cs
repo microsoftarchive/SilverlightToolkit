@@ -31,6 +31,9 @@ namespace System.Windows.Controls.Input.Design
                         Extensions.GetMemberName<SSWC.ButtonSpinner>(x => x.Content),
                         new CategoryAttribute(Properties.Resources.CommonProperties));
 
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.ButtonSpinner>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
 #endif

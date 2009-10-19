@@ -21,6 +21,6 @@ using System.Windows.Markup;
 [assembly: ComVisible(false)]
 [assembly: Guid("fb913921-fe71-4d9c-a9f6-03341a07685c")]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.30701.2348")]
+[assembly: AssemblyFileVersion("3.0.31016.2314")]
 [assembly: XmlnsPrefix("clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.ExpressionLight", "expressionLight")]
 [assembly: XmlnsDefinition("clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.ExpressionLight", "System.Windows.Controls.Theming")]

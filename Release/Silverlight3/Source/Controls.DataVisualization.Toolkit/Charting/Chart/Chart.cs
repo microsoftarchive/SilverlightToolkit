@@ -3,19 +3,14 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Globalization;
-using System.ComponentModel;
 using System.Windows.Controls.DataVisualization.Charting.Primitives;
+using System.Windows.Markup;
 
 namespace System.Windows.Controls.DataVisualization.Charting
 {
@@ -30,7 +25,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
     [StyleTypedProperty(Property = "ChartAreaStyle", StyleTargetType = typeof(EdgePanel))]
     [StyleTypedProperty(Property = "PlotAreaStyle", StyleTargetType = typeof(Grid))]
     [ContentProperty("Series")]
-    public sealed partial class Chart : Control, ISeriesHost
+    public partial class Chart : Control, ISeriesHost
     {
         /// <summary>
         /// Specifies the name of the ChartArea TemplatePart.
@@ -93,12 +88,22 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// Gets the collection of foreground elements.
         /// </summary>
-        ObservableCollection<UIElement> ISeriesHost.ForegroundElements { get { return _foregroundElements; } }
+        ObservableCollection<UIElement> ISeriesHost.ForegroundElements { get { return ForegroundElements; } }
+
+        /// <summary>
+        /// Gets the collection of foreground elements.
+        /// </summary>
+        protected ObservableCollection<UIElement> ForegroundElements { get { return _foregroundElements; } }
 
         /// <summary>
         /// Gets the collection of background elements.
         /// </summary>
-        ObservableCollection<UIElement> ISeriesHost.BackgroundElements { get { return _backgroundElements; } }
+        ObservableCollection<UIElement> ISeriesHost.BackgroundElements { get { return BackgroundElements; } }
+
+        /// <summary>
+        /// Gets the collection of background elements.
+        /// </summary>
+        protected ObservableCollection<UIElement> BackgroundElements { get { return _backgroundElements; } }
 
         /// <summary>
         /// Axes arranged along the edges.
@@ -130,7 +135,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Setter is public to work around a limitation with the XAML editing tools.")]
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "value", Justification = "Setter is public to work around a limitation with the XAML editing tools.")]
-        public Collection<Series> Series
+        public Collection<ISeries> Series
         {
             get
             {
@@ -145,7 +150,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// Stores the collection of Series displayed by the Chart.
         /// </summary>
-        private Collection<Series> _series;
+        private Collection<ISeries> _series;
 
         #region public Style ChartAreaStyle
         /// <summary>
@@ -236,58 +241,59 @@ namespace System.Windows.Controls.DataVisualization.Charting
                 null);
         #endregion public Style PlotAreaStyle
 
-        #region public Collection<Style> StylePalette
+        #region public Collection<ResourceDictionary> Palette
         /// <summary>
-        /// Gets or sets a palette of styles used by the children of the ISeriesHost.
+        /// Gets or sets a palette of ResourceDictionaries used by the children of the Chart.
         /// </summary>
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Want to allow this to be set from XAML.")]
-        public Collection<Style> StylePalette
+        public Collection<ResourceDictionary> Palette
         {
-            get { return GetValue(StylePaletteProperty) as Collection<Style>; }
-            set { SetValue(StylePaletteProperty, value); }
+            get { return GetValue(PaletteProperty) as Collection<ResourceDictionary>; }
+            set { SetValue(PaletteProperty, value); }
         }
 
         /// <summary>
-        /// Identifies the StylePalette dependency property.
+        /// Identifies the Palette dependency property.
         /// </summary>
-        public static readonly DependencyProperty StylePaletteProperty =
+        public static readonly DependencyProperty PaletteProperty =
             DependencyProperty.Register(
-                "StylePalette",
-                typeof(Collection<Style>),
+                "Palette",
+                typeof(Collection<ResourceDictionary>),
                 typeof(Chart),
-                new PropertyMetadata(OnStylePalettePropertyChanged));
+                new PropertyMetadata(OnPalettePropertyChanged));
 
         /// <summary>
-        /// Called when the value of the StylePalette property is changed.
+        /// Called when the value of the Palette property is changed.
         /// </summary>
-        /// <param name="d">Chart that contains the changed StylePalette.
+        /// <param name="d">Chart that contains the changed Palette.
         /// </param>
         /// <param name="e">Event arguments.</param>
-        private static void OnStylePalettePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPalettePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Chart source = (Chart) d;
-            Collection<Style> newValue = (Collection<Style>) e.NewValue;
-            source.OnStylePalettePropertyChanged(newValue);
+            Collection<ResourceDictionary> newValue = (Collection<ResourceDictionary>)e.NewValue;
+            source.OnPalettePropertyChanged(newValue);
         }
 
         /// <summary>
-        /// Called when the value of the StylePalette property is changed.
+        /// Called when the value of the Palette property is changed.
         /// </summary>
-        /// <param name="newValue">The new value for the StylePalette.</param>
-        private void OnStylePalettePropertyChanged(Collection<Style> newValue)
+        /// <param name="newValue">The new value for the Palette.</param>
+        private void OnPalettePropertyChanged(Collection<ResourceDictionary> newValue)
         {
-            StyleDispenser.Styles = newValue;
-            foreach (Series series in this.Series)
-            {
-                series.RefreshStyles();
-            }
+            ResourceDictionaryDispenser.ResourceDictionaries = newValue;
         }
-        #endregion public Collection<Style> StylePalette
+        #endregion public Collection<ResourceDictionary> Palette
 
         /// <summary>
         /// Gets or sets an object that rotates through the palette.
         /// </summary>
-        private StyleDispenser StyleDispenser { get; set; }
+        private ResourceDictionaryDispenser ResourceDictionaryDispenser { get; set; }
+
+        /// <summary>
+        /// Event that is invoked when the ResourceDictionaryDispenser's collection has changed.
+        /// </summary>
+        public event EventHandler ResourceDictionariesChanged;
 
         #region public object Title
         /// <summary>
@@ -351,8 +357,8 @@ namespace System.Windows.Controls.DataVisualization.Charting
             DefaultStyleKey = typeof(Chart);
 #endif
             // Create the backing collection for Series
-            UniqueObservableCollection<Series> series = new UniqueObservableCollection<Series>();
-            series.CollectionChanged += new NotifyCollectionChangedEventHandler(OnSeriesCollectionChanged);
+            UniqueObservableCollection<ISeries> series = new UniqueObservableCollection<ISeries>();
+            series.CollectionChanged += new NotifyCollectionChangedEventHandler(SeriesCollectionChanged);
             _series = series;
 
             // Create the backing collection for Axes
@@ -369,9 +375,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
             _legendChildrenLegendAdapter.Collection = chartLegendItems;
             LegendItems = chartLegendItems;
 
-            ISeriesHost host = this as ISeriesHost;
-            host.GlobalSeriesIndexesInvalidated += OnGlobalSeriesIndexesInvalidated;
-
             ChartAreaChildren = new AggregatedObservableCollection<UIElement>();
             ChartAreaChildren.ChildCollections.Add(_edgeAxes);
             ChartAreaChildren.ChildCollections.Add(_backgroundElements);
@@ -380,8 +383,26 @@ namespace System.Windows.Controls.DataVisualization.Charting
 
             _chartAreaChildrenListAdapter.Collection = ChartAreaChildren;
 
-            // Create style dispenser
-            StyleDispenser = new StyleDispenser();
+            // Create a dispenser
+            ResourceDictionaryDispenser = new ResourceDictionaryDispenser();
+            ResourceDictionaryDispenser.ResourceDictionariesChanged += delegate
+            {
+                OnResourceDictionariesChanged(EventArgs.Empty);
+            };
+        }
+
+        /// <summary>
+        /// Invokes the ResourceDictionariesChanged event.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        private void OnResourceDictionariesChanged(EventArgs e)
+        {
+            // Forward event on to listeners
+            EventHandler handler = ResourceDictionariesChanged;
+            if (null != handler)
+            {
+                handler.Invoke(this, e);
+            }
         }
 
         /// <summary>
@@ -498,19 +519,13 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// Adds a series to the plot area and injects chart services.
         /// </summary>
         /// <param name="series">The series to add to the plot area.</param>
-        private void AddSeriesToPlotArea(Series series)
+        private void AddSeriesToPlotArea(ISeries series)
         {
             series.SeriesHost = this;
 
             AggregatedObservableCollection<UIElement> chartLegendItems = this.LegendItems as AggregatedObservableCollection<UIElement>;
             int indexOfSeries = this.Series.IndexOf(series);
             chartLegendItems.ChildCollections.Insert(indexOfSeries, series.LegendItems);
-
-            ISeriesHost host = series as ISeriesHost;
-            if (host != null)
-            {
-                host.GlobalSeriesIndexesInvalidated += OnChildSeriesGlobalSeriesIndexesInvalidated;
-            }
         }
 
         /// <summary>
@@ -577,18 +592,6 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Causes the Chart to refresh the data obtained from its data source
-        /// and render the resulting series.
-        /// </summary>
-        public void Refresh()
-        {
-            foreach (Series series in Series)
-            {
-                series.Refresh();
-            }
-        }
-
-        /// <summary>
         /// Removes an axis from the Chart area.
         /// </summary>
         /// <param name="axis">The axis to remove from the ISeriesHost area.</param>
@@ -610,16 +613,11 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         /// <param name="series">The series to remove from the plot area.
         /// </param>
-        private void RemoveSeriesFromPlotArea(Series series)
+        private void RemoveSeriesFromPlotArea(ISeries series)
         {
             AggregatedObservableCollection<UIElement> legendItemsList = LegendItems as AggregatedObservableCollection<UIElement>;
             legendItemsList.ChildCollections.Remove(series.LegendItems);
 
-            ISeriesHost host = series as ISeriesHost;
-            if (host != null)
-            {
-                host.GlobalSeriesIndexesInvalidated -= OnChildSeriesGlobalSeriesIndexesInvalidated;
-            }
             series.SeriesHost = null;
         }
 
@@ -629,12 +627,12 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The event data.</param>
-        private void OnSeriesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void SeriesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // Clear ISeriesHost property of old Series
             if (null != e.OldItems)
             {
-                foreach (Series series in e.OldItems)
+                foreach (ISeries series in e.OldItems)
                 {
                     ISeriesHost host = series as ISeriesHost;
                     if (host != null)
@@ -657,7 +655,7 @@ namespace System.Windows.Controls.DataVisualization.Charting
             // Set ISeriesHost property of new Series
             if (null != e.NewItems)
             {
-                foreach (Series series in e.NewItems)
+                foreach (ISeries series in e.NewItems)
                 {
                     AddSeriesToPlotArea(series);
                 }
@@ -670,40 +668,17 @@ namespace System.Windows.Controls.DataVisualization.Charting
         }
 
         /// <summary>
-        /// Returns a rotating enumerator of Style objects that coordinates with 
-        /// the style dispenser object to ensure that no two enumerators are
-        /// currently on the same style if possible.  If the style
-        /// dispenser is reset or its collection of styles is changed then
-        /// the enumerators will also be reset.
+        /// Returns a rotating enumerator of ResourceDictionary objects that coordinates
+        /// with the dispenser object to ensure that no two enumerators are on the same
+        /// item. If the dispenser is reset or its collection is changed then the
+        /// enumerators are also reset.
         /// </summary>
-        /// <param name="stylePredicate">A predicate that returns a value
-        /// indicating whether to return a style.</param>
-        /// <returns>An enumerator of styles.</returns>
-        public IEnumerator<Style> GetStylesWhere(Func<Style, bool> stylePredicate)
+        /// <param name="predicate">A predicate that returns a value indicating
+        /// whether to return an item.</param>
+        /// <returns>An enumerator of ResourceDictionaries.</returns>
+        public IEnumerator<ResourceDictionary> GetResourceDictionariesWhere(Func<ResourceDictionary, bool> predicate)
         {
-            return StyleDispenser.GetStylesWhere(stylePredicate);
-        }
-
-        /// <summary>
-        /// Resets the styles dispensed by the chart.
-        /// </summary>
-        public void ResetStyles()
-        {
-            StyleDispenser.ResetStyles();
-        }
-
-        /// <summary>
-        /// Method handles the event raised when a child series' global series
-        /// indexes have changed.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="args">Information about the event.</param>
-        private void OnChildSeriesGlobalSeriesIndexesInvalidated(object sender, RoutedEventArgs args)
-        {
-            if (_globalSeriesIndicesInvalidated != null)
-            {
-                _globalSeriesIndicesInvalidated(sender, args);
-            }
+            return ResourceDictionaryDispenser.GetResourceDictionariesWhere(predicate);
         }
 
         /// <summary>
@@ -734,7 +709,17 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// Gets or sets the Series host of the chart.
         /// </summary>
         /// <remarks>This will always return null.</remarks>
-        ISeriesHost IRequireSeriesHost.SeriesHost { get; set; }
+        ISeriesHost IRequireSeriesHost.SeriesHost
+        {
+            get { return SeriesHost; }
+            set { SeriesHost = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Series host of the chart.
+        /// </summary>
+        /// <remarks>This will always return null.</remarks>
+        protected ISeriesHost SeriesHost { get; set; }
 
         /// <summary>
         /// Gets the axes collection of the chart.
@@ -747,24 +732,9 @@ namespace System.Windows.Controls.DataVisualization.Charting
         /// <summary>
         /// Gets the Series collection of the chart.
         /// </summary>
-        ObservableCollection<Series> ISeriesHost.Series
+        ObservableCollection<ISeries> ISeriesHost.Series
         {
-            get { return (ObservableCollection<Series>)Series; }
-        }
-
-        /// <summary>
-        /// This field is used to track listeners to the
-        /// GlobalSeriesIndexesInvalidated event.
-        /// </summary>
-        private RoutedEventHandler _globalSeriesIndicesInvalidated;
-
-        /// <summary>
-        /// This event is raised when global Series indices are invalidated.
-        /// </summary>
-        event RoutedEventHandler ISeriesHost.GlobalSeriesIndexesInvalidated
-        {
-            add { _globalSeriesIndicesInvalidated += value; }
-            remove { _globalSeriesIndicesInvalidated -= value; }
+            get { return (ObservableCollection<ISeries>)Series; }
         }
     }
 }

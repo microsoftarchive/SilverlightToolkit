@@ -2256,6 +2256,45 @@ namespace System.Windows.Controls
                 handler(this, e);
             }
         }
+
+        /// <summary>
+        /// Mouse wheel handler simulates (Ctrl+)PageUp/Down.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnMouseWheel(e);
+            if (!e.Handled)
+            {
+                bool ctrl;
+                bool shift;
+                CalendarExtensions.GetMetaKeyState(out ctrl, out shift);
+
+                if (!ctrl)
+                {
+                    if (e.Delta > 0)
+                    {
+                        ProcessPageUpKey(false);
+                    }
+                    else
+                    {
+                        ProcessPageDownKey(false);
+                    }
+                }
+                else
+                {
+                    if (e.Delta > 0)
+                    {
+                        ProcessDownKey(ctrl, shift);
+                    }
+                    else
+                    {
+                        ProcessUpKey(ctrl, shift);
+                    }
+                }
+                e.Handled = true;
+            }
+        }
         #endregion Mouse Events
 
         #region Key Events

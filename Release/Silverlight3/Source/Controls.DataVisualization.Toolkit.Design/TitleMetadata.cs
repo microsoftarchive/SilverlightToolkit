@@ -28,6 +28,9 @@ namespace System.Windows.Controls.DataVisualization.Design
                 typeof(SSWCD.Title),
                 b =>
                 {
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWCD.Title>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.DataVisualizationControlParts, false));
 #endif

@@ -4,7 +4,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A1E61645-F55F-4246-B8F9-61B656823783}</ProjectGuid>
+    <ProjectGuid>{73A15D65-7857-4441-A560-0019218B09A9}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -51,6 +51,10 @@
     </Reference>
     <Reference Include="System.Json" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Reactive, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1b331ac6720247d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -238,6 +242,10 @@
     <Compile Include="DomainUpDown\Month.cs" />
     <Compile Include="DomainUpDown\MonthToStringConverter.cs" />
     <Compile Include="DomainUpDown\Tutorial.cs" />
+    <Compile Include="DragAndDrop\CurrencyConverter.cs" />
+    <Compile Include="DragAndDrop\DragAndDropSample.xaml.cs">
+      <DependentUpon>DragAndDropSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Expander\ExpanderSample.xaml.cs">
       <DependentUpon>ExpanderSample.xaml</DependentUpon>
     </Compile>
@@ -257,6 +265,9 @@
     <Compile Include="GlobalCalendar\WeekendDayButtonStyleSelector.cs" />
     <Compile Include="GridSplitter\GridSplitterSample.xaml.cs">
       <DependentUpon>GridSplitterSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LayoutTransformer\LayoutTransformerSample.xaml.cs">
+      <DependentUpon>LayoutTransformerSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Navigation\MappingNavigationSample.xaml.cs">
       <DependentUpon>MappingNavigationSample.xaml</DependentUpon>
@@ -327,8 +338,6 @@
     </Compile>
     <Compile Include="TransitioningContentControl\TransitioningDomainUpDown.cs" />
     <Compile Include="TreeMap\AlternatingItemDefinitionSelector.cs" />
-    <Compile Include="TreeMap\Data\DataHelper.cs" />
-    <Compile Include="TreeMap\NhlNode.cs" />
     <Compile Include="TreeMap\FlexibleTemplateSample.xaml.cs">
       <DependentUpon>FlexibleTemplateSample.xaml</DependentUpon>
     </Compile>
@@ -347,7 +356,6 @@
     <Compile Include="TreeMap\TreeMapSample.xaml.cs">
       <DependentUpon>TreeMapSample.xaml</DependentUpon>
     </Compile>
-    <Content Include="TreeMap\Data\NHLData.xml" />
     <Compile Include="TreeView\Basics\TreeViewDataBindingSample.xaml.cs">
       <DependentUpon>TreeViewDataBindingSample.xaml</DependentUpon>
     </Compile>
@@ -449,6 +457,7 @@
     <Resource Include="AutoCompleteBox\Venice.jpg" />
     <Resource Include="DomainUpDown\JesseLiberty.png" />
     <Resource Include="Rating\Images\Casablanca.jpg" />
+    <Resource Include="AutoCompleteBox\Bing.png" />
     <Content Include="Silverlight.png" />
     <Content Include="Theming\ImplicitStyleManager\ImplicitStyleManagerTheme.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -586,6 +595,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DragAndDrop\DragAndDropSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GlobalCalendar\CalendarDayButtonStyleSelectorSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -601,6 +614,10 @@
     <Page Include="GridSplitter\GridSplitterSample.xaml">
       <SubType>Page</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="LayoutTransformer\LayoutTransformerSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Navigation\MappingNavigationSample.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -844,7 +861,10 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj"><Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project><Name>Controls.Samples.Common</Name></ProjectReference>
+    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj">
+      <Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project>
+      <Name>Controls.Samples.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

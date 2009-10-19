@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows.Controls;
 
-[assembly: SuppressMessage("General", "SWC1001:XmlDocumentationCommentShouldBeSpelledCorrectly", MessageId = "Farecast", Justification = "Farecast is a Microsoft web site.")]
+[assembly: SuppressMessage("General", "SWC1001:XmlDocumentationCommentShouldBeSpelledCorrectly", MessageId = "Bing", Justification = "Bing is a Microsoft web site.")]
 
 namespace System.Windows.Controls.Samples
 {

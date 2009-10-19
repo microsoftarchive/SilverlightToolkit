@@ -115,6 +115,7 @@
     <Compile Include="TabPanelMetadata.cs" />
     <Compile Include="TreeViewItemIsExpandedDesignModeValueProvider.cs" />
     <Compile Include="TreeViewItemMetadata.cs" />
+    <Compile Include="TreeViewMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -113,8 +113,7 @@ namespace System.Windows.Controls.Testing
             TestAsync(
                 chart,
                 () => chart.Series.Add(series),
-                () => itemsSource.Add(10),
-                () => chart.Refresh());
+                () => itemsSource.Add(10));
         }
     }
 }

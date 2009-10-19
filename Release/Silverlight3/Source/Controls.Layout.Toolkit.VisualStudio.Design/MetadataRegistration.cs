@@ -50,10 +50,13 @@ namespace System.Windows.Controls.Layout.VisualStudio.Design
                 typeof(SSWCP.ExpandableContentControl), 
                 b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
 
-            // .Expression.Design's own stuff
+            // .VisualStudio.Design's own stuff
 
             builder.AddCallback(
                 typeof(SSWC.AccordionItem), 
+                b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
+            builder.AddCallback(
+                typeof(SSWC.TransitioningContentControl),
                 b => b.AddCustomAttributes(new ToolboxBrowsableAttribute(false)));
         }
     }

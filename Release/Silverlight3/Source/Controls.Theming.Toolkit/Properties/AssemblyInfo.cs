@@ -21,7 +21,7 @@ using System.Windows.Markup;
 [assembly: ComVisible(false)]
 [assembly: Guid("fd61ff6f-deee-4f53-a613-4c35d1540fc6")]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.30701.2346")]
+[assembly: AssemblyFileVersion("3.0.31016.2257")]
 [assembly: CLSCompliant(true)]
 [assembly: XmlnsPrefix("clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit", "themingToolkit")]
 [assembly: XmlnsDefinitionAttribute("clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit", "System.Windows.Controls.Theming")]

@@ -12,18 +12,18 @@ using SSWCP = Silverlight::System.Windows.Controls.Primitives;
 namespace System.Windows.Controls.Design
 {
     /// <summary>
-    /// To register design time metadata for GlobalCalendarDayButton.
+    /// To register design time metadata for GlobalCalendarButton.
     /// </summary>
-    internal class GlobalCalendarDayButtonMetadata : AttributeTableBuilder
+    internal class GlobalCalendarButtonMetadata : AttributeTableBuilder
     {
         /// <summary>
-        /// To register design time metadata for GlobalCalendarDayButton.
+        /// To register design time metadata for GlobalCalendarButton.
         /// </summary>
-        public GlobalCalendarDayButtonMetadata()
+        public GlobalCalendarButtonMetadata()
             : base()
         {
             AddCallback(
-                typeof(SSWCP.GlobalCalendarDayButton),
+                typeof(SSWCP.GlobalCalendarButton),
                 b =>
                 {
 #if MWD40

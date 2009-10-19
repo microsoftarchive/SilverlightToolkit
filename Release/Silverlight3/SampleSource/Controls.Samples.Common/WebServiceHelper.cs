@@ -3,14 +3,8 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Globalization;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Windows.Browser;
-using System.Windows.Controls;
 
 namespace System.Windows.Controls.Samples
 {
@@ -22,19 +16,19 @@ namespace System.Windows.Controls.Samples
     public static class WebServiceHelper
     {
         /// <summary>
-        /// The format of the URI for JSON requests to Live Suggestions.
+        /// The format of the URI for JSON requests to Bing Suggestions.
         /// </summary>
-        private const string LiveSuggestionsJsonUriFormat = "http://api.search.live.net/qson.aspx?query={0}";
+        private const string SearchSuggestionsJsonUriFormat = "http://api.bing.net/osjson.aspx?query={0}";
 
         /// <summary>
-        /// Standard Live Search URI.
+        /// Standard Bing Search address.
         /// </summary>
-        private const string LiveSearchUriFormat = "http://search.live.com/results.aspx?q={0}";
-        
+        private const string WebSearchUriFormat = "http://www.bing.com/search?q={0}";
+
         /// <summary>
         /// A format string for creating a link to look at airline fares online.
         /// </summary>
-        private const string AirfareSearchUriFormat = "http://farecast.live.com/flightsearch.do?t=r&o={0}&e={1}&d1={2}&r1={3}&p={4}&b=COACH"; 
+        private const string AirfareSearchUriFormat = "http://www.bing.com/travel/flight/flightSearch?t=r&o={0}&e={1}&d1={2}&r1={3}&p={4}&b=COACH"; 
 
         /// <summary>
         /// Gets a value indicating whether the document scheme allows for web 
@@ -62,7 +56,7 @@ namespace System.Windows.Controls.Samples
         /// <returns>Returns a new Uri instance.</returns>
         public static Uri CreateWebSearchUri(string searchText)
         {
-            return new Uri(string.Format(CultureInfo.InvariantCulture, LiveSearchUriFormat, HttpUtility.UrlEncode(searchText)));
+            return new Uri(string.Format(CultureInfo.InvariantCulture, WebSearchUriFormat, HttpUtility.UrlEncode(searchText)));
         }
 
         /// <summary>
@@ -72,12 +66,12 @@ namespace System.Windows.Controls.Samples
         /// <returns>Returns a new Uri instance.</returns>
         public static Uri CreateWebSearchSuggestionsUri(string searchText)
         {
-            return new Uri(string.Format(CultureInfo.InvariantCulture, LiveSuggestionsJsonUriFormat, HttpUtility.UrlEncode(searchText)));
+            return new Uri(string.Format(CultureInfo.InvariantCulture, SearchSuggestionsJsonUriFormat, HttpUtility.UrlEncode(searchText)));
         }
 
         /// <summary>
-        /// Creates a Uri to look up flight pricing trends online using the 
-        /// Live Farecast service from Microsoft.
+        /// Creates a Uri to look up flight pricing trends online using Bing
+        /// Travel.
         /// </summary>
         /// <param name="departureAirport">The departure airport object.</param>
         /// <param name="arrivalAirport">The arrival airport object.</param>

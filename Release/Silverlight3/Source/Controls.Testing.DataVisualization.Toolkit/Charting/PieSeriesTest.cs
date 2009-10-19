@@ -37,7 +37,7 @@ namespace System.Windows.Controls.Testing
         public override void InitialValues()
         {
             PieSeries series = DefaultSeriesToTest as PieSeries;
-            Assert.IsNull(series.StylePalette);
+            Assert.IsNull(series.Palette);
             base.InitialValues();
         }
 
@@ -233,15 +233,14 @@ namespace System.Windows.Controls.Testing
             PieSeries series = DefaultSeriesToTest as PieSeries;
             series.IndependentValueBinding = new Binding();
             series.ItemsSource = new int[] { 4, 5, 6 };
-            ObservableCollection<Style> styles = new ObservableCollection<Style>();
-            styles.Add(new Style(typeof(Control)));
-            styles.Add(new Style(typeof(DataPoint)));
-            series.StylePalette = styles;
+            ObservableCollection<ResourceDictionary> styles = new ObservableCollection<ResourceDictionary>();
+            styles.Add(new ResourceDictionary());
+            styles.Add(new ResourceDictionary());
+            series.Palette = styles;
             TestAsync(
                 chart,
                 () => chart.Series.Add(series),
-                () => series.StylePalette.RemoveAt(0),
-                () => chart.Refresh());
+                () => series.Palette.RemoveAt(0));
         }
 
         /// <summary>
@@ -252,7 +251,8 @@ namespace System.Windows.Controls.Testing
         public override void StyleTypedPropertiesAreDefined()
         {
             IDictionary<string, Type> properties = DefaultControlToTest.GetType().GetStyleTypedProperties();
-            Assert.AreEqual(1, properties.Count);
+            Assert.AreEqual(2, properties.Count);
+            Assert.AreEqual(typeof(PieDataPoint), properties["DataPointStyle"]);
             Assert.AreEqual(typeof(LegendItem), properties["LegendItemStyle"]);
         }
 

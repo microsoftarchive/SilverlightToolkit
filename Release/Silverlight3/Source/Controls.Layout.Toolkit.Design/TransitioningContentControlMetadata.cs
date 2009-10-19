@@ -4,6 +4,7 @@
 // All other rights reserved.
 
 extern alias Silverlight;
+using System.ComponentModel;
 using System.Windows.Controls.Design.Common;
 using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Metadata;
@@ -26,6 +27,9 @@ namespace System.Windows.Controls.Layout.Design
                 typeof(SSWC.TransitioningContentControl),
                 b =>
                 {
+                    b.AddCustomAttributes(new DefaultBindingPropertyAttribute(
+                        Extensions.GetMemberName<SSWC.TransitioningContentControl>(x => x.Content)));
+
 #if MWD40
                     b.AddCustomAttributes(new ToolboxCategoryAttribute(ToolboxCategoryPaths.BasicControls, false));
 #endif

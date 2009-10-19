@@ -171,6 +171,33 @@ namespace System.Windows.Controls.Samples
 </sys:String>
     </src:SourceFile.Source>
   </src:SourceFile>
+  <src:SourceFile Path="TreeMapSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+
+Imports Microsoft.VisualBasic
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Example showing how the TreeMap can be templated and populated with data.
+''' &lt;/summary&gt;
+&lt;Sample("(0)TreeMap", DifficultyLevel.Basic), Category("TreeMap")&gt; _
+Partial Public Class TreeMapSample
+	Inherits UserControl
+	''' &lt;summary&gt;
+	''' Initializes a new instance of the MinimalSample class.
+	''' &lt;/summary&gt;
+	Public Sub New()
+		InitializeComponent()
+	End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
   <src:SourceFile Path="SalesData.cs">
     <src:SourceFile.Source>
       <sys:String>// (c) Copyright Microsoft Corporation.
@@ -207,6 +234,58 @@ namespace System.Windows.Controls.Samples
         }
     }
 }
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="SalesData.vb">
+    <src:SourceFile.Source>
+      <sys:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+''' &lt;summary&gt;
+''' Represents product sales data.
+''' &lt;/summary&gt;
+
+Imports Microsoft.VisualBasic
+Imports System
+Public Class SalesData
+	''' &lt;summary&gt;
+	''' Gets or sets the name of the product.
+	''' &lt;/summary&gt;
+	Private privateProduct As String
+	Public Property Product() As String
+		Get
+			Return privateProduct
+		End Get
+		Set(ByVal value As String)
+			privateProduct = value
+		End Set
+	End Property
+
+	''' &lt;summary&gt;
+	''' Gets or sets the quantity of the product sold.
+	''' &lt;/summary&gt;
+	Private privateQuantity As Integer
+	Public Property Quantity() As Integer
+		Get
+			Return privateQuantity
+		End Get
+		Set(ByVal value As Integer)
+			privateQuantity = value
+		End Set
+	End Property
+
+	''' &lt;summary&gt;
+	''' Gets the desired tooltip content.
+	''' &lt;/summary&gt;
+	Public ReadOnly Property ToolTip() As String
+		Get
+			Return Product &amp; ": " &amp; Quantity
+		End Get
+	End Property
+End Class
 </sys:String>
     </src:SourceFile.Source>
   </src:SourceFile>

@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace System.Windows.Controls
 {
@@ -113,6 +114,122 @@ namespace System.Windows.Controls
             }
         }
         #endregion public attached bool IsMouseWheelScrollingEnabled
+
+        #region private attached double VerticalOffset
+        /// <summary>
+        /// Gets the value of the VerticalOffset attached property for a specified ScrollViewer.
+        /// </summary>
+        /// <param name="element">The ScrollViewer from which the property value is read.</param>
+        /// <returns>The VerticalOffset property value for the ScrollViewer.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "This is an attached property and is only intended to be set on ScrollViewer's")]
+        private static double GetVerticalOffset(ScrollViewer element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            return (double)element.GetValue(VerticalOffsetProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the VerticalOffset attached property to a specified ScrollViewer.
+        /// </summary>
+        /// <param name="element">The ScrollViewer to which the attached property is written.</param>
+        /// <param name="value">The needed VerticalOffset value.</param>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "This is an attached property and is only intended to be set on ScrollViewer's")]
+        private static void SetVerticalOffset(ScrollViewer element, double value)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            element.SetValue(VerticalOffsetProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the VerticalOffset dependency property.
+        /// </summary>
+        private static readonly DependencyProperty VerticalOffsetProperty =
+            DependencyProperty.RegisterAttached(
+                "VerticalOffset",
+                typeof(double),
+                typeof(ScrollViewerExtensions),
+                new PropertyMetadata(OnVerticalOffsetPropertyChanged));
+
+        /// <summary>
+        /// VerticalOffsetProperty property changed handler.
+        /// </summary>
+        /// <param name="dependencyObject">ScrollViewer that changed its VerticalOffset.</param>
+        /// <param name="eventArgs">Event arguments.</param>
+        private static void OnVerticalOffsetPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            ScrollViewer source = dependencyObject as ScrollViewer;
+            if (source == null)
+            {
+                throw new ArgumentNullException("dependencyObject");
+            }
+
+            source.ScrollToVerticalOffset((double)eventArgs.NewValue);
+        }
+        #endregion private attached double VerticalOffset
+
+        #region private attached double HorizontalOffset
+        /// <summary>
+        /// Gets the value of the HorizontalOffset attached property for a specified ScrollViewer.
+        /// </summary>
+        /// <param name="element">The ScrollViewer from which the property value is read.</param>
+        /// <returns>The HorizontalOffset property value for the ScrollViewer.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "This is an attached property and is only intended to be set on ScrollViewer's")]
+        private static double GetHorizontalOffset(ScrollViewer element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            return (double)element.GetValue(HorizontalOffsetProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the HorizontalOffset attached property to a specified ScrollViewer.
+        /// </summary>
+        /// <param name="element">The ScrollViewer to which the attached property is written.</param>
+        /// <param name="value">The needed HorizontalOffset value.</param>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "This is an attached property and is only intended to be set on ScrollViewer's")]
+        private static void SetHorizontalOffset(ScrollViewer element, double value)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            element.SetValue(HorizontalOffsetProperty, value);
+        }
+
+        /// <summary>
+        /// Identifies the HorizontalOffset dependency property.
+        /// </summary>
+        private static readonly DependencyProperty HorizontalOffsetProperty =
+            DependencyProperty.RegisterAttached(
+                "HorizontalOffset",
+                typeof(double),
+                typeof(ScrollViewerExtensions),
+                new PropertyMetadata(OnHorizontalOffsetPropertyChanged));
+
+        /// <summary>
+        /// HorizontalOffsetProperty property changed handler.
+        /// </summary>
+        /// <param name="dependencyObject">ScrollViewer that changed its HorizontalOffset.</param>
+        /// <param name="eventArgs">Event arguments.</param>
+        private static void OnHorizontalOffsetPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            ScrollViewer source = dependencyObject as ScrollViewer;
+            if (source == null)
+            {
+                throw new ArgumentNullException("dependencyObject");
+            }
+
+            source.ScrollToHorizontalOffset((double)eventArgs.NewValue);
+        }
+        #endregion private attached double HorizontalOffset
 
         /// <summary>
         /// Coerce a vertical offset to fall within the vertical bounds of a
@@ -403,6 +520,36 @@ namespace System.Windows.Controls
                 throw new ArgumentNullException("element");
             }
 
+            ScrollIntoView(viewer, element, 0, 0, TimeSpan.Zero);
+        }
+
+        /// <summary>
+        /// Scroll the desired element into the ScrollViewer's viewport.
+        /// </summary>
+        /// <param name="viewer">The ScrollViewer.</param>
+        /// <param name="element">The element to scroll into view.</param>
+        /// <param name="horizontalMargin">The margin to add on the left or right.
+        /// </param>
+        /// <param name="verticalMargin">The margin to add on the top or bottom.
+        /// </param>
+        /// <param name="duration">The duration of the animation.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// <paramref name="viewer" /> is null.
+        /// </exception>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// <paramref name="element" /> is null.
+        /// </exception>
+        public static void ScrollIntoView(this ScrollViewer viewer, FrameworkElement element, double horizontalMargin, double verticalMargin, Duration duration)
+        {
+            if (viewer == null)
+            {
+                throw new ArgumentNullException("viewer");
+            }
+            else if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
             // Get the position of the element relative to the ScrollHost
             Rect? itemRect = element.GetBoundsRelativeTo(viewer);
             if (itemRect == null)
@@ -414,35 +561,58 @@ namespace System.Windows.Controls
             double verticalOffset = viewer.VerticalOffset;
             double verticalDelta = 0;
             double hostBottom = viewer.ViewportHeight;
-            double itemBottom = itemRect.Value.Bottom;
+            double itemBottom = itemRect.Value.Bottom + verticalMargin;
             if (hostBottom < itemBottom)
             {
                 verticalDelta = itemBottom - hostBottom;
                 verticalOffset += verticalDelta;
             }
-            double itemTop = itemRect.Value.Top;
+            double itemTop = itemRect.Value.Top - verticalMargin;
             if (itemTop - verticalDelta < 0)
             {
                 verticalOffset -= verticalDelta - itemTop;
             }
-            viewer.ScrollToVerticalOffset(verticalOffset);
 
             // Scroll horizontally
             double horizontalOffset = viewer.HorizontalOffset;
             double horizontalDelta = 0;
             double hostRight = viewer.ViewportWidth;
-            double itemRight = itemRect.Value.Right;
+            double itemRight = itemRect.Value.Right + horizontalMargin;
             if (hostRight < itemRight)
             {
                 horizontalDelta = itemRight - hostRight;
                 horizontalOffset += horizontalDelta;
             }
-            double itemLeft = itemRect.Value.Left;
+            double itemLeft = itemRect.Value.Left - horizontalMargin;
             if (itemLeft - horizontalDelta < 0)
             {
                 horizontalOffset -= horizontalDelta - itemLeft;
             }
-            viewer.ScrollToHorizontalOffset(horizontalOffset);
+
+            if (duration == TimeSpan.Zero)
+            {
+                viewer.ScrollToVerticalOffset(verticalOffset);
+                viewer.ScrollToHorizontalOffset(horizontalOffset);
+            }
+            else
+            {
+                Storyboard storyboard = new Storyboard();
+                SetVerticalOffset(viewer, viewer.VerticalOffset);
+                SetHorizontalOffset(viewer, viewer.HorizontalOffset);
+
+                DoubleAnimation verticalOffsetAnimation = new DoubleAnimation { To = verticalOffset, Duration = duration };
+                DoubleAnimation horizontalOffsetAnimation = new DoubleAnimation { To = verticalOffset, Duration = duration };
+
+                Storyboard.SetTarget(verticalOffsetAnimation, viewer);
+                Storyboard.SetTarget(horizontalOffsetAnimation, viewer);
+                Storyboard.SetTargetProperty(horizontalOffsetAnimation, new PropertyPath(ScrollViewerExtensions.HorizontalOffsetProperty));
+                Storyboard.SetTargetProperty(verticalOffsetAnimation, new PropertyPath(ScrollViewerExtensions.VerticalOffsetProperty));
+
+                storyboard.Children.Add(verticalOffsetAnimation);
+                storyboard.Children.Add(horizontalOffsetAnimation);
+
+                storyboard.Begin();
+            }
         }
     }
 }

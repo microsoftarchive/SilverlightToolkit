@@ -22,13 +22,15 @@
     </UserControl.Resources>
     
     <StackPanel>
-        <ContentControl Content="Live.com Search Suggestions" Style="{StaticResource Header}" />
+        <ContentControl Content="Bing Search Suggestions" Style="{StaticResource Header}" />
 
         <!-- AutoCompleteBox example -->
         <Grid Width="650" Height="406" Background="{StaticResource SearchSuggestionsImageBrush}">
-            <StackPanel Height="34" Width="490" Orientation="Horizontal" VerticalAlignment="Top" Margin="80,119,80,0">
-                <TextBlock FontSize="18" FontFamily="Verdana" VerticalAlignment="Center"><Run Text="Live Search"/></TextBlock>
-                <Grid Width="360" Height="34" Margin="8,0,0,0">
+            <StackPanel Width="490" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,119,10,0">
+
+                <Image Source="Bing.png" Stretch="None" />
+
+                <Grid Width="300" Height="34" Margin="8,0,0,0">
 
                     <input:AutoCompleteBox 
                         FilterMode="None"
@@ -47,7 +49,14 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Grid Margin="0" x:Name="RootElement">
-                                    <Rectangle Margin="0" Fill="#FF549C00" Stroke="#FF000000" StrokeThickness="0" RadiusX="2.5" RadiusY="2.5"/>
+                                    <Rectangle Margin="0" Stroke="#FF000000" StrokeThickness="0" RadiusX="2.5" RadiusY="2.5">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FFFCAA24" Offset="0" />
+                                                <GradientStop Color="#FFFF860A" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
                                     <Ellipse Height="16.105" Margin="0,6.438,5,0" VerticalAlignment="Top" Stroke="#FFFFFFFF" StrokeThickness="2" Width="15.938" HorizontalAlignment="Right"/>
                                     <Path Height="7.875" HorizontalAlignment="Left" Margin="7.754,0,0,6.467" VerticalAlignment="Bottom" Width="7.75" Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFFFFF" StrokeThickness="2" Data="M14.097251,19.182762 L8.7665224,24.552877"/>
                                 </Grid>
@@ -95,13 +104,15 @@
     &lt;/UserControl.Resources&gt;
     
     &lt;StackPanel&gt;
-        &lt;ContentControl Content="Live.com Search Suggestions" Style="{StaticResource Header}" /&gt;
+        &lt;ContentControl Content="Bing Search Suggestions" Style="{StaticResource Header}" /&gt;
 
         &lt;!-- AutoCompleteBox example --&gt;
         &lt;Grid Width="650" Height="406" Background="{StaticResource SearchSuggestionsImageBrush}"&gt;
-            &lt;StackPanel Height="34" Width="490" Orientation="Horizontal" VerticalAlignment="Top" Margin="80,119,80,0"&gt;
-                &lt;TextBlock FontSize="18" FontFamily="Verdana" VerticalAlignment="Center"&gt;&lt;Run Text="Live Search"/&gt;&lt;/TextBlock&gt;
-                &lt;Grid Width="360" Height="34" Margin="8,0,0,0"&gt;
+            &lt;StackPanel Width="490" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,119,10,0"&gt;
+
+                &lt;Image Source="Bing.png" Stretch="None" /&gt;
+
+                &lt;Grid Width="300" Height="34" Margin="8,0,0,0"&gt;
 
                     &lt;input:AutoCompleteBox 
                         FilterMode="None"
@@ -120,7 +131,14 @@
                         &lt;Button.Template&gt;
                             &lt;ControlTemplate TargetType="Button"&gt;
                                 &lt;Grid Margin="0" x:Name="RootElement"&gt;
-                                    &lt;Rectangle Margin="0" Fill="#FF549C00" Stroke="#FF000000" StrokeThickness="0" RadiusX="2.5" RadiusY="2.5"/&gt;
+                                    &lt;Rectangle Margin="0" Stroke="#FF000000" StrokeThickness="0" RadiusX="2.5" RadiusY="2.5"&gt;
+                                        &lt;Rectangle.Fill&gt;
+                                            &lt;LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"&gt;
+                                                &lt;GradientStop Color="#FFFCAA24" Offset="0" /&gt;
+                                                &lt;GradientStop Color="#FFFF860A" Offset="1" /&gt;
+                                            &lt;/LinearGradientBrush&gt;
+                                        &lt;/Rectangle.Fill&gt;
+                                    &lt;/Rectangle&gt;
                                     &lt;Ellipse Height="16.105" Margin="0,6.438,5,0" VerticalAlignment="Top" Stroke="#FFFFFFFF" StrokeThickness="2" Width="15.938" HorizontalAlignment="Right"/&gt;
                                     &lt;Path Height="7.875" HorizontalAlignment="Left" Margin="7.754,0,0,6.467" VerticalAlignment="Bottom" Width="7.75" Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FFFFFFFF" StrokeThickness="2" Data="M14.097251,19.182762 L8.7665224,24.552877"/&gt;
                                 &lt;/Grid&gt;
@@ -140,10 +158,9 @@
             &lt;/StackPanel&gt;
 
         &lt;/Grid&gt;
-      
+
     &lt;/StackPanel&gt;
-&lt;/UserControl&gt;
-</sys:String>
+&lt;/UserControl&gt;</sys:String>
     </src:SourceFile.Source>
   </src:SourceFile>
   <src:SourceFile Path="SearchSuggestionSample.xaml.cs">
@@ -243,18 +260,22 @@ namespace System.Windows.Controls.Samples
                 List&lt;string&gt; data = new List&lt;string&gt;();
                 try
                 {
-                    JsonObject jso = ((JsonObject)JsonObject.Parse(e.Result))["SearchSuggestion"] as JsonObject;
-                    string originalSearchString = jso["Query"];
-                    if (originalSearchString == autoComplete.SearchText)
+                    JsonArray result = (JsonArray)JsonArray.Parse(e.Result);
+                    if (result.Count &gt; 1)
                     {
-                        foreach (JsonObject suggestion in (JsonArray)jso["Section"])
+                        string originalSearchString = result[0];
+                        if (originalSearchString == autoComplete.SearchText)
                         {
-                            data.Add(suggestion.Values.First());
-                        }
+                            JsonArray suggestions = (JsonArray)result[1];
+                            foreach (JsonPrimitive suggestion in suggestions)
+                            {
+                                data.Add(suggestion);
+                            }
 
-                        // Diplay the AutoCompleteBox drop down with any suggestions
-                        autoComplete.ItemsSource = data;
-                        autoComplete.PopulateComplete();
+                            // Diplay the AutoCompleteBox drop down with any suggestions
+                            autoComplete.ItemsSource = data;
+                            autoComplete.PopulateComplete();
+                        }
                     }
                 }
                 catch
@@ -372,16 +393,18 @@ Partial Public Class SearchSuggestionSample
         If autoComplete IsNot Nothing AndAlso e.Error Is Nothing AndAlso (Not e.Cancelled) AndAlso (Not String.IsNullOrEmpty(e.Result)) Then
             Dim data As List(Of String) = New List(Of String)()
             Try
-                Dim jso As JsonObject = TryCast((CType(JsonObject.Parse(e.Result), JsonObject))("SearchSuggestion"), JsonObject)
-                Dim originalSearchString As String = jso("Query")
-                If originalSearchString = autoComplete.SearchText Then
-                    For Each suggestion As JsonObject In CType(jso("Section"), JsonArray)
-                        data.Add(suggestion.Values.First())
-                    Next suggestion
+                Dim result As JsonArray = TryCast((CType(JsonArray.Parse(e.Result), JsonArray)), JsonArray)
+                If result.Count &gt; 1 Then
+                    Dim originalSearchString As String = result(0)
+                    If originalSearchString = autoComplete.SearchText Then
+                        For Each suggestion As JsonPrimitive In CType(result(1), JsonArray)
+                            data.Add(suggestion)
+                        Next suggestion
 
-                    ' Diplay the AutoCompleteBox drop down with any suggestions
-                    autoComplete.ItemsSource = data
-                    autoComplete.PopulateComplete()
+                        ' Diplay the AutoCompleteBox drop down with any suggestions
+                        autoComplete.ItemsSource = data
+                        autoComplete.PopulateComplete()
+                    End If
                 End If
             Catch
             End Try
@@ -391,7 +414,98 @@ End Class
 </sys:String>
     </src:SourceFile.Source>
   </src:SourceFile>
+  <src:SourceFile Path="../../Controls.Samples.Common/WebServiceHelper.cs">
+    <src:SourceFile.Source>
+      <sys:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Globalization;
+using System.Windows.Browser;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// A set of simple helpers to enable the creation of more robust web 
+    /// service samples. Includes a centralized place to get generic addresses 
+    /// for service requests and web pages.
+    /// &lt;/summary&gt;
+    public static class WebServiceHelper
+    {
+        /// &lt;summary&gt;
+        /// The format of the URI for JSON requests to Bing Suggestions.
+        /// &lt;/summary&gt;
+        private const string SearchSuggestionsJsonUriFormat = "http://api.bing.net/osjson.aspx?query={0}";
+
+        /// &lt;summary&gt;
+        /// Standard Bing Search address.
+        /// &lt;/summary&gt;
+        private const string WebSearchUriFormat = "http://www.bing.com/search?q={0}";
+
+        /// &lt;summary&gt;
+        /// A format string for creating a link to look at airline fares online.
+        /// &lt;/summary&gt;
+        private const string AirfareSearchUriFormat = "http://www.bing.com/travel/flight/flightSearch?t=r&amp;o={0}&amp;e={1}&amp;d1={2}&amp;r1={3}&amp;p={4}&amp;b=COACH"; 
+
+        /// &lt;summary&gt;
+        /// Gets a value indicating whether the document scheme allows for web 
+        /// service access.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;Returns true when the scheme should permit web requests.&lt;/returns&gt;
+        public static bool CanMakeHttpRequests
+        {
+            get
+            {
+                if (!HtmlPage.IsEnabled)
+                {
+                    return false;
+                }
+
+                string scheme = HtmlPage.Document.DocumentUri.Scheme ?? string.Empty;
+                return string.Compare(scheme, "http", StringComparison.OrdinalIgnoreCase) == 0;
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a Uri to navigate to a web search service.
+        /// &lt;/summary&gt;
+        /// &lt;param name="searchText"&gt;The search string.&lt;/param&gt;
+        /// &lt;returns&gt;Returns a new Uri instance.&lt;/returns&gt;
+        public static Uri CreateWebSearchUri(string searchText)
+        {
+            return new Uri(string.Format(CultureInfo.InvariantCulture, WebSearchUriFormat, HttpUtility.UrlEncode(searchText)));
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a Uri for retrieving search suggestion phrases.
+        /// &lt;/summary&gt;
+        /// &lt;param name="searchText"&gt;The search string.&lt;/param&gt;
+        /// &lt;returns&gt;Returns a new Uri instance.&lt;/returns&gt;
+        public static Uri CreateWebSearchSuggestionsUri(string searchText)
+        {
+            return new Uri(string.Format(CultureInfo.InvariantCulture, SearchSuggestionsJsonUriFormat, HttpUtility.UrlEncode(searchText)));
+        }
+
+        /// &lt;summary&gt;
+        /// Creates a Uri to look up flight pricing trends online using Bing
+        /// Travel.
+        /// &lt;/summary&gt;
+        /// &lt;param name="departureAirport"&gt;The departure airport object.&lt;/param&gt;
+        /// &lt;param name="arrivalAirport"&gt;The arrival airport object.&lt;/param&gt;
+        /// &lt;param name="departure"&gt;The departure date.&lt;/param&gt;
+        /// &lt;param name="arrival"&gt;The arrival date.&lt;/param&gt;
+        /// &lt;param name="persons"&gt;The number of people that will be traveling.&lt;/param&gt;
+        /// &lt;returns&gt;Returns a new Uri object.&lt;/returns&gt;
+        public static Uri CreateAirfareSearchUri(Airport departureAirport, Airport arrivalAirport, DateTime departure, DateTime arrival, int persons)
+        {
+            return new Uri(string.Format(CultureInfo.InvariantCulture, AirfareSearchUriFormat, departureAirport.CodeFaa, arrivalAirport.CodeFaa, HttpUtility.UrlEncode(departure.ToShortDateString()), HttpUtility.UrlEncode(arrival.ToShortDateString()), persons.ToString(CultureInfo.InvariantCulture)));
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
 </src:SourceViewer>
-      
+
     </StackPanel>
 </UserControl>
