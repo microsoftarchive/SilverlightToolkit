@@ -1,0 +1,12 @@
+<OutOfBrowserSettings ShortName="Silverlight Controls Browser" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>Sample explorer for the controls and features found in the Silverlight Toolkit and Silverlight SDK.</OutOfBrowserSettings.Blurb>
+  <OutOfBrowserSettings.WindowSettings>
+    <WindowSettings Title="Silverlight Controls Browser" />
+  </OutOfBrowserSettings.WindowSettings>
+  <OutOfBrowserSettings.Icons>
+    <Icon Size="16,16">Toolkit16.png</Icon>
+    <Icon Size="32,32">Toolkit32.png</Icon>
+    <Icon Size="48,48">Toolkit48.png</Icon>
+    <Icon Size="128,128">Toolkit128.png</Icon>
+  </OutOfBrowserSettings.Icons>
+</OutOfBrowserSettings>

@@ -241,10 +241,10 @@ namespace System.Windows.Controls
         protected bool IsTreeViewItemDraggedDirectlyAboveOrBelowSelf(SW.DragEventArgs args)
         {
             ItemsControl dropTarget = GetDropTarget(args);
-            ItemDragEventArgs<ItemsControl> itemDragEventArgs = CurrentItemDragEventArgs;
+            ItemDragEventArgs itemDragEventArgs = args.Data.GetData() as ItemDragEventArgs;
             if (itemDragEventArgs != null && itemDragEventArgs.DragSource != null && itemDragEventArgs.DragSource == dropTarget)
             {
-                SelectionCollection selectionCollection = SelectionCollection.ToSelectionCollection(itemDragEventArgs.Data);
+                SelectionCollection selectionCollection = GetSelectionCollection(itemDragEventArgs.Data);
                 int index = GetDropTargetInsertionIndex(dropTarget, args);
                 return selectionCollection.Any(selection => !selection.Index.HasValue || selection.Index.Value == index);
             }
@@ -262,7 +262,7 @@ namespace System.Windows.Controls
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "The ExtendedRoutedEventArgs type doesn't exist in WPF.")]
         protected bool IsTreeViewItemDraggedInDescendent(SW.DragEventArgs args)
         {
-            ItemDragEventArgs<ItemsControl> itemDragEventArgs = CurrentItemDragEventArgs;
+            ItemDragEventArgs itemDragEventArgs = args.Data.GetData() as ItemDragEventArgs;
             if (itemDragEventArgs != null)
             {
                 ItemsControl itemsControl = GetDropTarget(args);
@@ -275,7 +275,7 @@ namespace System.Windows.Controls
                 // If the items control that contains the item being dragged over has the drag source as a descendent
                 if (dragSource != null && itemsControl.GetVisualAncestors().Contains(dragSource))
                 {
-                    SelectionCollection selectionCollection = SelectionCollection.ToSelectionCollection(itemDragEventArgs.Data);
+                    SelectionCollection selectionCollection = GetSelectionCollection(itemDragEventArgs.Data);
                     IEnumerable<DependencyObject> visualAncestorsAndSelf = itemsControl.GetVisualAncestorsAndSelf().ToList();
 
                     return selectionCollection.Any(selection => !selection.Index.HasValue || visualAncestorsAndSelf.Any(ancestor => dragSource.ItemContainerGenerator.IndexFromContainer(ancestor) == selection.Index.Value));

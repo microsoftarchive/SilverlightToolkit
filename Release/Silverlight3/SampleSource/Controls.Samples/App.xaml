@@ -73,6 +73,7 @@
                 <samplesCommon:SampleTreeItem TreeItemName="Theme Browser" IconResourceName="ThemeBrowser.png"/>
             </samplesCommon:SampleTreeItem>
             <samplesCommon:SampleTreeItem TreeItemName="Toolkit">
+                <samplesCommon:SampleTreeItem TreeItemName="BusyIndicator" IconResourceName="BusyIndicator.png" />
                 <samplesCommon:SampleTreeItem TreeItemName="DockPanel" IconResourceName="DockPanel.png" />
                 <samplesCommon:SampleTreeItem TreeItemName="Drag and Drop" IconResourceName="DragAndDrop.png" />
                 <samplesCommon:SampleTreeItem TreeItemName="Expander" IconResourceName="Expander.png" />

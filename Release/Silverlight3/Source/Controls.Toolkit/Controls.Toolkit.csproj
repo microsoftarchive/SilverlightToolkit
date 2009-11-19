@@ -20,6 +20,7 @@
     <FileAlignment>512</FileAlignment>
     <SilverlightApplication>false</SilverlightApplication>
     <SignAssembly>false</SignAssembly>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -51,7 +52,6 @@
     <Reference Include="System.Reactive, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1b331ac6720247d9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Binaries\System.Reactive.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
@@ -67,6 +67,7 @@
     <Compile Include="..\Controls\Common\IUpdateVisualState.cs">
       <Link>Common\IUpdateVisualState.cs</Link>
     </Compile>
+    <Compile Include="BusyIndicator\BusyIndicator.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Common\LengthConverter.cs" />
     <Compile Include="..\Controls\Common\NumericExtensions.cs">
@@ -190,6 +191,10 @@
       <SubType>Designer</SubType>
     </DefaultStyle>
     <DefaultStyle Include="DragDrop\TreeViewDragDropTarget.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="BusyIndicator\BusyIndicator.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DefaultStyle>

@@ -113,11 +113,6 @@
       <Name>Controls.Layout.Toolkit</Name>
       <Aliases>Silverlight</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\Controls\Controls.csproj">
-      <Project>{BDC7605E-4B2E-41B8-A5F6-4FBFD7651AC9}</Project>
-      <Name>Controls</Name>
-      <Aliases>Silverlight</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj">
       <Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project>
       <Name>Controls.Toolkit</Name>
@@ -125,9 +120,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Controls.Layout.Toolkit.VisualStudio.Design\System.Windows.Controls\Accordion.bmp">
+    <EmbeddedResource Include="..\Controls.Layout.Toolkit.VisualStudio.Design\System.Windows.Controls\Accordion.bmp">
       <Link>System.Windows.Controls\Accordion.bmp</Link>
-    </Content>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Layout.Toolkit.VisualStudio.Design\System.Windows.Controls\LayoutTransformer.bmp">
+      <Link>System.Windows.Controls\LayoutTransformer.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Layout.Toolkit.VisualStudio.Design\System.Windows.Controls\TransitioningContentControl.bmp">
+      <Link>System.Windows.Controls\TransitioningContentControl.bmp</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Controls.Layout.Toolkit.VisualStudio.Design\System.Windows.Controls.Primitives\ExapandableContentControl.bmp">
+      <Link>System.Windows.Controls.Primitives\ExapandableContentControl.bmp</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

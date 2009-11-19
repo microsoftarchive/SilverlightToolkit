@@ -10,7 +10,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
   xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-  xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"
   xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
   x:Class="System.Windows.Controls.Samples.DockPanelSample">
     <StackPanel>
@@ -32,7 +31,7 @@
                 </Setter>
                 <Setter Property="Margin" Value="2" />
             </Style>
-            <Style x:Key="DemoContent" TargetType="dataInput:Label">
+            <Style x:Key="DemoContent" TargetType="ContentControl">
                 <Setter Property="Content" Value="Content" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -45,6 +44,15 @@
                 <Setter Property="Padding" Value="1" />
                 <Setter Property="Margin" Value="0 0 1 1" />
                 <Setter Property="MinWidth" Value="10" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContentControl">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </StackPanel.Resources>
 
@@ -64,23 +72,22 @@
 
             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Left" FontWeight="Bold" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="Top" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="Right" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="2" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="Bottom" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="3" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" />
             </controlsToolkit:DockPanel>
         </Grid>
 
@@ -101,38 +108,38 @@
 
             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="True" FontWeight="Bold" />
             <controlsToolkit:DockPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource DemoPanel}" LastChildFill="True">
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="First" controlsToolkit:DockPanel.Dock="Left" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="First" controlsToolkit:DockPanel.Dock="Left" />
             </controlsToolkit:DockPanel>
             <controlsToolkit:DockPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource DemoPanel}" LastChildFill="True">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" />
             </controlsToolkit:DockPanel>
             <controlsToolkit:DockPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource DemoPanel}" LastChildFill="True">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" />
             </controlsToolkit:DockPanel>
             <controlsToolkit:DockPanel Grid.Row="0" Grid.Column="4" Style="{StaticResource DemoPanel}" LastChildFill="True">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="False" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
             </controlsToolkit:DockPanel>
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="2" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" />
             </controlsToolkit:DockPanel>
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="3" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right"/>
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right"/>
             </controlsToolkit:DockPanel>
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="4" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" />
             </controlsToolkit:DockPanel>
         </Grid>
 
@@ -152,56 +159,56 @@
 
             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Basic Spiral" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource DemoPanel}" LastChildFill="False">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="Full Spiral" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource DemoPanel}">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="5" Background="{StaticResource FifthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="6" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="7" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="8" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="9" Background="{StaticResource FourthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="10" Background="{StaticResource FifthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="11" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="12" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="13" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="14" Background="{StaticResource FourthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="15" Background ="{StaticResource FifthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="16" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="17" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="18" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="19" Background ="{StaticResource FourthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="20" Background="{StaticResource FifthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="21" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="22" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="23" Background ="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="24" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="5" Background="{StaticResource FifthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="6" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="7" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="8" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="9" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="10" Background="{StaticResource FifthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="11" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="12" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="13" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="14" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="15" Background ="{StaticResource FifthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="16" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="17" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="18" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="19" Background ="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="20" Background="{StaticResource FifthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="21" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="22" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="23" Background ="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="24" Background="{StaticResource FourthColor}" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="Clipping the Fifth" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="2" Style="{StaticResource DemoPanel}">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" FontSize="20" Background="{StaticResource FifthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" FontSize="20" Background="{StaticResource FifthColor}" />
             </controlsToolkit:DockPanel>
 
             <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="Too full for the Fifth" />
             <controlsToolkit:DockPanel Grid.Row="1" Grid.Column="3" Style="{StaticResource DemoPanel}">
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" />
-                <dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" Background="{StaticResource FifthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" />
+                <ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" Background="{StaticResource FifthColor}" />
             </controlsToolkit:DockPanel>
         </Grid>
 
@@ -295,7 +302,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
   xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-  xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"
   xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
   x:Class="System.Windows.Controls.Samples.DockPanelSample"&gt;
     &lt;StackPanel&gt;
@@ -317,7 +323,7 @@
                 &lt;/Setter&gt;
                 &lt;Setter Property="Margin" Value="2" /&gt;
             &lt;/Style&gt;
-            &lt;Style x:Key="DemoContent" TargetType="dataInput:Label"&gt;
+            &lt;Style x:Key="DemoContent" TargetType="ContentControl"&gt;
                 &lt;Setter Property="Content" Value="Content" /&gt;
                 &lt;Setter Property="HorizontalAlignment" Value="Center" /&gt;
                 &lt;Setter Property="VerticalAlignment" Value="Center" /&gt;
@@ -330,6 +336,15 @@
                 &lt;Setter Property="Padding" Value="1" /&gt;
                 &lt;Setter Property="Margin" Value="0 0 1 1" /&gt;
                 &lt;Setter Property="MinWidth" Value="10" /&gt;
+                &lt;Setter Property="Template"&gt;
+                    &lt;Setter.Value&gt;
+                        &lt;ControlTemplate TargetType="ContentControl"&gt;
+                            &lt;Grid Background="{TemplateBinding Background}"&gt;
+                                &lt;ContentPresenter Content="{TemplateBinding Content}"/&gt;
+                            &lt;/Grid&gt;
+                        &lt;/ControlTemplate&gt;
+                    &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
             &lt;/Style&gt;
         &lt;/StackPanel.Resources&gt;
 
@@ -349,23 +364,22 @@
 
             &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Left" FontWeight="Bold" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="Top" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="Right" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="2" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="Bottom" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="3" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
         &lt;/Grid&gt;
 
@@ -386,38 +400,38 @@
 
             &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="True" FontWeight="Bold" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource DemoPanel}" LastChildFill="True"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="First" controlsToolkit:DockPanel.Dock="Left" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="First" controlsToolkit:DockPanel.Dock="Left" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource DemoPanel}" LastChildFill="True"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource DemoPanel}" LastChildFill="True"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="0" Grid.Column="4" Style="{StaticResource DemoPanel}" LastChildFill="True"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="False" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="2" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="3" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right"/&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right"/&gt;
             &lt;/controlsToolkit:DockPanel&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="4" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="First" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Content="Second" Background="{StaticResource SecondColor}" controlsToolkit:DockPanel.Dock="Right" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Content="Third" Background="{StaticResource ThirdColor}" controlsToolkit:DockPanel.Dock="Top" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
         &lt;/Grid&gt;
 
@@ -437,56 +451,56 @@
 
             &lt;TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Description}" Text="Basic Spiral" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource DemoPanel}" LastChildFill="False"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Description}" Text="Full Spiral" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource DemoPanel}"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="5" Background="{StaticResource FifthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="6" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="7" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="8" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="9" Background="{StaticResource FourthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="10" Background="{StaticResource FifthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="11" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="12" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="13" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="14" Background="{StaticResource FourthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="15" Background ="{StaticResource FifthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="16" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="17" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="18" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="19" Background ="{StaticResource FourthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="20" Background="{StaticResource FifthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="21" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="22" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="23" Background ="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="24" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="1" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="2" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="3" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="4" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="5" Background="{StaticResource FifthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="6" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="7" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="8" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="9" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="10" Background="{StaticResource FifthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="11" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="12" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="13" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="14" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="15" Background ="{StaticResource FifthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="16" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="17" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="18" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="19" Background ="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="20" Background="{StaticResource FifthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="21" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Content="22" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Right" Content="23" Background ="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Bottom" Content="24" Background="{StaticResource FourthColor}" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource Description}" Text="Clipping the Fifth" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="2" Style="{StaticResource DemoPanel}"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" FontSize="20" Background="{StaticResource FifthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="90" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" FontSize="20" Background="{StaticResource FifthColor}" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
 
             &lt;TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Description}" Text="Too full for the Fifth" /&gt;
             &lt;controlsToolkit:DockPanel Grid.Row="1" Grid.Column="3" Style="{StaticResource DemoPanel}"&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" /&gt;
-                &lt;dataInput:Label Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" Background="{StaticResource FifthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Left" Content="First" Background="{StaticResource FirstColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" Width="60" controlsToolkit:DockPanel.Dock="Right" Content="Third" Background="{StaticResource ThirdColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Top" Content="Second" Background="{StaticResource SecondColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" HorizontalAlignment="Stretch" Height="100" controlsToolkit:DockPanel.Dock="Bottom" Content="Fourth" Background="{StaticResource FourthColor}" /&gt;
+                &lt;ContentControl Style="{StaticResource DemoContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left" Content="Fifth" Background="{StaticResource FifthColor}" /&gt;
             &lt;/controlsToolkit:DockPanel&gt;
         &lt;/Grid&gt;
 

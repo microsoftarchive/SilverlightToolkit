@@ -19,6 +19,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <SignAssembly>false</SignAssembly>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -196,9 +197,6 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DefaultStyle>
   </ItemGroup>
-  <PropertyGroup>
-    <ForwardLink>http://go.microsoft.com/fwlink/?LinkID=142571</ForwardLink>
-  </PropertyGroup>
   <ItemGroup>
     <DefaultStyle Include="ChildWindow\ChildWindow.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>

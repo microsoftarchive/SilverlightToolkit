@@ -1,0 +1,29 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="System.Windows.Controls.Samples.InputOverview">
+    <Grid Background="White" >
+        <TextBlock Style="{StaticResource Information}" Margin="5,30,0,0">
+        The class hierarchy of UpDownBase->UpDownBase->NumericUpDown is designed to: <LineBreak/>
+        ◦ Reuse control template/visual among similar UpDown controls like DomainUpDown, DateTimeUpDown etc. <LineBreak/>
+        ◦ Reuse common logic among UpDown controls <LineBreak/><LineBreak/>
+        The non generic UpDownBase class implements simulated covariance among all UpDown controls. <LineBreak/><LineBreak/>
+        The generic UpDownBase implements:  <LineBreak/>
+        ◦ The control contract: the Text and Spinner template parts, common and focused visual state groups, and the SpinnerStyle property. <LineBreak/>
+        ◦ The Value property. <LineBreak/>
+        ◦ The ParseError, ValueChanging and ValueChanged events. <LineBreak/>
+        ◦ The ApplyValue, ParseValue and FormatValue value input and output protocol. <LineBreak/><LineBreak/>
+        The NumericUpDown class implements NumericUpDown specific semantics, like the Minimum and Maximum properties and the Maximum  >= Value >= Minimum coercion logic; the DecimalPlaces property and display logic etc. <LineBreak/>
+        The Spinner class is an abstraction over the up/down buttons, to provide support for more flexible UI paradigms and controls. <LineBreak/>
+        The ValueChanging event is an attempt to provide WPF like preview events. <LineBreak/>
+                                                                                                                                          
+        </TextBlock>
+    </Grid>
+</UserControl>

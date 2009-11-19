@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="System.Windows.Controls.UnitTests.DataFormApp_FieldsWithInitialAutoEdit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:datacontrols="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit"
+    xmlns:swc="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:local="clr-namespace:System.Windows.Controls.UnitTests"
+    >
+    <UserControl.Resources>
+        <local:IntCollection x:Key="intCollection" />
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <datacontrols:DataForm x:Name="dataForm" AutoGenerateFields="False">
+            <datacontrols:DataForm.ReadOnlyTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <datacontrols:DataField>
+                            <CheckBox TabIndex="0" IsChecked="{Binding BoolProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <swc:DatePicker TabIndex="1" SelectedDate="{Binding DateTimeProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <TextBox x:Name="textBox" Text="{Binding StringProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField Label="Custom label" LabelPosition="Top">
+                            <TextBlock Text="Display template" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <ComboBox ItemsSource="{StaticResource intCollection}" SelectedItem="{Binding IntProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <StackPanel>
+                            <datacontrols:DataField>
+                                <TextBox Text="{Binding StringProperty, Mode=OneTime, ValidatesOnExceptions=false, NotifyOnValidationError=false}" />
+                            </datacontrols:DataField>
+                            <datacontrols:DataField>
+                                <TextBox Text="{Binding StringProperty}" />
+                            </datacontrols:DataField>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </datacontrols:DataForm.ReadOnlyTemplate>
+            <datacontrols:DataForm.EditTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <datacontrols:DataField>
+                            <CheckBox TabIndex="0" IsChecked="{Binding BoolProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <swc:DatePicker TabIndex="1" SelectedDate="{Binding DateTimeProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <TextBox x:Name="textBox" Text="{Binding StringProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField Label="Custom label" LabelPosition="Top">
+                            <TextBlock Text="Edit template" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <ComboBox ItemsSource="{StaticResource intCollection}" SelectedItem="{Binding IntProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <StackPanel>
+                            <datacontrols:DataField>
+                                <TextBox Text="{Binding StringProperty, Mode=OneTime, ValidatesOnExceptions=false, NotifyOnValidationError=false}" />
+                            </datacontrols:DataField>
+                            <datacontrols:DataField>
+                                <TextBox Text="{Binding StringProperty}" />
+                            </datacontrols:DataField>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </datacontrols:DataForm.EditTemplate>
+            <datacontrols:DataForm.NewItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <datacontrols:DataField>
+                            <CheckBox TabIndex="0" IsChecked="{Binding BoolProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <swc:DatePicker TabIndex="1" SelectedDate="{Binding DateTimeProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <TextBox x:Name="textBox" Text="{Binding StringProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField Label="Custom label" LabelPosition="Top">
+                            <TextBlock Text="Insert template" />
+                        </datacontrols:DataField>
+                        <datacontrols:DataField>
+                            <ComboBox ItemsSource="{StaticResource intCollection}" SelectedItem="{Binding IntProperty, Mode=TwoWay}" />
+                        </datacontrols:DataField>
+                        <StackPanel>
+                            <datacontrols:DataField>
+                                <TextBox Text="{Binding StringProperty, Mode=OneTime, ValidatesOnExceptions=false, NotifyOnValidationError=false}" />
+                            </datacontrols:DataField>
+                            <datacontrols:DataField>
+                                <TextBox Text="{Binding StringProperty}" />
+                            </datacontrols:DataField>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </datacontrols:DataForm.NewItemTemplate>
+        </datacontrols:DataForm>
+    </Grid>
+</UserControl>

@@ -1,4 +1,5 @@
-﻿// This source is subject to the Microsoft Public License (Ms-PL).
+﻿// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
@@ -20,4 +21,4 @@ using System.Windows;
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.31016.2326")]
+[assembly: AssemblyFileVersion("3.0.31118.0244")]

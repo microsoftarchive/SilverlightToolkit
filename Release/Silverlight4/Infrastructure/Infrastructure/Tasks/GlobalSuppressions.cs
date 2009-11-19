@@ -1,0 +1,61 @@
+﻿// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Diagnostics.CodeAnalysis;
+
+// Imported types, keeping structure as-is and suppressing
+// Not all types are currently in use.
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#.ctor(System.IO.Stream,System.IO.FileAccess)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#.ctor(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#.ctor(System.String,System.IO.FileAccess)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Clear()")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Close()")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#CopyFromDirectory(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#CopyFromFile(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#CopyToDirectory(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#CopyToFile(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Count")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#CreateText(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Delete(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#DeleteDirectory(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Exists(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Files")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#GetFilesInDirectory(System.String,System.IO.SearchOption)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#GetRelativePath(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Globalization", "CA1307:SpecifyStringComparison", MessageId = "System.String.StartsWith(System.String)", Scope = "member", Target = "System.IO.Compression.ZipArchive.#GetRelativePath(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#IsReadOnly")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Move(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#OpenRead(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#OpenText(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Read(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "archiveStream", Scope = "member", Target = "System.IO.Compression.ZipArchive.#Read(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#ReadAllText(System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#WriteAllText(System.String,System.String)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchive.#WriteArchiveDirectoryToStream(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "System.IO.Compression.ZipArchiveFile")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#Archive")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "CheckSum", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#CheckSum")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#DateTimeToDosTime(System.DateTime)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#DosTimeToDateTime(System.UInt32)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#DosTimeToDateTime(System.UInt32)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#Read(System.IO.Compression.ZipArchive)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#Validate()")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#WriteArchiveDirectoryEntryToStream(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#WriteToStream(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ZipArchiveFile.#WriteZipFileHeader(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#.ctor(System.Int32)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#Length")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#ReadContentsFrom(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#ReadUInt16()")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#ReadUInt32()")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#SkipBytes(System.Int32)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#WriteContentsTo(System.IO.Stream)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#WriteUInt16(System.UInt16)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.IO.Compression.ByteBuffer.#WriteUInt32(System.UInt32)")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "System.IO.Compression.Crc32")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "System.IO.Compression.ZipArchive")]
+
+// Value-add namespace
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "System.IO.Compression", Justification = "Namespace is by-design.")]

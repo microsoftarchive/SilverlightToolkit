@@ -21,4 +21,4 @@ using System.Windows;
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.31016.2323")]
+[assembly: AssemblyFileVersion("3.0.31118.0243")]

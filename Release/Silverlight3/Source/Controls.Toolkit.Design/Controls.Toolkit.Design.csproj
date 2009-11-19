@@ -91,6 +91,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusyIndicatorMetadata.cs" />
     <Compile Include="ExpanderIsExpandedDesignModeValueProvider.cs" />
     <Compile Include="GlobalCalendarButtonMetadata.cs" />
     <Compile Include="GlobalCalendarDayButtonMetadata.cs" />

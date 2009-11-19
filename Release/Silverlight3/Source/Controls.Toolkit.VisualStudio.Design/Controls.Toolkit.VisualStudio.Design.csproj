@@ -125,6 +125,8 @@
   <ItemGroup>
     <EmbeddedResource Include="System.Windows.Controls\DockPanel.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\Expander.bmp" />
+    <EmbeddedResource Include="System.Windows.Controls\GlobalCalendar.bmp" />
+    <EmbeddedResource Include="System.Windows.Controls\HeaderedContentControl.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\Viewbox.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\WrapPanel.bmp" />
   </ItemGroup>

@@ -20,6 +20,7 @@
     <FileAlignment>512</FileAlignment>
     <SilverlightApplication>false</SilverlightApplication>
     <SignAssembly>false</SignAssembly>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>

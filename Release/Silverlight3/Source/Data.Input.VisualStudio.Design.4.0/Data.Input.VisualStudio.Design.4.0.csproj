@@ -111,15 +111,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Data.Input.VisualStudio.Design\System.Windows.Controls\DescriptionViewer.bmp">
+    <EmbeddedResource Include="..\Data.Input.VisualStudio.Design\System.Windows.Controls\DescriptionViewer.bmp">
       <Link>System.Windows.Controls\DescriptionViewer.bmp</Link>
-    </Content>
-    <Content Include="..\Data.Input.VisualStudio.Design\System.Windows.Controls\Label.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Data.Input.VisualStudio.Design\System.Windows.Controls\Label.bmp">
       <Link>System.Windows.Controls\Label.bmp</Link>
-    </Content>
-    <Content Include="..\Data.Input.VisualStudio.Design\System.Windows.Controls\ValidationSummary.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Data.Input.VisualStudio.Design\System.Windows.Controls\ValidationSummary.bmp">
       <Link>System.Windows.Controls\ValidationSummary.bmp</Link>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

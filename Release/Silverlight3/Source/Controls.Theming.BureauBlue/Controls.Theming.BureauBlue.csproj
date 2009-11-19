@@ -10,6 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>System.Windows.Controls.Theming</RootNamespace>
     <AssemblyName>System.Windows.Controls.Theming.BureauBlue</AssemblyName>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SilverlightApplication>false</SilverlightApplication>

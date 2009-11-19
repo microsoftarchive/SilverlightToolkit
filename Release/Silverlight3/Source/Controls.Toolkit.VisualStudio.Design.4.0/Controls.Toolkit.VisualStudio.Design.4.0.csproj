@@ -116,18 +116,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\DockPanel.bmp">
+    <EmbeddedResource Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\DockPanel.bmp">
       <Link>System.Windows.Controls\DockPanel.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\Expander.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\Expander.bmp">
       <Link>System.Windows.Controls\Expander.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\Viewbox.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\GlobalCalendar.bmp">
+      <Link>System.Windows.Controls\GlobalCalendar.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\HeaderedContentControl.bmp">
+      <Link>System.Windows.Controls\HeaderedContentControl.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\Viewbox.bmp">
       <Link>System.Windows.Controls\Viewbox.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\WrapPanel.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Toolkit.VisualStudio.Design\System.Windows.Controls\WrapPanel.bmp">
       <Link>System.Windows.Controls\WrapPanel.bmp</Link>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

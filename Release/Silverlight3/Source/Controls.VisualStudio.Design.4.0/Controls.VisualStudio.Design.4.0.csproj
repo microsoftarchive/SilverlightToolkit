@@ -147,6 +147,9 @@
     <EmbeddedResource Include="..\Controls.VisualStudio.Design\System.Windows.Controls\GridSplitter.bmp">
       <Link>System.Windows.Controls\GridSplitter.bmp</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.VisualStudio.Design\System.Windows.Controls\HeaderedItemsControl.bmp">
+      <Link>System.Windows.Controls\HeaderedItemsControl.bmp</Link>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\Controls.VisualStudio.Design\System.Windows.Controls\TabControl.bmp">
       <Link>System.Windows.Controls\TabControl.bmp</Link>
     </EmbeddedResource>

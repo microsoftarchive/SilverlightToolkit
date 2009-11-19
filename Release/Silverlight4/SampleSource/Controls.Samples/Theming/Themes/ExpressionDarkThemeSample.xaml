@@ -1,0 +1,583 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+xmlns:expressionDark="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.ExpressionDark"
+  xmlns:samples="clr-namespace:System.Windows.Controls.Samples"
+  x:Class="System.Windows.Controls.Samples.ExpressionDarkThemeSample">
+    <StackPanel>
+        <ContentControl Content="ExpressionDarkTheme" Style="{StaticResource Header}" />
+        <expressionDark:ExpressionDarkTheme HorizontalContentAlignment="Stretch">
+            <samples:AllControls/>
+        </expressionDark:ExpressionDarkTheme>
+        <samplesCommon:SourceViewer xmlns:samplesCommon="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <samplesCommon:SourceFile Path="ExpressionDarkThemeSample.xaml">
+    <samplesCommon:SourceFile.Source>
+      <system:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:expressionDark="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.ExpressionDark"
+  xmlns:samples="clr-namespace:System.Windows.Controls.Samples"
+  x:Class="System.Windows.Controls.Samples.ExpressionDarkThemeSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;ContentControl Content="ExpressionDarkTheme" Style="{StaticResource Header}" /&gt;
+        &lt;expressionDark:ExpressionDarkTheme HorizontalContentAlignment="Stretch"&gt;
+            &lt;samples:AllControls/&gt;
+        &lt;/expressionDark:ExpressionDarkTheme&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</system:String>
+    </samplesCommon:SourceFile.Source>
+  </samplesCommon:SourceFile>
+  <samplesCommon:SourceFile Path="ExpressionDarkThemeSample.xaml.cs">
+    <samplesCommon:SourceFile.Source>
+      <system:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Windows.Controls;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Demonstrate the ExpressionDark theme.
+    /// &lt;/summary&gt;
+    [Sample("Theming/Themes/ExpressionDark")]
+    public partial class ExpressionDarkThemeSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ExpressionDarkThemeSample class.
+        /// &lt;/summary&gt;
+        public ExpressionDarkThemeSample()
+        {
+            InitializeComponent();
+        }
+    }
+}</system:String>
+    </samplesCommon:SourceFile.Source>
+  </samplesCommon:SourceFile>
+  <samplesCommon:SourceFile Path="ExpressionDarkThemeSample.xaml.vb">
+    <samplesCommon:SourceFile.Source>
+      <system:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Windows.Controls
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Demonstrate the ExpressionDark theme.
+''' &lt;/summary&gt;
+&lt;Sample("Theming/Themes/ExpressionDark", DifficultyLevel.None), Category("Theming")&gt; _
+Partial Public Class ExpressionDarkThemeSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the ExpressionDarkThemeSample class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+End Class
+
+</system:String>
+    </samplesCommon:SourceFile.Source>
+  </samplesCommon:SourceFile>
+  <samplesCommon:SourceFile Path="AllControls.xaml">
+    <samplesCommon:SourceFile.Source>
+      <system:String>&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.AllControls"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:input="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input"
+  xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
+  
+  
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
+  xmlns:local="clr-namespace:System.Windows.Controls.Samples"
+  mc:Ignorable="d"&gt;
+    &lt;UserControl.Resources&gt;
+        
+       &lt;local:VacationBudgetCollection x:Key="VacationBudget"/&gt;
+
+        &lt;common:HierarchicalDataTemplate x:Key="MediaEntry"&gt;
+            &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;TextBlock FontWeight="Bold" Text="{Binding Path=MediaName}" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/common:HierarchicalDataTemplate&gt;
+
+        &lt;common:HierarchicalDataTemplate x:Key="Catalog" ItemsSource="{Binding Path=MediaItems}" ItemTemplate="{StaticResource MediaEntry}"&gt;
+            &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;TextBlock FontWeight="Bold" Text="{Binding Path=CatalogName}" /&gt;
+            &lt;/StackPanel&gt;
+        &lt;/common:HierarchicalDataTemplate&gt;
+    &lt;/UserControl.Resources&gt;
+
+    &lt;Grid x:Name="Root" Height="Auto" Width="Auto" Background="#FF595959" Opacity="1"&gt;
+        &lt;controlsToolkit:DockPanel Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"&gt;
+            &lt;controlsToolkit:Expander Header="Microsoft Communities" ExpandDirection="Down" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Top" Background="#FF858585" Margin="0,0,0,0"&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;
+                    &lt;Image x:Name="ExpanderImage" Margin="10,10,10,10"&gt;&lt;/Image&gt;
+                    &lt;TextBlock Text="Welcome to Silverlight Themes" FontSize="20" Margin="40,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"&gt;&lt;/TextBlock&gt;
+                &lt;/StackPanel&gt;
+            &lt;/controlsToolkit:Expander&gt;
+
+            &lt;Grid controlsToolkit:DockPanel.Dock="Right" Margin="0,10,10,0"&gt;
+                &lt;Grid.RowDefinitions&gt;
+                    &lt;RowDefinition Height="Auto"/&gt;
+                    &lt;RowDefinition Height="Auto"/&gt;
+                    &lt;RowDefinition Height="Auto"/&gt;
+                &lt;/Grid.RowDefinitions&gt;
+                &lt;Grid Margin="5,2,5,0"  VerticalAlignment="Stretch" Grid.Row="0"&gt;
+                    &lt;StackPanel Margin="0,0,0,0"&gt;
+                        &lt;controls:Label Content="My Trips Bar" FontWeight="Bold" FontFamily="Portable User Interface" Height="16" Width="179" HorizontalAlignment="Left" /&gt;
+                        &lt;controls:Calendar Height="168" Width="179" /&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/Grid&gt;
+                &lt;Border Grid.Row="0" Background="#FF6A6A6A" Opacity="0.42" CornerRadius="5,5,5,5" Canvas.ZIndex="-1" Grid.RowSpan="3" /&gt;
+
+                &lt;Grid Grid.Row="2" Grid.RowSpan="2" Margin="0,16,0,0"&gt;
+                    &lt;Grid.RowDefinitions&gt;
+                        &lt;RowDefinition Height="Auto" /&gt;
+                        &lt;RowDefinition Height="Auto" /&gt;
+                    &lt;/Grid.RowDefinitions&gt;
+                    &lt;Button Content="Scheduled Trips" IsEnabled="False" /&gt;
+                    &lt;ListBox x:Name="TripsList" Grid.RowSpan="2" Grid.Row="1" Height="300" /&gt;
+                &lt;/Grid&gt;
+
+                &lt;Grid Height="Auto" VerticalAlignment="Top" Grid.Row="1" Margin="5,27,5,10"&gt;
+                    &lt;Grid.ColumnDefinitions&gt;
+                        &lt;ColumnDefinition Width="0.614*" /&gt;
+                        &lt;ColumnDefinition Width="0.386*" /&gt;
+                    &lt;/Grid.ColumnDefinitions&gt;
+                    &lt;Grid.RowDefinitions&gt;
+                        &lt;RowDefinition Height="Auto" /&gt;
+                        &lt;RowDefinition Height="0.5*" /&gt;
+                        &lt;RowDefinition Height="0.5*" /&gt;
+                    &lt;/Grid.RowDefinitions&gt;
+
+                    &lt;controls:Label Content="Add New Trip" FontWeight="Bold" FontFamily="Portable User Interface" Height="16" Width="179" VerticalAlignment="Stretch" /&gt;
+                    &lt;Button Height="Auto" Content="Add" VerticalAlignment="Stretch" Grid.RowSpan="2" Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Padding="18,3,16,3" /&gt;
+                    &lt;TextBox Height="Auto" Grid.Row="1" VerticalAlignment="Stretch" Text="TextBox" TextWrapping="Wrap" Margin="0,0,0,0" /&gt;
+                    &lt;controls:DatePicker Grid.Row="2" /&gt;
+                &lt;/Grid&gt;
+            &lt;/Grid&gt;
+
+            &lt;Grid controlsToolkit:DockPanel.Dock="Left"  VerticalAlignment="Stretch" Margin="10,5,0,0"&gt;
+           
+                &lt;Grid.RowDefinitions&gt;
+                    &lt;RowDefinition /&gt;
+                    &lt;RowDefinition /&gt;
+                    &lt;RowDefinition /&gt;
+                &lt;/Grid.RowDefinitions&gt;
+
+                &lt;controls:TreeView ItemTemplate="{StaticResource Catalog}" x:Name="VactionTreeView" SelectedItemChanged="OnVacationChanged" Margin="0,0,0,0" Opacity="1" Background="{x:Null}" Width="350" Height="250" VerticalAlignment="Top" /&gt;
+                &lt;Border Margin="0,0,0,0" Opacity="0.415" Background="#FF8C8484" CornerRadius="5,5,5,5" Canvas.ZIndex="-1" Width="350" Height="250" VerticalAlignment="Stretch"/&gt;
+
+                &lt;Grid Grid.Row="1" Margin="0,6,0,0" Height="Auto"&gt;
+                    &lt;Grid.RowDefinitions&gt;
+                        &lt;RowDefinition /&gt;
+
+                    &lt;/Grid.RowDefinitions&gt;
+
+                    &lt;StackPanel Margin="7,5,0,0" Height="Auto"&gt;
+                        &lt;controls:Label Content="Printing" FontFamily="Portable User Interface" FontWeight="Bold" HorizontalAlignment="Left" /&gt;
+
+                        &lt;RadioButton Content="All"/&gt;
+                        &lt;RadioButton Content="Selection"/&gt;
+                        &lt;RadioButton Content="Current"/&gt;
+                    &lt;/StackPanel&gt;
+
+                    &lt;StackPanel HorizontalAlignment="Right" Margin="0,5,7,7" Width="Auto" Grid.Column="1"&gt;
+                        &lt;controls:Label Content="Copies" FontFamily="Portable User Interface" FontWeight="Bold" Height="Auto" Width="Auto" /&gt;
+                        &lt;StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" &gt;
+                            &lt;controls:Label Content="Number of Copies:" FontFamily="Portable User Interface" FontWeight="Normal" Height="16" Width="104" /&gt;
+                            &lt;inputToolkit:NumericUpDown /&gt;
+                        &lt;/StackPanel&gt;
+                        &lt;ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="25" SelectedIndex="0" Margin="0,7,0,0"&gt;
+                            &lt;ComboBoxItem Content="Black&amp;amp;White"&gt;&lt;/ComboBoxItem&gt;
+                            &lt;ComboBoxItem Content="Color"&gt;&lt;/ComboBoxItem&gt;
+                            &lt;ComboBoxItem Content="Draft"&gt;&lt;/ComboBoxItem&gt;
+                        &lt;/ComboBox&gt;
+                        &lt;CheckBox Height="Auto" Width="Auto" Content="Collate" Margin="0,15,0,0" /&gt;
+                    &lt;/StackPanel&gt;
+                    &lt;Border Background="#FF979797" Canvas.ZIndex="-1" Opacity="0.44" CornerRadius="5,5,5,5" /&gt;
+                &lt;/Grid&gt;
+                &lt;controls:TabControl Width="350" Height="270" Grid.Row="2" Margin="0,11,0,0" VerticalAlignment="Top"&gt;
+                    &lt;controls:TabItem Header="Budget"&gt;
+                       &lt;chartingToolkit:Chart Title="Vacation Budget" VerticalAlignment="Stretch" &gt;
+                            &lt;chartingToolkit:Chart.Series&gt;
+                                &lt;chartingToolkit:PieSeries
+                                        IndependentValueBinding="{Binding ExpenseType}"
+                                        DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True"&gt;
+                                        &lt;chartingToolkit:PieSeries.ItemsSource&gt;
+                                        &lt;toolkit:ObjectCollection&gt;
+                                            &lt;local:Budget ExpenseType="Airfare" ExpenseValue="150"/&gt;
+                                            &lt;local:Budget ExpenseType="Hotels" ExpenseValue="60"/&gt;
+                                            &lt;local:Budget ExpenseType="Food" ExpenseValue="20"/&gt;
+                                            &lt;local:Budget ExpenseType="Entertainment" ExpenseValue="30"/&gt;
+                                        &lt;/toolkit:ObjectCollection&gt;
+                                &lt;/chartingToolkit:PieSeries.ItemsSource&gt;
+                             &lt;/chartingToolkit:PieSeries&gt;
+                           &lt;/chartingToolkit:Chart.Series&gt;
+                        &lt;/chartingToolkit:Chart&gt;
+                    &lt;/controls:TabItem&gt;
+                    &lt;controls:TabItem Header="Entertaiment"&gt;
+                        &lt;chartingToolkit:Chart Title="Entertainment Budget 2007-2008" Width="350" Height="240" LegendTitle="Legend" VerticalAlignment="Stretch"&gt;
+                            &lt;chartingToolkit:Chart.Series&gt;
+                                &lt;chartingToolkit:ColumnSeries Title="Budget 2007" 
+                                      IndependentValueBinding="{Binding ExpenseType}"
+                                      DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True"&gt;
+                                        &lt;chartingToolkit:ColumnSeries.ItemsSource&gt;
+                                            &lt;toolkit:ObjectCollection&gt;
+                                                &lt;local:Budget ExpenseType="Movies" ExpenseValue="150"/&gt;
+                                                &lt;local:Budget ExpenseType="Museum" ExpenseValue="60"/&gt;
+                                            &lt;/toolkit:ObjectCollection&gt;
+                                        &lt;/chartingToolkit:ColumnSeries.ItemsSource&gt;
+                                &lt;/chartingToolkit:ColumnSeries&gt;
+                                &lt;chartingToolkit:ColumnSeries Title="Budget 2008"
+                                      IndependentValueBinding="{Binding ExpenseType}"
+                                      DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True"&gt;
+                                        &lt;chartingToolkit:ColumnSeries.ItemsSource&gt;
+                                            &lt;toolkit:ObjectCollection&gt;
+                                                &lt;local:Budget ExpenseType="Movies" ExpenseValue="200"/&gt;
+                                                &lt;local:Budget ExpenseType="Museum" ExpenseValue="140"/&gt;
+                                            &lt;/toolkit:ObjectCollection&gt;
+                                        &lt;/chartingToolkit:ColumnSeries.ItemsSource&gt;
+                                &lt;/chartingToolkit:ColumnSeries&gt;
+                            &lt;/chartingToolkit:Chart.Series&gt;
+                        &lt;/chartingToolkit:Chart&gt;
+                    &lt;/controls:TabItem&gt;
+                    &lt;controls:TabItem Header="Trends"&gt;
+                        &lt;chartingToolkit:Chart Width="350" Height="240" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" LegendTitle="Legend" Title="Budget Trends in 2007"&gt;
+                            &lt;chartingToolkit:Chart.Series&gt;
+                                &lt;chartingToolkit:LineSeries Title="Trends"
+                                ItemsSource="{StaticResource VacationBudget}"
+                                IndependentValueBinding="{Binding Date}"
+                                DependentValueBinding="{Binding ExpenseValue}"&gt;     
+                                &lt;/chartingToolkit:LineSeries&gt;
+                            &lt;/chartingToolkit:Chart.Series&gt;
+                             &lt;chartingToolkit:Chart.Axes&gt;
+                                &lt;chartingToolkit:DateTimeAxis Orientation="Horizontal" MaxHeight="1" Opacity="0" Minimum="2008/07/07" Maximum="2008/09/08"/&gt;
+                                &lt;chartingToolkit:LinearAxis Orientation="Vertical" MaxWidth="1" Opacity="0" Minimum="36" Maximum="55"/&gt;
+                            &lt;/chartingToolkit:Chart.Axes&gt;
+                        &lt;/chartingToolkit:Chart&gt;
+                    &lt;/controls:TabItem&gt;
+                &lt;/controls:TabControl&gt;
+            &lt;/Grid&gt;
+
+            &lt;Grid Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,0,30,0"&gt;
+                &lt;Grid.RowDefinitions&gt;
+                    &lt;RowDefinition Height="0.622*"/&gt;
+                    &lt;RowDefinition Height="0.378*"/&gt;
+                &lt;/Grid.RowDefinitions&gt;
+
+                &lt;Grid Margin="0,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"&gt;
+                    &lt;Grid.ColumnDefinitions&gt;
+                        &lt;ColumnDefinition Width="Auto"/&gt;
+                        &lt;ColumnDefinition Width="*"/&gt;
+                    &lt;/Grid.ColumnDefinitions&gt;
+                    &lt;Grid.RowDefinitions&gt;
+                        &lt;RowDefinition Height="Auto"/&gt;
+                        &lt;RowDefinition Height="0.756*"/&gt;
+                        &lt;RowDefinition Height="Auto" MinHeight="45"/&gt;
+                    &lt;/Grid.RowDefinitions&gt;
+
+                    &lt;Border Background="#FF8E8D8D" CornerRadius="5,5,5,5"&gt;
+                        &lt;Image x:Name="VacationImage" Width="400" Height="300" Stretch="UniformToFill" /&gt;         
+                    &lt;/Border&gt;
+                    &lt;Slider HorizontalAlignment="Center" Width="Auto" Grid.Column="1" Grid.Row="0" IsDirectionReversed="False" Orientation="Vertical" Margin="5,0,0,0" /&gt;
+                    &lt;Slider Grid.Row="2" VerticalAlignment="Top" Height="Auto" Margin="0,5,0,0" /&gt;
+                &lt;/Grid&gt;
+
+                &lt;Grid Grid.Row="1" Margin="0,10,0,0"&gt;
+                    &lt;Grid.RowDefinitions&gt;
+                        &lt;RowDefinition Height="Auto"&gt;&lt;/RowDefinition&gt;
+                        &lt;RowDefinition Height="*"&gt;&lt;/RowDefinition&gt;
+                    &lt;/Grid.RowDefinitions&gt;
+                    &lt;StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top"&gt;
+                        &lt;controls:Label Content="Search" VerticalAlignment="Bottom" Margin="0,0,4,0" /&gt;
+                        &lt;input:AutoCompleteBox x:Name="SampleAutoComplete" Width="300" /&gt;
+                    &lt;/StackPanel&gt;
+                    &lt;data:DataGrid Grid.Row="1" x:Name="SampleDataGrid" Margin="10,10,10,10" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" VerticalAlignment="Top"/&gt;
+                    &lt;Border Height="280" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" Width="Auto" Grid.Row="0" Grid.RowSpan="2" Background="#FF666666" CornerRadius="5,5,5,5" Canvas.ZIndex="-1" Opacity="0.3" /&gt;
+                &lt;/Grid&gt;
+            &lt;/Grid&gt;
+        &lt;/controlsToolkit:DockPanel&gt;
+        &lt;Border CornerRadius="10,10,10,10" Opacity="0" Canvas.ZIndex="-1" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"&gt;
+            &lt;Border.Background&gt;
+                &lt;LinearGradientBrush EndPoint="0.256,0.834" StartPoint="0.964,-0.021"&gt;
+                    &lt;GradientStop Color="#FF000000" /&gt;
+                    &lt;GradientStop Color="#FDFFFFFF" Offset="1" /&gt;
+                &lt;/LinearGradientBrush&gt;
+            &lt;/Border.Background&gt;
+            &lt;Canvas&gt;
+                &lt;Path Stretch="Fill" Data="F1 M 4.33333,342L 3.00001,342.667C 38.4239,316.358 73.8478,290.05 115.514,276.495C 157.181,262.939 205.091,262.136 221.355,249.222C 237.62,236.307 222.239,211.281 216.964,196.869C 211.688,182.457 216.518,178.66 220.752,175.335C 224.987,172.011 228.625,169.159 236.123,170.46C 243.62,171.761 254.977,177.214 258.157,174.734C 261.337,172.255 256.341,161.843 255.656,155.23C 254.972,148.616 258.6,145.801 272.987,150.229C 287.374,154.657 312.52,166.329 323.224,158.176C 333.927,150.024 330.187,122.048 342.072,98.74C 353.958,75.4324 381.468,56.7934 408.2,42.9915C 434.933,29.1896 460.888,20.2247 479.177,24.1753C 497.465,28.1258 508.087,44.9917 516.113,62.7541C 524.139,80.5164 529.57,99.1753 535,117.834C 497.667,199.333 503,156.667 498.333,205.333C 496.62,223.201 492.301,230.285 489.07,232.788C 491.562,233.109 495.396,234.163 501,236.667C 532.333,250.667 540.333,266.667 562.333,244.667C 584.333,222.667 555.667,167.333 597.667,226C 639.667,284.667 590.333,346 577,352C 570.333,367.333 530.333,375.333 530.333,375.333C 530.333,375.333 427,410.667 433,389.333C 422.333,397.333 399,326 401,314.667C 403,303.333 415,285.333 415,285.333L 425.667,248.667L 422.333,234.667L 413.667,228C 357.667,224 321,237.333 323.667,254.667C 326.333,272 319.667,272 329.667,294.667C 339.667,317.333 405,316 344.333,362.667C 283.667,409.333 232.333,574 5.66667,489.333L 4.33333,342 Z M 145.333,311.333C 127.476,311.333 113,325.81 113,343.667C 113,361.524 127.476,376 145.333,376C 163.19,376 177.667,361.524 177.667,343.667C 177.667,325.81 163.19,311.333 145.333,311.333 Z M 203.667,292.667C 191.516,292.667 181.667,302.517 181.667,314.667C 181.667,326.817 191.516,336.667 203.667,336.667C 215.817,336.667 225.667,326.817 225.667,314.667C 225.667,302.517 215.817,292.667 203.667,292.667 Z M 246.667,279.333C 239.487,279.333 233.667,284.258 233.667,290.333C 233.667,296.408 239.487,301.333 246.667,301.333C 253.846,301.333 259.667,296.408 259.667,290.333C 259.667,284.258 253.846,279.333 246.667,279.333 Z M 567.667,270C 559.566,270 553,276.417 553,284.333C 553,292.249 559.566,298.667 567.667,298.667C 575.767,298.667 582.333,292.249 582.333,284.333C 582.333,276.417 575.767,270 567.667,270 Z " d:LayoutOverrides="Width, Height" Opacity="0.6" VerticalAlignment="Stretch" d:IsHidden="True"&gt;
+                    &lt;Path.Fill&gt;
+                        &lt;LinearGradientBrush StartPoint="-7.80076e-010,0.495068" EndPoint="1.04155,0.495068"&gt;
+                            &lt;GradientStop Color="#FF000000" Offset="0" /&gt;
+                            &lt;GradientStop Color="#FFFFFFFF" Offset="1" /&gt;
+                        &lt;/LinearGradientBrush&gt;
+                    &lt;/Path.Fill&gt;
+                &lt;/Path&gt;
+            &lt;/Canvas&gt;
+        &lt;/Border&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;</system:String>
+    </samplesCommon:SourceFile.Source>
+  </samplesCommon:SourceFile>
+  <samplesCommon:SourceFile Path="AllControls.xaml.cs">
+    <samplesCommon:SourceFile.Source>
+      <system:String>// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Controls.Theming;
+using System.Collections.Generic;
+using System.Windows.Controls.DataVisualization.Charting;
+using System.Collections;
+using System.Linq;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// A user control with examples of every control to demonstrate themes.
+    /// &lt;/summary&gt;
+    public partial class AllControls : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the Background Brush for this user Control.
+        /// &lt;/summary&gt;
+        public Brush PreferredBackground
+        {
+            get { return Root.Background; }
+            set { Root.Background = value; }
+        }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the AllControls class.
+        /// &lt;/summary&gt;
+        public AllControls()
+        {
+            InitializeComponent();
+            LayoutUpdated += OnLayoutUpdated;
+
+            SampleDataGrid.ItemsSource = Employee.Executives;
+            SampleAutoComplete.ItemsSource = Catalog.VacationMediaItems;
+            TripsList.ItemsSource = Catalog.PlannedVacationMediaItems;
+            VacationImage.Source = Catalog.VacationCatalog.CatalogImage.Source;
+
+            VactionTreeView.LayoutUpdated += OnTreeViewLayoutUpdated;
+            ObjectCollection collection = new ObjectCollection();
+            collection.Add(Catalog.VacationCatalog);
+            VactionTreeView.ItemsSource = collection;
+            ExpanderImage.Source = SharedResources.GetImage("SilverlightThemesLogo.jpg").Source;
+        }
+
+        /// &lt;summary&gt;
+        /// Initialize ImplicitStyleManager once the visual tree is ready.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The UserControl.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnLayoutUpdated(object sender, EventArgs e)
+        {
+            // Only apply once
+            LayoutUpdated -= OnLayoutUpdated;
+
+            // ImplicitStyleManager is design to only style controls in the
+            // namescope it was defined in.  Since user controls create new
+            // namescopes, the ImplicitStyleManager acting on the Theme controls
+            // will not style the controls in the AllControls user control.  By
+            // applying ImplicitStyleManager to the root of the user control
+            // (without giving it a theme to use), it will walk up the visual
+            // tree to the Theme control and use its styles.
+            ImplicitStyleManager.SetApplyMode(Root, ImplicitStylesApplyMode.Auto);
+            ImplicitStyleManager.Apply(Root);
+        }
+
+        /// &lt;summary&gt;
+        /// Expanding the TreeView Items.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The source object.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The event arguments.&lt;/param&gt;
+        private void OnTreeViewLayoutUpdated(object sender, EventArgs e)
+        {
+            VactionTreeView.LayoutUpdated -= OnTreeViewLayoutUpdated;
+            VactionTreeView.ExpandAll();
+        }
+
+        /// &lt;summary&gt;
+        /// Fired when selected item in the tree changes.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The source object.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The selection changed event data.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Declared as an event handler in XAML.")]
+        private void OnVacationChanged(object sender, RoutedPropertyChangedEventArgs&lt;object&gt; e)
+        {
+            MediaItem media = VactionTreeView.SelectedItem as MediaItem;
+            if (media != null)
+            {
+                VacationImage.Source = media.Image.Source;
+            }
+            else
+            {
+                Catalog catalog = VactionTreeView.SelectedItem as Catalog;
+                if (catalog != null)
+                {
+                    VacationImage.Source = catalog.CatalogImage.Source;
+                }
+            }
+        }
+    }
+}</system:String>
+    </samplesCommon:SourceFile.Source>
+  </samplesCommon:SourceFile>
+  <samplesCommon:SourceFile Path="AllControls.xaml.vb">
+    <samplesCommon:SourceFile.Source>
+      <system:String>' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Diagnostics.CodeAnalysis
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.Windows.Media
+Imports System.Windows.Controls.Theming
+Imports System.Collections.Generic
+Imports System.Windows.Controls.DataVisualization.Charting
+Imports System.Collections
+Imports System.Linq
+
+''' &lt;summary&gt;
+''' A user control with examples of every control to demonstrate themes.
+''' &lt;/summary&gt;
+Partial Public Class AllControls
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Gets or sets the Background Brush for this user Control.
+    ''' &lt;/summary&gt;
+    Public Property PreferredBackground() As Brush
+        Get
+            Return Root.Background
+        End Get
+        Set(ByVal value As Brush)
+            Root.Background = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the AllControls class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+
+        ' Use AddHandler here because RemoveHandler is called by handler
+        AddHandler LayoutUpdated, AddressOf OnLayoutUpdated
+        SampleDataGrid.ItemsSource = Employee.Executives
+        SampleAutoComplete.ItemsSource = Catalog.VacationMediaItems
+        TripsList.ItemsSource = Catalog.PlannedVacationMediaItems
+        VacationImage.Source = Catalog.VacationCatalog.CatalogImage.Source
+
+        ' Use AddHandler here because RemoveHandler is called by handler
+        AddHandler VactionTreeView.LayoutUpdated, AddressOf OnTreeViewLayoutUpdated
+        Dim collection As New ObjectCollection()
+        collection.Add(Catalog.VacationCatalog)
+        VactionTreeView.ItemsSource = collection
+        ExpanderImage.Source = SharedResources.GetImage("SilverlightThemesLogo.jpg").Source
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Initialize ImplicitStyleManager once the visual tree is ready.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The UserControl.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    Private Sub OnLayoutUpdated(ByVal sender As Object, ByVal e As EventArgs)
+        ' Only apply once
+        RemoveHandler LayoutUpdated, AddressOf OnLayoutUpdated
+
+        ' ImplicitStyleManager is design to only style controls in the
+        ' namescope it was defined in.  Since user controls create new
+        ' namescopes, the ImplicitStyleManager acting on the Theme controls
+        ' will not style the controls in the AllControls user control.  By
+        ' applying ImplicitStyleManager to the root of the user control
+        ' (without giving it a theme to use), it will walk up the visual
+        ' tree to the Theme control and use its styles.
+        ImplicitStyleManager.SetApplyMode(Root, ImplicitStylesApplyMode.Auto)
+        ImplicitStyleManager.Apply(Root)
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Expanding the TreeView Items.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The source object.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;The event arguments.&lt;/param&gt;
+    Private Sub OnTreeViewLayoutUpdated(ByVal sender As Object, ByVal e As EventArgs)
+        RemoveHandler VactionTreeView.LayoutUpdated, AddressOf OnTreeViewLayoutUpdated
+        VactionTreeView.ExpandAll()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Fired when selected item in the tree changes.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The source object.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;The selection changed event data.&lt;/param&gt;
+    &lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Declared as an event handler in XAML.")&gt; _
+    Private Sub OnVacationChanged(ByVal sender As Object, ByVal e As RoutedPropertyChangedEventArgs(Of Object))
+        Dim media As MediaItem = TryCast(VactionTreeView.SelectedItem, MediaItem)
+        If media IsNot Nothing Then
+            VacationImage.Source = media.Image.Source
+        Else
+            Dim catalog As Catalog = TryCast(VactionTreeView.SelectedItem, Catalog)
+            If catalog IsNot Nothing Then
+                VacationImage.Source = catalog.CatalogImage.Source
+            End If
+        End If
+    End Sub
+End Class
+</system:String>
+    </samplesCommon:SourceFile.Source>
+  </samplesCommon:SourceFile>
+</samplesCommon:SourceViewer>
+    </StackPanel>
+</UserControl>

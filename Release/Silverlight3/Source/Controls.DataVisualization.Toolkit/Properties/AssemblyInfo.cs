@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 // Silverlight-specific settings
 [assembly: AssemblyDescription("Silverlight Toolkit Data Visualization Controls")]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.31016.2251")]
+[assembly: AssemblyFileVersion("3.0.31118.0235")]
 [assembly: AssemblyProduct("Microsoft® Silverlight™ Toolkit")]
 [assembly: Guid("5d0880cb-44d8-4a5c-a839-e7bd88ce022d")]
 

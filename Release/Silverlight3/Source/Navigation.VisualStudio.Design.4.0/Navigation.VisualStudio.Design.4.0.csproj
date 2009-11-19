@@ -111,12 +111,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Navigation.VisualStudio.Design\System.Windows.Controls\Frame.bmp">
+    <EmbeddedResource Include="..\Navigation.VisualStudio.Design\System.Windows.Controls\Frame.bmp">
       <Link>System.Windows.Controls\Frame.bmp</Link>
-    </Content>
-    <Content Include="..\Navigation.VisualStudio.Design\System.Windows.Controls\Page.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Navigation.VisualStudio.Design\System.Windows.Controls\Page.bmp">
       <Link>System.Windows.Controls\Page.bmp</Link>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

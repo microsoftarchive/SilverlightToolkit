@@ -12,6 +12,7 @@
     <AssemblyName>System.Windows.Controls.Theming.RainierPurple</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>false</ThrowErrorsInValidation>

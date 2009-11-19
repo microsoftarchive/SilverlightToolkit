@@ -129,11 +129,8 @@
     <EmbeddedResource Include="..\Binaries\System.Windows.Controls.DataVisualization.Toolkit.XML" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj">
-      <Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project>
-      <Name>Controls.DataVisualization.Toolkit</Name>
-      <Aliases>Silverlight</Aliases>
-    </ProjectReference>
+    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj"><Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project><Name>Controls.DataVisualization.Toolkit</Name><Aliases>Silverlight</Aliases></ProjectReference>
+    <Reference Include="System.Windows.Controls" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="System.Windows.Controls.DataVisualization.Charting\AreaSeries.Icon.12x12.png" />

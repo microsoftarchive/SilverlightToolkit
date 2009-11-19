@@ -127,6 +127,9 @@
     <Compile Include="DataForm\DataTemplates\TemplateFieldInsertTemplate.xaml.cs">
       <DependentUpon>TemplateFieldInsertTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_DirectContent.xaml.cs">
+      <DependentUpon>DataFormApp_DirectContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithStylesWithTemplates.xaml.cs">
       <DependentUpon>DataFormApp_FieldsWithStylesWithTemplates.xaml</DependentUpon>
     </Compile>
@@ -238,6 +241,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_DirectContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
     <Page Include="DataForm\TestApps\DataFormApp_FieldsWithStylesWithTemplates.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -331,7 +338,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <Import  Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -115,27 +115,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\ButtonSpinner.bmp">
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\ButtonSpinner.bmp">
       <Link>System.Windows.Controls\ButtonSpinner.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\DomainUpDown.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\DomainUpDown.bmp">
       <Link>System.Windows.Controls\DomainUpDown.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\ListTimePickerPopup.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\ListTimePickerPopup.bmp">
       <Link>System.Windows.Controls\ListTimePickerPopup.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\NumericUpDown.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\NumericUpDown.bmp">
       <Link>System.Windows.Controls\NumericUpDown.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\TimePicker.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\TimePicker.bmp">
       <Link>System.Windows.Controls\TimePicker.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\TimeUpDown.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\TimeUpDown.bmp">
       <Link>System.Windows.Controls\TimeUpDown.bmp</Link>
-    </Content>
-    <Content Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\UpDownBase.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Input.Toolkit.VisualStudio.Design\System.Windows.Controls\UpDownBase.bmp">
       <Link>System.Windows.Controls\UpDownBase.bmp</Link>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

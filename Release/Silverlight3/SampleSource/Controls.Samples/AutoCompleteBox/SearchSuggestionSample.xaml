@@ -71,7 +71,7 @@
             <StackPanel x:Name="HostingWarning" Background="#88000000">
                 <StackPanel Background="#aaffffff" Margin="6">
                     <TextBlock Margin="6" UseLayoutRounding="False" FontWeight="Bold">This sample must be hosted on a web server.</TextBlock>
-                    <TextBlock Margin="6" UseLayoutRounding="False" TextWrapping="Wrap">A cross-domain web service call can only be made when the page is hosted from a server via the HTTP scheme. Consider hosting this using IIS, the built-in Web Development Server in Visual Studio, or another server technology.</TextBlock>
+                    <TextBlock Margin="6" UseLayoutRounding="False" TextWrapping="Wrap">A cross-domain web service call can only be made when the page is hosted from a server via the HTTP scheme. Consider hosting this using IIS, the built-in Web Development Server in Visual Studio, or another server technology. At this time, this sample is also not supported in Out of Browser scenarios.</TextBlock>
                 </StackPanel>
             </StackPanel>
 
@@ -153,7 +153,7 @@
             &lt;StackPanel x:Name="HostingWarning" Background="#88000000"&gt;
                 &lt;StackPanel Background="#aaffffff" Margin="6"&gt;
                     &lt;TextBlock Margin="6" UseLayoutRounding="False" FontWeight="Bold"&gt;This sample must be hosted on a web server.&lt;/TextBlock&gt;
-                    &lt;TextBlock Margin="6" UseLayoutRounding="False" TextWrapping="Wrap"&gt;A cross-domain web service call can only be made when the page is hosted from a server via the HTTP scheme. Consider hosting this using IIS, the built-in Web Development Server in Visual Studio, or another server technology.&lt;/TextBlock&gt;
+                    &lt;TextBlock Margin="6" UseLayoutRounding="False" TextWrapping="Wrap"&gt;A cross-domain web service call can only be made when the page is hosted from a server via the HTTP scheme. Consider hosting this using IIS, the built-in Web Development Server in Visual Studio, or another server technology. At this time, this sample is also not supported in Out of Browser scenarios.&lt;/TextBlock&gt;
                 &lt;/StackPanel&gt;
             &lt;/StackPanel&gt;
 

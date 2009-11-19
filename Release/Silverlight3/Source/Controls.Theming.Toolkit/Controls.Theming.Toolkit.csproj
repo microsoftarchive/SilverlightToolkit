@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SilverlightApplication>false</SilverlightApplication>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
   </PropertyGroup>

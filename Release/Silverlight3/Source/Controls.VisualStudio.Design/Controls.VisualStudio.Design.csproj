@@ -145,6 +145,7 @@
     <EmbeddedResource Include="System.Windows.Controls\DatePicker.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\DatePickerTextBox.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\GridSplitter.bmp" />
+    <EmbeddedResource Include="System.Windows.Controls\HeaderedItemsControl.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\TabControl.bmp" />
     <EmbeddedResource Include="System.Windows.Controls\TreeView.bmp" />
   </ItemGroup>

@@ -20,6 +20,7 @@
     <FileAlignment>512</FileAlignment>
     <SilverlightApplication>false</SilverlightApplication>
     <SignAssembly>false</SignAssembly>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -58,6 +59,7 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Controls.Data" />
+    <Reference Include="System.Windows.Controls.Data.Input" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />

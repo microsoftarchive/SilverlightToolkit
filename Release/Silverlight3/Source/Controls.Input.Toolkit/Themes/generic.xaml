@@ -1463,7 +1463,7 @@
             </vsm:VisualStateManager.VisualStateGroups>
             <!-- Spinner + HintVisualElement + TextBox -->
             <!-- the border will be 'flown out' to act as a balloon -->
-            <Popup x:Name="TimeHintPopup" IsOpen="True" VerticalOffset="0">
+            <Popup x:Name="TimeHintPopup" VerticalOffset="0">
               <Border x:Name="TimeHintVisualElement" IsHitTestVisible="True" BorderBrush="Gray" Background="White" Visibility="Collapsed" HorizontalAlignment="Left" BorderThickness="1">
                 <Border.RenderTransform>
                   <TransformGroup>

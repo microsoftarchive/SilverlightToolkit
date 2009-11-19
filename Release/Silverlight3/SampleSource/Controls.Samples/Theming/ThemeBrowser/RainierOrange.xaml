@@ -12,7 +12,6 @@
                     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
                     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
                     xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-                    xmlns:input="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input"
                     xmlns:controlsPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls"
                     xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
                     xmlns:chartingPrimitivesToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit" 

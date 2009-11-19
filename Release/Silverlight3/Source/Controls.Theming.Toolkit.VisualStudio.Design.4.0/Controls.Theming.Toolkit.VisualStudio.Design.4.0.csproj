@@ -103,9 +103,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Controls.Theming.Toolkit.VisualStudio.Design\System.Windows.Controls.Theming\ImplicitStyleManager.bmp">
+    <EmbeddedResource Include="..\Controls.Theming.Toolkit.VisualStudio.Design\System.Windows.Controls.Theming\ImplicitStyleManager.bmp">
       <Link>System.Windows.Controls.Theming\ImplicitStyleManager.bmp</Link>
-    </Content>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Controls.Theming.Toolkit.VisualStudio.Design\System.Windows.Controls.Theming\Theme.bmp">
+      <Link>System.Windows.Controls.Theming\Theme.bmp</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controls.Theming.Toolkit\Controls.Theming.Toolkit.csproj">

@@ -192,7 +192,7 @@ namespace Microsoft.Windows
                 .Where(queryContinueDragEvent => queryContinueDragEvent.EventArgs.Action == SW.DragAction.Cancel)
                 .Subscribe(queryContinueDragEvent => OnCancel());
 
-            _dragCompleted.Subscribe(() => IsDragging = false);
+            _dragCompleted.Subscribe(_ => IsDragging = false);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Microsoft.Windows
                     keyStatesChanged.IgnoreAll(),
                     escapePressedChanged.IgnoreAll())
                 .Until(_dragCompleted)
-                .Subscribe(() => RaiseDragSourceEvents(_lastDragEventArgs));
+                .Subscribe(_ => RaiseDragSourceEvents(_lastDragEventArgs));
 
             IObservable<Event<SW.DragEventArgs>> dragOver =
                 from dragStartedEvent in _dragStarted
@@ -543,7 +543,7 @@ namespace Microsoft.Windows
                             mouseMoveEvent.EventArgs))
                     .Select(
                         acceptDropSourceAndEventArgs =>
-                            new Event<SW.DragEventArgs>(
+                            (Event<SW.DragEventArgs>) new Event<SW.DragEventArgs>(
                                 acceptDropSourceAndEventArgs.Item1,
                                 new SW.DragEventArgs(_dragStartEventArgs)
                                 {

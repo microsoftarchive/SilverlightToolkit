@@ -185,6 +185,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj"><Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project><Name>Controls.DataVisualization.Toolkit</Name><Aliases>Silverlight</Aliases></ProjectReference>
     <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj"><Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project><Name>Controls.Toolkit</Name></ProjectReference>
+    <Reference Include="System.Windows.Controls" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="System.Windows.Controls.DataVisualization.Charting\AreaSeries.bmp" />
@@ -199,6 +200,9 @@
     <EmbeddedResource Include="System.Windows.Controls.DataVisualization.Charting\LineSeries.bmp" />
     <EmbeddedResource Include="System.Windows.Controls.DataVisualization.Charting\PieSeries.bmp" />
     <EmbeddedResource Include="System.Windows.Controls.DataVisualization.Charting\ScatterSeries.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="System.Windows.Controls.DataVisualization\TreeMap.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

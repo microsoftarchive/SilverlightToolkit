@@ -20,11 +20,40 @@ namespace System.Windows.Controls.Samples
         /// </summary>
         public App()
         {
+            if (App.Current.InstallState == InstallState.Installed)
+            {
+                App.Current.CheckAndDownloadUpdateCompleted += OnCheckAndDownloadUpdateCompleted;
+                App.Current.CheckAndDownloadUpdateAsync();
+            }
+
             Startup += delegate
             {
                 RootVisual = new SampleBrowser(this.GetType().Assembly, SampleTreeItems);
             };
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Checks for the update completed event.
+        /// </summary>
+        /// <param name="sender">The source object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnCheckAndDownloadUpdateCompleted(object sender, CheckAndDownloadUpdateCompletedEventArgs e)
+        {
+            if (e.UpdateAvailable)
+            {
+                MessageBox.Show("An application update has been downloaded and "
+                              + "will be available the next time you start the "
+                              + "sample application.");
+            }
+            else if (e.Error != null)
+            {
+                MessageBox.Show("While checking for an application update, the "
+                              + "following message was encountered:"
+                              + Environment.NewLine 
+                              + Environment.NewLine 
+                              + e.Error.Message);
+            }
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Information about an ongoing item drag event.
         /// </summary>
-        private static ItemDragEventArgs<TItemsControlType> _currentItemDragEventArgs;
+        private static ItemDragEventArgs _currentItemDragEventArgs;
 
         /// <summary>
         /// The state of the keys relevant to drag and drop operation.
@@ -89,19 +89,19 @@ namespace System.Windows.Controls
         /// <summary>
         /// An event raised when an item drag is started.
         /// </summary>
-        private Subject<Event<ItemDragEventArgs<TItemsControlType>>> _itemDragStarted = new Subject<Event<ItemDragEventArgs<TItemsControlType>>>();
+        private Subject<Event<ItemDragEventArgs>> _itemDragStarted = new Subject<Event<ItemDragEventArgs>>();
 
         /// <summary>
         /// An event raised when an item drag is completed.
         /// </summary>
-        private Subject<Event<ItemDragEventArgs<TItemsControlType>>> _itemDragCompleted = new Subject<Event<ItemDragEventArgs<TItemsControlType>>>();
+        private Subject<Event<ItemDragEventArgs>> _itemDragCompleted = new Subject<Event<ItemDragEventArgs>>();
 
         /// <summary>
         /// Gets information about an ongoing item drag event.
         /// </summary>
-        protected static ItemDragEventArgs<TItemsControlType> CurrentItemDragEventArgs
+        private static ItemDragEventArgs CurrentItemDragEventArgs
         {
-            get { return (_currentItemDragEventArgs != null) ? new ItemDragEventArgs<TItemsControlType>(_currentItemDragEventArgs) : null; }
+            get { return (_currentItemDragEventArgs != null) ? new ItemDragEventArgs(_currentItemDragEventArgs) : null; }
         }
 
         /// <summary>
@@ -174,12 +174,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// A list of ItemDragStarting event handlers.
         /// </summary>
-        private List<EventHandler<ItemDragEventArgs<TItemsControlType>>> _itemDragStarting = new List<EventHandler<ItemDragEventArgs<TItemsControlType>>>();
+        private List<EventHandler<ItemDragEventArgs>> _itemDragStarting = new List<EventHandler<ItemDragEventArgs>>();
 
         /// <summary>
         /// An event raised when a drag operation is starting on an item.
         /// </summary>
-        public event EventHandler<ItemDragEventArgs<TItemsControlType>> ItemDragStarting
+        public event EventHandler<ItemDragEventArgs> ItemDragStarting
         {
             add
             {
@@ -196,10 +196,12 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="eventArgs">Information about the drag starting event.
         /// </param>
-        protected virtual void OnItemDragStarting(ItemDragEventArgs<TItemsControlType> eventArgs)
+        protected virtual void OnItemDragStarting(ItemDragEventArgs eventArgs)
         {
-            ItemDragEventArgs<TItemsControlType> copy = new ItemDragEventArgs<TItemsControlType>(eventArgs);
-            foreach (EventHandler<ItemDragEventArgs<TItemsControlType>> handler in this._itemDragStarting)
+            UIElement dragSource = eventArgs.DragSource as UIElement;
+
+            ItemDragEventArgs copy = new ItemDragEventArgs(eventArgs);
+            foreach (EventHandler<ItemDragEventArgs> handler in this._itemDragStarting)
             {
                 handler(this, copy);
                 if (copy.Handled)
@@ -211,7 +213,7 @@ namespace System.Windows.Controls
 
             if (!eventArgs.Cancel && !SW.DragDrop.IsDragInProgress)
             {
-                _itemDragStarted.OnNext(new Event<ItemDragEventArgs<TItemsControlType>>(this, eventArgs));
+                _itemDragStarted.OnNext(new Event<ItemDragEventArgs>(this, eventArgs));
                 SW.GiveFeedbackEventHandler giveFeedbackHandler =
                     (_, a) =>
                     {
@@ -222,31 +224,36 @@ namespace System.Windows.Controls
                 handler =
                     (_, args) =>
                     {
-                        eventArgs.DragSource.RemoveHandler(
-                            SW.DragDrop.GiveFeedbackEvent,
-                            giveFeedbackHandler);
-
+                        if (dragSource != null)
+                        {
+                            dragSource.RemoveHandler(
+                                SW.DragDrop.GiveFeedbackEvent,
+                                giveFeedbackHandler);
+                        }
                         SW.DragDrop.DragDropCompleted -= handler;
 
                         _itemDragCompleted.OnNext(
-                            new Event<ItemDragEventArgs<TItemsControlType>>(
+                            new Event<ItemDragEventArgs>(
                                 this,
-                                new ItemDragEventArgs<TItemsControlType>(eventArgs)
+                                new ItemDragEventArgs(eventArgs)
                                 {
                                     Effects = (args.Effects == SW.DragDropEffects.Scroll || args.Effects == SW.DragDropEffects.None) ? args.Effects : _lastGiveFeedbackEffects
                                 }));
                     };
 
-                eventArgs.DragSource.AddHandler(
-                    SW.DragDrop.GiveFeedbackEvent,
-                    giveFeedbackHandler,
-                    true);
+                if (dragSource != null)
+                {
+                    dragSource.AddHandler(
+                        SW.DragDrop.GiveFeedbackEvent,
+                        giveFeedbackHandler,
+                        true);
+                }
 
                 SW.DragDrop.DragDropCompleted += handler;
 
                 SW.DragDrop.DoDragDrop(
                     eventArgs.DragSource,
-                    eventArgs.Data,
+                    eventArgs,
                     eventArgs.AllowedEffects,
                     SW.DragDropKeyStates.LeftMouseButton);
             }
@@ -257,12 +264,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// A list of ItemDragCompleted event handlers.
         /// </summary>
-        private List<EventHandler<ItemDragEventArgs<TItemsControlType>>> _itemDroppedOnTargetHandlers = new List<EventHandler<ItemDragEventArgs<TItemsControlType>>>();
+        private List<EventHandler<ItemDragEventArgs>> _itemDroppedOnTargetHandlers = new List<EventHandler<ItemDragEventArgs>>();
 
         /// <summary>
         /// This event is raised when an item is dropped on a target.
         /// </summary>
-        public event EventHandler<ItemDragEventArgs<TItemsControlType>> ItemDroppedOnTarget
+        public event EventHandler<ItemDragEventArgs> ItemDroppedOnTarget
         {
             add
             {
@@ -278,9 +285,9 @@ namespace System.Windows.Controls
         /// Raises the ItemDragCompleted event.
         /// </summary>
         /// <param name="args">Information about the event.</param>
-        protected virtual void OnItemDroppedOnTarget(ItemDragEventArgs<TItemsControlType> args)
+        protected virtual void OnItemDroppedOnTarget(ItemDragEventArgs args)
         {
-            foreach (EventHandler<ItemDragEventArgs<TItemsControlType>> handler in _itemDroppedOnTargetHandlers)
+            foreach (EventHandler<ItemDragEventArgs> handler in _itemDroppedOnTargetHandlers)
             {
                 handler(this, args);
                 if (args.Handled)
@@ -341,7 +348,7 @@ namespace System.Windows.Controls
             // Don't bother to do anything unless data is a selection collection
             // and all items have indexes.  Otherwise the result would be 
             // non-deterministic.
-            SelectionCollection selectionCollection = SelectionCollection.ToSelectionCollection(args.Data.GetData());
+            SelectionCollection selectionCollection = GetSelectionCollection(args.Data.GetData());
             if (selectionCollection.All(selection => selection.Index.HasValue))
             {
                 // Grabbing the drop target insertion index.
@@ -839,7 +846,7 @@ namespace System.Windows.Controls
 
             draggingObservable.Subscribe(ev => OnDragging(ev.EventArgs));
 
-            _itemDragCompleted.Subscribe(ev => OnItemDragCompleted(ev.EventArgs));
+            _itemDragCompleted.Subscribe(ev => InternalOnItemDragCompleted(ev.EventArgs));
         }
 
         /// <summary>
@@ -853,7 +860,9 @@ namespace System.Windows.Controls
         protected bool IsDragWithinDragSource(SW.DragEventArgs args)
         {
             // We can only tell if an item is being dragged within the drag source if the drag is originating from another drag drop target.
-            ItemDragEventArgs<TItemsControlType> currentItemDragEventArgs = CurrentItemDragEventArgs;
+            object data = args.Data.GetData();
+
+            ItemDragEventArgs currentItemDragEventArgs = data as ItemDragEventArgs;
             if (currentItemDragEventArgs != null)
             {
                 TItemsControlType dropTarget = GetDropTarget(args);
@@ -928,7 +937,7 @@ namespace System.Windows.Controls
         /// <returns>An observable that raises whenever a drag operation begins
         /// on an item.</returns>
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Use of Rx makes code appear more complex than it is to static analyzer.")]
-        private IObservable<Event<ItemDragEventArgs<TItemsControlType>>> GetItemDragStarting()
+        private IObservable<Event<ItemDragEventArgs>> GetItemDragStarting()
         {
             return
                 from mouseLeftButtonDown in this.GetMouseLeftButtonDownAlways()
@@ -952,11 +961,11 @@ namespace System.Windows.Controls
                 let data = ItemFromContainer(itemsControl, itemContainer)
                 where data != null
                 select
-                    new Event<ItemDragEventArgs<TItemsControlType>>(
+                    new Event<ItemDragEventArgs>(
                         this,
-                        new ItemDragEventArgs<TItemsControlType>
+                        new ItemDragEventArgs
                         {
-                            Offset = offset,
+                            DragDecoratorContentMouseOffset = offset,
                             Data = new SelectionCollection() { new Selection(itemIndex, data) },
                             DragSource = itemsControl,
                             AllowedEffects = this.ReadLocalValue(AllowedSourceEffectsProperty) == DependencyProperty.UnsetValue ? GetAllowedEffects(itemsControl) : (SW.DragDropEffects) this.GetValue(AllowedSourceEffectsProperty),
@@ -1013,8 +1022,8 @@ namespace System.Windows.Controls
             {
                 mouseLocation = new Point(0, 0);
             }
-            Canvas.SetLeft(_dragDecorator, mouseLocation.X - _currentItemDragEventArgs.Offset.X);
-            Canvas.SetTop(_dragDecorator, mouseLocation.Y - _currentItemDragEventArgs.Offset.Y);
+            Canvas.SetLeft(_dragDecorator, mouseLocation.X - _currentItemDragEventArgs.DragDecoratorContentMouseOffset.X);
+            Canvas.SetTop(_dragDecorator, mouseLocation.Y - _currentItemDragEventArgs.DragDecoratorContentMouseOffset.Y);
         }
 
         /// <summary>
@@ -1022,7 +1031,7 @@ namespace System.Windows.Controls
         /// operation begins.
         /// </summary>
         /// <param name="args">Information about the event.</param>
-        private void OnItemDragStarted(ItemDragEventArgs<TItemsControlType> args)
+        private void OnItemDragStarted(ItemDragEventArgs args)
         {
             _currentItemDragEventArgs = args;
             _itemWasDroppedOnSource = false;
@@ -1037,7 +1046,7 @@ namespace System.Windows.Controls
             _dragPopup.HorizontalOffset = offset.X;
             _dragPopup.VerticalOffset = offset.Y;
 
-            _dragDecorator.IconPosition = new Point(args.Offset.X + mouseCursorSize.Width, args.Offset.Y + mouseCursorSize.Height);
+            _dragDecorator.IconPosition = new Point(args.DragDecoratorContentMouseOffset.X + mouseCursorSize.Width, args.DragDecoratorContentMouseOffset.Y + mouseCursorSize.Height);
 
             _dragContainer.Width = Application.Current.RootVisual.RenderSize.Width;
             _dragContainer.Height = Application.Current.RootVisual.RenderSize.Height;
@@ -1046,12 +1055,33 @@ namespace System.Windows.Controls
             _dragPopup.IsOpen = true;
         }
 
+        #region public event ItemDragCompleted
+        /// <summary>
+        /// A list of event handles for the ItemDragCompleted event.
+        /// </summary>
+        private IList<EventHandler<ItemDragEventArgs>> _itemDragCompletedHandlers = new List<EventHandler<ItemDragEventArgs>>();
+
+        /// <summary>
+        /// An event raised when the an item drag is completed.
+        /// </summary>
+        public event EventHandler<ItemDragEventArgs> ItemDragCompleted
+        {
+            add
+            {
+                _itemDragCompletedHandlers.Add(value);
+            }
+            remove
+            {
+                _itemDragCompletedHandlers.Remove(value);
+            }
+        }
+
         /// <summary>
         /// This method hides graphical elements when a drag operation 
         /// completes.  
         /// </summary>
         /// <param name="args">Information about the event.</param>
-        private void OnItemDragCompleted(ItemDragEventArgs<TItemsControlType> args)
+        private void InternalOnItemDragCompleted(ItemDragEventArgs args)
         {
             _currentItemDragEventArgs = null;
             _dragPopup.IsOpen = false;
@@ -1060,9 +1090,29 @@ namespace System.Windows.Controls
 
             if (!_itemWasDroppedOnSource)
             {
-                OnItemDroppedOnTarget(args);
+                OnItemDroppedOnTarget(new ItemDragEventArgs(args));
+            }
+
+            OnItemDragCompleted(args);
+        }
+
+        /// <summary>
+        /// This method is invoked when an item drag is completed.
+        /// </summary>
+        /// <param name="args">Information about the event.</param>
+        protected virtual void OnItemDragCompleted(ItemDragEventArgs args)
+        {
+            foreach (EventHandler<ItemDragEventArgs> handler in _itemDragCompletedHandlers)
+            {
+                handler(this, args);
+                if (args.Handled)
+                {
+                    break;
+                }
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Updates the drag event information whenever a drag event occurs.
@@ -1074,7 +1124,7 @@ namespace System.Windows.Controls
             TItemsControlType dropTarget = GetDropTarget(args);
 
             SW.DragDropEffects effects = args.AllowedEffects;
-            SelectionCollection selectionCollection = SelectionCollection.ToSelectionCollection(args.Data.GetData());
+            SelectionCollection selectionCollection = GetSelectionCollection(args.Data.GetData());
 
             // Prevent a move, link, or copy if the items can't be added or if 
             // we're dragging over the drag source and there are no indexes 
@@ -1107,6 +1157,23 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
+        /// Gets a selection collection from the data in a drag operation.
+        /// </summary>
+        /// <param name="data">The data being transferred by the drag
+        /// operation.</param>
+        /// <returns>A selection collection containing the data.</returns>
+        internal static SelectionCollection GetSelectionCollection(object data)
+        {
+            ItemDragEventArgs args = data as ItemDragEventArgs;
+            if (args != null)
+            {
+                data = args.Data;
+            }
+
+            return SelectionCollection.ToSelectionCollection(data);
+        }
+
+        /// <summary>
         /// Adds data to the drop target.
         /// </summary>
         /// <param name="args">Information about the Drop event.</param>
@@ -1116,7 +1183,7 @@ namespace System.Windows.Controls
                 || (args.AllowedEffects & SW.DragDropEffects.Move) == SW.DragDropEffects.Move)
             {
                 object data = args.Data.GetData();
-                SelectionCollection selectionCollection = SelectionCollection.ToSelectionCollection(data);
+                SelectionCollection selectionCollection = GetSelectionCollection(data);
 
                 TItemsControlType dropTarget = GetDropTarget(args);
                 if (dropTarget != null && selectionCollection.All(selection => CanAddItem(dropTarget, selection.Item)))
@@ -1158,7 +1225,7 @@ namespace System.Windows.Controls
         /// <param name="data">The data to remove from the ItemsControl.</param>
         private void RemoveDataFromItemsControl(TItemsControlType itemsControl, object data)
         {
-            SelectionCollection selectionCollection = SelectionCollection.ToSelectionCollection(data);
+            SelectionCollection selectionCollection = GetSelectionCollection(data);
             IEnumerable<Selection> selectionsWithIndexes = selectionCollection.Where(selection => selection.Index.HasValue).OrderByDescending(selection => selection.Index);
             foreach (Selection selection in selectionsWithIndexes)
             {

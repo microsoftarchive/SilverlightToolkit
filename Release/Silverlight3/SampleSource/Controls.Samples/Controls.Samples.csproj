@@ -21,6 +21,8 @@
     <CreateTestPage>true</CreateTestPage>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -148,6 +150,9 @@
     <Compile Include="AutoCompleteBox\SampleEmployeeCollection.cs" />
     <Compile Include="AutoCompleteBox\SearchSuggestionSample.xaml.cs">
       <DependentUpon>SearchSuggestionSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BusyIndicator\BusyIndicatorSample.xaml.cs">
+      <DependentUpon>BusyIndicatorSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Calendar\CalendarSample.xaml.cs">
       <DependentUpon>CalendarSample.xaml</DependentUpon>
@@ -458,10 +463,25 @@
     <Resource Include="DomainUpDown\JesseLiberty.png" />
     <Resource Include="Rating\Images\Casablanca.jpg" />
     <Resource Include="AutoCompleteBox\Bing.png" />
-    <Content Include="Silverlight.png" />
+    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <Content Include="Silverlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Theming\ImplicitStyleManager\ImplicitStyleManagerTheme.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Toolkit128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="AutoCompleteBox\CustomEvents.xaml">
       <SubType>Designer</SubType>
@@ -480,6 +500,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AutoCompleteBox\SearchSuggestionSample.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BusyIndicator\BusyIndicatorSample.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -861,10 +885,7 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj">
-      <Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project>
-      <Name>Controls.Samples.Common</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj"><Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project><Name>Controls.Samples.Common</Name></ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

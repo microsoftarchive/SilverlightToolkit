@@ -134,12 +134,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Data.VisualStudio.Design\System.Windows.Controls\DataGrid.bmp">
+    <EmbeddedResource Include="..\Data.VisualStudio.Design\System.Windows.Controls\DataGrid.bmp">
       <Link>System.Windows.Controls\DataGrid.bmp</Link>
-    </Content>
-    <Content Include="..\Data.VisualStudio.Design\System.Windows.Controls\DataPager.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Data.VisualStudio.Design\System.Windows.Controls\DataPager.bmp">
       <Link>System.Windows.Controls\DataPager.bmp</Link>
-    </Content>
+    </EmbeddedResource>
     <Resource Include="Images\DataGridCheckBoxColumn.png" />
     <Resource Include="Images\DataGridComboBoxColumn.png" />
     <Resource Include="Images\DataGridHyperlinkColumn.png" />

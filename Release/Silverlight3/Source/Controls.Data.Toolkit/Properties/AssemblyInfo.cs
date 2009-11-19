@@ -22,7 +22,7 @@ using System.Windows.Markup;
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.0.5.0")]
-[assembly: AssemblyFileVersion("3.0.31016.2250")]
+[assembly: AssemblyFileVersion("3.0.31118.0235")]
 [assembly: CLSCompliant(true)]
 [assembly: XmlnsPrefix("clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Toolkit", "controlsDataToolkit")]
 [assembly: XmlnsDefinitionAttribute("clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Toolkit", "System.Windows.Controls")]

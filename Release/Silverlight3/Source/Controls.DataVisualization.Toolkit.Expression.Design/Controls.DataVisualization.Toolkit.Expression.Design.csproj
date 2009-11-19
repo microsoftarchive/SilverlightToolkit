@@ -93,11 +93,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj">
-      <Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project>
-      <Name>Controls.DataVisualization.Toolkit</Name>
-      <Aliases>Silverlight</Aliases>
-    </ProjectReference>
+    <ProjectReference Include="..\Controls.DataVisualization.Toolkit\Controls.DataVisualization.Toolkit.csproj"><Project>{C203F873-5EC5-4233-A6BE-094F39DBB211}</Project><Name>Controls.DataVisualization.Toolkit</Name><Aliases>Silverlight</Aliases></ProjectReference>
+    <Reference Include="System.Windows.Controls" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

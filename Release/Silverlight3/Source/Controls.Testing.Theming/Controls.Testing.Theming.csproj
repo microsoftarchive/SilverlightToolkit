@@ -146,14 +146,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controls.Testing.Common\Controls.Testing.Common.csproj">
-      <Project>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</Project>
-      <Name>Controls.Testing.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Controls.Theming.Toolkit\Controls.Theming.Toolkit.csproj">
-      <Project>{94D59978-57A5-4EF9-8659-D33DD73A50C7}</Project>
-      <Name>Controls.Theming.Toolkit</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Controls.Testing.Common\Controls.Testing.Common.csproj"><Project>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</Project><Name>Controls.Testing.Common</Name></ProjectReference>
+    <ProjectReference Include="..\Controls.Theming.Toolkit\Controls.Theming.Toolkit.csproj"><Project>{94D59978-57A5-4EF9-8659-D33DD73A50C7}</Project><Name>Controls.Theming.Toolkit</Name></ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <PropertyGroup>
