@@ -1,0 +1,182 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client"
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    x:Class="Microsoft.Silverlight.Testing.Client.TestMethodDetails"
+    d:DesignHeight="310" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Silverlight.Testing;component/Client/ClientResources.xaml" />
+                <ResourceDictionary Source="/Microsoft.Silverlight.Testing;component/Client/ClientButtons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <StackPanel>
+            <Grid>
+                <TextBlock 
+                    HorizontalAlignment="Left"
+                    Margin="4,4,4,0" 
+                    VerticalAlignment="Top" 
+                    Text="{Binding Parent.Name}" 
+                    TextWrapping="Wrap" 
+                    FontSize="12" 
+                    Foreground="{StaticResource GrayTextBrush}"/>
+            </Grid>
+
+            <!-- Title -->
+            <Grid Margin="4,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" 
+                           TextWrapping="Wrap" 
+                           FontFamily="Segoe UI Light" 
+                           FontSize="{StaticResource TitleFont}"
+                           Foreground="{Binding Passed, Converter={StaticResource passFailColoring}}"/>
+                <Border 
+                    Grid.Column="1" 
+                    Height="1" 
+                    BorderBrush="Black" 
+                    BorderThickness="4,1,1,1" 
+                    VerticalAlignment="Center" 
+                    Opacity="0.11"/>
+            </Grid>
+
+            <StackPanel>
+
+                <!-- Optional description -->
+                <TextBlock 
+                    Visibility="{Binding HasDescriptionVisibility}"
+                    Text="{Binding Description}" 
+                    Margin="6,0,4,0" 
+                    Foreground="{StaticResource GrayTextBrush}"/>
+
+                <!-- Information Grid -->
+                <Border Margin="4,4,4,0" 
+                        BorderThickness="0" 
+                        Padding="2">
+                    <Grid x:Name="InformationGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition x:Name="InformativeRight" Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="86" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Test information" FontWeight="Bold" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Result:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="1" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Result.Result}" 
+                                       FontWeight="{Binding Passed, Converter={StaticResource fontWeightConverter}, ConverterParameter=Normal}"
+                                       Margin="0,0,0,2" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Assembly:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="2" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Parent.Parent.Name}" 
+                                       Margin="0,0,0,2"  />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Namespace:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="3" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Parent.Namespace}" 
+                                       Margin="0,0,0,2"  />
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Test Class:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="4" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Parent.Name, Mode=OneWay}" 
+                                       Margin="0,0,0,2"  />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Test Method:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="5" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Name, Mode=OneWay}" 
+                                       Margin="0,0,0,2"  />
+
+                            <TextBlock Grid.Row="6" Grid.ColumnSpan="2" Text="Executing Timing" FontWeight="Bold" />
+
+                            <TextBlock Grid.Row="7" Grid.Column="0" Text="Started:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="7" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Result.Started}" 
+                                       Margin="0,0,0,2" />
+
+                            <TextBlock Grid.Row="8" Grid.Column="0" Text="Finished:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="8" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Result.Finished}" 
+                                       Margin="0,0,0,2" />
+
+                            <TextBlock Grid.Row="9" Grid.Column="0" Text="Elapsed Time:" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="9" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       Text="{Binding ReadableElapsedTime}" 
+                                       Margin="0,0,0,2" />
+
+                            <TextBlock Grid.Row="10" Grid.Column="0" Text="Output:" VerticalAlignment="Center" 
+                                       Visibility="{Binding WriteLineOutput, Converter={StaticResource visibilityConverter}}"/>
+                            <TextBlock Grid.Row="10" 
+                                       Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Text="{Binding WriteLineOutput}" 
+                                       Margin="0,0,0,2" />
+
+
+                            <!-- CONSIDER: List test tags -->
+                            <!-- CONSIDER: List information about relatives of the type and method -->
+                        </Grid>
+
+                        <local:TestExceptionDetails Grid.Column="1" />
+
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

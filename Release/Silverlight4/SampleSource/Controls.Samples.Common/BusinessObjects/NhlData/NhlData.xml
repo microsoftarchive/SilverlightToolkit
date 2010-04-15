@@ -1,0 +1,448 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+// The statistical data used for this demonstration is (c) Copyright 2008 from http://www.hockeydb.com.
+-->
+
+<DataSet>
+<NhlNode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rank>0</Rank>
+  <Name>The NHL</Name>
+  <Points>2582</Points>
+  <Wins>1078</Wins>
+  <Losses>956</Losses>
+  <GoalsFor>6782</GoalsFor>
+  <GoalsAgainst>6782</GoalsAgainst>
+  <PenaltyMinutes>37407</PenaltyMinutes>
+  <Children>
+    <NhlNode>
+      <Rank>1</Rank>
+      <Name>Western Conference</Name>
+      <Points>1327</Points>
+      <Wins>548</Wins>
+      <Losses>451</Losses>
+      <GoalsFor>3317</GoalsFor>
+      <GoalsAgainst>3238</GoalsAgainst>
+      <PenaltyMinutes>18274</PenaltyMinutes>
+      <Children>
+        <NhlNode>
+          <Rank>1</Rank>
+          <Name>Pacific</Name>
+          <Points>449</Points>
+          <Wins>186</Wins>
+          <Losses>147</Losses>
+          <GoalsFor>1112</GoalsFor>
+          <GoalsAgainst>1064</GoalsAgainst>
+          <PenaltyMinutes>5964</PenaltyMinutes>
+          <Children>
+            <NhlNode>
+              <Rank>5</Rank>
+              <Name>Dallas Stars</Name>
+              <Points>106</Points>
+              <Wins>48</Wins>
+              <Losses>24</Losses>
+              <GoalsFor>241</GoalsFor>
+              <GoalsAgainst>187</GoalsAgainst>
+              <PenaltyMinutes>959</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>11</Rank>
+              <Name>San Jose Sharks</Name>
+              <Points>95</Points>
+              <Wins>40</Wins>
+              <Losses>27</Losses>
+              <GoalsFor>217</GoalsFor>
+              <GoalsAgainst>192</GoalsAgainst>
+              <PenaltyMinutes>1249</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>13</Rank>
+              <Name>Los Angeles Kings</Name>
+              <Points>92</Points>
+              <Wins>38</Wins>
+              <Losses>28</Losses>
+              <GoalsFor>252</GoalsFor>
+              <GoalsAgainst>228</GoalsAgainst>
+              <PenaltyMinutes>1348</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>16</Rank>
+              <Name>Phoenix Coyotes</Name>
+              <Points>90</Points>
+              <Wins>35</Wins>
+              <Losses>27</Losses>
+              <GoalsFor>214</GoalsFor>
+              <GoalsAgainst>212</GoalsAgainst>
+              <PenaltyMinutes>1154</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>26</Rank>
+              <Name>Mighty Ducks of Anaheim</Name>
+              <Points>66</Points>
+              <Wins>25</Wins>
+              <Losses>41</Losses>
+              <GoalsFor>188</GoalsFor>
+              <GoalsAgainst>245</GoalsAgainst>
+              <PenaltyMinutes>1254</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+          </Children>
+        </NhlNode>
+        <NhlNode>
+          <Rank>3</Rank>
+          <Name>Central</Name>
+          <Points>436</Points>
+          <Wins>183</Wins>
+          <Losses>157</Losses>
+          <GoalsFor>1088</GoalsFor>
+          <GoalsAgainst>1076</GoalsAgainst>
+          <PenaltyMinutes>5899</PenaltyMinutes>
+          <Children>
+            <NhlNode>
+              <Rank>2</Rank>
+              <Name>Detroit Red Wings</Name>
+              <Points>111</Points>
+              <Wins>49</Wins>
+              <Losses>20</Losses>
+              <GoalsFor>253</GoalsFor>
+              <GoalsAgainst>202</GoalsAgainst>
+              <PenaltyMinutes>1053</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>6</Rank>
+              <Name>St. Louis Blues</Name>
+              <Points>103</Points>
+              <Wins>43</Wins>
+              <Losses>22</Losses>
+              <GoalsFor>249</GoalsFor>
+              <GoalsAgainst>195</GoalsAgainst>
+              <PenaltyMinutes>1343</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>19</Rank>
+              <Name>Nashville Predators</Name>
+              <Points>80</Points>
+              <Wins>34</Wins>
+              <Losses>36</Losses>
+              <GoalsFor>186</GoalsFor>
+              <GoalsAgainst>200</GoalsAgainst>
+              <PenaltyMinutes>1071</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>22</Rank>
+              <Name>Chicago Blackhawks</Name>
+              <Points>71</Points>
+              <Wins>29</Wins>
+              <Losses>40</Losses>
+              <GoalsFor>210</GoalsFor>
+              <GoalsAgainst>246</GoalsAgainst>
+              <PenaltyMinutes>1234</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>23</Rank>
+              <Name>Columbus Blue Jackets</Name>
+              <Points>71</Points>
+              <Wins>28</Wins>
+              <Losses>39</Losses>
+              <GoalsFor>190</GoalsFor>
+              <GoalsAgainst>233</GoalsAgainst>
+              <PenaltyMinutes>1198</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+          </Children>
+        </NhlNode>
+        <NhlNode>
+          <Rank>4</Rank>
+          <Name>Northwest</Name>
+          <Points>442</Points>
+          <Wins>179</Wins>
+          <Losses>147</Losses>
+          <GoalsFor>1117</GoalsFor>
+          <GoalsAgainst>1098</GoalsAgainst>
+          <PenaltyMinutes>6411</PenaltyMinutes>
+          <Children>
+            <NhlNode>
+              <Rank>1</Rank>
+              <Name>Colorado Avalanche</Name>
+              <Points>118</Points>
+              <Wins>52</Wins>
+              <Losses>16</Losses>
+              <GoalsFor>270</GoalsFor>
+              <GoalsAgainst>192</GoalsAgainst>
+              <PenaltyMinutes>1007</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>12</Rank>
+              <Name>Edmonton Oilers</Name>
+              <Points>93</Points>
+              <Wins>39</Wins>
+              <Losses>28</Losses>
+              <GoalsFor>243</GoalsFor>
+              <GoalsAgainst>222</GoalsAgainst>
+              <PenaltyMinutes>1267</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>15</Rank>
+              <Name>Vancouver Canucks</Name>
+              <Points>90</Points>
+              <Wins>36</Wins>
+              <Losses>28</Losses>
+              <GoalsFor>239</GoalsFor>
+              <GoalsAgainst>238</GoalsAgainst>
+              <PenaltyMinutes>1342</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>20</Rank>
+              <Name>Calgary Flames</Name>
+              <Points>73</Points>
+              <Wins>27</Wins>
+              <Losses>36</Losses>
+              <GoalsFor>197</GoalsFor>
+              <GoalsAgainst>236</GoalsAgainst>
+              <PenaltyMinutes>1586</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>25</Rank>
+              <Name>Minnesota Wild</Name>
+              <Points>68</Points>
+              <Wins>25</Wins>
+              <Losses>39</Losses>
+              <GoalsFor>168</GoalsFor>
+              <GoalsAgainst>210</GoalsAgainst>
+              <PenaltyMinutes>1209</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+          </Children>
+        </NhlNode>
+      </Children>
+    </NhlNode>
+    <NhlNode>
+      <Rank>2</Rank>
+      <Name>Eastern Conference</Name>
+      <Points>1255</Points>
+      <Wins>530</Wins>
+      <Losses>505</Losses>
+      <GoalsFor>3465</GoalsFor>
+      <GoalsAgainst>3544</GoalsAgainst>
+      <PenaltyMinutes>19133</PenaltyMinutes>
+      <Children>
+        <NhlNode>
+          <Rank>2</Rank>
+          <Name>Atlantic</Name>
+          <Points>431</Points>
+          <Wins>187</Wins>
+          <Losses>166</Losses>
+          <GoalsFor>1251</GoalsFor>
+          <GoalsAgainst>1216</GoalsAgainst>
+          <PenaltyMinutes>6508</PenaltyMinutes>
+          <Children>
+            <NhlNode>
+              <Rank>3</Rank>
+              <Name>New Jersey Devils</Name>
+              <Points>111</Points>
+              <Wins>48</Wins>
+              <Losses>19</Losses>
+              <GoalsFor>295</GoalsFor>
+              <GoalsAgainst>195</GoalsAgainst>
+              <PenaltyMinutes>1010</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>7</Rank>
+              <Name>Philadelphia Flyers</Name>
+              <Points>100</Points>
+              <Wins>43</Wins>
+              <Losses>25</Losses>
+              <GoalsFor>240</GoalsFor>
+              <GoalsAgainst>207</GoalsAgainst>
+              <PenaltyMinutes>1242</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>9</Rank>
+              <Name>Pittsburgh Penguins</Name>
+              <Points>96</Points>
+              <Wins>42</Wins>
+              <Losses>28</Losses>
+              <GoalsFor>281</GoalsFor>
+              <GoalsAgainst>256</GoalsAgainst>
+              <PenaltyMinutes>1248</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>21</Rank>
+              <Name>New York Rangers</Name>
+              <Points>72</Points>
+              <Wins>33</Wins>
+              <Losses>43</Losses>
+              <GoalsFor>250</GoalsFor>
+              <GoalsAgainst>290</GoalsAgainst>
+              <PenaltyMinutes>1753</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>30</Rank>
+              <Name>New York Islanders</Name>
+              <Points>52</Points>
+              <Wins>21</Wins>
+              <Losses>51</Losses>
+              <GoalsFor>185</GoalsFor>
+              <GoalsAgainst>268</GoalsAgainst>
+              <PenaltyMinutes>1255</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+          </Children>
+        </NhlNode>
+        <NhlNode>
+          <Rank>5</Rank>
+          <Name>Northeast</Name>
+          <Points>455</Points>
+          <Wins>195</Wins>
+          <Losses>150</Losses>
+          <GoalsFor>1157</GoalsFor>
+          <GoalsAgainst>1077</GoalsAgainst>
+          <PenaltyMinutes>6204</PenaltyMinutes>
+          <Children>
+            <NhlNode>
+              <Rank>4</Rank>
+              <Name>Ottawa Senators</Name>
+              <Points>109</Points>
+              <Wins>48</Wins>
+              <Losses>21</Losses>
+              <GoalsFor>274</GoalsFor>
+              <GoalsAgainst>205</GoalsAgainst>
+              <PenaltyMinutes>1347</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>8</Rank>
+              <Name>Buffalo Sabres</Name>
+              <Points>98</Points>
+              <Wins>46</Wins>
+              <Losses>30</Losses>
+              <GoalsFor>218</GoalsFor>
+              <GoalsAgainst>184</GoalsAgainst>
+              <PenaltyMinutes>1217</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>14</Rank>
+              <Name>Toronto Maple Leafs</Name>
+              <Points>90</Points>
+              <Wins>37</Wins>
+              <Losses>29</Losses>
+              <GoalsFor>232</GoalsFor>
+              <GoalsAgainst>207</GoalsAgainst>
+              <PenaltyMinutes>1212</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>18</Rank>
+              <Name>Boston Bruins</Name>
+              <Points>88</Points>
+              <Wins>36</Wins>
+              <Losses>30</Losses>
+              <GoalsFor>227</GoalsFor>
+              <GoalsAgainst>249</GoalsAgainst>
+              <PenaltyMinutes>1454</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>24</Rank>
+              <Name>Montreal Canadiens</Name>
+              <Points>70</Points>
+              <Wins>28</Wins>
+              <Losses>40</Losses>
+              <GoalsFor>206</GoalsFor>
+              <GoalsAgainst>232</GoalsAgainst>
+              <PenaltyMinutes>974</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+          </Children>
+        </NhlNode>
+        <NhlNode>
+          <Rank>6</Rank>
+          <Name>Southeast</Name>
+          <Points>369</Points>
+          <Wins>148</Wins>
+          <Losses>189</Losses>
+          <GoalsFor>1057</GoalsFor>
+          <GoalsAgainst>1251</GoalsAgainst>
+          <PenaltyMinutes>6421</PenaltyMinutes>
+          <Children>
+            <NhlNode>
+              <Rank>10</Rank>
+              <Name>Washington Capitals</Name>
+              <Points>96</Points>
+              <Wins>41</Wins>
+              <Losses>27</Losses>
+              <GoalsFor>233</GoalsFor>
+              <GoalsAgainst>211</GoalsAgainst>
+              <PenaltyMinutes>1043</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>17</Rank>
+              <Name>Carolina Hurricanes</Name>
+              <Points>88</Points>
+              <Wins>38</Wins>
+              <Losses>32</Losses>
+              <GoalsFor>212</GoalsFor>
+              <GoalsAgainst>225</GoalsAgainst>
+              <PenaltyMinutes>1022</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>27</Rank>
+              <Name>Florida Panthers</Name>
+              <Points>66</Points>
+              <Wins>22</Wins>
+              <Losses>38</Losses>
+              <GoalsFor>200</GoalsFor>
+              <GoalsAgainst>246</GoalsAgainst>
+              <PenaltyMinutes>1994</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>28</Rank>
+              <Name>Atlanta Thrashers</Name>
+              <Points>60</Points>
+              <Wins>23</Wins>
+              <Losses>45</Losses>
+              <GoalsFor>211</GoalsFor>
+              <GoalsAgainst>289</GoalsAgainst>
+              <PenaltyMinutes>1290</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+            <NhlNode>
+              <Rank>29</Rank>
+              <Name>Tampa Bay Lightning</Name>
+              <Points>59</Points>
+              <Wins>24</Wins>
+              <Losses>47</Losses>
+              <GoalsFor>201</GoalsFor>
+              <GoalsAgainst>280</GoalsAgainst>
+              <PenaltyMinutes>1072</PenaltyMinutes>
+              <Children />
+            </NhlNode>
+          </Children>
+        </NhlNode>
+      </Children>
+    </NhlNode>
+  </Children>
+</NhlNode>
+</DataSet>

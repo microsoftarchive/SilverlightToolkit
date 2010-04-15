@@ -1,0 +1,293 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.TreeMapSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:local="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples"             
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0">
+            <ContentControl Content="TreeMap" Style="{StaticResource Header}" />
+            <TextBlock Style="{StaticResource Information}">
+            The TreeMap is a control which displays hierarchical data as a collection of nested 
+            rectangles whose area (and other properties) are proportional to selected metrics within that data. The example below
+            shows how the TreeMap varies the area associated with each product in accordance with the quantity sold.
+            </TextBlock>
+        </StackPanel>
+            
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <controls:ObjectCollection x:Key="SalesData">
+                    <local:SalesData Product="Hamburgers" Quantity="100"/>
+                    <local:SalesData Product="Cheeseburgers" Quantity="150"/>
+                    <local:SalesData Product="Hot Dogs" Quantity="70"/>
+                    <local:SalesData Product="Pizza" Quantity="120"/>
+                    <local:SalesData Product="Fries" Quantity="270"/>
+                </controls:ObjectCollection>
+            </Grid.Resources>
+
+            <data:DataGrid Grid.Column="0" IsReadOnly="True" CanUserResizeColumns="False" CanUserReorderColumns="False" SelectionMode="Single" Margin="25,25,25,25" 
+                           AutoGenerateColumns="False" ItemsSource="{StaticResource SalesData}">
+                <data:DataGrid.Columns>
+                    <data:DataGridTextColumn IsReadOnly="True" Header="Product" Binding="{Binding Product}"/>
+                    <data:DataGridTextColumn IsReadOnly="True" Header="Quantity" Binding="{Binding Quantity}"/>
+                </data:DataGrid.Columns>
+            </data:DataGrid>
+
+            <datavis:TreeMap HorizontalAlignment="Left" Grid.Column="1" Width="300" Height="200" ItemsSource="{StaticResource SalesData}">
+                <datavis:TreeMap.ItemDefinition>
+                    <datavis:TreeMapItemDefinition ValuePath="Quantity">
+                        <DataTemplate>
+                            <Border Background="AliceBlue" BorderBrush="Black" BorderThickness="1" ToolTipService.ToolTip="{Binding ToolTip}">
+                                <TextBlock Text="{Binding Product}" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </Border>
+                        </DataTemplate>
+                    </datavis:TreeMapItemDefinition>
+                </datavis:TreeMap.ItemDefinition>
+            </datavis:TreeMap>
+        </Grid>
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="TreeMapSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.TreeMapSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:local="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples"             
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height="Auto"/&gt;
+            &lt;RowDefinition Height="30"/&gt;
+            &lt;RowDefinition Height="*"/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        
+        &lt;StackPanel Grid.Row="0"&gt;
+            &lt;ContentControl Content="TreeMap" Style="{StaticResource Header}" /&gt;
+            &lt;TextBlock Style="{StaticResource Information}"&gt;
+            The TreeMap is a control which displays hierarchical data as a collection of nested 
+            rectangles whose area (and other properties) are proportional to selected metrics within that data. The example below
+            shows how the TreeMap varies the area associated with each product in accordance with the quantity sold.
+            &lt;/TextBlock&gt;
+        &lt;/StackPanel&gt;
+            
+        &lt;Grid Grid.Row="2"&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="Auto"/&gt;
+                &lt;ColumnDefinition Width="*"/&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+
+            &lt;Grid.Resources&gt;
+                &lt;controls:ObjectCollection x:Key="SalesData"&gt;
+                    &lt;local:SalesData Product="Hamburgers" Quantity="100"/&gt;
+                    &lt;local:SalesData Product="Cheeseburgers" Quantity="150"/&gt;
+                    &lt;local:SalesData Product="Hot Dogs" Quantity="70"/&gt;
+                    &lt;local:SalesData Product="Pizza" Quantity="120"/&gt;
+                    &lt;local:SalesData Product="Fries" Quantity="270"/&gt;
+                &lt;/controls:ObjectCollection&gt;
+            &lt;/Grid.Resources&gt;
+
+            &lt;data:DataGrid Grid.Column="0" IsReadOnly="True" CanUserResizeColumns="False" CanUserReorderColumns="False" SelectionMode="Single" Margin="25,25,25,25" 
+                           AutoGenerateColumns="False" ItemsSource="{StaticResource SalesData}"&gt;
+                &lt;data:DataGrid.Columns&gt;
+                    &lt;data:DataGridTextColumn IsReadOnly="True" Header="Product" Binding="{Binding Product}"/&gt;
+                    &lt;data:DataGridTextColumn IsReadOnly="True" Header="Quantity" Binding="{Binding Quantity}"/&gt;
+                &lt;/data:DataGrid.Columns&gt;
+            &lt;/data:DataGrid&gt;
+
+            &lt;datavis:TreeMap HorizontalAlignment="Left" Grid.Column="1" Width="300" Height="200" ItemsSource="{StaticResource SalesData}"&gt;
+                &lt;datavis:TreeMap.ItemDefinition&gt;
+                    &lt;datavis:TreeMapItemDefinition ValuePath="Quantity"&gt;
+                        &lt;DataTemplate&gt;
+                            &lt;Border Background="AliceBlue" BorderBrush="Black" BorderThickness="1" ToolTipService.ToolTip="{Binding ToolTip}"&gt;
+                                &lt;TextBlock Text="{Binding Product}" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/&gt;
+                            &lt;/Border&gt;
+                        &lt;/DataTemplate&gt;
+                    &lt;/datavis:TreeMapItemDefinition&gt;
+                &lt;/datavis:TreeMap.ItemDefinition&gt;
+            &lt;/datavis:TreeMap&gt;
+        &lt;/Grid&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TreeMapSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Example showing how the TreeMap can be templated and populated with data.
+    /// &lt;/summary&gt;
+    [Sample("(0)TreeMap", DifficultyLevel.Basic, "TreeMap")]
+    public partial class TreeMapSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the MinimalSample class.
+        /// &lt;/summary&gt;
+        public TreeMapSample()
+        {
+            InitializeComponent();
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TreeMapSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+
+Imports Microsoft.VisualBasic
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Example showing how the TreeMap can be templated and populated with data.
+''' &lt;/summary&gt;
+&lt;Sample("(0)TreeMap", DifficultyLevel.Basic), Category("TreeMap")&gt; _
+Partial Public Class TreeMapSample
+	Inherits UserControl
+	''' &lt;summary&gt;
+	''' Initializes a new instance of the MinimalSample class.
+	''' &lt;/summary&gt;
+	Public Sub New()
+		InitializeComponent()
+	End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="SalesData.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Represents product sales data.
+    /// &lt;/summary&gt;
+    public class SalesData
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets the name of the product.
+        /// &lt;/summary&gt;
+        public string Product { set; get; }
+
+        /// &lt;summary&gt;
+        /// Gets or sets the quantity of the product sold.
+        /// &lt;/summary&gt;
+        public int Quantity { set; get; }
+
+        /// &lt;summary&gt;
+        /// Gets the desired tooltip content.
+        /// &lt;/summary&gt;
+        public string ToolTip
+        {
+            get
+            {
+                return Product + ": " + Quantity;
+            }
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="SalesData.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+''' &lt;summary&gt;
+''' Represents product sales data.
+''' &lt;/summary&gt;
+
+Imports Microsoft.VisualBasic
+Imports System
+Public Class SalesData
+	''' &lt;summary&gt;
+	''' Gets or sets the name of the product.
+	''' &lt;/summary&gt;
+	Private privateProduct As String
+	Public Property Product() As String
+		Get
+			Return privateProduct
+		End Get
+		Set(ByVal value As String)
+			privateProduct = value
+		End Set
+	End Property
+
+	''' &lt;summary&gt;
+	''' Gets or sets the quantity of the product sold.
+	''' &lt;/summary&gt;
+	Private privateQuantity As Integer
+	Public Property Quantity() As Integer
+		Get
+			Return privateQuantity
+		End Get
+		Set(ByVal value As Integer)
+			privateQuantity = value
+		End Set
+	End Property
+
+	''' &lt;summary&gt;
+	''' Gets the desired tooltip content.
+	''' &lt;/summary&gt;
+	Public ReadOnly Property ToolTip() As String
+		Get
+			Return Product &amp; ": " &amp; Quantity
+		End Get
+	End Property
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </Grid>
+</UserControl>

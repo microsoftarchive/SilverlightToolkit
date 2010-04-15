@@ -1,0 +1,514 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl 
+    x:Class="Microsoft.Silverlight.Testing.Client.TestPage" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client"
+    xmlns:localControls="clr-namespace:Microsoft.Silverlight.Testing.Controls"
+    xmlns:mscorlib="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+    d:DesignHeight="350" d:DesignWidth="640">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Silverlight.Testing;component/Client/ClientButtons.xaml" />
+                <ResourceDictionary Source="/Microsoft.Silverlight.Testing;component/Client/ClientResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- TreeView data templates -->
+            <localControls:HierarchicalDataTemplate x:Key="testMethodItem">
+                <Border 
+                    Margin="-3"
+                    Padding="3"
+                    CornerRadius="3"
+                    Background="{Binding Passed, Converter={StaticResource passFailTransparentColoring}}"
+                    BorderBrush="{Binding Passed, Converter={StaticResource passFailBoldColoring}}" 
+                    BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <localControls:TreeViewItemCheckBox />
+                        <TextBlock Text="{Binding Name}">
+                            <ToolTipService.ToolTip>
+                                <TextBlock Text="{Binding Description}" Margin="3" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </localControls:HierarchicalDataTemplate>
+            <localControls:HierarchicalDataTemplate x:Key="testClassItem"
+                                                    ItemsSource="{Binding Path=TestMethods}"
+                                                    ItemTemplate="{StaticResource testMethodItem}">
+                <StackPanel Orientation="Horizontal">
+                    <localControls:TreeViewItemCheckBox  />
+                    <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+            </localControls:HierarchicalDataTemplate>
+            <localControls:HierarchicalDataTemplate x:Key="testAssemblyItem"
+                                                    ItemsSource="{Binding Path=TestClasses}"
+                                                    ItemTemplate="{StaticResource testClassItem}">
+                <StackPanel Orientation="Horizontal">
+                    <localControls:TreeViewItemCheckBox  />
+                    <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+            </localControls:HierarchicalDataTemplate>
+
+            <!-- Detailed View Data Templates -->
+
+            <!--
+            //
+            // Test Class
+            //
+            -->
+            <DataTemplate x:Key="TestClassDataTemplate">
+                <StackPanel>
+                    <Grid Margin="4,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" 
+                                   FontFamily="Segoe UI Light" 
+                                   FontSize="{StaticResource TitleFont}"
+                                   Foreground="{Binding Passed, Converter={StaticResource passFailColoring}}"/>
+                        <Border Grid.Column="1" 
+                                Height="1" 
+                                BorderBrush="Black" 
+                                BorderThickness="4,1,1,1" 
+                                VerticalAlignment="Center" 
+                                Opacity="0.11"/>
+                    </Grid>
+                </StackPanel>
+            </DataTemplate>
+            <!--
+            //
+            // Test Method
+            //
+            -->
+            <DataTemplate x:Key="TestMethodDataTemplate">
+                <local:TestMethodDetails DataContext="{Binding}" />
+            </DataTemplate>
+            <!--
+            //
+            // Unknown/Other
+            // (Currently displayed for test assemblies)
+            //
+            -->
+            <DataTemplate x:Key="DefaultDataTemplate">
+                <Grid>
+                    <TextBlock Text="No additional information is available for this type of data." 
+                               Opacity=".6"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+            <!--
+            //
+            // Empty grid
+            //
+            -->
+            <DataTemplate x:Key="EmptyGridDataTemplate">
+                <Grid/>
+            </DataTemplate>
+            <!--
+            //
+            // Right-aligned buttons for navigating through test results
+            //
+            -->
+            <DataTemplate x:Key="TestMethodRightButtonsTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <Border Visibility="{Binding Passed, Converter={StaticResource visibilityConverter}, ConverterParameter='Collapsed'}"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Margin="0,0,10,0"
+                            Background="#33ff0000"
+                            BorderBrush="#99ff0000">
+                        <StackPanel Orientation="Horizontal" Margin="-1">
+                            <Button 
+                                Style="{StaticResource ToolbarButtonStyle}"
+                                Tag="PreviousFailure"
+                                Click="OnResultNavigationClick"
+                                Content="Previous"
+                                ToolTipService.ToolTip="Moves to the previous test failure"
+                                Visibility="{Binding PreviousFailingResult, Converter={StaticResource visibilityConverter}}"/>
+                            <Button 
+                                Style="{StaticResource ToolbarButtonStyle}"
+                                Tag="NextFailure"
+                                Click="OnResultNavigationClick"
+                                ToolTipService.ToolTip="Moves to the next test failure"
+                                Content="Next"
+                                Visibility="{Binding NextFailingResult, Converter={StaticResource visibilityConverter}}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Button 
+                        Margin="16,0,0,0"
+                        Style="{StaticResource ToolbarButtonStyle}"
+                        Content="Previous"
+                        Tag="Previous"
+                        ToolTipService.ToolTip="Moves to the previous test result"
+                        Click="OnResultNavigationClick"
+                        Visibility="{Binding PreviousResult, Converter={StaticResource visibilityConverter}}"/>
+                    <Button 
+                        Style="{StaticResource ToolbarButtonStyle}"
+                        Tag="Next"
+                        Click="OnResultNavigationClick"
+                        Content="Next"
+                        ToolTipService.ToolTip="Moves to the next test result"
+                        Visibility="{Binding NextResult, Converter={StaticResource visibilityConverter}}"/>
+                </StackPanel>
+
+            </DataTemplate>
+
+            <!-- Data template selectors -->
+            <local:DataTemplateSelector 
+                x:Key="DetailsViewDataTemplate"
+                DefaultDataTemplate="{StaticResource DefaultDataTemplate}"
+                TestMethodTemplate="{StaticResource TestMethodDataTemplate}"
+                TestClassTemplate="{StaticResource TestClassDataTemplate}"/>
+            <local:DataTemplateSelector 
+                x:Key="RightToolbarButtonsDataTemplate"
+                DefaultDataTemplate="{StaticResource EmptyGridDataTemplate}"
+                TestClassTemplate="{StaticResource EmptyGridDataTemplate}"
+                TestMethodTemplate="{StaticResource TestMethodRightButtonsTemplate}"/>
+
+            <!-- Visibility converter based on type name -->
+            <local:TypeNameVisibilityConverter
+                x:Key="TypeNameVisibilityConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="TestLayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62"/>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" x:Name="TestStageRowDefinition" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid VerticalAlignment="Top" Height="62">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF293955" Offset="0" />
+                    <GradientStop Color="#FF4A5D80" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <ProgressBar 
+                Grid.ColumnSpan="2"
+                Minimum="0" 
+                Maximum="{Binding TotalScenarios}" 
+                Value="{Binding RunScenarios}" 
+                Style="{StaticResource TestRunProgressBarStyle}"
+                VerticalAlignment="Bottom"
+                Height="6"
+                Opacity=".5"
+                Visibility="{Binding IsRunning, Converter={StaticResource visibilityConverter}}"
+                Foreground="White">
+            </ProgressBar>
+            <local:Header 
+                HorizontalAlignment="Left" 
+                Margin="10,10,0,0" 
+                x:Name="header1" 
+                VerticalAlignment="Top" 
+                DataContext="{Binding}"/>
+            <Grid Grid.Column="1" 
+                  Visibility="{Binding IsRunning, Converter={StaticResource visibilityConverter}}"
+                  Margin="6,6,14,6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Text="{Binding CurrentTestMethod}" 
+                    Foreground="White" 
+                    FontSize="11" 
+                    Opacity="0.85" 
+                    Grid.Row="0" />
+                <TextBlock 
+                    Text="{Binding CurrentTest}" 
+                    Foreground="White" 
+                    FontSize="18" 
+                    Opacity="0.65" 
+                    Grid.Row="1" />
+            </Grid>
+        </Grid>
+
+        <!-- Results view -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/><!-- Toolbar -->
+                <RowDefinition Height="Auto"/><!-- Notifications -->
+                <RowDefinition /><!-- Master details view -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition 
+                    Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <local:ResultsTreeView BorderThickness="0"
+                                   ItemTemplate="{StaticResource testAssemblyItem}"
+                                   ItemsSource="{Binding TestAssemblies}"
+                                   MinWidth="150"
+                                   MaxWidth="1500"
+                                   Grid.Row="2"
+                                   x:Name="resultsTreeView" />
+            <localControls:GridSplitter 
+                Style="{StaticResource SimpleGridSplitterStyle}"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    ShowsPreview="False" >
+                <localControls:GridSplitter.Background>
+                    <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                        <GradientStop Color="#19000000" Offset="0"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </LinearGradientBrush>
+                </localControls:GridSplitter.Background>
+            </localControls:GridSplitter>
+
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Border BorderThickness="1,0">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#1C000000" Offset="0"/>
+                            <GradientStop Color="#1C000000" Offset="0.85"/>
+                            <GradientStop Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Grid>
+                        <!-- Details view -->
+                        <ScrollViewer 
+                            BorderThickness="0" 
+                            HorizontalScrollBarVisibility="Auto" 
+                            VerticalScrollBarVisibility="Auto">
+                            <ContentPresenter 
+                                ContentTemplate="{Binding SelectedValue, Converter={StaticResource DetailsViewDataTemplate}, ElementName=resultsTreeView, Mode=OneWay}"
+                                Content="{Binding SelectedValue, ElementName=resultsTreeView, Mode=OneWay}" />
+                        </ScrollViewer>
+
+                        <!-- Waiting view -->
+                        <StackPanel
+                            Margin="16"
+                            Visibility="{Binding SelectedValue, Converter={StaticResource visibilityConverter}, ConverterParameter=Collapsed, ElementName=resultsTreeView, Mode=OneWay}">
+
+                            <TextBlock Text="Silverlight Unit Test Framework" FontSize="24" />
+                            <TextBlock Text="Copyright © 2010 Microsoft Corporation. All Rights Reserved." />
+                            <TextBlock Text="Silverlight Toolkit: http://silverlight.codeplex.com/" />
+                            <StackPanel 
+                                Orientation="Horizontal" 
+                                Margin="0,10,0,0">
+                                <TextBlock Text="Framework Build: " />
+                                <TextBlock x:Name="unitTestFrameworkBuild" />
+                            </StackPanel>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Notifications -->
+            <local:Notifications
+                x:Name="Notifications"
+                Grid.Row="1"
+                Grid.ColumnSpan="2">
+            </local:Notifications>
+            
+            <!-- Toolbar -->
+            <Grid Grid.ColumnSpan="2" Grid.Row="0">
+                <Border Padding="3" BorderThickness="0,1,0,1" BorderBrush="#ffb6babf">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#ffe5e9ee" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource ToolbarButtonStyle}" 
+                                Content="Copy all checked results" 
+                                Tag="CopyAllChecked"
+                                Click="OnClipboardButtonClick"
+                                x:Name="ToolbarCopyAllResults"/>
+                            <Button Style="{StaticResource ToolbarButtonStyle}" 
+                                Content="Copy test assembly results" 
+                                Tag="CopyResults"
+                                Click="OnClipboardButtonClick"
+                                Visibility="{Binding SelectedValue, ConverterParameter='Microsoft.Silverlight.Testing.Client.TestAssemblyData', Converter={StaticResource TypeNameVisibilityConverter}, ElementName=resultsTreeView}"/>
+                            <Button Style="{StaticResource ToolbarButtonStyle}" 
+                                Content="Copy class results" 
+                                Tag="CopyResults"
+                                Click="OnClipboardButtonClick"
+                                Visibility="{Binding SelectedValue, ConverterParameter='Microsoft.Silverlight.Testing.Client.TestClassData', Converter={StaticResource TypeNameVisibilityConverter}, ElementName=resultsTreeView}"/>
+                            <Button Style="{StaticResource ToolbarButtonStyle}" 
+                                Content="Copy method results" 
+                                Tag="CopyResults"
+                                Click="OnClipboardButtonClick"
+                                Visibility="{Binding SelectedValue, ConverterParameter='Microsoft.Silverlight.Testing.Client.TestMethodData', Converter={StaticResource TypeNameVisibilityConverter}, ElementName=resultsTreeView}"/>
+                            <Button Style="{StaticResource ToolbarButtonStyle}" 
+                                Content="{Binding TestApplicationInformation.InstallationStateText}" 
+                                Click="OnInstallClick"
+                                IsEnabled="{Binding TestApplicationInformation.OutOfBrowserApplicationInstalled, Converter={StaticResource InvertValueConverter}}"
+                                Visibility="{Binding TestApplicationInformation.SupportsOutOfBrowserAndNotInstalled, Converter={StaticResource visibilityConverter}}"
+                                x:Name="ToolbarInstallOob"/>
+                        </StackPanel>
+                        <ContentPresenter 
+                            HorizontalAlignment="Right"
+                            ContentTemplate="{Binding SelectedValue, Converter={StaticResource RightToolbarButtonsDataTemplate}, ElementName=resultsTreeView, Mode=OneWay}"
+                            Content="{Binding SelectedValue, ElementName=resultsTreeView, Mode=OneWay}" />
+                    </Grid>
+
+                </Border>
+            </Grid>
+        </Grid>
+
+        <localControls:GridSplitter 
+            Style="{StaticResource SimpleGridSplitterStyle}"
+            Grid.Row="2"
+            Grid.Column="0"
+            Height="16"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            ShowsPreview="False" >
+            <localControls:GridSplitter.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#19000000" Offset="0"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </LinearGradientBrush>
+            </localControls:GridSplitter.Background>
+        </localControls:GridSplitter>
+
+        <!-- Footer and dock -->
+        <Grid Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /><!-- 24 -->
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Border Background="#ffeeeeee" 
+                        HorizontalAlignment="Left" 
+                        BorderThickness="0,1,1,0"
+                        BorderBrush="#33000000"
+                        CornerRadius="3,3,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Left">
+                        <!-- Minimize/Maximize -->
+                        <Button Style="{StaticResource ToolbarButtonStyle}"
+                                Click="OnTestStageExpanderClick"
+                                Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Test Stage" 
+                                           VerticalAlignment="Center"/>
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  RenderTransformOrigin=".5,.5">
+                                    <ContentPresenter.RenderTransform>
+                                        <RotateTransform x:Name="TestStageExpander" Angle="0" />
+                                    </ContentPresenter.RenderTransform>
+                                    <Path Data="F1M0,0L4,4 8,0 0,0z"
+                                          Fill="Black"
+                                          Opacity=".7"/>
+                                </ContentPresenter>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- Play/Pause -->
+                <Button Style="{StaticResource ToolbarButtonStyle}"
+                        Background="#33000000"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Stretch"
+                        Visibility="{Binding IsRunning, Converter={StaticResource visibilityConverter}}"
+                        Click="OnPlayPauseClick"
+                        Padding="8">
+                    <StackPanel Opacity=".75">
+                        <ContentPresenter RenderTransformOrigin=".5,.5"
+                                          VerticalAlignment="Top"
+                                          HorizontalAlignment="Center"
+                                          Visibility="{Binding IsDispatcherRunning, Converter={StaticResource visibilityConverter}}">
+                            <ContentPresenter.RenderTransform>
+                                <RotateTransform Angle="-90" />
+                            </ContentPresenter.RenderTransform>
+                            <Path Data="F1M0,0L4,4 8,0 0,0z"
+                                  Fill="Black"/>
+                        </ContentPresenter>
+                        <TextBlock Text="||"
+                                   FontSize="9"
+                                   Foreground="Black"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Visibility="{Binding IsDispatcherRunning, Converter={StaticResource visibilityConverter},ConverterParameter=Collapsed}"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="1" Background="#ffeeeeee">
+                <Border x:Name="TestStageBorder" 
+                        Background="White" 
+                        Padding="3" 
+                        Margin="6" 
+                        BorderBrush="#33000000" 
+                        BorderThickness="1">
+
+                    <!-- Actual test stage -->
+                    <Grid x:Name="TestStage" />
+
+                </Border>
+
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="overlayGrid"
+              Visibility="Collapsed"
+              Grid.RowSpan="2"
+              Grid.Row="1">
+        </Grid>
+
+        <Grid x:Name="ClipboardHelperGrid"
+              Visibility="Collapsed"
+              Grid.RowSpan="2"
+              Grid.Row="1"
+              Background="#66000000">
+            <Grid Margin="18" 
+                  Background="#ffeeeeee"
+                  VerticalAlignment="Center" 
+                  HorizontalAlignment="Center">
+                <StackPanel 
+                    Margin="8"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Text="To copy the information requested, select the text below and press Ctrl + C or Command + C on your keyboard." />
+                    <TextBox 
+                        x:Name="ClipboardContents" 
+                        AcceptsReturn="True" 
+                        MinHeight="60" 
+                        MaxHeight="600"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto"
+                        Margin="4" />
+                    <Button 
+                        Content="Close" 
+                        Tag="Close"
+                        Click="OnClipboardButtonClick"
+                        Margin="4" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

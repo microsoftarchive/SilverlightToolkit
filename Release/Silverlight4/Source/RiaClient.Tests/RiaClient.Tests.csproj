@@ -1,0 +1,508 @@
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{551C9664-1181-450D-A855-5D2EDE53C7D9}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.AppFx.UnitTests</RootNamespace>
+    <AssemblyName>Microsoft.AppFx.UnitTests.Silverlight</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>Microsoft.AppFx.UnitTests.Silverlight.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Microsoft.AppFx.UnitTests.Silverlight.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\RiaClient.snk</AssemblyOriginatorKeyFile>
+    <OutputPath>ClientBin\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0108</NoWarn>
+    <ErrorReport>prompt</ErrorReport>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'CodeCov|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;CODECOV</DefineConstants>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\DisplayFormatAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\EditableAttributeTest.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataPager\DataPagerTests.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataPager\DataPagerTestSource.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\FrameNavigationCacheModeEnabledTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\FrameNavigationCacheModeRequiredTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestClasses\NavigationEventRecordList.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestClasses\TestDerivedFrame.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\ContentControl1.xaml.cs">
+      <DependentUpon>ContentControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeChangesPage.xaml.cs">
+      <DependentUpon>NavigationCacheModeChangesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeDisabledPage.xaml.cs">
+      <DependentUpon>NavigationCacheModeDisabledPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeEnabledPage.xaml.cs">
+      <DependentUpon>NavigationCacheModeEnabledPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeRequiredPage.xaml.cs">
+      <DependentUpon>NavigationCacheModeRequiredPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage9.xaml.cs">
+      <DependentUpon>ReentrancyPage9.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage8.xaml.cs">
+      <DependentUpon>ReentrancyPage8.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage7.xaml.cs">
+      <DependentUpon>ReentrancyPage7.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage3.xaml.cs">
+      <DependentUpon>ReentrancyPage3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage4.xaml.cs">
+      <DependentUpon>ReentrancyPage4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage5.xaml.cs">
+      <DependentUpon>ReentrancyPage5.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage6.xaml.cs">
+      <DependentUpon>ReentrancyPage6.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage2.xaml.cs">
+      <DependentUpon>ReentrancyPage2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage1.xaml.cs">
+      <DependentUpon>ReentrancyPage1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestClasses\PageThatRecordsVirtuals.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\DataClassSources\CollectionGenerator.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\DataClassSources\EnumerableCollection.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\DataClassSources\ObservableEnumerableCollection.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\Helper Classes\TestEnumerableCollection.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\PagedCollectionViewTest.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\AddItemTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\BasicCollectionTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\CollectionChangedTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\CurrencyTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\EditingTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\GroupingTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\MiscellaneousTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\PagingTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\RemoveItemTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestCases\SortingTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\AddItemTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\BasicCollectionTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\CollectionChangedTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\CurrencyTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\EditingTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\GroupingTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\PagingTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\RemoveItemTestClasses.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\TestClasses\SortingTestClasses.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\ValidationAutomationTest.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\DataSourceINCC.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridDdsTest.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\PageEmptyStringTitle.xaml.cs">
+      <DependentUpon>PageEmptyStringTitle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\PageNullStringTitle.xaml.cs">
+      <DependentUpon>PageNullStringTitle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Data\DataClasses\Order.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridRowGroupingTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\UriParsingHelperTests.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\Customer.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\DescriptionViewerTests.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\ValidationSummaryTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\LabelTests.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\ValidationHelperTests.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\Order.cs" />
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\TestPages\DescriptionViewerTestPage.xaml.cs">
+      <DependentUpon>DescriptionViewerTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\TestPages\ValidationSummaryTestPage.xaml.cs">
+      <DependentUpon>ValidationSummaryTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\TestPages\LabelTestPage.xaml.cs">
+      <DependentUpon>LabelTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Data.Input\Validation\TestPages\ValidationHelperTestPage.xaml.cs">
+      <DependentUpon>ValidationHelperTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.ComponentModel.DataAnnotations\AssociatedMetadataTypeTypeDescriptionProviderTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\AssociatedMetadataTypeTypeDescriptorTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\AttributeUsageTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\CustomValidationAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\DataAnnotationsTestHelper.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\DataAnnotationsTestResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataAnnotationsTestResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="System.ComponentModel.DataAnnotations\DataTypeAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\DerivedValidationAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\DisplayAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\EnumDataTypeAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\ExceptionHelper.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\FilterUIHintAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\LocalizableStringTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\MetadataTypeAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\RangeAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\RegularExpressionAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\RequiredAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\ScaffoldAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\StringLengthAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\UIHintAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\UnitTestHelper.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\ValidationAttributeTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\ValidationContextTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\ValidationResultTest.cs" />
+    <Compile Include="System.ComponentModel.DataAnnotations\ValidatorTest.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Data\Common\Common.cs" />
+    <Compile Include="System.Windows.Controls.Data\Common\LiveReference.cs" />
+    <Compile Include="System.Windows.Controls.Data\Common\SilverlightTestExtensions.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClasses\Customer.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClasses\DataTypes.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClasses\EnumType.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\DataClassSource.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\GenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\GenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\NonGenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\NonGenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\DataClassSources\NonGenericListINCC.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataDrtTest.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridAutomationTest.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridCellValidateDelegate.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridDelegate.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests_EditingEvents.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests_RequireGeneric.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests_RequireGT0.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests_RequireGT1.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests_Unrestricted.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DataGridTests_Validation.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGridRow\DetailsTemplate.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGridRow\Header.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGridRow\HeaderStyle.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGridRow_DependencyProperties_TestClass.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\AreRowDetailsFrozen.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\AutoGenerateColumns.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\CanUserReorderColumns.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\CanUserResizeColumns.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\ColumnHeadersHeight.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\ColumnWidth.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\GridlinesVisibility.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\HeadersVisibility.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\HorizontalGridlinesBrush.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\HorizontalScrollBarVisibility.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\IsReadOnly.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\ItemsSource.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\RowDetailsTemplate.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\RowDetailsVisibility.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\RowHeadersWidth.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\RowHeight.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\SelectedIndex.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\SelectedItem.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\SelectedItems.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\SelectionMode.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\VerticalGridlinesBrush.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid\VerticalScrollBarVisibility.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\DependencyProperties\DataGrid_DependencyProperties_TestClass.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestCases\PropertyTestExpectedResultsAttribute.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\Customer_GenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\Customer_GenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\Customer_NonGenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\Customer_NonGenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\Customer_NonGenericListINCC.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypesINPC_GenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypesINPC_GenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypesINPC_NonGenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypesINPC_NonGenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypesINPC_NonGenericListINCC.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypes_GenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypes_GenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypes_NonGenericEnumerable.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypes_NonGenericList.cs" />
+    <Compile Include="System.Windows.Controls.Data\TestClasses\DataTypes_NonGenericListINCC.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\ContentLoaders\PageResourceContentLoaderTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\ContentLoaders\TestPages\PageWithCodebehind.xaml.cs">
+      <DependentUpon>PageWithCodebehind.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\ContentLoaders\TestPages\PageWithCodebehindAndComment.xaml.cs">
+      <DependentUpon>PageWithCodebehindAndComment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\FrameTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\PageTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Page3.xaml.cs">
+      <DependentUpon>Page3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Page2.xaml.cs">
+      <DependentUpon>Page2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Controls\TestPages\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="System.Windows.Controls.Navigation\Journals\JournalEntryTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\UriMappers\UriMapperTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\UriMappers\UriMappingTests.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Journals\BrowserHelper.cs" />
+    <Compile Include="System.Windows.Controls.Navigation\Journals\JournalTests.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\Helper Classes\EditableTestClass.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\Helper Classes\FixedSizeCollection.cs" />
+    <Compile Include="System.Windows.Data\PagedCollectionView\Helper Classes\TestClass.cs" />
+    <Compile Include="TestUtilities\DependencyObjectExtensions.cs" />
+    <Compile Include="TestUtilities\ExceptionHelper.cs" />
+    <Compile Include="TestUtilities\SilverlightControlTest.cs" />
+    <Compile Include="TestUtilities\UnitTestHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\ContentControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeChangesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeDisabledPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeEnabledPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\NavigationCacheModeRequiredPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\PageEmptyStringTitle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\PageNullStringTitle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage9.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage8.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage7.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage5.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage6.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Reentrancy\ReentrancyPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\UserControl1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\ContentLoaders\TestPages\PageWithCodebehind.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\ContentLoaders\TestPages\PageWithCodebehindAndComment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\ContentLoaders\TestPages\PureXamlPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Page3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Page2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Navigation\Controls\TestPages\Page1.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="System.Windows.Controls.Data.Input\Validation\TestPages\DescriptionViewerTestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="System.Windows.Controls.Data.Input\Validation\TestPages\ValidationSummaryTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="System.Windows.Controls.Data.Input\Validation\TestPages\LabelTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="System.Windows.Controls.Data.Input\Validation\TestPages\ValidationHelperTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.ComponentModel.DataAnnotations\System.ComponentModel.DataAnnotations.csproj">
+      <Project>{01C0998A-866C-4267-8E1D-D7228CC3D7E7}</Project>
+      <Name>System.ComponentModel.DataAnnotations</Name>
+      <Private Condition="'$(Configuration)' == 'CodeCov'">False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Controls.Data\System.Windows.Controls.Data.csproj">
+      <Project>{3888C686-FC29-4CCB-A754-3500146D8815}</Project>
+      <Name>System.Windows.Controls.Data</Name>
+      <Private Condition="'$(Configuration)' == 'CodeCov'">False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Data\System.Windows.Data.csproj">
+      <Project>{5507CD5D-7272-4539-BBDE-745640AE7BE1}</Project>
+      <Name>System.Windows.Data</Name>
+      <Private Condition="'$(Configuration)' == 'CodeCov'">False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Controls.Data.Input\System.Windows.Controls.Data.Input.csproj">
+      <Project>{80182170-B5A7-47C5-825D-F0ECC7EB4663}</Project>
+      <Name>System.Windows.Controls.Data.Input</Name>
+      <Private Condition="'$(Configuration)' == 'CodeCov'">False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Controls.Navigation\System.Windows.Controls.Navigation.csproj">
+      <Project>{969E33FE-1289-4BC2-863A-C848BB476CC0}</Project>
+      <Name>System.Windows.Controls.Navigation</Name>
+      <Private Condition="'$(Configuration)' == 'CodeCov'">False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RiaClient.Tests.NavigationUnitTests1\NavigationUnitTests1.csproj">
+      <Project>{F11D5FFD-234A-4539-BCD7-C233F34066F8}</Project>
+      <Name>NavigationUnitTests1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RiaClient.Tests.NavigationUnitTests2\NavigationUnitTests2.csproj">
+      <Project>{68EC2C78-5766-4DE8-B17A-30606843F4C4}</Project>
+      <Name>NavigationUnitTests2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="System.ComponentModel.DataAnnotations\DataAnnotationsTestResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataAnnotationsTestResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>System.ComponentModel.DataAnnotations.Test</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v4.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

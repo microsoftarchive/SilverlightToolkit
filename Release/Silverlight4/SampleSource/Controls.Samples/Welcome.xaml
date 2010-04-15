@@ -1,0 +1,81 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.Welcome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+            <!-- Welcome! -->
+            <TextBlock FontSize="18" Foreground="#FF313861" FontWeight="Bold" Margin="0,30,0,0">Welcome to the Silverlight Toolkit</TextBlock>
+
+            <TextBlock  
+              Grid.Row="1"
+              Style="{StaticResource Information}" 
+              x:Name="WelcomeText">
+                <LineBreak />
+
+                To the left you'll find the list of controls included in 
+                this release of the Silverlight Toolkit and the Silverlight SDK.
+                Many of the nodes expand to reveal basic control information,
+                properties, and scenarios.
+                <LineBreak /><LineBreak />
+                
+                Each sample page also includes the ability to view and copy 
+                both the XAML and the source code. To copy text, simply select 
+                the text and press Control + C (Windows) or Command + C (Mac).
+            </TextBlock>
+
+        <controlsToolkit:WrapPanel Grid.Row="2"
+                                   Margin="4,10,10,10"
+                                   x:Name="InstallApplicationPanel"
+                                   Visibility="Collapsed">
+            <Button 
+                BorderBrush="#33000000"
+                Padding="5,3,5,3"
+                x:Name="InstallButton"
+                Click="InstallSamplesClick"
+                Content="Install the Control Samples" />
+            <TextBlock
+                Style="{StaticResource Information}"
+                x:Name="InstallText">
+                app to experience the Silverlight Toolkit and Silverlight SDK 
+                controls on your machine at any time.
+            </TextBlock>
+        </controlsToolkit:WrapPanel>
+
+        <TextBlock  
+              Grid.Row="3"
+              Style="{StaticResource Information}" >
+                We're interested in hearing your feedback and experiences.
+                <LineBreak /><LineBreak />
+                    
+                Thank you, and enjoy,
+                <LineBreak /><LineBreak />
+
+                <Run FontStyle="Italic">The Silverlight Team</Run>
+        </TextBlock>
+
+        <!-- Link to the CodePlex site -->
+        <HyperlinkButton 
+          Foreground="#FF1F3269" 
+          Grid.Row="4"
+          Content="http://silverlight.codeplex.com/"
+          NavigateUri="http://silverlight.codeplex.com/"
+          TargetName="_blank"
+          FontSize="12" 
+          Margin="2,0,0,0" />
+    </Grid>
+</UserControl>

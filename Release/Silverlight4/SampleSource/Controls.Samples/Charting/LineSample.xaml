@@ -1,0 +1,297 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  xmlns:chartingPrimitivesToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  x:Class="System.Windows.Controls.Samples.LineSample">
+    <StackPanel>
+
+        <!-- Scenarios -->
+        <ContentControl Content="Scenarios" Style="{StaticResource Header}"/>
+
+        <controlsToolkit:WrapPanel>
+
+            <!-- Typical Use -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="Typical Use">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:LineSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}"/>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Grid>
+
+            <!-- Chronological -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="Chronological">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:LineSeries
+                            Title="Widget Popularity"
+                            ItemsSource="{StaticResource WidgetPopularity}"
+                            IndependentValueBinding="{Binding Date}"
+                            DependentValueBinding="{Binding Percent}" />
+                        <chartingToolkit:LineSeries
+                            Title="Gizmo Popularity"
+                            ItemsSource="{StaticResource GizmoPopularity}"
+                            IndependentValueBinding="{Binding Date}"
+                            DependentValueBinding="{Binding Percent}" />
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Grid>
+
+            <!-- Custom Axes -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="Custom Axes">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:LineSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}"/>
+                    </chartingToolkit:Chart.Series>
+                    <chartingToolkit:Chart.Axes>
+                        <chartingToolkit:LinearAxis Orientation="X" Minimum="1" Maximum="8" Interval="2" FontStyle="Italic"/>
+                        <chartingToolkit:LinearAxis Orientation="Y" Minimum="100" Maximum="140" Interval="10" ShowGridLines="True" FontStyle="Italic"/>
+                    </chartingToolkit:Chart.Axes>
+                </chartingToolkit:Chart>
+            </Grid>
+
+            <!-- Sparkline -->
+            <Grid Style="{StaticResource WrapperStyle}">
+                <StackPanel>
+                    <ContentControl Content="Sparkline" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                    <chartingToolkit:Chart Width="200" Height="50">
+                        <chartingToolkit:Chart.Series>
+                            <chartingToolkit:LineSeries
+                                ItemsSource="{StaticResource WidgetPopularity}"
+                                IndependentValueBinding="{Binding Date}"
+                                DependentValueBinding="{Binding Percent}">
+                                <chartingToolkit:LineSeries.DataPointStyle>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Template" Value="{x:Null}"/>
+                                    </Style>
+                                </chartingToolkit:LineSeries.DataPointStyle>
+                            </chartingToolkit:LineSeries>
+                        </chartingToolkit:Chart.Series>
+                        <chartingToolkit:Chart.Template>
+                            <ControlTemplate TargetType="chartingToolkit:Chart">
+                                <chartingPrimitivesToolkit:EdgePanel x:Name="ChartArea">
+                                    <Grid Canvas.ZIndex="-1" Style="{TemplateBinding PlotAreaStyle}" />
+                                    <Border Canvas.ZIndex="10" BorderBrush="#FF919191" BorderThickness="1" />
+                                </chartingPrimitivesToolkit:EdgePanel>
+                            </ControlTemplate>
+                        </chartingToolkit:Chart.Template>
+                        <chartingToolkit:Chart.Axes>
+                            <chartingToolkit:DateTimeAxis Orientation="X" MaxHeight="1" Opacity="0" Minimum="2008/07/07" Maximum="2008/09/08"/>
+                            <chartingToolkit:LinearAxis Orientation="Y" MaxWidth="1" Opacity="0" Minimum="36" Maximum="55"/>
+                        </chartingToolkit:Chart.Axes>
+                    </chartingToolkit:Chart>
+                </StackPanel>
+            </Grid>
+
+        </controlsToolkit:WrapPanel>
+
+
+        <!-- Generated Charts -->
+        <ContentControl Content="Generated Charts" Style="{StaticResource Header}"/>
+        <controlsToolkit:WrapPanel x:Name="GeneratedChartsPanel"/>
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="LineSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  xmlns:chartingPrimitivesToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  x:Class="System.Windows.Controls.Samples.LineSample"&gt;
+    &lt;StackPanel&gt;
+
+        &lt;!-- Scenarios --&gt;
+        &lt;ContentControl Content="Scenarios" Style="{StaticResource Header}"/&gt;
+
+        &lt;controlsToolkit:WrapPanel&gt;
+
+            &lt;!-- Typical Use --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="Typical Use"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:LineSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}"/&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Chronological --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="Chronological"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:LineSeries
+                            Title="Widget Popularity"
+                            ItemsSource="{StaticResource WidgetPopularity}"
+                            IndependentValueBinding="{Binding Date}"
+                            DependentValueBinding="{Binding Percent}" /&gt;
+                        &lt;chartingToolkit:LineSeries
+                            Title="Gizmo Popularity"
+                            ItemsSource="{StaticResource GizmoPopularity}"
+                            IndependentValueBinding="{Binding Date}"
+                            DependentValueBinding="{Binding Percent}" /&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Custom Axes --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="Custom Axes"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:LineSeries
+                            Title="Particulate Levels"
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            IndependentValueBinding="{Binding Rainfall}"
+                            DependentValueBinding="{Binding Particulate}"/&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                    &lt;chartingToolkit:Chart.Axes&gt;
+                        &lt;chartingToolkit:LinearAxis Orientation="X" Minimum="1" Maximum="8" Interval="2" FontStyle="Italic"/&gt;
+                        &lt;chartingToolkit:LinearAxis Orientation="Y" Minimum="100" Maximum="140" Interval="10" ShowGridLines="True" FontStyle="Italic"/&gt;
+                    &lt;/chartingToolkit:Chart.Axes&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;!-- Sparkline --&gt;
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;StackPanel&gt;
+                    &lt;ContentControl Content="Sparkline" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"/&gt;
+                    &lt;chartingToolkit:Chart Width="200" Height="50"&gt;
+                        &lt;chartingToolkit:Chart.Series&gt;
+                            &lt;chartingToolkit:LineSeries
+                                ItemsSource="{StaticResource WidgetPopularity}"
+                                IndependentValueBinding="{Binding Date}"
+                                DependentValueBinding="{Binding Percent}"&gt;
+                                &lt;chartingToolkit:LineSeries.DataPointStyle&gt;
+                                    &lt;Style TargetType="Control"&gt;
+                                        &lt;Setter Property="Template" Value="{x:Null}"/&gt;
+                                    &lt;/Style&gt;
+                                &lt;/chartingToolkit:LineSeries.DataPointStyle&gt;
+                            &lt;/chartingToolkit:LineSeries&gt;
+                        &lt;/chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:Chart.Template&gt;
+                            &lt;ControlTemplate TargetType="chartingToolkit:Chart"&gt;
+                                &lt;chartingPrimitivesToolkit:EdgePanel x:Name="ChartArea"&gt;
+                                    &lt;Grid Canvas.ZIndex="-1" Style="{TemplateBinding PlotAreaStyle}" /&gt;
+                                    &lt;Border Canvas.ZIndex="10" BorderBrush="#FF919191" BorderThickness="1" /&gt;
+                                &lt;/chartingPrimitivesToolkit:EdgePanel&gt;
+                            &lt;/ControlTemplate&gt;
+                        &lt;/chartingToolkit:Chart.Template&gt;
+                        &lt;chartingToolkit:Chart.Axes&gt;
+                            &lt;chartingToolkit:DateTimeAxis Orientation="X" MaxHeight="1" Opacity="0" Minimum="2008/07/07" Maximum="2008/09/08"/&gt;
+                            &lt;chartingToolkit:LinearAxis Orientation="Y" MaxWidth="1" Opacity="0" Minimum="36" Maximum="55"/&gt;
+                        &lt;/chartingToolkit:Chart.Axes&gt;
+                    &lt;/chartingToolkit:Chart&gt;
+                &lt;/StackPanel&gt;
+            &lt;/Grid&gt;
+
+        &lt;/controlsToolkit:WrapPanel&gt;
+
+
+        &lt;!-- Generated Charts --&gt;
+        &lt;ContentControl Content="Generated Charts" Style="{StaticResource Header}"/&gt;
+        &lt;controlsToolkit:WrapPanel x:Name="GeneratedChartsPanel"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="LineSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization.Charting;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating ScatterSeries.
+    /// &lt;/summary&gt;
+    [Sample("Line Series", DifficultyLevel.Basic, "Line Series")]
+    public partial class LineSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the ScatterSample class.
+        /// &lt;/summary&gt;
+        public LineSample()
+        {
+            InitializeComponent();
+
+            SampleGenerators.GenerateNumericSeriesSamples(GeneratedChartsPanel, () =&gt; new LineSeries(), true);
+            SampleGenerators.GenerateDateTimeValueSeriesSamples(GeneratedChartsPanel, () =&gt; new LineSeries());
+            SampleGenerators.GenerateMultipleValueSeriesSamples(GeneratedChartsPanel, () =&gt; new LineSeries(), true);
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="LineSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.Windows.Controls
+Imports System.Windows.Controls.DataVisualization.Charting
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating ScatterSeries.
+''' &lt;/summary&gt;
+&lt;Sample("Line Series", DifficultyLevel.Basic, "Line Series")&gt; _
+Partial Public Class LineSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the ScatterSample class.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+
+        SampleGenerators.GenerateNumericSeriesSamples(GeneratedChartsPanel, Function() New LineSeries(), True)
+        SampleGenerators.GenerateDateTimeValueSeriesSamples(GeneratedChartsPanel, Function() New LineSeries())
+        SampleGenerators.GenerateMultipleValueSeriesSamples(GeneratedChartsPanel, Function() New LineSeries(), True)
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

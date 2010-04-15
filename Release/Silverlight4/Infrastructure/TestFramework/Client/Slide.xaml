@@ -1,0 +1,73 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client">
+
+    <Style TargetType="local:Slide">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Slide">
+                    <Grid Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SlidePosition">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.25"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="PositionNormal"/>
+                                <VisualState x:Name="PositionLeft">
+                                    <Storyboard>
+                                        <DoubleAnimation To="-320" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Content" />
+                                        <DoubleAnimation To="-160" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Header" />
+                                        <DoubleAnimation To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Header"/>
+                                        <DoubleAnimation To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="FixedHeader"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PositionRight">
+                                    <Storyboard>
+                                        <DoubleAnimation To="320" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Content"/>
+                                        <DoubleAnimation To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="FixedHeader"/>
+                                        <DoubleAnimation To="160" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="Header"/>
+                                        <DoubleAnimation To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Header"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="64" /><!-- 44 -->
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="Header" RenderTransformOrigin="0.5,0.5" >
+                            <Grid.RenderTransform>
+                                <TranslateTransform />
+                            </Grid.RenderTransform>
+                            <ContentPresenter 
+                                HorizontalAlignment="Left"
+                                Margin="10,0,0,0"
+                                Content="{TemplateBinding Header}"/>
+                        </Grid>
+                        <Grid x:Name="FixedHeader" HorizontalAlignment="Right">
+                            <ContentPresenter Content="{TemplateBinding FixedHeader}"/>
+                        </Grid>
+                        <Grid x:Name="Content" Grid.Row="1">
+                            <Grid.RenderTransform>
+                                <TranslateTransform />
+                            </Grid.RenderTransform>
+                            <ContentPresenter 
+                                Content="{TemplateBinding Content}" 
+                                ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

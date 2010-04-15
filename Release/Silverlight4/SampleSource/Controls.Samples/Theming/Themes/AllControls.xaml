@@ -1,0 +1,268 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:input="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input"
+    xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"  
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples"
+    x:Class="System.Windows.Controls.Samples.AllControls"  
+    xmlns:basics="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:dataForm="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit"
+    xmlns:inputPrimitivesToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input"
+    xmlns:inputToolkitPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Input.Toolkit"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    xmlns:layoutPrimitivesToolkit="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:layoutToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:theming="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.Toolkit"
+  >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Margin="5" >
+            <Button Content="Button" Margin="3" />
+            <ToggleButton Content="ToggleButton" Margin="3" IsThreeState="True"/>
+            <ComboBox Margin="3">
+                <ComboBoxItem Content="ComboBoxItem 1" />
+                <ComboBoxItem Content="ComboBoxItem 2" />
+                <ComboBoxItem Content="ComboBoxItem 3" />
+            </ComboBox>
+            <TextBox Margin="3" Text="Textbox" />
+            <input:AutoCompleteBox x:Name="SampleAutoComplete" Margin="5,5,5,5"/>
+            <PasswordBox Margin="3" Password="password" />
+            <inputToolkit:NumericUpDown Margin="3" />
+            <RadioButton Content="RadioButton 1" Margin="5" IsChecked="false" IsThreeState="True"/>
+            <RadioButton Content="RadioButton 2" Margin="5" IsChecked="true" IsThreeState="True"/>
+            <RadioButton Content="RadioButton 3" Margin="5" IsChecked="{x:Null}" IsThreeState="True"/>
+            <CheckBox Content="CheckBox 1" Margin="5" IsChecked="false" IsThreeState="True"/>
+            <CheckBox Content="CheckBox 2" Margin="5" IsChecked="true" IsThreeState="True"/>
+            <CheckBox Content="CheckBox 3" Margin="5" IsChecked="{x:Null}" IsThreeState="True"/>
+            <ListBox Height="75" Margin="5">
+                <ListBoxItem Height="25" Content="ListBoxItem 1" />
+                <ListBoxItem Height="25" Content="ListBoxItem 2" />
+                <ListBoxItem Height="25" Content="ListBoxItem 3" />
+                <ListBoxItem Height="25" Content="ListBoxItem 4" />
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5">
+            <layoutToolkit:Accordion BorderBrush="{x:Null}" HorizontalAlignment="Stretch" SelectionMode="ZeroOrMore" Margin="5" >
+                <layoutToolkit:AccordionItem Header="AccordionItem1" HorizontalAlignment="Stretch" >
+                    <StackPanel Margin="10,10,0,10">
+                        <CheckBox Content="Chelsea"/>
+                        <CheckBox Content="Manchester"/>
+                        <CheckBox Content="Tottenham"/>
+                    </StackPanel>
+                </layoutToolkit:AccordionItem>
+                <layoutToolkit:AccordionItem Header="AccordionItem2" HorizontalAlignment="Stretch" >
+                    <StackPanel Margin="10,10,0,10">
+                        <CheckBox Content="Arsenal"/>
+                        <CheckBox Content="Liverpool"/>
+                        <CheckBox Content="Aston Villa"/>
+                    </StackPanel>
+                </layoutToolkit:AccordionItem>
+                <layoutToolkit:AccordionItem Header="AccordionItem3" HorizontalAlignment="Stretch" >
+                    <StackPanel Margin="10,10,0,10">
+                        <CheckBox Content="Sunderland"/>
+                        <CheckBox Content="West Ham"/>
+                        <CheckBox Content="Blackburn"/>
+                    </StackPanel>
+                </layoutToolkit:AccordionItem>
+            </layoutToolkit:Accordion>
+            <controls:ChildWindow Title="ChildWindow" Width="Auto" Height="100" Content="Lorem ipsum dolor sit amet" Margin="10,0,10,0" />
+            <data:DataPager Source="{Binding}" Margin="10" />
+            <dataForm:DataForm Margin="10" x:Name="SampleDataForm" />
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <Rectangle Grid.Row="0" Grid.Column="0" Fill="#19FFFFFF" Stroke="#B2FFFFFF"/>
+                <Rectangle Grid.Row="0" Grid.Column="2" Fill="#19FFFFFF" Stroke="#B2FFFFFF"/>
+                <Rectangle Grid.Row="2" Grid.Column="0" Fill="#19FFFFFF" Stroke="#B2FFFFFF"/>
+                <Rectangle Grid.Row="2" Grid.Column="2" Fill="#33FFFFFF" Stroke="#B2FFFFFF"/>
+
+                <controls:GridSplitter
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                    ShowsPreview="True" />
+                <controls:GridSplitter
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  Grid.RowSpan="3"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" 
+                    ShowsPreview="True" 
+                    />
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="5">
+            <controls:TreeView Margin="5">
+                <controls:TreeViewItem Header="TreeViewItem 1">
+                    <controls:TreeViewItem Header="TreeViewItem 2" />
+                    <controls:TreeViewItem Header="TreeViewItem 3" />
+                </controls:TreeViewItem>
+                <controls:TreeViewItem Header="TreeViewItem 4">
+                    <controls:TreeViewItem Header="TreeViewItem 5" />
+                    <controls:TreeViewItem Header="TreeViewItem 6" />
+                </controls:TreeViewItem>
+            </controls:TreeView>
+            <controls:Calendar Margin="5" />
+            <controls:TabControl  Height="50" TabStripPlacement="Top" Margin="5">
+                <controls:TabItem Header="TabItem 1" Width="70">
+                    <Grid />
+                </controls:TabItem>
+                <controls:TabItem Header="TabItem 2">
+                    <Grid />
+                </controls:TabItem>
+            </controls:TabControl>
+            <Slider Margin="5" />
+            <HyperlinkButton Content="HyperlinkButton" Margin="5" />
+            <controlsToolkit:Expander Margin="5" Header="Expander">
+                <Rectangle Width="50" Height="150" Margin="10" Fill="#88000000" StrokeThickness="2" Stroke="#FFFFFFFF" RadiusX="5" RadiusY="5" />
+            </controlsToolkit:Expander>
+            <controls:DatePicker Margin="5" />
+            <data:DataGrid x:Name="SampleDataGrid" Margin="5" AutoGenerateColumns="False"  HeadersVisibility="All" GridLinesVisibility="All" >
+                <data:DataGrid.Columns>
+                    <data:DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                    <data:DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                </data:DataGrid.Columns>
+            </data:DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Margin="5">
+            <chartingToolkit:Chart Margin="5" Height="200" Title="Bar Graph">
+                <chartingToolkit:BarSeries Title="Jared" IndependentValueBinding="{Binding ExpenseType}"
+                                        DependentValueBinding="{Binding ExpenseValue}">
+                    <chartingToolkit:BarSeries.ItemsSource>
+                        <toolkit:ObjectCollection>
+                            <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
+                            <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
+                            <local:Budget ExpenseType="Food" ExpenseValue="20"/>
+                            <local:Budget ExpenseType="Shows" ExpenseValue="30"/>
+                        </toolkit:ObjectCollection>
+                    </chartingToolkit:BarSeries.ItemsSource>
+                </chartingToolkit:BarSeries>
+            </chartingToolkit:Chart>
+            <chartingToolkit:Chart Margin="5" Height="200" Title="Column Graph">
+                <chartingToolkit:ColumnSeries Title="Jared" IndependentValueBinding="{Binding ExpenseType}"
+                                        DependentValueBinding="{Binding ExpenseValue}" >
+                    <chartingToolkit:ColumnSeries.ItemsSource>
+                        <toolkit:ObjectCollection>
+                            <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
+                            <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
+                            <local:Budget ExpenseType="Food" ExpenseValue="20"/>
+                            <local:Budget ExpenseType="Shows" ExpenseValue="30"/>
+                        </toolkit:ObjectCollection>
+                    </chartingToolkit:ColumnSeries.ItemsSource>
+
+                </chartingToolkit:ColumnSeries>
+            </chartingToolkit:Chart>
+            <chartingToolkit:Chart Margin="5" Height="200" VerticalAlignment="Stretch" >
+                <chartingToolkit:Chart.Series>
+                    <chartingToolkit:PieSeries
+                                        IndependentValueBinding="{Binding ExpenseType}"
+                                        DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
+                        <chartingToolkit:PieSeries.ItemsSource>
+                            <toolkit:ObjectCollection>
+                                <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
+                                <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
+                                <local:Budget ExpenseType="Food" ExpenseValue="20"/>
+                                <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
+                                <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
+                                <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
+                                <local:Budget ExpenseType="Food" ExpenseValue="20"/>
+                                <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
+                                <local:Budget ExpenseType="Airfare" ExpenseValue="150"/>
+                                <local:Budget ExpenseType="Hotels" ExpenseValue="60"/>
+                                <local:Budget ExpenseType="Food" ExpenseValue="20"/>
+                                <local:Budget ExpenseType="Entertainment" ExpenseValue="30"/>
+                            </toolkit:ObjectCollection>
+                        </chartingToolkit:PieSeries.ItemsSource>
+                    </chartingToolkit:PieSeries>
+                </chartingToolkit:Chart.Series>
+            </chartingToolkit:Chart>
+        </StackPanel>
+        <StackPanel Grid.Column="4" Margin="5">
+            <chartingToolkit:Chart Margin="5" Height="200" Title="Line Graph">
+                <chartingToolkit:LineSeries Title="Jared" IndependentValueBinding="{Binding Date}"
+                                        DependentValueBinding="{Binding ExpenseValue}" IsSelectionEnabled="True">
+                    <chartingToolkit:LineSeries.ItemsSource>
+                        <toolkit:ObjectCollection>
+                            <local:Budget ExpenseType="2000" ExpenseValue="150"/>
+                            <local:Budget ExpenseType="2001" ExpenseValue="60"/>
+                            <local:Budget ExpenseType="2002" ExpenseValue="20"/>
+                            <local:Budget ExpenseType="2003" ExpenseValue="30"/>
+                            <local:Budget ExpenseType="2004" ExpenseValue="80"/>
+                            <local:Budget ExpenseType="2005" ExpenseValue="60"/>
+                            <local:Budget ExpenseType="2006" ExpenseValue="55"/>
+                            <local:Budget ExpenseType="2007" ExpenseValue="93"/>
+                        </toolkit:ObjectCollection>
+                    </chartingToolkit:LineSeries.ItemsSource>
+                </chartingToolkit:LineSeries>
+            </chartingToolkit:Chart>
+            <chartingToolkit:Chart Margin="5" Height="200" Title="Scatter Graph">
+                <chartingToolkit:ScatterSeries Title="Dots" IndependentValueBinding="{Binding Date}"
+                                        DependentValueBinding="{Binding ExpenseValue}" >
+                    <chartingToolkit:ScatterSeries.ItemsSource>
+                        <toolkit:ObjectCollection>
+                            <local:Budget ExpenseType="2000" ExpenseValue="150"/>
+                            <local:Budget ExpenseType="2001" ExpenseValue="60"/>
+                            <local:Budget ExpenseType="2002" ExpenseValue="20"/>
+                            <local:Budget ExpenseType="2003" ExpenseValue="30"/>
+                            <local:Budget ExpenseType="2004" ExpenseValue="80"/>
+                            <local:Budget ExpenseType="2005" ExpenseValue="60"/>
+                            <local:Budget ExpenseType="2006" ExpenseValue="55"/>
+                            <local:Budget ExpenseType="2007" ExpenseValue="93"/>
+                        </toolkit:ObjectCollection>
+                    </chartingToolkit:ScatterSeries.ItemsSource>
+                </chartingToolkit:ScatterSeries>
+            </chartingToolkit:Chart>
+            <chartingToolkit:Chart Margin="5" Height="200" Title="Bubble Graph">
+                <chartingToolkit:BubbleSeries Title="Bubbles" IndependentValueBinding="{Binding Date}"
+                                        DependentValueBinding="{Binding ExpenseValue}" 
+                                        SizeValueBinding="{Binding Volume}">
+                    <chartingToolkit:BubbleSeries.ItemsSource>
+                        <toolkit:ObjectCollection>
+                            <local:Budget ExpenseType="2000" ExpenseValue="150" Volume="15.2"/>
+                            <local:Budget ExpenseType="2001" ExpenseValue="60" Volume="20.4"/>
+                            <local:Budget ExpenseType="2002" ExpenseValue="20" Volume="18.2"/>
+                            <local:Budget ExpenseType="2003" ExpenseValue="30" Volume="9.32"/>
+                            <local:Budget ExpenseType="2004" ExpenseValue="80" Volume="10.2"/>
+                            <local:Budget ExpenseType="2005" ExpenseValue="60" Volume="20.4"/>
+                            <local:Budget ExpenseType="2006" ExpenseValue="55" Volume="18.2"/>
+                            <local:Budget ExpenseType="2007" ExpenseValue="93" Volume="15.32"/>
+                        </toolkit:ObjectCollection>
+                    </chartingToolkit:BubbleSeries.ItemsSource>
+                </chartingToolkit:BubbleSeries>
+            </chartingToolkit:Chart>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

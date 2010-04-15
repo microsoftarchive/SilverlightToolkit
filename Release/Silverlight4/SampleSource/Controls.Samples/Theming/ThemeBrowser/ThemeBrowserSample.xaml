@@ -1,0 +1,189 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<UserControl 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+  x:Class="System.Windows.Controls.Samples.ThemeBrowserSample">
+    <Grid Background="White">
+        <Grid.Resources>
+
+            <!-- DataTemplate for Photograph instances -->
+            <DataTemplate x:Key="PhotographTemplate">
+                <Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Viewbox Height="70" Width="70" VerticalAlignment="Bottom">
+                        <Border BorderBrush="#FF999999" BorderThickness="1" Padding="10">
+                            <Viewbox  Stretch="Uniform" StretchDirection="Both">
+                                <ContentControl Content="{Binding Path=ThumbnailImage}" />
+                            </Viewbox>
+                        </Border>
+                    </Viewbox>
+                    <ContentControl Grid.Row="1" Content="{Binding ThemeName}" HorizontalAlignment="Center" FontSize="10" />
+                </Grid>
+            </DataTemplate>
+
+            <!-- A smoothed out ListBoxItem style -->
+            <Style x:Key="SmoothListBoxItem" TargetType="ListBoxItem">
+                <Setter Property="IsEnabled" Value="true" />
+                <Setter Property="Foreground" Value="#FF000000" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="VerticalContentAlignment" Value="Top" />
+                <Setter Property="Cursor" Value="Arrow" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Background" Value="White" />
+                <Setter Property="Padding" Value="2,0,0,0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Grid Background="{TemplateBinding Background}">
+                                <vsm:VisualStateManager.VisualStateGroups>
+                                    <vsm:VisualStateGroup x:Name="CommonStates">
+                                        <vsm:VisualState x:Name="Normal" />
+                                        <vsm:VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverOverlay" Storyboard.TargetProperty="Opacity" To=".75" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="fillStop0Hover" Storyboard.TargetProperty="Color" To="#FFF9FAFA" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="fillStop1Hover" Storyboard.TargetProperty="Color" To="#FFD6DFE7" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="fillStop2Hover" Storyboard.TargetProperty="Color" To="#FFD3E4F5" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="strokeStop0Hover" Storyboard.TargetProperty="Color" To="#00000000" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="strokeStop1Hover" Storyboard.TargetProperty="Color" To="#00000000" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="SelectionStates">
+                                        <vsm:VisualState x:Name="Unselected" />
+                                        <vsm:VisualState x:Name="Selected">
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetName="fillStop0" Storyboard.TargetProperty="Color" To="#FFD9EFFF" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="fillStop1" Storyboard.TargetProperty="Color" To="#FFBDD2E6" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="fillStop2" Storyboard.TargetProperty="Color" To="#FFA1B6CD" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="strokeStop0" Storyboard.TargetProperty="Color" To="#FF77B9EB" Duration="0" />
+                                                <ColorAnimation Storyboard.TargetName="strokeStop1" Storyboard.TargetProperty="Color" To="#FF4887CD" Duration="0" />
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                    <vsm:VisualStateGroup x:Name="FocusStates">
+                                        <vsm:VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                        <vsm:VisualState x:Name="Unfocused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility" Duration="0">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </vsm:VisualState>
+                                    </vsm:VisualStateGroup>
+                                </vsm:VisualStateManager.VisualStateGroups>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Rectangle IsHitTestVisible="False">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0.316111,0.0165521" EndPoint="0.316111,0.724833">
+                                            <GradientStop x:Name="fillStop0" Color="#00000000" Offset="0"/>
+                                            <GradientStop x:Name="fillStop1" Color="#00000000" Offset="0.682203"/>
+                                            <GradientStop x:Name="fillStop2" Color="#00000000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                    <Rectangle.Stroke>
+                                        <LinearGradientBrush StartPoint="0.318122,0.0360108" EndPoint="0.318122,0.715784">
+                                            <GradientStop x:Name="strokeStop0" Color="#00000000" Offset="0"/>
+                                            <GradientStop x:Name="strokeStop1" Color="#00000000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Stroke>
+                                </Rectangle>
+                                <Rectangle x:Name="HoverOverlay" IsHitTestVisible="False" Opacity="0">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0.316111,0.0165521" EndPoint="0.316111,0.724833">
+                                            <GradientStop x:Name="fillStop0Hover" Color="#00000000" Offset="0"/>
+                                            <GradientStop x:Name="fillStop1Hover" Color="#00000000" Offset="0.682203"/>
+                                            <GradientStop x:Name="fillStop2Hover" Color="#00000000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                    <Rectangle.Stroke>
+                                        <LinearGradientBrush StartPoint="0.318122,0.0360108" EndPoint="0.318122,0.715784">
+                                            <GradientStop x:Name="strokeStop0Hover" Color="#00000000" Offset="0"/>
+                                            <GradientStop x:Name="strokeStop1Hover" Color="#00000000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Stroke>
+                                </Rectangle>
+
+                                <Border x:Name="FocusVisual" BorderBrush="#FF0B8BAA" BorderThickness="1" CornerRadius="4" Visibility="Collapsed" IsHitTestVisible="False" />
+                                <ContentPresenter
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  HorizontalAlignment="Left" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ListBox template that uses a WrapPanel -->
+            <Style x:Key="WrapListBox" TargetType="ListBox">
+                <Setter Property="ItemContainerStyle" Value="{StaticResource SmoothListBoxItem}" />
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <controlsToolkit:WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBox">
+                            <Grid>
+                                <Border BorderBrush="#FF000000" BorderThickness="1" CornerRadius="3">
+                                    <Border BorderBrush="#FFFFFFFF" BorderThickness="2" CornerRadius="3">
+                                        <ItemsPresenter />
+                                    </Border>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel x:Name="DemoControls">
+            <ListBox
+              x:Name="ThemesList"
+              ItemTemplate="{StaticResource PhotographTemplate}"
+              ItemContainerStyle="{StaticResource SmoothListBoxItem}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

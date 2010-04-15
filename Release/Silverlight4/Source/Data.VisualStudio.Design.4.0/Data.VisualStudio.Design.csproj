@@ -1,0 +1,168 @@
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2746F259-B6DD-485A-B4E3-97E31C3482C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Data.Design</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Data.VisualStudio.Design</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\RiaClient.snk</AssemblyOriginatorKeyFile>
+    <OutputPath>..\Binaries\$(Configuration)\Silverlight\</OutputPath>
+    <DocumentationFile>$(SolutionDir)Binaries\$(Configuration)\Silverlight\System.Windows.Controls.Data.VisualStuio.Design.XML</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>TRACE;DEBUG;MWD40</DefineConstants>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;MWD40</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Windows.Design.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Design.Interaction, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration" Condition=" '$(ManagedToolsDirectory)' == '' ">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration" Condition=" '$(ManagedToolsDirectory)' != '' ">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\controls.design.common\Extensions.cs">
+      <Link>Design.Common\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\controls.design.common\GenericDefaultInitializer.cs">
+      <Link>Design.Common\GenericDefaultInitializer.cs</Link>
+    </Compile>
+    <Compile Include="..\controls.design.common\Util.cs">
+      <Link>Design.Common\Util.cs</Link>
+    </Compile>
+    <Compile Include="ColumnInfo.cs" />
+    <Compile Include="ColumnTypes.cs" />
+    <Compile Include="DataGridActions.cs" />
+    <Compile Include="DataGridBoundColumnMetadata.cs" />
+    <Compile Include="DataGridCheckBoxColumnMetadata.cs" />
+    <Compile Include="DataGridColumnHeaderMetadata.cs" />
+    <Compile Include="DataGridColumnMetadata.cs" />
+    <Compile Include="DataGridDesignHelper.cs" />
+    <Compile Include="DataGridInitializer.cs" />
+    <Compile Include="DataGridMenuProvider.cs" />
+    <Compile Include="DataGridMetadata.cs" />
+    <Compile Include="DataGridRowHeaderMetadata.cs" />
+    <Compile Include="DataGridRowMetadata.cs" />
+    <Compile Include="DataGridTemplateColumnMetadata.cs" />
+    <Compile Include="DataGridTextColumnMetadata.cs" />
+    <Compile Include="DataPagerMetadata.cs" />
+    <Compile Include="DesignerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DesignerDialog.designer.cs">
+      <DependentUpon>DesignerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InverseBoolConverter.cs" />
+    <Compile Include="IsUseMetadataEnabledConverter.cs" />
+    <Compile Include="MetadataBase.cs" />
+    <Compile Include="MetadataRegistration.cs" />
+    <Compile Include="PlatformTypes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyColumnDataModel.cs" />
+    <Compile Include="PropertyColumnDataModelCollection.cs" />
+    <Compile Include="PropertyColumnEditor.xaml.cs">
+      <DependentUpon>PropertyColumnEditor.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data.VisualStudio.Design.4.0.Silverlight\Data.VisualStudio.Design.Silverlight.csproj">
+      <Project>{F14FB5D8-CA16-4F50-B67C-A5129F4FB825}</Project>
+      <Name>Data.VisualStudio.Design.Silverlight</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DataGridCheckBoxColumn.png" />
+    <Resource Include="Images\DataGridComboBoxColumn.png" />
+    <Resource Include="Images\DataGridHyperlinkColumn.png" />
+    <Resource Include="Images\DataGridTemplateColumn.png" />
+    <Resource Include="Images\DataGridTextColumn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DesignerDialog.resx">
+      <DependentUpon>DesignerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="PropertyColumnEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="System.Windows.Controls\DataGrid.bmp" />
+    <EmbeddedResource Include="System.Windows.Controls\DataPager.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

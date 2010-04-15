@@ -1,0 +1,235 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  x:Class="System.Windows.Controls.Samples.TabControlSample">
+    <StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <controls:TabControl Margin="5" Grid.Row="0" >
+                <controls:TabItem Header="One">
+                    <TextBlock Text="Some content" />
+                </controls:TabItem>
+                <controls:TabItem >
+                    <controls:TabItem.Header>
+                        <TextBlock Text="Two" ToolTipService.ToolTip="This tab has nothing" />
+                    </controls:TabItem.Header>
+                </controls:TabItem>
+                <controls:TabItem>
+                    <controls:TabItem.Header>
+                        <Ellipse Width="20" Height="20" Fill="Blue" />
+                    </controls:TabItem.Header>
+                    <TextBlock Text="Tab #3's Content" FontSize="20" />
+                </controls:TabItem>
+                <controls:TabItem>
+                    <controls:TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Four"/>
+                            <Ellipse Width="20" Height="20" Fill="Blue" />
+                        </StackPanel>
+                    </controls:TabItem.Header>
+                    <Ellipse Width="20" Height="20" Fill="Blue" />
+                </controls:TabItem>
+                <controls:TabItem>
+                    <controls:TabItem.Header>
+                        <Button Content="Button!" Width="100" />
+                    </controls:TabItem.Header>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock Text="Stack Panel with TextBlock and Ellipse" FontSize="18" />
+                            <Ellipse Width="20" Height="20" Fill="Blue" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </controls:TabItem>
+            </controls:TabControl>
+            
+            <Button
+              Grid.Row="1"
+              Margin="5"
+              Content="Dynamically adds TabItem to TabControl Below"
+              Click="OnAddTabItem" />
+            <controls:TabControl x:Name="sampleTabs" TabStripPlacement="Right" Grid.Row="2" Margin="5">
+                <controls:TabItem Header="One">
+                    <TextBlock Text="Some content" />
+                </controls:TabItem>
+                <controls:TabItem Header="Two">
+                    <TextBlock Text="Some content" />
+                </controls:TabItem>
+            </controls:TabControl>
+        </Grid>
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="TabControlSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  x:Class="System.Windows.Controls.Samples.TabControlSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;Grid&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="*" /&gt;
+                &lt;RowDefinition Height="Auto" /&gt;
+                &lt;RowDefinition Height="*" /&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            
+            &lt;controls:TabControl Margin="5" Grid.Row="0" &gt;
+                &lt;controls:TabItem Header="One"&gt;
+                    &lt;TextBlock Text="Some content" /&gt;
+                &lt;/controls:TabItem&gt;
+                &lt;controls:TabItem &gt;
+                    &lt;controls:TabItem.Header&gt;
+                        &lt;TextBlock Text="Two" ToolTipService.ToolTip="This tab has nothing" /&gt;
+                    &lt;/controls:TabItem.Header&gt;
+                &lt;/controls:TabItem&gt;
+                &lt;controls:TabItem&gt;
+                    &lt;controls:TabItem.Header&gt;
+                        &lt;Ellipse Width="20" Height="20" Fill="Blue" /&gt;
+                    &lt;/controls:TabItem.Header&gt;
+                    &lt;TextBlock Text="Tab #3's Content" FontSize="20" /&gt;
+                &lt;/controls:TabItem&gt;
+                &lt;controls:TabItem&gt;
+                    &lt;controls:TabItem.Header&gt;
+                        &lt;StackPanel Orientation="Horizontal"&gt;
+                            &lt;TextBlock Text="Four"/&gt;
+                            &lt;Ellipse Width="20" Height="20" Fill="Blue" /&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/controls:TabItem.Header&gt;
+                    &lt;Ellipse Width="20" Height="20" Fill="Blue" /&gt;
+                &lt;/controls:TabItem&gt;
+                &lt;controls:TabItem&gt;
+                    &lt;controls:TabItem.Header&gt;
+                        &lt;Button Content="Button!" Width="100" /&gt;
+                    &lt;/controls:TabItem.Header&gt;
+                    &lt;ScrollViewer&gt;
+                        &lt;StackPanel&gt;
+                            &lt;TextBlock Text="Stack Panel with TextBlock and Ellipse" FontSize="18" /&gt;
+                            &lt;Ellipse Width="20" Height="20" Fill="Blue" /&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/ScrollViewer&gt;
+                &lt;/controls:TabItem&gt;
+            &lt;/controls:TabControl&gt;
+            
+            &lt;Button
+              Grid.Row="1"
+              Margin="5"
+              Content="Dynamically adds TabItem to TabControl Below"
+              Click="OnAddTabItem" /&gt;
+            &lt;controls:TabControl x:Name="sampleTabs" TabStripPlacement="Right" Grid.Row="2" Margin="5"&gt;
+                &lt;controls:TabItem Header="One"&gt;
+                    &lt;TextBlock Text="Some content" /&gt;
+                &lt;/controls:TabItem&gt;
+                &lt;controls:TabItem Header="Two"&gt;
+                    &lt;TextBlock Text="Some content" /&gt;
+                &lt;/controls:TabItem&gt;
+            &lt;/controls:TabControl&gt;
+        &lt;/Grid&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TabControlSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the DatePicker.
+    /// &lt;/summary&gt;
+    [Sample("TabControl", DifficultyLevel.Basic, "TabControl")]
+    public partial class TabControlSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the DatePickerSample class.
+        /// &lt;/summary&gt;
+        public TabControlSample()
+        {
+            InitializeComponent();
+        }
+
+        /// &lt;summary&gt;
+        /// Handle button clicks to add new tab items.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The Button.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Event handler attached in XAML.")]
+        private void OnAddTabItem(object sender, RoutedEventArgs e)
+        {
+            sampleTabs.Items.Add(
+                new TabItem
+                {
+                    Header = "Dynamically Created TabItem",
+                    Content = "Some Content"
+                });
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TabControlSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.ComponentModel
+Imports System.Diagnostics.CodeAnalysis
+
+''' &lt;summary&gt;
+''' Sample page demonstrating the DatePicker.
+''' &lt;/summary&gt;
+&lt;Sample("TabControl", DifficultyLevel.Basic, "TabControl")&gt; _
+Partial Public Class TabControlSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the DatePickerSample class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Handle button clicks to add new tab items.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The Button.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    &lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Event handler attached in XAML.")&gt; _
+    Private Sub OnAddTabItem(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        sampleTabs.Items.Add(New TabItem With {.Header = "Dynamically Created TabItem", .Content = "Some Content"})
+    End Sub
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

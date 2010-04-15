@@ -1,0 +1,576 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.RichSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows">
+
+    <Grid>
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+                     
+            <StackPanel Grid.Row="0">
+                <StackPanel Grid.Row="0">
+                    <ContentControl Content="Rich TreeMap" Style="{StaticResource Header}" />
+                    <TextBlock Style="{StaticResource Information}">
+                        This sample shows how bindings for dimensions can be dynamically changed.  In
+                        the example below we control both the size and color of the rectangles.
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource Information}" FontSize="9">
+                        The statistical data used for this demonstration is (c) Copyright 2008 from http://www.hockeydb.com.
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+                    <TextBlock Width="Auto" FontSize="11" Text="Size:" Margin="0,8,8,0" VerticalAlignment="Center" FontFamily="Verdana" />
+                    <ComboBox x:Name="sizeMetric" Width="130" SelectionChanged="OnSizeMetricSelectionChanged"
+                            VerticalAlignment="Center" FontFamily="Verdana">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="Rank" Tag="Rank" />
+                            <ComboBoxItem Content="Points" Tag="Points" />
+                            <ComboBoxItem Content="Wins" Tag="Wins" />
+                            <ComboBoxItem Content="Losses" Tag="Losses" />
+                            <ComboBoxItem Content="GoalsFor" Tag="GoalsFor" />
+                            <ComboBoxItem Content="GoalsAgainst" Tag="GoalsAgainst" />
+                            <ComboBoxItem Content="PenaltyMinutes" Tag="PenaltyMinutes" />
+                        </ComboBox.Items>
+                    </ComboBox>
+
+                    <Rectangle Height="Auto" Width="2" Fill="#21000000" OpacityMask="#FF000000" Margin="8,1,8,1" />
+
+                    <TextBlock Width="Auto" FontSize="11" Text="Color:" Margin="0,8,8,0" VerticalAlignment="Center" FontFamily="Verdana" />
+                    <ComboBox x:Name="colorMetric" Width="130" SelectionChanged="OnColorMetricSelectionChanged"
+                            VerticalAlignment="Center" FontFamily="Verdana" Cursor="Hand">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="Rank" Tag="Rank" />
+                            <ComboBoxItem Content="Points" Tag="Points" />
+                            <ComboBoxItem Content="Wins" Tag="Wins" />
+                            <ComboBoxItem Content="Losses" Tag="Losses" />
+                            <ComboBoxItem Content="GoalsFor" Tag="GoalsFor" />
+                            <ComboBoxItem Content="GoalsAgainst" Tag="GoalsAgainst" />
+                            <ComboBoxItem Content="PenaltyMinutes" Tag="PenaltyMinutes" />
+                        </ComboBox.Items>
+                    </ComboBox>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,0,8,0">
+                        <TextBlock Width="Auto" FontSize="10" Text="Min" Margin="0,0,3,0" VerticalAlignment="Top" FontFamily="Verdana"/>
+                        <Rectangle Height="16" Width="120" StrokeThickness="0.5">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="120,16" StartPoint="0,16" SpreadMethod="Pad" MappingMode="Absolute">
+                                    <GradientStop Color="AliceBlue"/>
+                                    <GradientStop Color="CornflowerBlue" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock Width="Auto" FontSize="10" Text="Max" Margin="3,0,0,0" VerticalAlignment="Top" FontFamily="Verdana"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </StackPanel>
+
+            <datavis:TreeMap x:Name="treeMapControl" Grid.Row="1">
+                <datavis:TreeMap.Interpolators>
+                    <datavis:SolidColorBrushInterpolator TargetName="itemContainer" TargetProperty="Background" 
+                                               DataRangeBinding="{Binding Points}" From="AliceBlue" To="CornflowerBlue" />
+                </datavis:TreeMap.Interpolators>
+
+                <datavis:TreeMap.ItemDefinition>
+                    <datavis:TreeMapItemDefinition ItemsSource="{Binding Children}" ValueBinding="{Binding Rank}" ChildItemPadding="1">
+                        <DataTemplate>
+                            <Border x:Name="itemContainer" BorderBrush="Black" BorderThickness="1" Loaded="ItemContainer_Loaded">
+                                <ToolTipService.ToolTip>
+                                    <Grid>
+                                        <Grid.Resources>
+                                            <Style x:Key="StdTxtStyleTitle" TargetType="TextBlock">
+                                                <Setter Property="FontSize" Value="12" />
+                                                <Setter Property="FontFamily" Value="Verdana" />
+                                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                            </Style>
+                                            <Style x:Key="StdTxtStyleValue" TargetType="TextBlock">
+                                                <Setter Property="FontSize" Value="12" />
+                                                <Setter Property="FontFamily" Value="Verdana" />
+                                                <Setter Property="HorizontalAlignment" Value="Left" />
+                                                <Setter Property="Foreground" Value="Blue" />
+                                            </Style>
+                                        </Grid.Resources>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Rank: " Grid.Column="0" Grid.Row="1"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Rank}" Grid.Column="1" Grid.Row="1"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Points: " Grid.Column="0" Grid.Row="2"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Points}" Grid.Column="1" Grid.Row="2"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Wins: " Grid.Column="0" Grid.Row="3"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Wins}" Grid.Column="1" Grid.Row="3"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Losses: " Grid.Column="0" Grid.Row="4"/>
+                                        <TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Losses}" Grid.Column="1" Grid.Row="4"/>
+                                    </Grid>
+                                </ToolTipService.ToolTip>
+                                <CheckBox Background="Transparent">
+                                    <CheckBox.Template>
+                                        <ControlTemplate TargetType="CheckBox">
+                                            <Grid Cursor="Hand">
+                                                <vsm:VisualStateManager.VisualStateGroups>
+                                                    <vsm:VisualStateGroup x:Name="CommonStates">
+                                                        <vsm:VisualStateGroup.Transitions>
+                                                            <vsm:VisualTransition GeneratedDuration="00:00:00.1" To="MouseOver"/>
+                                                            <vsm:VisualTransition GeneratedDuration="00:00:00.1" To="Checked"/>
+                                                        </vsm:VisualStateGroup.Transitions>
+                                                        <vsm:VisualState x:Name="Normal" />
+                                                        <vsm:VisualState x:Name="MouseOver">
+                                                            <Storyboard>
+                                                                <ColorAnimation Duration="00:00:00.2000000" 
+                                                                                BeginTime="00:00:00" To="Orange"
+                                                                                Storyboard.TargetName="itemOverlay" 
+                                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" />
+                                                            </Storyboard>
+                                                        </vsm:VisualState>
+                                                        <vsm:VisualState x:Name="Checked">
+                                                            <Storyboard>
+                                                                <ColorAnimation Duration="00:00:00.2000000" 
+                                                                                BeginTime="00:00:00" To="LightSalmon"
+                                                                                Storyboard.TargetName="itemOverlay" 
+                                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" />
+                                                            </Storyboard>
+                                                        </vsm:VisualState>
+                                                    </vsm:VisualStateGroup>
+                                                </vsm:VisualStateManager.VisualStateGroups>
+
+                                                <Border x:Name="itemOverlay" Background="Transparent" />
+
+                                                <TextBlock Text="{Binding Name}" Margin="2,2,0,0" TextWrapping="Wrap" TextAlignment="Center" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </CheckBox.Template>
+                                </CheckBox>
+                            </Border>
+                        </DataTemplate>
+                    </datavis:TreeMapItemDefinition>
+                </datavis:TreeMap.ItemDefinition>
+            </datavis:TreeMap>
+        </Grid>
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="RichSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.RichSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid Background="White"&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height="Auto"/&gt;
+                &lt;RowDefinition Height="*"/&gt;
+            &lt;/Grid.RowDefinitions&gt;
+                     
+            &lt;StackPanel Grid.Row="0"&gt;
+                &lt;StackPanel Grid.Row="0"&gt;
+                    &lt;ContentControl Content="Rich TreeMap" Style="{StaticResource Header}" /&gt;
+                    &lt;TextBlock Style="{StaticResource Information}"&gt;
+                        This sample shows how bindings for dimensions can be dynamically changed.  In
+                        the example below we control both the size and color of the rectangles.
+                    &lt;/TextBlock&gt;
+                    &lt;TextBlock Style="{StaticResource Information}" FontSize="9"&gt;
+                        The statistical data used for this demonstration is (c) Copyright 2008 from http://www.hockeydb.com.
+                    &lt;/TextBlock&gt;
+                &lt;/StackPanel&gt;
+                &lt;StackPanel Orientation="Horizontal" Margin="3,3,3,3"&gt;
+                    &lt;TextBlock Width="Auto" FontSize="11" Text="Size:" Margin="0,8,8,0" VerticalAlignment="Center" FontFamily="Verdana" /&gt;
+                    &lt;ComboBox x:Name="sizeMetric" Width="130" SelectionChanged="OnSizeMetricSelectionChanged"
+                            VerticalAlignment="Center" FontFamily="Verdana"&gt;
+                        &lt;ComboBox.Items&gt;
+                            &lt;ComboBoxItem Content="Rank" Tag="Rank" /&gt;
+                            &lt;ComboBoxItem Content="Points" Tag="Points" /&gt;
+                            &lt;ComboBoxItem Content="Wins" Tag="Wins" /&gt;
+                            &lt;ComboBoxItem Content="Losses" Tag="Losses" /&gt;
+                            &lt;ComboBoxItem Content="GoalsFor" Tag="GoalsFor" /&gt;
+                            &lt;ComboBoxItem Content="GoalsAgainst" Tag="GoalsAgainst" /&gt;
+                            &lt;ComboBoxItem Content="PenaltyMinutes" Tag="PenaltyMinutes" /&gt;
+                        &lt;/ComboBox.Items&gt;
+                    &lt;/ComboBox&gt;
+
+                    &lt;Rectangle Height="Auto" Width="2" Fill="#21000000" OpacityMask="#FF000000" Margin="8,1,8,1" /&gt;
+
+                    &lt;TextBlock Width="Auto" FontSize="11" Text="Color:" Margin="0,8,8,0" VerticalAlignment="Center" FontFamily="Verdana" /&gt;
+                    &lt;ComboBox x:Name="colorMetric" Width="130" SelectionChanged="OnColorMetricSelectionChanged"
+                            VerticalAlignment="Center" FontFamily="Verdana" Cursor="Hand"&gt;
+                        &lt;ComboBox.Items&gt;
+                            &lt;ComboBoxItem Content="Rank" Tag="Rank" /&gt;
+                            &lt;ComboBoxItem Content="Points" Tag="Points" /&gt;
+                            &lt;ComboBoxItem Content="Wins" Tag="Wins" /&gt;
+                            &lt;ComboBoxItem Content="Losses" Tag="Losses" /&gt;
+                            &lt;ComboBoxItem Content="GoalsFor" Tag="GoalsFor" /&gt;
+                            &lt;ComboBoxItem Content="GoalsAgainst" Tag="GoalsAgainst" /&gt;
+                            &lt;ComboBoxItem Content="PenaltyMinutes" Tag="PenaltyMinutes" /&gt;
+                        &lt;/ComboBox.Items&gt;
+                    &lt;/ComboBox&gt;
+
+                    &lt;StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="30,0,8,0"&gt;
+                        &lt;TextBlock Width="Auto" FontSize="10" Text="Min" Margin="0,0,3,0" VerticalAlignment="Top" FontFamily="Verdana"/&gt;
+                        &lt;Rectangle Height="16" Width="120" StrokeThickness="0.5"&gt;
+                            &lt;Rectangle.Fill&gt;
+                                &lt;LinearGradientBrush EndPoint="120,16" StartPoint="0,16" SpreadMethod="Pad" MappingMode="Absolute"&gt;
+                                    &lt;GradientStop Color="AliceBlue"/&gt;
+                                    &lt;GradientStop Color="CornflowerBlue" Offset="1"/&gt;
+                                &lt;/LinearGradientBrush&gt;
+                            &lt;/Rectangle.Fill&gt;
+                        &lt;/Rectangle&gt;
+                        &lt;TextBlock Width="Auto" FontSize="10" Text="Max" Margin="3,0,0,0" VerticalAlignment="Top" FontFamily="Verdana"/&gt;
+                    &lt;/StackPanel&gt;
+
+                &lt;/StackPanel&gt;
+            &lt;/StackPanel&gt;
+
+            &lt;datavis:TreeMap x:Name="treeMapControl" Grid.Row="1"&gt;
+                &lt;datavis:TreeMap.Interpolators&gt;
+                    &lt;datavis:SolidColorBrushInterpolator TargetName="itemContainer" TargetProperty="Background" 
+                                               DataRangeBinding="{Binding Points}" From="AliceBlue" To="CornflowerBlue" /&gt;
+                &lt;/datavis:TreeMap.Interpolators&gt;
+
+                &lt;datavis:TreeMap.ItemDefinition&gt;
+                    &lt;datavis:TreeMapItemDefinition ItemsSource="{Binding Children}" ValueBinding="{Binding Rank}" ChildItemPadding="1"&gt;
+                        &lt;DataTemplate&gt;
+                            &lt;Border x:Name="itemContainer" BorderBrush="Black" BorderThickness="1" Loaded="ItemContainer_Loaded"&gt;
+                                &lt;ToolTipService.ToolTip&gt;
+                                    &lt;Grid&gt;
+                                        &lt;Grid.Resources&gt;
+                                            &lt;Style x:Key="StdTxtStyleTitle" TargetType="TextBlock"&gt;
+                                                &lt;Setter Property="FontSize" Value="12" /&gt;
+                                                &lt;Setter Property="FontFamily" Value="Verdana" /&gt;
+                                                &lt;Setter Property="HorizontalAlignment" Value="Right" /&gt;
+                                            &lt;/Style&gt;
+                                            &lt;Style x:Key="StdTxtStyleValue" TargetType="TextBlock"&gt;
+                                                &lt;Setter Property="FontSize" Value="12" /&gt;
+                                                &lt;Setter Property="FontFamily" Value="Verdana" /&gt;
+                                                &lt;Setter Property="HorizontalAlignment" Value="Left" /&gt;
+                                                &lt;Setter Property="Foreground" Value="Blue" /&gt;
+                                            &lt;/Style&gt;
+                                        &lt;/Grid.Resources&gt;
+                                        &lt;Grid.ColumnDefinitions&gt;
+                                            &lt;ColumnDefinition Width="100"/&gt;
+                                            &lt;ColumnDefinition Width="100"/&gt;
+                                        &lt;/Grid.ColumnDefinitions&gt;
+                                        &lt;Grid.RowDefinitions&gt;
+                                            &lt;RowDefinition Height="20"/&gt;
+                                            &lt;RowDefinition /&gt;
+                                            &lt;RowDefinition /&gt;
+                                            &lt;RowDefinition /&gt;
+                                            &lt;RowDefinition /&gt;
+                                        &lt;/Grid.RowDefinitions&gt;
+                                        &lt;TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Rank: " Grid.Column="0" Grid.Row="1"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Rank}" Grid.Column="1" Grid.Row="1"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Points: " Grid.Column="0" Grid.Row="2"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Points}" Grid.Column="1" Grid.Row="2"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Wins: " Grid.Column="0" Grid.Row="3"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Wins}" Grid.Column="1" Grid.Row="3"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleTitle}" Text="Losses: " Grid.Column="0" Grid.Row="4"/&gt;
+                                        &lt;TextBlock Style="{StaticResource StdTxtStyleValue}" Text="{Binding Losses}" Grid.Column="1" Grid.Row="4"/&gt;
+                                    &lt;/Grid&gt;
+                                &lt;/ToolTipService.ToolTip&gt;
+                                &lt;CheckBox Background="Transparent"&gt;
+                                    &lt;CheckBox.Template&gt;
+                                        &lt;ControlTemplate TargetType="CheckBox"&gt;
+                                            &lt;Grid Cursor="Hand"&gt;
+                                                &lt;vsm:VisualStateManager.VisualStateGroups&gt;
+                                                    &lt;vsm:VisualStateGroup x:Name="CommonStates"&gt;
+                                                        &lt;vsm:VisualStateGroup.Transitions&gt;
+                                                            &lt;vsm:VisualTransition GeneratedDuration="00:00:00.1" To="MouseOver"/&gt;
+                                                            &lt;vsm:VisualTransition GeneratedDuration="00:00:00.1" To="Checked"/&gt;
+                                                        &lt;/vsm:VisualStateGroup.Transitions&gt;
+                                                        &lt;vsm:VisualState x:Name="Normal" /&gt;
+                                                        &lt;vsm:VisualState x:Name="MouseOver"&gt;
+                                                            &lt;Storyboard&gt;
+                                                                &lt;ColorAnimation Duration="00:00:00.2000000" 
+                                                                                BeginTime="00:00:00" To="Orange"
+                                                                                Storyboard.TargetName="itemOverlay" 
+                                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" /&gt;
+                                                            &lt;/Storyboard&gt;
+                                                        &lt;/vsm:VisualState&gt;
+                                                        &lt;vsm:VisualState x:Name="Checked"&gt;
+                                                            &lt;Storyboard&gt;
+                                                                &lt;ColorAnimation Duration="00:00:00.2000000" 
+                                                                                BeginTime="00:00:00" To="LightSalmon"
+                                                                                Storyboard.TargetName="itemOverlay" 
+                                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" /&gt;
+                                                            &lt;/Storyboard&gt;
+                                                        &lt;/vsm:VisualState&gt;
+                                                    &lt;/vsm:VisualStateGroup&gt;
+                                                &lt;/vsm:VisualStateManager.VisualStateGroups&gt;
+
+                                                &lt;Border x:Name="itemOverlay" Background="Transparent" /&gt;
+
+                                                &lt;TextBlock Text="{Binding Name}" Margin="2,2,0,0" TextWrapping="Wrap" TextAlignment="Center" /&gt;
+                                            &lt;/Grid&gt;
+                                        &lt;/ControlTemplate&gt;
+                                    &lt;/CheckBox.Template&gt;
+                                &lt;/CheckBox&gt;
+                            &lt;/Border&gt;
+                        &lt;/DataTemplate&gt;
+                    &lt;/datavis:TreeMapItemDefinition&gt;
+                &lt;/datavis:TreeMap.ItemDefinition&gt;
+            &lt;/datavis:TreeMap&gt;
+        &lt;/Grid&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="RichSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows.Data;
+
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "System.Windows.Controls.Samples.RichSample.#itemContainer")]
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample showing the TreeMap with richer visuals and functionality.
+    /// &lt;/summary&gt;
+    [Sample("(5)Rich sample", DifficultyLevel.Intermediate, "TreeMap")]
+    public partial class RichSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Internal cache of the data source, used when refreshing the TreeMap.
+        /// &lt;/summary&gt;
+        private IList&lt;NhlNode&gt; _dataSource;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the RichSample class.
+        /// &lt;/summary&gt;
+        public RichSample()
+        {
+            InitializeComponent();
+            Loaded += new RoutedEventHandler(RichSample_Loaded);
+        }
+
+        /// &lt;summary&gt;
+        /// Loads the XML sample data and populates the TreeMap.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The event data.&lt;/param&gt;
+        private void RichSample_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Sample browser-specific layout change
+            SampleHelpers.ChangeSampleAlignmentToStretch(this);
+
+            sizeMetric.SelectedIndex = 1;
+            colorMetric.SelectedIndex = 0;
+
+            _dataSource = NhlDataHelper.LoadDefaultFile();
+
+            RefreshDataSource();
+        }
+
+        /// &lt;summary&gt;
+        /// Helper to force the TreeMap to refresh its data.
+        /// &lt;/summary&gt;
+        private void RefreshDataSource()
+        {
+            treeMapControl.ItemsSource = null;
+            treeMapControl.ItemsSource = _dataSource;
+        }
+
+        /// &lt;summary&gt;
+        /// Changes the property used to generate sizes for rectangles.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The event data.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached as an event handler in XAML")]
+        private void OnSizeMetricSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count &gt; 0)
+            {
+                ComboBoxItem item = e.AddedItems[0] as ComboBoxItem;
+                treeMapControl.ItemDefinition.ValueBinding = new Binding(item.Tag as string);
+
+                RefreshDataSource();
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Changes the property used to set the background color on rectangles.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The event data.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached as an event handler in XAML")]
+        private void OnColorMetricSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count &gt; 0)
+            {
+                ComboBoxItem item = e.AddedItems[0] as ComboBoxItem;
+                treeMapControl.Interpolators[0].DataRangeBinding = new Binding(item.Tag as string);
+
+                RefreshDataSource();
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// This is a workaround for the ToolTip behavior - when tooltip is a 
+        /// nested element, DataContext is not inherited.
+        /// It is not a TreeMap specific workaround.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sending UI element - Border in our case.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Events - irrelevant in our case.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached as an event handler in XAML")]
+        private void ItemContainer_Loaded(object sender, RoutedEventArgs e)
+        {
+            Border border = sender as Border;
+
+            // see summary
+            if (border != null)
+            {
+                ((FrameworkElement) ToolTipService.GetToolTip(border)).DataContext = border.DataContext;
+            }
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="RichSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+
+Imports Microsoft.VisualBasic
+Imports System.Collections.Generic
+Imports System.ComponentModel
+Imports System.Diagnostics.CodeAnalysis
+Imports System.Windows.Data
+
+&lt;Assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope := "member", Target := "System.Windows.Controls.Samples.RichSample.#itemContainer")&gt;
+''' &lt;summary&gt;
+''' Sample showing the TreeMap with richer visuals and functionality.
+''' &lt;/summary&gt;
+&lt;Sample("(5)Rich sample", DifficultyLevel.Intermediate), Category("TreeMap")&gt; _
+Partial Public Class RichSample
+	Inherits UserControl
+	''' &lt;summary&gt;
+	''' Internal cache of the data source, used when refreshing the TreeMap.
+	''' &lt;/summary&gt;
+	Private _dataSource As IList(Of NhlNode)
+
+	''' &lt;summary&gt;
+	''' Initializes a new instance of the RichSample class.
+	''' &lt;/summary&gt;
+	Public Sub New()
+		InitializeComponent()
+		AddHandler Loaded, AddressOf RichSample_Loaded
+	End Sub
+
+	''' &lt;summary&gt;
+	''' Loads the XML sample data and populates the TreeMap.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	Private Sub RichSample_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+		' Sample browser-specific layout change
+		SampleHelpers.ChangeSampleAlignmentToStretch(Me)
+
+		sizeMetric.SelectedIndex = 1
+		colorMetric.SelectedIndex = 0
+
+        _dataSource = NhlDataHelper.LoadDefaultFile()
+
+		RefreshDataSource()
+	End Sub
+
+	''' &lt;summary&gt;
+	''' Helper to force the TreeMap to refresh its data.
+	''' &lt;/summary&gt;
+	Private Sub RefreshDataSource()
+		treeMapControl.ItemsSource = Nothing
+		treeMapControl.ItemsSource = _dataSource
+	End Sub
+
+	''' &lt;summary&gt;
+	''' Changes the property used to generate sizes for rectangles.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	&lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification := "Attached as an event handler in XAML")&gt; _
+	Private Sub OnSizeMetricSelectionChanged(ByVal sender As Object, ByVal e As SelectionChangedEventArgs)
+		If e.AddedItems.Count &gt; 0 Then
+			Dim item As ComboBoxItem = TryCast(e.AddedItems(0), ComboBoxItem)
+			treeMapControl.ItemDefinition.ValueBinding = New Binding(TryCast(item.Tag, String))
+
+			RefreshDataSource()
+		End If
+	End Sub
+
+	''' &lt;summary&gt;
+	''' Changes the property used to set the background color on rectangles.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	&lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification := "Attached as an event handler in XAML")&gt; _
+	Private Sub OnColorMetricSelectionChanged(ByVal sender As Object, ByVal e As SelectionChangedEventArgs)
+		If e.AddedItems.Count &gt; 0 Then
+			Dim item As ComboBoxItem = TryCast(e.AddedItems(0), ComboBoxItem)
+			treeMapControl.Interpolators(0).DataRangeBinding = New Binding(TryCast(item.Tag, String))
+
+			RefreshDataSource()
+		End If
+	End Sub
+
+	''' &lt;summary&gt;
+	''' This is a workaround for the ToolTip behavior - when tooltip is a 
+	''' nested element, DataContext is not inherited.
+	''' It is not a TreeMap specific workaround.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;Sending UI element - Border in our case.&lt;/param&gt;
+	''' &lt;param name="e"&gt;Events - irrelevant in our case.&lt;/param&gt;
+	&lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification := "Attached as an event handler in XAML")&gt; _
+	Private Sub ItemContainer_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+		Dim border As Border = TryCast(sender, Border)
+
+		' see summary
+		If border IsNot Nothing Then
+			CType(ToolTipService.GetToolTip(border), FrameworkElement).DataContext = border.DataContext
+		End If
+	End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </Grid>
+</UserControl>

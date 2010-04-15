@@ -1,0 +1,127 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BDD560FA-0411-4C08-9741-E21C75C1C356}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Testing</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Testing</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>System.Windows.Controls.Testing.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>System.Windows.Controls.Testing.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <SignAssembly>true</SignAssembly><AssemblyOriginatorKeyFile>..\System.Windows.Controls.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\AutoCompleteBoxAutomationPeerTest.cs" />
+    <Compile Include="AutoCompleteBox\AutoCompleteBoxTest.cs" />
+    <Compile Include="AutoCompleteBox\OverriddenAutoCompleteBox.cs" />
+    <Compile Include="AutoCompleteBox\AutoCompleteBoxTest.Regressions.cs" />
+    <Compile Include="AutoCompleteBox\XamlSelectionAdapter.cs" />
+    <Compile Include="Common\SimpleValueConverter.cs" />
+    <Compile Include="AutoCompleteBox\OverriddenSelectionAdapter.cs" />
+    <Compile Include="Common\RoutedPropertyChangingEventArgsTest.cs" />
+    <Compile Include="Common\TestObjectCollection.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HeaderedItemsControl\OverriddenHeaderedItemsControl.cs" />
+    <Compile Include="HeaderedItemsControl\HeaderedItemsControlTest.cs" />
+    <Compile Include="HeaderedItemsControl\IOverriddenHeaderedItemsControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeView\IOverriddenTreeView.cs" />
+    <Compile Include="TreeView\IOverriddenTreeViewItem.cs" />
+    <Compile Include="TreeView\OverriddenTreeView.cs" />
+    <Compile Include="TreeView\OverriddenTreeViewItem.cs" />
+    <Compile Include="TreeView\TreeViewAutomationPeerTest.cs" />
+    <Compile Include="TreeView\TreeViewItemAutomationPeerTest.cs" />
+    <Compile Include="TreeView\TreeViewItemTest.cs" />
+    <Compile Include="TreeView\TreeViewTest.cs" />
+    <Compile Include="TreeView\TreeViewTest.Regressions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Controls.Input" />
+    <ProjectReference Include="..\Controls.Testing.Common\Controls.Testing.Common.csproj"><Project>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</Project><Name>Controls.Testing.Common</Name></ProjectReference>
+    <Reference Include="System.Windows.Controls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Label\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v4.0\Microsoft.Silverlight.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <ItemGroup><None Include="..\System.Windows.Controls.snk" /></ItemGroup><ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

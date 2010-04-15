@@ -1,0 +1,950 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A1E61645-F55F-4246-B8F9-61B656823783}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Samples</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Samples</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>System.Windows.Controls.Samples.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>System.Windows.Controls.Samples.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7"><SpecificVersion>False</SpecificVersion><HintPath>..\Binaries\System.Windows.Controls.Toolkit.Internals.dll</HintPath></Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.DataForm.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Data.DataForm.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Data.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.BubbleCreme, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.BubbleCreme.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.BureauBlack, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.BureauBlack.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.BureauBlue, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.BureauBlue.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.ExpressionDark, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.ExpressionDark.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.ExpressionLight, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.ExpressionLight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.RainierOrange, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.RainierOrange.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.RainierPurple, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.RainierPurple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.ShinyBlue, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.ShinyBlue.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.ShinyRed, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.ShinyRed.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.SystemColors, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.SystemColors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.TwilightBlue, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.TwilightBlue.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.WhistlerBlue, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.WhistlerBlue.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.30119.1317, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accordion\AccordionSample.xaml.cs">
+      <DependentUpon>AccordionSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Accordion\AccordionShowcase.xaml.cs">
+      <DependentUpon>AccordionShowcase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Accordion\AccordionUsage.xaml.cs">
+      <DependentUpon>AccordionUsage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\AutoCompleteLambda.xaml.cs">
+      <DependentUpon>AutoCompleteLambda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\AutoCompleteBoxSample.xaml.cs">
+      <DependentUpon>AutoCompleteBoxSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\DictionaryKeyValueConverter.cs" />
+    <Compile Include="AutoCompleteBox\CustomEvents.xaml.cs">
+      <DependentUpon>CustomEvents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\AutoCompleteComboBox.xaml.cs">
+      <DependentUpon>AutoCompleteComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\DataGridAutoCompleteBoxEdit.xaml.cs">
+      <DependentUpon>DataGridAutoCompleteBoxEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\DataGridAutoCompleteBox.xaml.cs">
+      <DependentUpon>DataGridAutoCompleteBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteBox\DataGridSelectionAdapter.cs" />
+    <Compile Include="AutoCompleteBox\RandomEmployeeDetails.cs" />
+    <Compile Include="AutoCompleteBox\SampleEmployeeCollection.cs" />
+    <Compile Include="AutoCompleteBox\SearchSuggestionSample.xaml.cs">
+      <DependentUpon>SearchSuggestionSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BusyIndicator\BusyIndicatorSample.xaml.cs">
+      <DependentUpon>BusyIndicatorSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContextMenu\ContextMenuSample.xaml.cs">
+      <DependentUpon>ContextMenuSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContextMenu\ChangeControlFontFaceCommand.cs" />
+    <Compile Include="ContextMenu\ChangeControlFontSizeCommand.cs" />
+    <Compile Include="ContextMenu\Email.cs" />
+    <Compile Include="Calendar\CalendarSample.xaml.cs">
+      <DependentUpon>CalendarSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\AreaSample.xaml.cs">
+      <DependentUpon>AreaSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\BarSample.xaml.cs">
+      <DependentUpon>BarSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\ColumnAnimationSample.xaml.cs">
+      <DependentUpon>ColumnAnimationSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\ColumnSample.xaml.cs">
+      <DependentUpon>ColumnSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\BubbleSample.xaml.cs">
+      <DependentUpon>BubbleSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\Data\Pair.cs" />
+    <Compile Include="Charting\Data\Pet.cs" />
+    <Compile Include="Charting\LineSample.xaml.cs">
+      <DependentUpon>LineSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\StackedSeries.xaml.cs">
+      <DependentUpon>StackedSeries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\PieAnimationSample.xaml.cs">
+      <DependentUpon>PieAnimationSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\PieSample.xaml.cs">
+      <DependentUpon>PieSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\SampleGenerators.cs" />
+    <Compile Include="Charting\ScatterSample.xaml.cs">
+      <DependentUpon>ScatterSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\Scenarios\CustomSeries\CustomSeriesSample.xaml.cs">
+      <DependentUpon>CustomSeriesSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charting\Scenarios\CustomSeries\FunctionSeries.cs" />
+    <Compile Include="Charting\Scenarios\CustomSeries\SimpleFunctionTypeConverter.cs" />
+    <Compile Include="Charting\Scenarios\SeriesZoom\SeriesZoomSample.xaml.cs">
+      <DependentUpon>SeriesZoomSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\ChildWindowSample.xaml.cs">
+      <DependentUpon>ChildWindowSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\ChildWindowStyleSample.xaml.cs">
+      <DependentUpon>ChildWindowStyleSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\DemoChildWindow.xaml.cs">
+      <DependentUpon>DemoChildWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\StyledChildWindow.xaml.cs">
+      <DependentUpon>StyledChildWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\DataFormHeterogeneousDataSample.xaml.cs">
+      <DependentUpon>DataFormHeterogeneousDataSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\DataFormSample.xaml.cs">
+      <DependentUpon>DataFormSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\DataFormTemplateSample.xaml.cs">
+      <DependentUpon>DataFormTemplateSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataGrid\DataGridGroupingSample.xaml.cs">
+      <DependentUpon>DataGridGroupingSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataGrid\DataGridMasterDetailSample.xaml.cs">
+      <DependentUpon>DataGridMasterDetailSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataGrid\DataGridSample.xaml.cs">
+      <DependentUpon>DataGridSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataPager\DataPagerSample.xaml.cs">
+      <DependentUpon>DataPagerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DatePicker\DatePickerSample.xaml.cs">
+      <DependentUpon>DatePickerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DomainUpDown\BorderToStringConverter.cs" />
+    <Compile Include="DomainUpDown\DomainUpDownAnimationsSample.xaml.cs">
+      <DependentUpon>DomainUpDownAnimationsSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DomainUpDown\DomainUpDownSample.xaml.cs">
+      <DependentUpon>DomainUpDownSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DomainUpDown\DomainUpDownSpinnerSample.xaml.cs">
+      <DependentUpon>DomainUpDownSpinnerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DomainUpDown\Month.cs" />
+    <Compile Include="DomainUpDown\MonthToStringConverter.cs" />
+    <Compile Include="DomainUpDown\Tutorial.cs" />
+    <Compile Include="DragAndDrop\CurrencyConverter.cs" />
+    <Compile Include="DragAndDrop\DragAndDropSample.xaml.cs">
+      <DependentUpon>DragAndDropSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Expander\ExpanderSample.xaml.cs">
+      <DependentUpon>ExpanderSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalCalendar\CalendarDayButtonStyleSelectorSample.xaml.cs">
+      <DependentUpon>CalendarDayButtonStyleSelectorSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalCalendar\ExactHoliday.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarHolidaysSample.xaml.cs">
+      <DependentUpon>GlobalCalendarHolidaysSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalCalendar\GlobalCalendarSample.xaml.cs">
+      <DependentUpon>GlobalCalendarSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalCalendar\Holiday.cs" />
+    <Compile Include="GlobalCalendar\HolidayDayButtonStyleSelector.cs" />
+    <Compile Include="GlobalCalendar\RelativeHoliday.cs" />
+    <Compile Include="GlobalCalendar\WeekendDayButtonStyleSelector.cs" />
+    <Compile Include="GridSplitter\GridSplitterSample.xaml.cs">
+      <DependentUpon>GridSplitterSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LayoutTransformer\LayoutTransformerSample.xaml.cs">
+      <DependentUpon>LayoutTransformerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\MappingNavigationSample.xaml.cs">
+      <DependentUpon>MappingNavigationSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\NavigationSample.xaml.cs">
+      <DependentUpon>NavigationSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\Page2.xaml.cs">
+      <DependentUpon>Page2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\QueryNavigationSample.xaml.cs">
+      <DependentUpon>QueryNavigationSample.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Navigation\QueryPage.xaml.cs">
+      <DependentUpon>QueryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Rating\RatingSample.xaml.cs">
+      <DependentUpon>RatingSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleHelpers.cs" />
+    <Compile Include="TabControl\TabControlSample.xaml.cs">
+      <DependentUpon>TabControlSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Theming\ThemeBrowser\Budget.cs" />
+    <Compile Include="Theming\ThemeBrowser\Catalog.cs" />
+    <Compile Include="Theming\ThemeBrowser\MediaItem.cs" />
+    <Compile Include="Theming\ThemeBrowser\ThemeBrowserSample.xaml.cs">
+      <DependentUpon>ThemeBrowserSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Theming\ThemeBrowser\ThemeCatalogItem.cs" />
+    <Compile Include="Theming\ThemeBrowser\VacationBudgetCollection.cs" />
+    <Compile Include="Theming\ThemesOverview.xaml.cs">
+      <DependentUpon>ThemesOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Theming\Themes\AllControls.xaml.cs">
+      <DependentUpon>AllControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimeInput\ArabicTimeGlobalizationInfo.cs" />
+    <Compile Include="TimeInput\PlusMinusHourTimeParser.cs" />
+    <Compile Include="TimeInput\PlusMinusMinuteTimeInputParser.cs" />
+    <Compile Include="TimeInput\TimeInputPopupSample.xaml.cs">
+      <DependentUpon>TimeInputPopupSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimeInput\TimeInputSample.xaml.cs">
+      <DependentUpon>TimeInputSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimeInput\TimePickerArabicCulture.xaml.cs">
+      <DependentUpon>TimePickerArabicCulture.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimeInput\TimePickerGesturesScenarios.xaml.cs">
+      <DependentUpon>TimePickerGesturesScenarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimeInput\TimePickerStudio.xaml.cs">
+      <DependentUpon>TimePickerStudio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimeInput\TimeUpDownSample.xaml.cs">
+      <DependentUpon>TimeUpDownSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransitioningContentControl\TransitioningContentControlSample.xaml.cs">
+      <DependentUpon>TransitioningContentControlSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransitioningContentControl\TransitioningDomainUpDown.cs" />
+    <Compile Include="TreeMap\AlternatingItemDefinitionSelector.cs" />
+    <Compile Include="TreeMap\FlexibleTemplateSample.xaml.cs">
+      <DependentUpon>FlexibleTemplateSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\InterpolatorsSample.xaml.cs">
+      <DependentUpon>InterpolatorsSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\RichSample.xaml.cs">
+      <DependentUpon>RichSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\SalesData.cs" />
+    <Compile Include="TreeMap\SegmentedSample.xaml.cs">
+      <DependentUpon>SegmentedSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeMap\SegmentItemDefinitionSelector.cs" />
+    <Compile Include="TreeMap\SegmentNode.cs" />
+    <Compile Include="TreeMap\TreeMapSample.xaml.cs">
+      <DependentUpon>TreeMapSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Basics\TreeViewDataBindingSample.xaml.cs">
+      <DependentUpon>TreeViewDataBindingSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Basics\TreeViewEventsSample.xaml.cs">
+      <DependentUpon>TreeViewEventsSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Basics\TreeViewInteractionSample.xaml.cs">
+      <DependentUpon>TreeViewInteractionSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Basics\TreeViewSample.xaml.cs">
+      <DependentUpon>TreeViewSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Basics\TreeViewSelectionSample.xaml.cs">
+      <DependentUpon>TreeViewSelectionSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Basics\TreeViewStylingSample.xaml.cs">
+      <DependentUpon>TreeViewStylingSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Scenarios\CheckedTreeViewItemSample.xaml.cs">
+      <DependentUpon>CheckedTreeViewItemSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Scenarios\MasterDetailSample.xaml.cs">
+      <DependentUpon>MasterDetailSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Scenarios\NestedHierarchicalDataTemplateSample.xaml.cs">
+      <DependentUpon>NestedHierarchicalDataTemplateSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\Scenarios\OrganizationalChartSample.xaml.cs">
+      <DependentUpon>OrganizationalChartSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDown\InputOverview.xaml.cs">
+      <DependentUpon>InputOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDown\Spinner\ButtonSpinner\ButtonSpinnerSample.xaml.cs">
+      <DependentUpon>ButtonSpinnerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DockPanel\DockPanelSample.xaml.cs">
+      <DependentUpon>DockPanelSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Expander\HeaderedContentControl\HeaderedContentControlSample.xaml.cs">
+      <DependentUpon>HeaderedContentControlSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeView\HeaderedItemsControl\HeaderedItemsControlSample.xaml.cs">
+      <DependentUpon>HeaderedItemsControlSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpDown\NumericUpDown\NumericUpDownSample.xaml.cs">
+      <DependentUpon>NumericUpDownSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ParseUtility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpDown\UpDownBase\UpDownBaseSample.xaml.cs">
+      <DependentUpon>UpDownBaseSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Validation\DescriptionViewerSample.xaml.cs">
+      <DependentUpon>DescriptionViewerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Validation\ValidationSummarySample.xaml.cs">
+      <DependentUpon>ValidationSummarySample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Validation\LabelSample.xaml.cs">
+      <DependentUpon>LabelSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome.xaml.cs">
+      <DependentUpon>Welcome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WrapPanel\WrapPanelSample.xaml.cs">
+      <DependentUpon>WrapPanelSample.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="Accordion\AccordionSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Accordion\AccordionShowcase.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Accordion\AccordionUsage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AutoCompleteBox\AutoCompleteLambda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AutoCompleteBox\AutoCompleteBoxSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Charting\Images\Abstract Glow.jpg" />
+    <Resource Include="AutoCompleteBox\Venice.jpg" />
+    <Resource Include="DomainUpDown\JesseLiberty.png" />
+    <Resource Include="Rating\Images\Casablanca.jpg" />
+    <Resource Include="AutoCompleteBox\Bing.png" />
+    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <Content Include="Silverlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Page Include="AutoCompleteBox\CustomEvents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AutoCompleteBox\AutoCompleteComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AutoCompleteBox\DataGridAutoCompleteBoxEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AutoCompleteBox\DataGridAutoCompleteBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AutoCompleteBox\SearchSuggestionSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BusyIndicator\BusyIndicatorSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ContextMenu\ContextMenuSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Calendar\CalendarSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Charting\AreaSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\BarSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\ColumnAnimationSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\ColumnSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\BubbleSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\LineSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\Overview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\StackedSeries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\PieAnimationSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\PieSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\ScatterSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\Scenarios\CustomSeries\CustomSeriesSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Charting\Scenarios\SeriesZoom\SeriesZoomSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\ChildWindowSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\ChildWindowStyleSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\DemoChildWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\StyledChildWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataForm\DataFormHeterogeneousDataSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\DataFormSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\DataFormTemplateSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataGrid\DataGridGroupingSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataGrid\DataGridMasterDetailSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataGrid\DataGridSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataPager\DataPagerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DatePicker\DatePickerSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DomainUpDown\DomainUpDownAnimationsSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DomainUpDown\DomainUpDownSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DomainUpDown\DomainUpDownSpinnerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragAndDrop\DragAndDropSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GlobalCalendar\CalendarDayButtonStyleSelectorSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GlobalCalendar\GlobalCalendarHolidaysSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GlobalCalendar\GlobalCalendarSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GridSplitter\GridSplitterSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LayoutTransformer\LayoutTransformerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Navigation\MappingNavigationSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Navigation\NavigationSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Navigation\Page1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Navigation\Page2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Navigation\QueryNavigationSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Navigation\QueryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rating\RatingSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TabControl\TabControlSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theming\ThemeBrowser\ThemeBrowserSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theming\ThemesOverview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theming\Themes\AllControls.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimeInput\TimeInputPopupSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TimeInput\TimeInputSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimeInput\TimePickerArabicCulture.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TimeInput\TimePickerGesturesScenarios.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TimeInput\TimePickerStudio.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TimeInput\TimeUpDownSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransitioningContentControl\TransitioningContentControlSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\FlexibleTemplateSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\InterpolatorsSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\RichSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TreeMap\SegmentedSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeMap\TreeMapSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Basics\TreeViewDataBindingSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Basics\TreeViewEventsSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Basics\TreeViewInteractionSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Basics\TreeViewSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Basics\TreeViewSelectionSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Basics\TreeViewStylingSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Scenarios\CheckedTreeViewItemSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Scenarios\MasterDetailSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Scenarios\NestedHierarchicalDataTemplateSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\Scenarios\OrganizationalChartSample.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpDown\InputOverview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpDown\Spinner\ButtonSpinner\ButtonSpinnerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DockPanel\DockPanelSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Expander\ExpanderSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Expander\HeaderedContentControl\HeaderedContentControlSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TreeView\HeaderedItemsControl\HeaderedItemsControlSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpDown\NumericUpDown\NumericUpDownSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpDown\UpDownBase\UpDownBaseSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Validation\DescriptionViewerSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Validation\ValidationSummarySample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Validation\LabelSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Welcome.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WrapPanel\WrapPanelSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="TreeView\Templating\TreeViewTemplatingSample.xaml.cs">
+      <DependentUpon>TreeViewTemplatingSample.xaml</DependentUpon>
+    </Compile>
+    <Content Include="TreeView\Templating\TreeViewCheckBoxes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeView\Templating\TreeViewConnectingLines.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeView\Templating\TreeViewDefault.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TreeView\Templating\TreeViewFullRowSelect.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Page Include="TreeView\Templating\TreeViewTemplatingSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ContextMenu\Delete.png" />
+    <Resource Include="ContextMenu\MoveUp.png" />
+    <Resource Include="ContextMenu\MoveDown.png" />
+    <Resource Include="ContextMenu\ZoomIn.png" />
+    <Resource Include="ContextMenu\ZoomOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Samples.Common\Controls.Samples.Common.csproj"><Project>{1F7EF403-BE2B-4DBE-9850-E80EAB250D0D}</Project><Name>Controls.Samples.Common</Name></ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v4.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

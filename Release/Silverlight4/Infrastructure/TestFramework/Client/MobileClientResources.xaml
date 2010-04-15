@@ -1,0 +1,591 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client">
+
+    <local:VisibilityConverter x:Key="visibilityConverter" />
+    <local:ColorSelectorConverter x:Key="passFailColoring" 
+                                  TrueColor="Transparent" 
+                                  FalseColor="#66FF0000" />
+    <local:ColorSelectorConverter x:Key="MobilePassFailColoring"
+                                  TrueColor="White" 
+                                  FalseColor="#FFFF0000" />
+    <local:ColorSelectorConverter x:Key="passFailBoldColoring" 
+                                  TrueColor="Transparent" 
+                                  FalseColor="Red" />
+    <DropShadowEffect x:Key="HeaderTextShadow" 
+                      BlurRadius="2" 
+                      ShadowDepth="1"/>
+
+    <Color x:Key="highlightBorder">#fffd00</Color>
+    <Color x:Key="highlightBackground">#fdfdb0</Color>
+    <Color x:Key="highlightForeground">Black</Color>
+    <SolidColorBrush x:Key="highlightBorderBrush" 
+                     Color="{StaticResource highlightBorder}" />
+    <SolidColorBrush x:Key="highlightBackgroundBrush" 
+                     Color="{StaticResource highlightBackground}" />
+    <SolidColorBrush x:Key="highlightForegroundBrush" 
+                     Color="{StaticResource highlightForeground}" />
+
+    <local:ColorSelectorConverter x:Key="runPassedFailCounterColor" 
+                                  TrueColor="Transparent" 
+                                  FalseColor="Red" />
+
+    <Style TargetType="Border" x:Key="counterBorder">
+        <Setter Property="CornerRadius" Value="2" />
+        <Setter Property="BorderBrush" Value="#33000000" />
+        <Setter Property="Height" Value="42" />
+        <Setter Property="MinWidth" Value="42" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="counterText">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="smallText">
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Opacity" Value=".8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="VeryTopHeaderBrush">
+        <GradientStop Color="Black" Offset="1"/>
+        <GradientStop Color="#FF3C3C3C" Offset="0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="LightVeryTopHeaderBrush">
+        <GradientStop Color="#FFEFF6F9" Offset="0"/>
+        <GradientStop Color="#FFBDC5C9" Offset="1"/>
+    </LinearGradientBrush>
+
+    <Color x:Key="ToolbarColor1">#FF6A6A6A</Color>
+    <Color x:Key="ToolbarColor2">#FF323232</Color>
+    <Color x:Key="ToolbarColor3">#E5171717</Color>
+
+    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="ToolbarBrush">
+        <GradientStop Color="{StaticResource ToolbarColor1}" Offset="0"/>
+        <GradientStop Color="{StaticResource ToolbarColor2}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource ToolbarColor3}" Offset="0.5001"/>
+        <!-- #FF8195AF -->
+        <GradientStop Color="{StaticResource ToolbarColor3}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <Color x:Key="ToolbarFailedColor1">Red</Color>
+    <Color x:Key="ToolbarFailedColor2">Red</Color>
+    <Color x:Key="ToolbarFailedColor3">#E5FF0000</Color>
+
+    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="ToolbarFailedBrush">
+        <GradientStop Color="{StaticResource ToolbarFailedColor1}" Offset="0"/>
+        <GradientStop Color="{StaticResource ToolbarFailedColor2}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource ToolbarFailedColor3}" Offset="0.5001"/>
+        <GradientStop Color="{StaticResource ToolbarFailedColor3}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="Trans" Color="Transparent"/>
+    <SolidColorBrush x:Key="Greenish" Color="Green"/>
+    <local:BrushSelector x:Key="topBarPassedColoring"
+                         TrueBrush="{StaticResource Trans}"
+                         FalseBrush="{StaticResource ToolbarFailedBrush}"/>
+    <local:BrushSelector x:Key="topBarFinalPassedColoring"
+                         TrueBrush="{StaticResource Greenish}"
+                         FalseBrush="{StaticResource Trans}"/>
+
+    <ControlTemplate x:Key="LeftArrowModifiedTemplate" TargetType="local:AdvancedButton">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <Storyboard>
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="BorderGradient" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="00:00:00" Value="#00000000"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="BorderGradient" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="00:00:00" Value="#26000000"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="BorderGradient1" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="00:00:00" Value="#26000000"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="BorderGradient" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="00:00:00" Value="#59000000"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="BorderGradient1" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="00:00:00" Value="#59000000"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
+                                <SplineDoubleKeyFrame KeyTime="0" Value=".55"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused"/>
+                    <VisualState x:Name="Unfocused"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="Background" 
+					BorderThickness="{TemplateBinding BorderThickness}" 
+					CornerRadius="{TemplateBinding CornerRadius}"
+					Background="{TemplateBinding Background}">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#BF000000" Offset="0"/>
+                        <GradientStop Color="#A5FFFFFF" Offset="1"/>
+                        <GradientStop Color="#7F666666" Offset="0.862"/>
+                        <GradientStop Color="#7F181818" Offset="0.259"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <Border CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#3FFFFFFF" Offset="0"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                            <GradientStop Color="#26FFFFFF" Offset="0.5"/>
+                            <GradientStop Color="Transparent" Offset="0.5009"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border CornerRadius="{TemplateBinding CornerRadius}"
+							x:Name="BorderGradient" >
+                        <Border.Background>
+                            <SolidColorBrush/>
+                        </Border.Background>
+                    </Border>
+                </Border>
+            </Border>
+            <local:LayoutTransformer 
+                    x:Name="ArrowVisualElement" 
+                    Margin="-13,0"
+                    Visibility="{TemplateBinding SecondaryVisibility}"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center">
+                <local:LayoutTransformer.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="45"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </local:LayoutTransformer.LayoutTransform>
+                <local:LayoutTransformer.Clip>
+                    <RectangleGeometry Rect="0,0,13,30" />
+                </local:LayoutTransformer.Clip>
+                <Border HorizontalAlignment="Left"
+                        BorderThickness="1,0,0,1"
+                        Height="19"
+                        Width="19"
+                    Background="{TemplateBinding Background}">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                    <RotateTransform Angle="-45" CenterX="0.5" CenterY="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#8B000000" Offset="0"/>
+                            <GradientStop Color="#7F666666" Offset="0.862"/>
+                            <GradientStop Color="#F2181818" Offset="0.259"/>
+                            <GradientStop Color="#7F666666" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border>
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                        <RotateTransform Angle="-45" CenterX="0.5" CenterY="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#3FFFFFFF" Offset="0"/>
+                                <GradientStop Color="Transparent" Offset="1"/>
+                                <GradientStop Color="#26FFFFFF" Offset="0.5"/>
+                                <GradientStop Color="Transparent" Offset="0.5009"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border
+                			x:Name="BorderGradient1">
+                            <Border.Background>
+                                <SolidColorBrush/>
+                            </Border.Background>
+                        </Border>
+                    </Border>
+                </Border>
+            </local:LayoutTransformer>
+
+            <Grid Margin="-4,0,-1,0">
+                <!-- contentPresenterHost -->
+                <ContentPresenter 
+						x:Name="contentPresenter" 
+						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+						Margin="{TemplateBinding Padding}" 
+						VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+						Content="{TemplateBinding Content}" 
+						ContentTemplate="{TemplateBinding ContentTemplate}">
+                    <ContentPresenter.Effect>
+                        <DropShadowEffect BlurRadius="2" ShadowDepth="1" Direction="80" Opacity="0.7" />
+                    </ContentPresenter.Effect>
+                </ContentPresenter>
+            </Grid>
+            <Rectangle 
+                    Visibility="Collapsed"
+                    x:Name="DisabledVisualElement" Fill="#FFFFFFFF" RadiusX="3" RadiusY="3" IsHitTestVisible="false" Opacity="0"/>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="LeftArrowToolbarButton" TargetType="local:AdvancedButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="8,3,8,3"/>
+        <Setter Property="BorderThickness" Value="0,1,1,1"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="SecondaryVisibility" Value="Visible"/>
+        <Setter Property="Margin" Value="20,7,4,7"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Template" Value="{StaticResource LeftArrowModifiedTemplate}"/>
+        <Setter Property="FontSize" Value="11" />
+    </Style>
+    
+    <Style x:Key="ToolbarButton" TargetType="local:AdvancedButton">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Padding" Value="14,3,8,3"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template" Value="{StaticResource LeftArrowModifiedTemplate}"/>
+        <Setter Property="Margin" Value="7,7,7,7"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="SecondaryVisibility" Value="Collapsed"/>
+    </Style>
+
+    <Style x:Key="OldToolbarButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ToolbarBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <!--
+    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="FailedBullet">
+                            old <GradientStop Color="#FF78ABFB" Offset="0"/>
+                            <GradientStop Color="#FF3D6BC2" Offset="1"/>
+        <GradientStop Color="#FFFB7878" Offset="0"/>
+        <GradientStop Color="#FFC23D3D" Offset="1"/>
+    </LinearGradientBrush-->
+    <SolidColorBrush x:Key="FailedBullet" Color="Red" />
+
+    <!-- Color Resources -->
+    <Color x:Key="PhoneBackgroundColor">#FF1F1F1F</Color>
+    <Color x:Key="PhoneContrastForegroundColor">Black</Color>
+    <Color x:Key="PhoneForegroundColor">White</Color>
+    <Color x:Key="PhoneInactiveColor">#FF666666</Color>
+    <Color x:Key="PhoneDisabledColor">#FF808080</Color>
+    <Color x:Key="PhoneSubtleColor">#FF999999</Color>
+    <Color x:Key="PhoneContrastBackgroundColor">#FFFFFFFF</Color>
+    <Color x:Key="PhoneTextBoxColor">#FFBFBFBF</Color>
+    <Color x:Key="PhoneBorderColor">#FFCCCCCC</Color>
+    <Color x:Key="PhoneTextSelectionColor">Black</Color>
+    <Color x:Key="PhoneAccentColor">#FF1BA1E2</Color>
+
+    <!-- Brush Resources -->
+    <SolidColorBrush x:Key="PhoneAccentBrush" Color="{StaticResource PhoneAccentColor}"/>
+    <SolidColorBrush x:Key="PhoneBackgroundBrush" Color="{StaticResource PhoneBackgroundColor}"/>
+    <SolidColorBrush x:Key="PhoneContrastForegroundBrush" Color="{StaticResource PhoneContrastForegroundColor}"/>
+    <SolidColorBrush x:Key="PhoneForegroundBrush" Color="{StaticResource PhoneForegroundColor}"/>
+    <SolidColorBrush x:Key="PhoneInactiveBrush" Color="{StaticResource PhoneInactiveColor}"/>
+    <SolidColorBrush x:Key="PhoneDisabledBrush" Color="{StaticResource PhoneDisabledColor}"/>
+    <SolidColorBrush x:Key="PhoneSubtleBrush" Color="{StaticResource PhoneSubtleColor}"/>
+    <SolidColorBrush x:Key="PhoneContrastBackgroundBrush" Color="{StaticResource PhoneContrastBackgroundColor}"/>
+    <SolidColorBrush x:Key="PhoneTextBoxBrush" Color="{StaticResource PhoneTextBoxColor}"/>
+    <SolidColorBrush x:Key="PhoneBorderBrush" Color="{StaticResource PhoneBorderColor}"/>
+    <SolidColorBrush x:Key="PhoneTextSelectionBrush" Color="{StaticResource PhoneTextSelectionColor}"/>
+    <SolidColorBrush x:Key="TransparentBrush" Color="Transparent"/>
+
+    <!-- Touch Target area -->
+    <Thickness x:Key="PhoneTouchTargetOverhang">12</Thickness>
+
+    <!-- Default border size-->
+    <Thickness x:Key="PhoneDefaultBorderThickness">3</Thickness>
+
+    <!-- Font Names -->
+    <FontFamily x:Key="PhoneFontFamilyNormal">Segoe WP</FontFamily>
+    <FontFamily x:Key="PhoneFontFamilyLight">Segoe WP Light</FontFamily>
+    <FontFamily x:Key="PhoneFontFamilySemiLight">Segoe WP Semilight</FontFamily>
+    <FontFamily x:Key="PhoneFontFamilySemiBold">Segoe WP Semibold</FontFamily>
+
+    <!-- Font sizes -->
+    <!--14pt-->
+    <system:Double x:Key="PhoneFontSizeSmall">18.667</system:Double>
+    <!--15pt-->
+    <system:Double x:Key="PhoneFontSizeNormal">20</system:Double>
+    <!--17pt-->
+    <system:Double x:Key="PhoneFontSizeMedium">22.667</system:Double>
+    <!--19pt-->
+    <system:Double x:Key="PhoneFontSizeMediumLarge">25.333</system:Double>
+    <!--24pt-->
+    <system:Double x:Key="PhoneFontSizeLarge">32</system:Double>
+    <!--32pt-->
+    <system:Double x:Key="PhoneFontSizeExtraLarge">42.667</system:Double>
+    <!--54pt-->
+    <system:Double x:Key="PhoneFontSizeExtraExtraLarge">72</system:Double>
+
+    <!-- TextBlock styles -->
+    <Style x:Key="PhoneTextApplicationNameStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="Margin" Value="24"/>
+    </Style>
+
+    <Style x:Key="PhoneTextTitleNameStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraExtraLarge}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="Margin" Value="20, 46, 20 ,0"/>
+    </Style>
+
+    <Style x:Key="PhoneTextBodyTextStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="LineHeight" Value="32"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="24, 11, 24, 24"/>
+    </Style>
+
+    <Style x:Key="DoubleLineListTitleTextStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="Margin" Value="18, 4, 18, 0"/>
+    </Style>
+
+    <Style x:Key="DoubleLineListSubTitleTextStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+        <Setter Property="Margin" Value="18, -13, 18, 10"/>
+    </Style>
+
+    <!--ListBoxItemStyle-->
+    <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected"/>
+                                <VisualState x:Name="Selected"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ListBox Style -->
+    <Style x:Key="ListBoxStyle" TargetType="ListBox">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemStyle}"/>
+    </Style>
+    
+    <!-- My custom phone styles without margins -->
+    <Style x:Key="PhoneTextApplicationNameStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    </Style>
+
+    <Style x:Key="PhoneTextTitleNameStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraExtraLarge}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    </Style>
+
+    <Style x:Key="PhoneTextBodyTextStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="LineHeight" Value="32"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="DoubleLineListTitleTextStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeExtraLarge}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    </Style>
+
+    <Style x:Key="DoubleLineListSubTitleTextStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+    </Style>
+
+    <Style x:Key="SmallerDoubleLineListTitleTextStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    </Style>
+
+    <Style x:Key="SmallerDoubleLineListSubTitleTextStyleNoMargin" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeNormal}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+    </Style>
+
+    <DataTemplate x:Key="StandardHierarchicalListItemTemplate">
+        <Grid HorizontalAlignment="Stretch">
+            <Border 
+                Height="60" 
+                BorderThickness="0,0,0,1" 
+                BorderBrush="#66E0E0E0" 
+                Background="Black">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="42"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- C1 : Left icon or notification -->
+                    <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Width="19" Height="19" 
+                             Fill="{StaticResource FailedBullet}"
+                             Visibility="{Binding Path=Passed, Converter={StaticResource visibilityConverter}, ConverterParameter=Collapsed}"/>
+
+                    <!-- C2 : Content -->
+                    <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition /> <!--Height="40" /-->
+<!--                            <RowDefinition Height="60" /-->
+                            <!-- 
+                            <RowDefinition Height="38" />
+                            -->
+                        </Grid.RowDefinitions>
+
+                        <!--<TextBlock Grid.Row="0" Foreground="White" FontSize="16" FontWeight="Bold" Text="{Binding Name}" />DoubleLineListTitleTextStyleNoMargin -->
+                        <TextBlock 
+                            Grid.Row="0" 
+                            Style="{StaticResource SmallerDoubleLineListTitleTextStyleNoMargin}" 
+                            VerticalAlignment="Center"
+                            Text="{Binding Name}" />
+
+                        <!--TextBlock Grid.Row="1" Foreground="White" Text="{Binding Description}" FontSize="10.667" /-->
+                        <!--TextBlock Grid.Row="1" Style="{StaticResource SmallerDoubleLineListSubTitleTextStyleNoMargin}" 
+                                   Foreground="#ff336699" Text="{Binding Description}"/-->
+
+                        <!-- Description -->
+                        <!-- 
+                        <TextBlock Grid.Row="2" Text="{Binding Description}" TextWrapping="Wrap" Foreground="#7F000000" FontSize="10.667" />
+                        -->
+
+                    </Grid>
+
+                    <!-- C3 : Right arrow -->
+                    <ContentPresenter Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Path Data="F1M0,0L4,4 0,8 0,0z" Fill="White" Opacity=".5" />
+                    </ContentPresenter>
+
+                </Grid>
+
+            </Border>
+        </Grid>
+    </DataTemplate>
+    
+    <Style TargetType="ListBoxItem" x:Key="StandardHierarchicalListItemStyle">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected"/>
+                                <VisualState x:Name="Selected"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListBox" x:Key="StandardHierarchicalList">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemTemplate" Value="{StaticResource StandardHierarchicalListItemTemplate}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource StandardHierarchicalListItemStyle}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+    </Style>
+    
+    <DataTemplate x:Key="TextHeaderContentTemplate">
+        <Grid>
+            <TextBlock HorizontalAlignment="Left" 
+                       VerticalAlignment="Center"
+                       FontSize="{StaticResource PhoneFontSizeMedium}"
+                       Foreground="White"
+                       Text="{Binding}"
+                       Effect="{StaticResource HeaderTextShadow}" />
+        </Grid>
+    </DataTemplate>
+
+    <Style TargetType="ContentControl" x:Key="TextHeaderContent">
+        <Setter Property="ContentTemplate" Value="{StaticResource TextHeaderContentTemplate}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+</ResourceDictionary>
