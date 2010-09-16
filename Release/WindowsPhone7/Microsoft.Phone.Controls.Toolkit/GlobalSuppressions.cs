@@ -1,0 +1,17 @@
+﻿using System.Diagnostics.CodeAnalysis;
+
+[assembly: SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "Satisfied for Release, not for Debug.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "System.Windows", Justification = "Matching Silverlight namespaces for existing classes.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "System.Windows.Controls", Justification = "Matching Silverlight namespaces for existing classes.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "System.Windows.Controls.Primitives", Justification = "Matching Silverlight namespaces for existing classes.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Microsoft.Phone.Controls", Justification = "Using corresponding Toolkit namespace for existing classes.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Microsoft.Phone.Controls.Primitives", Justification = "Using corresponding Toolkit namespace for existing classes.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "png", Scope = "resource", Target = "Microsoft.Phone.Controls.Properties.Resources.resources", Justification = "Standard file extension for PNG images.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.DatePickerPage.#VisibilityStates", Justification = "VSM group name.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.DatePickerPage.#Open", Justification = "VSM state name.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.DatePickerPage.#Closed", Justification = "VSM state name.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.DatePickerPage.#PlaneProjection", Justification = "Referenced by a VSM state.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.TimePickerPage.#VisibilityStates", Justification = "VSM group name.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.TimePickerPage.#Open", Justification = "VSM state name.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.TimePickerPage.#Closed", Justification = "VSM state name.")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "Microsoft.Phone.Controls.TimePickerPage.#PlaneProjection", Justification = "Referenced by a VSM state.")]
