@@ -245,7 +245,7 @@ namespace Microsoft.Phone.Controls.Primitives
             if (_isAnimating)
             {
                 double y = _panningTransform.Y;
-                _panelStoryboard.Stop();
+                StopAnimation();
                 _panningTransform.Y = y;
                 _isAnimating = false;
                 _state = State.Dragging;
@@ -429,8 +429,12 @@ namespace Microsoft.Phone.Controls.Primitives
             }
 
             _itemsPanel.Children.Clear();
-            _panelStoryboard.Stop();
+            StopAnimation();
             _panningTransform.Y = 0;
+
+            // Reset the extents
+            _minimumPanelScroll = float.MinValue;
+            _maximumPanelScroll = float.MaxValue;
 
             Balance();
         }
@@ -452,9 +456,7 @@ namespace Microsoft.Phone.Controls.Primitives
             }
 
             double from = _panningTransform.Y;
-            _panelStoryboard.Stop();
-
-            CompositionTarget.Rendering -= AnimationPerFrameCallback;
+            StopAnimation();
             CompositionTarget.Rendering += AnimationPerFrameCallback;
 
             _panelAnimation.Duration = duration;
@@ -465,6 +467,12 @@ namespace Microsoft.Phone.Controls.Primitives
             _panelStoryboard.SeekAlignedToLastTick(TimeSpan.Zero);
 
             _isAnimating = true;
+        }
+
+        private void StopAnimation()
+        {
+            _panelStoryboard.Stop();
+            CompositionTarget.Rendering -= AnimationPerFrameCallback;
         }
 
         private void Brake(double newStoppingPoint)

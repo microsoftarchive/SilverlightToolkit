@@ -1,0 +1,196 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.LongListSelectorSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:local="clr-namespace:PhoneToolkitSample"
+    xmlns:data="clr-namespace:PhoneToolkitSample.Data"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <phone:PhoneApplicationPage.Resources>
+        
+        <!-- MOVIE RESOURCES -->
+
+        <!-- The template for the list header. This will scroll as a part of the list. -->
+        <DataTemplate x:Key="movieListHeader">
+            <TextBlock Text="new releases" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </DataTemplate>
+
+        <!-- The group header template, for groups in the main list -->
+        <DataTemplate x:Key="movieGroupHeader">
+            <Border Background="{StaticResource PhoneAccentBrush}" Padding="{StaticResource PhoneTouchTargetOverhang}">
+                <TextBlock Text="{Binding Key}" Style="{StaticResource PhoneTextLargeStyle}"/>
+            </Border>
+        </DataTemplate>
+
+        <!-- The template for groups when they are items in the "jump list". Not setting -->
+        <!-- the GroupItemTemplate property will disable "jump list" functionality. -->
+        <DataTemplate x:Key="groupItemHeader">
+            <Border Background="{StaticResource PhoneAccentBrush}" Margin="{StaticResource PhoneTouchTargetOverhang}" Padding="{StaticResource PhoneTouchTargetOverhang}">
+                <TextBlock Text="{Binding Key}" Style="{StaticResource PhoneTextLargeStyle}"/>
+            </Border>
+        </DataTemplate>
+
+        <!-- The template for movie items -->
+        <DataTemplate x:Key="movieItemTemplate">
+            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Width="110" Height="150" Source="{Binding ImageUrl}" VerticalAlignment="Top"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" TextWrapping="Wrap" Margin="12,-12,12,6"/>
+                    <TextBlock Text="{Binding Stars}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                    <TextBlock Text="{Binding Information}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                    <TextBlock Text="{Binding Description}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <data:MoviesByCategory x:Key="movies"/>
+        <data:MoreCommand x:Key="moreCommand"/>
+        
+        <!-- BUDDIES RESOURCES -->
+        <data:PeopleByFirstName x:Key="buddies"/>
+
+        <data:GroupToBrushValueConverter x:Key="groupBrush"/>
+        
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <controls:Pivot Title="LONGLISTSELECTOR SAMPLES">
+            <controls:PivotItem Header="linq">
+                <toolkit:LongListSelector x:Name="linqMovies" Background="Transparent"
+                    ListHeaderTemplate="{StaticResource movieListHeader}"
+                    GroupHeaderTemplate="{StaticResource movieGroupHeader}"
+                    GroupItemTemplate="{StaticResource groupItemHeader}"
+                    ItemTemplate="{StaticResource movieItemTemplate}">                    
+                </toolkit:LongListSelector>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="code">
+                <toolkit:LongListSelector x:Name="codeMovies" Background="Transparent" 
+                    ItemsSource="{StaticResource movies}"
+                    ListHeaderTemplate="{StaticResource movieListHeader}"
+                    GroupHeaderTemplate="{StaticResource movieGroupHeader}"
+                    GroupItemTemplate="{StaticResource groupItemHeader}"
+                    ItemTemplate="{StaticResource movieItemTemplate}">
+
+                    <!-- The group footer template, for groups in the main list -->
+                    <toolkit:LongListSelector.GroupFooterTemplate>
+                        <DataTemplate>
+                            <local:CommandButton DataContext="{Binding}" Content="{Binding GetMore}" Command="{StaticResource moreCommand}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </toolkit:LongListSelector.GroupFooterTemplate>
+
+                </toolkit:LongListSelector>
+                
+            </controls:PivotItem>
+            
+            <controls:PivotItem Header="buddies">
+                
+                <toolkit:LongListSelector x:Name="buddies" Background="Transparent"
+                    ItemsSource="{StaticResource buddies}">
+                    
+                    <toolkit:LongListSelector.GroupItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </toolkit:LongListSelector.GroupItemsPanel>
+                    <toolkit:LongListSelector.GroupItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Converter={StaticResource groupBrush}}" Width="99" Height="99" Margin="6" IsHitTestVisible="{Binding HasItems}">
+                                <TextBlock Text="{Binding Key}" 
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                       FontSize="36"
+                                       Margin="{StaticResource PhoneTouchTargetOverhang}"
+                                       Foreground="{StaticResource PhoneForegroundBrush}"                                        
+                                       VerticalAlignment="Bottom"/>
+                            </Border>
+                        </DataTemplate>
+                    </toolkit:LongListSelector.GroupItemTemplate>
+
+                    <toolkit:LongListSelector.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <Border Background="Transparent">
+                                <Border Background="{StaticResource PhoneAccentBrush}" Width="75" Height="75" HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding Key}" 
+                                           Foreground="{StaticResource PhoneForegroundBrush}" 
+                                           Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                           VerticalAlignment="Bottom"/>
+                                </Border>
+                            </Border>
+                        </DataTemplate>
+                    </toolkit:LongListSelector.GroupHeaderTemplate>
+                    
+                    <toolkit:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Width="110" Height="150" Source="{Binding ImageUrl}" VerticalAlignment="Top"/>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding FullName}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
+                                    <TextBlock Text="{Binding Email}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Mobile:" Style="{StaticResource PhoneTextSmallStyle}"/>
+                                        <TextBlock Text="{Binding Mobile}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Home:" Style="{StaticResource PhoneTextSmallStyle}"/>
+                                        <TextBlock Text="{Binding Home}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </toolkit:LongListSelector.ItemTemplate>
+                                        
+                </toolkit:LongListSelector>
+                
+            </controls:PivotItem>
+            
+        </controls:Pivot>
+    </Grid>
+
+</phone:PhoneApplicationPage>

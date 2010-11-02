@@ -14,12 +14,18 @@
 
     <Style TargetType="primitives:ToggleSwitchButton">
         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="SwitchForeground" Value="{StaticResource PhoneAccentBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="primitives:ToggleSwitchButton">
-                    <Grid x:Name="SwitchRoot" Background="Transparent" CacheMode="BitmapCache">
+                    <Border
+                        x:Name="Root"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CacheMode="BitmapCache"
+                        Opacity="{TemplateBinding Opacity}"
+                        Padding="{TemplateBinding Padding}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
@@ -36,7 +42,7 @@
                                             Duration="0"
                                             To="{StaticResource PhoneForegroundColor}"/>
                                         <DoubleAnimation
-                                            Storyboard.TargetName="SwitchRoot"
+                                            Storyboard.TargetName="Root"
                                             Storyboard.TargetProperty="Opacity"
                                             Duration="0"
                                             To="0.3"/>
@@ -87,7 +93,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border Width="136" Height="95">
+                        <Grid x:Name="SwitchRoot" Background="Transparent" Height="95" Width="136">
                             <Grid x:Name="SwitchTrack" Width="88">
                                 <Grid x:Name="SwitchBottom" Background="{TemplateBinding SwitchForeground}" Height="32">
                                     <Rectangle
@@ -123,8 +129,8 @@
                                         Background="White"/>
                                 </Border>
                             </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -132,15 +138,21 @@
 
     <Style TargetType="controls:ToggleSwitch">
         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
-        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyLight}"/>
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="SwitchForeground" Value="{StaticResource PhoneAccentBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ToggleSwitch">
-                    <Grid x:Name="Root" Margin="12,0,36,48" CacheMode="BitmapCache">
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}"
+                        CacheMode="BitmapCache">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
@@ -160,38 +172,48 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ContentControl
-                            x:Name="Header"
-                            ContentTemplate="{TemplateBinding HeaderTemplate}"
-                            Content="{TemplateBinding Header}"
-                            Foreground="{StaticResource PhoneSubtleBrush}"
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                            FontSize="{StaticResource PhoneFontSizeSmall}"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"/>
-                        <ContentControl
-                            x:Name="Content"
-                            Grid.Row="1"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Content="{TemplateBinding Content}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        <primitives:ToggleSwitchButton
-                            x:Name="Switch"
-                            Grid.RowSpan="2"
-                            Grid.Column="1"
-                            Margin="-24,-29,-24,-30"
-                            VerticalAlignment="Bottom"
-                            Background="{TemplateBinding Background}"/>
-                    </Grid>
+                        <Grid Margin="12,5,36,42">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentControl
+                                x:Name="Header"
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                FontSize="{StaticResource PhoneFontSizeNormal}"
+                                Foreground="{StaticResource PhoneBorderBrush}"
+                                HorizontalAlignment="Left"
+                                IsTabStop="False"
+                                Margin="-1,0,0,0"
+                                Opacity="{TemplateBinding Opacity}"
+                                VerticalAlignment="Bottom"/>
+                            <ContentControl
+                                x:Name="Content"
+                                Grid.Row="1"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                IsTabStop="False"
+                                Margin="-1,1,0,-7"
+                                Opacity="{TemplateBinding Opacity}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <primitives:ToggleSwitchButton
+                                x:Name="Switch"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                Background="{TemplateBinding Background}"
+                                Margin="-22,-29,-24,-28"
+                                Opacity="{TemplateBinding Opacity}"
+                                SwitchForeground="{TemplateBinding SwitchForeground}"
+                                VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -314,6 +336,42 @@
         </Setter>
     </Style>
 
+    <Style TargetType="controls:LongListSelector">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border 
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ScrollStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="00:00:00.5"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Scrolling">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="NotScrolling">
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <Canvas x:Name="ItemsPanel">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform x:Name="PanningTransform"/>
+                                </Canvas.RenderTransform>
+                            </Canvas>
+                            <ScrollBar x:Name="VerticalScrollBar" IsHitTestVisible="False" Opacity="0" Height="Auto" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch" IsTabStop="False" Minimum="0" Orientation="Vertical" CacheMode="BitmapCache"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="primitives:LoopingSelectorItem">
         <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
         <Setter Property="Padding" Value="6"/>
@@ -405,7 +463,10 @@
         <Setter Property="Foreground" Value="{StaticResource PhoneTextBoxForegroundBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="PickerPageUri" Value="/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/TimePickerPage.xaml"/>
-        <Setter Property="ValueStringFormat" Value="{}{0:t}"/>
+        <!-- Ideally, the short time pattern 't' would be correct. However, it does not respect
+             the system's "24-hour clock" setting override and so the correct effective value of
+             ValueStringFormat is determined on an as-needed basis (unless overridden). -->
+        <!--<Setter Property="ValueStringFormat" Value="{}{0:t}"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:TimePicker">
@@ -429,6 +490,224 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
 
+    <Style TargetType="controls:ListPicker">
+        <Setter Property="Background" Value="{StaticResource PhoneTextBoxBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneTextBoxForegroundBrush}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="{StaticResource PhoneTouchTargetOverhang}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ListPicker">
+                    <StackPanel>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PickerStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Expanded">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetProperty="Background"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneTextBoxEditBackgroundColor}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetProperty="BorderBrush"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneTextBoxEditBorderBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Foreground="{StaticResource PhoneSubtleBrush}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="0 0 0 8"/>
+                        <Grid>
+                            <Border
+                                x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding Background}"
+                                BorderThickness="2">
+                                <Canvas x:Name="ItemsPresenterHost" MinHeight="46">
+                                    <ItemsPresenter x:Name="ItemsPresenter">
+                                        <ItemsPresenter.RenderTransform>
+                                            <TranslateTransform x:Name="ItemsPresenterTranslateTransform"/>
+                                        </ItemsPresenter.RenderTransform>
+                                    </ItemsPresenter>
+                                </Canvas>
+                            </Border>
+                            <Popup x:Name="FullModePopup">
+                                <Border Background="{StaticResource PhoneChromeBrush}"> <!-- Popup.Child should always be a Border -->
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <ContentControl
+                                            Grid.Row="0"
+                                            Content="{TemplateBinding FullModeHeader}"
+                                            Foreground="{StaticResource PhoneForegroundBrush}"
+                                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                            FontSize="{StaticResource PhoneFontSizeMedium}"
+                                            HorizontalAlignment="Left"
+                                            Margin="24 12 0 0"/>
+                                        <ListBox
+                                            x:Name="FullModeSelector"
+                                            Grid.Row="1"
+                                            ItemTemplate="{TemplateBinding ActualFullModeItemTemplate}"
+                                            FontSize="{TemplateBinding FontSize}"
+                                            Margin="{StaticResource PhoneMargin}">
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel/> <!-- Ensures all containers will be available during the Loaded event -->
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+                                        </ListBox>
+                                    </Grid>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:ListPickerItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="8 6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ListPickerItem">
+                    <Grid Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected"/>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="ContentContainer"
+                                            Storyboard.TargetProperty="Foreground"
+                                            Duration="0">
+                                            <DiscreteObjectKeyFrame
+                                                Value="{StaticResource PhoneAccentBrush}"
+                                                KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl
+                            x:Name="ContentContainer"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:AutoCompleteBox">
+        <Setter Property="Background" Value="{StaticResource PhoneTextBoxBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PhoneTextBoxBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneTextBoxForegroundBrush}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" Margin="8,7"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="6,0,6,4"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:AutoCompleteBox">
+                    <Grid>
+                        <TextBox
+                            x:Name="Text"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontStyle="{TemplateBinding FontStyle}"
+                            FontWeight="{TemplateBinding FontWeight}"
+                            Foreground="{TemplateBinding Foreground}"
+                            InputScope="{TemplateBinding InputScope}"
+                            Opacity="{TemplateBinding Opacity}"
+                            Padding="{TemplateBinding Padding}"
+                            Style="{TemplateBinding TextBoxStyle}"/>
+                        <Popup x:Name="Popup">
+                            <ListBox
+                                x:Name="Selector"
+                                Background="White"
+                                BorderBrush="{StaticResource PhoneTextBoxEditBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontStyle="{TemplateBinding FontStyle}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                IsTabStop="False"
+                                ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                ItemTemplate="{TemplateBinding ItemTemplate}"
+                                Opacity="{TemplateBinding Opacity}"
+                                Padding="0,8"/>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:TransitionFrame">
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TransitionFrame">
+                    <Border
+                        x:Name="ClientArea"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Margin="{TemplateBinding Margin}">
+                        <Grid>
+                            <ContentPresenter
+                                x:Name="FirstContentPresenter"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter
+                                x:Name="SecondContentPresenter"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

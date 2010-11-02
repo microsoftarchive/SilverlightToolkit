@@ -40,7 +40,7 @@ namespace Microsoft.Phone.Controls
         protected override IEnumerable<LoopingSelector> GetSelectorsOrderedByCulturePattern()
         {
             return GetSelectorsOrderedByCulturePattern(
-                CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.ToUpperInvariant(),
+                CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern.ToUpperInvariant(),
                 new char[] { 'H', 'M', 'T' },
                 new LoopingSelector[] { PrimarySelector, SecondarySelector, TertiarySelector });
         }

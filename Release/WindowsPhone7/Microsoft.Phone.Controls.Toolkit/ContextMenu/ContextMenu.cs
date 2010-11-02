@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 #if WINDOWS_PHONE
 using Microsoft.Phone.Controls.Primitives;
 using Microsoft.Phone.Controls;
@@ -85,17 +84,6 @@ namespace System.Windows.Controls
         /// Tracks the threshold for releasing contact during the ContextMenu open animation.
         /// </summary>
         private DateTime _openingStoryboardReleaseThreshold;
-
-        /// <summary>
-        /// Stores a reference to the timer used to detect the tap+hold gesture that opens the ContextMenu.
-        /// </summary>
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(0.5) };
-
-        /// <summary>
-        /// Tracks the start point for manipulation events (in root-relative coordinates).
-        /// </summary>
-        private Point _manipulationStartPoint;
-
 #endif
 
         /// <summary>
@@ -151,9 +139,8 @@ namespace System.Windows.Controls
                     if (null != ownerFrameworkElement)
                     {
 #if WINDOWS_PHONE
-                        ownerFrameworkElement.ManipulationStarted -= new EventHandler<ManipulationStartedEventArgs>(HandleOwnerFrameworkElementManipulationStarted);
-                        ownerFrameworkElement.ManipulationDelta -= new EventHandler<ManipulationDeltaEventArgs>(HandleOwnerFrameworkElementManipulationDeltaOrCompleted);
-                        ownerFrameworkElement.ManipulationCompleted -= new EventHandler<ManipulationCompletedEventArgs>(HandleOwnerFrameworkElementManipulationDeltaOrCompleted);
+                        GestureListener listener = GestureService.GetGestureListener(ownerFrameworkElement);
+                        listener.Hold -= new EventHandler<GestureEventArgs>(HandleOwnerHold);
                         ownerFrameworkElement.Loaded -= new RoutedEventHandler(HandleOwnerLoaded);
                         ownerFrameworkElement.Unloaded -= new RoutedEventHandler(HandleOwnerUnloaded);
                         HandleOwnerUnloaded(null, null);
@@ -169,9 +156,8 @@ namespace System.Windows.Controls
                     if (null != ownerFrameworkElement)
                     {
 #if WINDOWS_PHONE
-                        ownerFrameworkElement.ManipulationStarted += new EventHandler<ManipulationStartedEventArgs>(HandleOwnerFrameworkElementManipulationStarted);
-                        ownerFrameworkElement.ManipulationDelta += new EventHandler<ManipulationDeltaEventArgs>(HandleOwnerFrameworkElementManipulationDeltaOrCompleted);
-                        ownerFrameworkElement.ManipulationCompleted += new EventHandler<ManipulationCompletedEventArgs>(HandleOwnerFrameworkElementManipulationDeltaOrCompleted);
+                        GestureListener listener = GestureService.GetGestureListener(ownerFrameworkElement);
+                        listener.Hold += new EventHandler<GestureEventArgs>(HandleOwnerHold);
                         ownerFrameworkElement.Loaded += new RoutedEventHandler(HandleOwnerLoaded);
                         ownerFrameworkElement.Unloaded += new RoutedEventHandler(HandleOwnerUnloaded);
                         // Owner *may* already be live and have fired its Loaded event - hook up manually if necessary
@@ -359,10 +345,6 @@ namespace System.Windows.Controls
 
             // Temporarily hook LayoutUpdated to find out when Application.Current.RootVisual gets set.
             LayoutUpdated += new EventHandler(HandleLayoutUpdated);
-
-#if WINDOWS_PHONE
-            _dispatcherTimer.Tick += new EventHandler(HandleDispatcherTimerTick);
-#endif
         }
 
 #if WINDOWS_PHONE
@@ -536,54 +518,11 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Handles the ManipulationStarted event of the Owner element.
+        /// Handles the Hold event for the owning element.
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleOwnerFrameworkElementManipulationStarted(object sender, ManipulationStartedEventArgs e)
-        {
-            // Cancel any outstanding timer
-            _dispatcherTimer.Stop();
-
-            // Record the start point
-            if (null != _rootVisual)
-            {
-                _manipulationStartPoint = e.ManipulationContainer.TransformToVisual(_rootVisual).Transform(e.ManipulationOrigin);
-            }
-
-            // Start a new timer
-            _dispatcherTimer.Start();
-        }
-
-        /// <summary>
-        /// Handles the ManipulationDelta or ManipulationCompleted events of the Owner element.
-        /// </summary>
-        /// <param name="sender">Source of the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void HandleOwnerFrameworkElementManipulationDeltaOrCompleted(object sender, EventArgs e)
-        {
-            // Stop the current timer because manipulation has gone far enough to count as movement
-            // -OR-
-            // Stop the current timer if the manipulation completes before it fires
-            _dispatcherTimer.Stop();
-        }
-
-        /// <summary>
-        /// Handles the Tick event of the DispatcherTimer for tap+hold detection.
-        /// </summary>
-        /// <param name="sender">Source of the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void HandleDispatcherTimerTick(object sender, EventArgs e)
-        {
-            // Stop the timer because its job is done
-            _dispatcherTimer.Stop();
-
-            // Open the popup
-            if (!IsOpen)
-            {
-                OpenPopup(_manipulationStartPoint);
-            }
-        }
+        private void HandleOwnerHold(object sender, GestureEventArgs e)
 #else
         /// <summary>
         /// Handles the MouseRightButtonDown event for the owning element.
@@ -591,6 +530,7 @@ namespace System.Windows.Controls
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
         private void HandleOwnerMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+#endif
         {
             if (!IsOpen)
             {
@@ -598,7 +538,6 @@ namespace System.Windows.Controls
                 e.Handled = true;
             }
         }
-#endif
 
 #if WINDOWS_PHONE
         /// <summary>
@@ -697,6 +636,27 @@ namespace System.Windows.Controls
                 IsOpen = false;
                 e.Cancel = true;
             }
+        }
+
+        /// <summary>
+        /// Calls TransformToVisual on the specified element for the specified visual, suppressing the ArgumentException that can occur in some cases.
+        /// </summary>
+        /// <param name="element">Element on which to call TransformToVisual.</param>
+        /// <param name="visual">Visual to pass to the call to TransformToVisual.</param>
+        /// <returns>Resulting GeneralTransform object.</returns>
+        private static GeneralTransform SafeTransformToVisual(UIElement element, UIElement visual)
+        {
+            GeneralTransform result;
+            try
+            {
+                result = element.TransformToVisual(visual);
+            }
+            catch (ArgumentException)
+            {
+                // Not perfect, but better than throwing an exception
+                result = new TranslateTransform();
+            }
+            return result;
         }
 #endif
 
@@ -808,7 +768,7 @@ namespace System.Windows.Controls
                 Rect bounds = new Rect(0, 0, effectiveWidth, effectiveHeight);
                 if (_page != null)
                 {
-                    bounds = _page.TransformToVisual(_rootVisual).TransformBounds(new Rect(0, 0, _page.ActualWidth, _page.ActualHeight));
+                    bounds = SafeTransformToVisual(_page, _rootVisual).TransformBounds(new Rect(0, 0, _page.ActualWidth, _page.ActualHeight));
                 }
                 // Left align with full width
                 x = bounds.Left;
@@ -893,7 +853,7 @@ namespace System.Windows.Controls
                 FrameworkElement ownerElement = _owner as FrameworkElement;
                 if (null != ownerElement)
                 {
-                    Point point = ownerElement.TransformToVisual(_rootVisual).Transform(new Point());
+                    Point point = SafeTransformToVisual(ownerElement, _rootVisual).Transform(new Point());
 
                     // Create a layer for the element's background
                     UIElement elementBackground = new Rectangle

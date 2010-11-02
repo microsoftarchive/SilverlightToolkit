@@ -27,6 +27,11 @@ namespace PhoneToolkitSample
             NavigateTo("/Samples/ToggleSwitchSample.xaml");
         }
 
+        private void OnTransitions(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("/Samples/TransitionsSample.xaml");
+        }
+
         private void OnContextMenu(object sender, RoutedEventArgs e)
         {
             NavigateTo("/Samples/ContextMenuSample.xaml");
@@ -45,6 +50,21 @@ namespace PhoneToolkitSample
         private void OnGestures(object sender, RoutedEventArgs e)
         {
             NavigateTo("/Samples/GestureSample.xaml");
+        }
+
+        private void OnAutoCompleteBox(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("/Samples/AutoCompleteBoxSample.xaml");
+        }
+
+        private void OnListPicker(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("/Samples/ListPickerSample.xaml");
+        }
+
+        private void OnLongListSelector(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("/Samples/LongListSelectorSample.xaml");
         }
     }
 }

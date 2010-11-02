@@ -4,6 +4,7 @@
 // All other rights reserved.
 
 using System;
+using System.Globalization;
 
 namespace Microsoft.Phone.Controls
 {
@@ -12,6 +13,8 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public class TimePicker : DateTimePickerBase
     {
+        private string _fallbackValueStringFormat;
+
         /// <summary>
         /// Initializes a new instance of the TimePicker control.
         /// </summary>
@@ -19,6 +22,25 @@ namespace Microsoft.Phone.Controls
         {
             DefaultStyleKey = typeof(TimePicker);
             Value = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Gets the fallback value for the ValueStringFormat property.
+        /// </summary>
+        protected override string ValueStringFormatFallback
+        {
+            get
+            {
+                if (null == _fallbackValueStringFormat)
+                {
+                    // Need to convert LongTimePattern into ShortTimePattern to work around a platform bug
+                    // such that only LongTimePattern respects the "24-hour clock" override setting.
+                    // This technique is not perfect, but works for all the initially-supported languages.
+                    string pattern = CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern.Replace(":ss", "");
+                    _fallbackValueStringFormat = "{0:" + pattern + "}";
+                }
+                return _fallbackValueStringFormat;
+            }
         }
     }
 }

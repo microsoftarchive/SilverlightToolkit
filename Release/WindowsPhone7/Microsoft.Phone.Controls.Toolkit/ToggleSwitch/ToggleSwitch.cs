@@ -5,10 +5,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Microsoft.Phone.Controls
 {
@@ -41,7 +43,7 @@ namespace Microsoft.Phone.Controls
         private const string SwitchPart = "Switch";
 
         /// <summary>
-        /// Identifies the Header dependency property.
+        /// Identifies the Header DependencyProperty.
         /// </summary>
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
@@ -56,13 +58,13 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
-        /// Identifies the HeaderTemplate dependency property.
+        /// Identifies the HeaderTemplate DependencyProperty.
         /// </summary>
         public static readonly DependencyProperty HeaderTemplateProperty =
             DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the header template.
+        /// Gets or sets the template used to display the control's header.
         /// </summary>
         public DataTemplate HeaderTemplate
         {
@@ -71,7 +73,22 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
-        /// Gets and sets the IsChecked property.
+        /// Identifies the SwitchForeground DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty SwitchForegroundProperty =
+            DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
+
+        /// <summary>
+        /// Gets or sets the switch foreground.
+        /// </summary>
+        public Brush SwitchForeground
+        {
+            get { return (Brush)GetValue(SwitchForegroundProperty); }
+            set { SetValue(SwitchForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the ToggleSwitch is checked.
         /// </summary>
         [TypeConverter(typeof(NullableBoolConverter))]
         public bool? IsChecked
@@ -81,34 +98,59 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
-        /// The IsChecked DependencyProperty definition.
+        /// Identifies the IsChecked DependencyProperty.
         /// </summary>
         public static readonly DependencyProperty IsCheckedProperty =
             DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new PropertyMetadata(false, OnIsCheckedChanged));
 
-        private static void OnIsCheckedChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Invoked when the IsChecked DependencyProperty is changed.
+        /// </summary>
+        /// <param name="d">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ToggleSwitch sender = (ToggleSwitch)obj;
-            if (sender.Switch != null)
+            ToggleSwitch toggleSwitch = (ToggleSwitch)d;
+            if (toggleSwitch._toggleButton != null)
             {
-                sender.Switch.IsChecked = (bool?)e.NewValue;
+                toggleSwitch._toggleButton.IsChecked = (bool?)e.NewValue;
             }
         }
 
         /// <summary>
-        /// The Checked event handler. Will be raised when the switch is checked.
+        /// Occurs when the
+        /// <see cref="T:Microsoft.Phone.Controls.ToggleSwitch"/>
+        /// is checked.
         /// </summary>
         public event EventHandler<RoutedEventArgs> Checked;
 
         /// <summary>
-        /// The Unchecked event handler. Will be raised when the switch is unchecked.
+        /// Occurs when the
+        /// <see cref="T:Microsoft.Phone.Controls.ToggleSwitch"/>
+        /// is unchecked.
         /// </summary>
         public event EventHandler<RoutedEventArgs> Unchecked;
 
         /// <summary>
-        /// The Switch part.
+        /// Occurs when the
+        /// <see cref="T:Microsoft.Phone.Controls.ToggleSwitch"/>
+        /// is indeterminate.
         /// </summary>
-        private ToggleButton _switch;
+        public event EventHandler<RoutedEventArgs> Indeterminate;
+
+        /// <summary>
+        /// Occurs when the
+        /// <see cref="System.Windows.Controls.Primitives.ToggleButton"/>
+        /// is clicked.
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> Click;
+
+        /// <summary>
+        /// The
+        /// <see cref="System.Windows.Controls.Primitives.ToggleButton"/>
+        /// template part.
+        /// </summary>
+        private ToggleButton _toggleButton;
 
         /// <summary>
         /// Whether the content was set.
@@ -121,7 +163,6 @@ namespace Microsoft.Phone.Controls
         public ToggleSwitch()
         {
             DefaultStyleKey = typeof(ToggleSwitch);
-            Loaded += LoadedHandler;
         }
 
         /// <summary>
@@ -171,68 +212,97 @@ namespace Microsoft.Phone.Controls
         {
             base.OnApplyTemplate();
 
-            Switch = (GetTemplateChild(SwitchPart) as ToggleButton) ?? new ToggleButton();
-            Switch.IsChecked = IsChecked;
-
-            ChangeVisualState(false);
-        }
-
-        /// <summary>
-        /// Handles the loading of this control.
-        /// Sets the content if it is null when the control is loaded.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event information.</param>
-        private void LoadedHandler(object sender, RoutedEventArgs e)
-        {
             if (!_wasContentSet && GetBindingExpression(ContentProperty) == null)
             {
                 SetDefaultContent();
             }
-        }
 
-        /// <summary>
-        /// Gets or sets the toggle switch.
-        /// </summary>
-        private ToggleButton Switch
-        {
-            get { return _switch; }
-            set
+            if (_toggleButton != null)
             {
-                if (_switch != null)
-                {
-                    _switch.Checked -= Switch_Checked;
-                    _switch.Unchecked -= Switch_Unchecked;
-                }
-                _switch = value;
-                if (_switch != null)
-                {
-                    _switch.Checked += Switch_Checked;
-                    _switch.Unchecked += Switch_Unchecked;
-                }
+                _toggleButton.Checked -= CheckedHandler;
+                _toggleButton.Unchecked -= UncheckedHandler;
+                _toggleButton.Indeterminate -= IndeterminateHandler;
+                _toggleButton.Click -= ClickHandler;
             }
+            _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
+            if (_toggleButton != null)
+            {
+                _toggleButton.Checked += CheckedHandler;
+                _toggleButton.Unchecked += UncheckedHandler;
+                _toggleButton.Indeterminate += IndeterminateHandler;
+                _toggleButton.Click += ClickHandler;
+                _toggleButton.IsChecked = IsChecked;
+            }
+            ChangeVisualState(false);
         }
 
         /// <summary>
-        /// Checks the state when the toggle switch is checked and simulates the event.
+        /// Mirrors the
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Checked"/>
+        /// event.
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void Switch_Checked(object sender, RoutedEventArgs e)
+        private void CheckedHandler(object sender, RoutedEventArgs e)
         {
             IsChecked = true;
             SafeRaise.Raise(Checked, this, e);
         }
 
         /// <summary>
-        /// Unchecks the state when the toggle switch is unchecked and simulates the event.
+        /// Mirrors the
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Unchecked"/>
+        /// event.
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void Switch_Unchecked(object sender, RoutedEventArgs e)
+        private void UncheckedHandler(object sender, RoutedEventArgs e)
         {
             IsChecked = false;
             SafeRaise.Raise(Unchecked, this, e);
+        }
+
+        /// <summary>
+        /// Mirrors the
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Indeterminate"/>
+        /// event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private void IndeterminateHandler(object sender, RoutedEventArgs e)
+        {
+            IsChecked = null;
+            SafeRaise.Raise(Indeterminate, this, e);
+        }
+
+        /// <summary>
+        /// Mirrors the 
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Click"/>
+        /// event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private void ClickHandler(object sender, RoutedEventArgs e)
+        {
+            SafeRaise.Raise(Click, this, e);
+        }
+
+        /// <summary>
+        /// Returns a
+        /// <see cref="T:System.String"/>
+        /// that represents the current
+        /// <see cref="T:System.Object"/>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "{{ToggleSwitch IsChecked={0}, Content={1}}}",
+                IsChecked,
+                Content
+            );
         }
     }
 }

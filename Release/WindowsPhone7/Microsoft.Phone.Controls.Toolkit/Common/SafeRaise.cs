@@ -17,6 +17,19 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="eventToRaise">The event to raise.</param>
         /// <param name="sender">The event sender.</param>
+        public static void Raise(EventHandler eventToRaise, object sender)
+        {
+            if (eventToRaise != null)
+            {
+                eventToRaise(sender, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Raises an event in a thread-safe manner, also does the null check.
+        /// </summary>
+        /// <param name="eventToRaise">The event to raise.</param>
+        /// <param name="sender">The event sender.</param>
         public static void Raise(EventHandler<EventArgs> eventToRaise, object sender)
         {
             Raise(eventToRaise, sender, EventArgs.Empty);

@@ -26,6 +26,8 @@ namespace Microsoft.Phone.Controls
         private ButtonBase _dateButtonPart;
         private PhoneApplicationFrame _frame;
         private object _frameContentWhenOpened;
+        private NavigationInTransition _savedNavigationInTransition;
+        private NavigationOutTransition _savedNavigationOutTransition;
         private IDateTimePickerPage _dateTimePickerPage;
 
         /// <summary>
@@ -160,6 +162,11 @@ namespace Microsoft.Phone.Controls
             "PickerPageUri", typeof(Uri), typeof(DateTimePickerBase), null);
 
         /// <summary>
+        /// Gets the fallback value for the ValueStringFormat property.
+        /// </summary>
+        protected virtual string ValueStringFormatFallback { get { return "{0}"; } }
+
+        /// <summary>
         /// Initializes a new instance of the DateTimePickerBase control.
         /// </summary>
         public DateTimePickerBase()
@@ -194,7 +201,7 @@ namespace Microsoft.Phone.Controls
 
         private void UpdateValueString()
         {
-            ValueString = string.Format(CultureInfo.CurrentCulture, ValueStringFormat ?? "{0}", Value);
+            ValueString = string.Format(CultureInfo.CurrentCulture, ValueStringFormat ?? ValueStringFormatFallback, Value);
         }
 
         private void OpenPickerPage()
@@ -211,6 +218,16 @@ namespace Microsoft.Phone.Controls
                 if (null != _frame)
                 {
                     _frameContentWhenOpened = _frame.Content;
+
+                    // Save and clear host page transitions for the upcoming "popup" navigation
+                    UIElement frameContentWhenOpenedAsUIElement = _frameContentWhenOpened as UIElement;
+                    if (null != frameContentWhenOpenedAsUIElement)
+                    {
+                        _savedNavigationInTransition = TransitionService.GetNavigationInTransition(frameContentWhenOpenedAsUIElement);
+                        TransitionService.SetNavigationInTransition(frameContentWhenOpenedAsUIElement, null);
+                        _savedNavigationOutTransition = TransitionService.GetNavigationOutTransition(frameContentWhenOpenedAsUIElement);
+                        TransitionService.SetNavigationOutTransition(frameContentWhenOpenedAsUIElement, null);
+                    }
 
                     _frame.Navigated += new NavigatedEventHandler(HandleFrameNavigated);
                     _frame.NavigationStopped += new NavigationStoppedEventHandler(HandleFrameNavigationStoppedOrFailed);
@@ -230,6 +247,17 @@ namespace Microsoft.Phone.Controls
                 _frame.Navigated -= new NavigatedEventHandler(HandleFrameNavigated);
                 _frame.NavigationStopped -= new NavigationStoppedEventHandler(HandleFrameNavigationStoppedOrFailed);
                 _frame.NavigationFailed -= new NavigationFailedEventHandler(HandleFrameNavigationStoppedOrFailed);
+
+                // Restore host page transitions for the completed "popup" navigation
+                UIElement frameContentWhenOpenedAsUIElement = _frameContentWhenOpened as UIElement;
+                if (null != frameContentWhenOpenedAsUIElement)
+                {
+                    TransitionService.SetNavigationInTransition(frameContentWhenOpenedAsUIElement, _savedNavigationInTransition);
+                    _savedNavigationInTransition = null;
+                    TransitionService.SetNavigationOutTransition(frameContentWhenOpenedAsUIElement, _savedNavigationOutTransition);
+                    _savedNavigationOutTransition = null;
+                }
+
                 _frame = null;
                 _frameContentWhenOpened = null;
             }

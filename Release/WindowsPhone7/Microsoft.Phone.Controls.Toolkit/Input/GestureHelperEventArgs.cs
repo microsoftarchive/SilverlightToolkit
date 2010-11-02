@@ -18,11 +18,17 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// The point, in unrotated screen coordinates, where the gesture occurred.
         /// </summary>
-        protected Point Origin0 { get; private set; }
+        protected Point GestureOrigin { get; private set; }
+        
+        /// <summary>
+        /// The point, in unrotated screen coordinates, where the first touchpoint is now.
+        /// </summary>
+        protected Point TouchPosition { get; private set; }
 
-        internal GestureEventArgs(Point hostOrigin)
+        internal GestureEventArgs(Point gestureOrigin, Point position)
         {
-            Origin0 = hostOrigin;
+            GestureOrigin = gestureOrigin;
+            TouchPosition = position;
         }
 
         /// <summary>
@@ -43,7 +49,7 @@ namespace Microsoft.Phone.Controls
         /// <returns>The gesture's starting point relative to the given UIElement.</returns>
         public Point GetPosition(UIElement relativeTo)
         {
-            return GetPosition(relativeTo, Origin0);
+            return GetPosition(relativeTo, TouchPosition);
         }
 
         /// <summary>
@@ -78,8 +84,8 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public class DragStartedGestureEventArgs : GestureEventArgs
     {
-        internal DragStartedGestureEventArgs(Point hostOrigin, Orientation direction) 
-            : base(hostOrigin)
+        internal DragStartedGestureEventArgs(Point gestureOrigin, Orientation direction) 
+            : base(gestureOrigin, gestureOrigin)
         {
             Direction = direction;
         }
@@ -95,8 +101,8 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public class DragDeltaGestureEventArgs : GestureEventArgs
     {
-        internal DragDeltaGestureEventArgs(Point hostOrigin, Point change, Orientation direction) 
-            : base(hostOrigin)
+        internal DragDeltaGestureEventArgs(Point gestureOrigin, Point currentPosition, Point change, Orientation direction) 
+            : base(gestureOrigin, currentPosition)
         {
             HorizontalChange = change.X;
             VerticalChange = change.Y;
@@ -124,8 +130,8 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public class DragCompletedGestureEventArgs : GestureEventArgs
     {
-        internal DragCompletedGestureEventArgs(Point hostOrigin, Point change, Orientation direction, Point finalVelocity) 
-            : base(hostOrigin)
+        internal DragCompletedGestureEventArgs(Point gestureOrigin, Point currentPosition, Point change, Orientation direction, Point finalVelocity)
+            : base(gestureOrigin, currentPosition)
         {
             HorizontalChange = change.X;
             VerticalChange = change.Y;
@@ -168,7 +174,7 @@ namespace Microsoft.Phone.Controls
         private Point _velocity;
 
         internal FlickGestureEventArgs(Point hostOrigin, Point velocity) 
-            : base(hostOrigin)
+            : base(hostOrigin, hostOrigin)
         {
             _velocity = velocity;
         }
@@ -208,14 +214,20 @@ namespace Microsoft.Phone.Controls
     public class MultiTouchGestureEventArgs : GestureEventArgs
     {
         /// <summary>
+        /// The second touch point's initial position
+        /// </summary>
+        protected Point GestureOrigin2 { get; private set; }
+
+        /// <summary>
         /// The second touch point. The first is stored in GestureEventArgs.
         /// </summary>
-        protected Point Origin1 { get; private set; }
+        protected Point TouchPosition2 { get; private set; }
 
-        internal MultiTouchGestureEventArgs(Point origin0, Point origin1)
-            : base(origin0)
+        internal MultiTouchGestureEventArgs(Point gestureOrigin, Point gestureOrigin2, Point position, Point position2)
+            : base(gestureOrigin, position)
         {
-            Origin1 = origin1;
+            GestureOrigin2 = gestureOrigin2;
+            TouchPosition2 = position2;
         }
 
         /// <summary>
@@ -233,7 +245,7 @@ namespace Microsoft.Phone.Controls
             }
             else if (index == 1)
             {
-                return GetPosition(relativeTo, Origin1);
+                return GetPosition(relativeTo, TouchPosition2);
             }
             else
                 throw new ArgumentOutOfRangeException("index");
@@ -245,8 +257,8 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public class PinchStartedGestureEventArgs : MultiTouchGestureEventArgs
     {
-        internal PinchStartedGestureEventArgs(Point pinch0, Point pinch1)
-            : base(pinch0, pinch1)
+        internal PinchStartedGestureEventArgs(Point gestureOrigin, Point gestureOrigin2, Point pinch, Point pinch2)
+            : base(gestureOrigin, gestureOrigin2, pinch, pinch2)
         {
         }
 
@@ -255,7 +267,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public double Distance
         {
-            get { return MathHelpers.GetDistance(Origin0, Origin1); }
+            get { return MathHelpers.GetDistance(TouchPosition, TouchPosition2); }
         }
 
         /// <summary>
@@ -263,7 +275,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public double Angle
         {
-            get { return MathHelpers.GetAngle(Origin1.X - Origin0.X, Origin1.Y - Origin0.Y); }
+            get { return MathHelpers.GetAngle(TouchPosition2.X - TouchPosition.X, TouchPosition2.Y - TouchPosition.Y); }
         }
     }
 
@@ -272,17 +284,9 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public class PinchGestureEventArgs : MultiTouchGestureEventArgs
     {
-        // The current position of the first touch point
-        private Point _position0;
-
-        // The current position of the second touch point
-        private Point _position1;
-
-        internal PinchGestureEventArgs(Point origin0, Point origin1, Point position0, Point position1)
-            : base(origin0, origin1)
+        internal PinchGestureEventArgs(Point gestureOrigin, Point gestureOrigin2, Point position, Point position2)
+            : base(gestureOrigin, gestureOrigin2, position, position2)
         {
-            _position0 = position0;
-            _position1 = position1;
         }
 
         /// <summary>
@@ -293,8 +297,8 @@ namespace Microsoft.Phone.Controls
         {
             get
             {
-                double originalDistance = Math.Max(MathHelpers.GetDistance(Origin0, Origin1), 1.0);
-                double newDistance = Math.Max(MathHelpers.GetDistance(_position0, _position1), 1.0);
+                double originalDistance = Math.Max(MathHelpers.GetDistance(GestureOrigin, GestureOrigin2), 1.0);
+                double newDistance = Math.Max(MathHelpers.GetDistance(TouchPosition, TouchPosition2), 1.0);
 
                 return newDistance / originalDistance;
             }
@@ -308,8 +312,8 @@ namespace Microsoft.Phone.Controls
         {
             get
             {
-                double oldAngle = MathHelpers.GetAngle(Origin1.X - Origin0.X, Origin1.Y - Origin0.Y);
-                double newAngle = MathHelpers.GetAngle(_position1.X - _position0.X, _position1.Y - _position0.Y);
+                double oldAngle = MathHelpers.GetAngle(GestureOrigin2.X - GestureOrigin.X, GestureOrigin2.Y - GestureOrigin.Y);
+                double newAngle = MathHelpers.GetAngle(TouchPosition2.X - TouchPosition.X, TouchPosition2.Y - TouchPosition.Y);
 
                 return newAngle - oldAngle;
             }

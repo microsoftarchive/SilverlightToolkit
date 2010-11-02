@@ -61,6 +61,42 @@ namespace Microsoft.Phone.Controls.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid FilterMode enumeration value. The value must be one of the defined AutoCompleteFilterMode values to be accepted..
+        /// </summary>
+        internal static string AutoComplete_OnFilterModePropertyChanged_InvalidValue {
+            get {
+                return ResourceManager.GetString("AutoComplete_OnFilterModePropertyChanged_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid maximum drop down height value &apos;{0}&apos;. The value must be greater than or equal to zero..
+        /// </summary>
+        internal static string AutoComplete_OnMaxDropDownHeightPropertyChanged_InvalidValue {
+            get {
+                return ResourceManager.GetString("AutoComplete_OnMaxDropDownHeightPropertyChanged_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid MinimumPopulateDelay value &apos;{0}&apos;. The value must be greater than or equal to zero..
+        /// </summary>
+        internal static string AutoComplete_OnMinimumPopulateDelayPropertyChanged_InvalidValue {
+            get {
+                return ResourceManager.GetString("AutoComplete_OnMinimumPopulateDelayPropertyChanged_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot set read-only property SearchText..
+        /// </summary>
+        internal static string AutoComplete_OnSearchTextPropertyChanged_InvalidWrite {
+            get {
+                return ResourceManager.GetString("AutoComplete_OnSearchTextPropertyChanged_InvalidWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CHOOSE DATE.
         /// </summary>
         internal static string DatePickerTitle {
@@ -88,6 +124,24 @@ namespace Microsoft.Phone.Controls.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SelectedIndex must always be set to a valid value..
+        /// </summary>
+        internal static string InvalidSelectedIndex {
+            get {
+                return ResourceManager.GetString("InvalidSelectedIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SelectedItem must always be set to a valid value..
+        /// </summary>
+        internal static string InvalidSelectedItem {
+            get {
+                return ResourceManager.GetString("InvalidSelectedItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
         internal static string Off {
@@ -102,6 +156,15 @@ namespace Microsoft.Phone.Controls.Properties {
         internal static string On {
             get {
                 return ResourceManager.GetString("On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The RoutedPropertyChangingEvent cannot be canceled!.
+        /// </summary>
+        internal static string RoutedPropertyChangingEventArgs_CancelSet_InvalidOperation {
+            get {
+                return ResourceManager.GetString("RoutedPropertyChangingEventArgs_CancelSet_InvalidOperation", resourceCulture);
             }
         }
         

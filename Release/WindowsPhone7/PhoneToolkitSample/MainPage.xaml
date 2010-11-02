@@ -11,6 +11,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
@@ -19,6 +20,27 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="false">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -32,13 +54,19 @@
         </StackPanel>
 
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel>
-                <Button Content="ToggleSwitch" Click="OnToggleSwitch"/>
-                <Button Content="ContextMenu" Click="OnContextMenu"/>
-                <Button Content="DatePicker &amp; TimePicker" Click="OnDateTimePicker"/>
-                <Button Content="WrapPanel" Click="OnWrapPanel"/>
-                <Button Content="Gestures" Click="OnGestures"/>
-            </StackPanel>
+            <ScrollViewer>
+                <StackPanel>
+                    <Button Content="AutoCompleteBox" Click="OnAutoCompleteBox"/>
+                    <Button Content="ContextMenu" Click="OnContextMenu"/>
+                    <Button Content="DatePicker &amp; TimePicker" Click="OnDateTimePicker"/>
+                    <Button Content="Gestures" Click="OnGestures"/>
+                    <Button Content="ListPicker" Click="OnListPicker"/>
+                    <Button Content="LongListSelector" Click="OnLongListSelector"/>
+                    <Button Content="ToggleSwitch" Click="OnToggleSwitch"/>
+                    <Button Content="Transitions" Click="OnTransitions"/>
+                    <Button Content="WrapPanel" Click="OnWrapPanel"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

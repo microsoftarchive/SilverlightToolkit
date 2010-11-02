@@ -75,7 +75,7 @@ namespace Microsoft.Phone.Controls.Primitives
         /// <returns>True if it uses a 24-hour clock; false otherwise.</returns>
         public static bool CurrentCultureUsesTwentyFourHourClock()
         {
-            return !CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("t");
+            return !CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern.Contains("t");
         }
     }
 }

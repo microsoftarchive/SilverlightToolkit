@@ -218,6 +218,7 @@ namespace Microsoft.Phone.Controls.Primitives
         protected override void OnToggle()
         {
             IsChecked = IsChecked == true ? false : true;
+            ChangeVisualState(true);
         }
 
         /// <summary>
@@ -307,7 +308,6 @@ namespace Microsoft.Phone.Controls.Primitives
             if (click)
             {
                 OnClick();
-                ChangeVisualState(true);
             }
             _wasDragged = false;
         }

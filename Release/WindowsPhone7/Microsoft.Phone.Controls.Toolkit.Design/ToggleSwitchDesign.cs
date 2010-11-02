@@ -24,8 +24,10 @@ namespace Microsoft.Phone.Controls.Design
                 throw new ArgumentNullException("modelItem");
             }
             modelItem.Properties["Header"].SetValue(typeof(ToggleSwitch).Name);
-            modelItem.Properties["Width"].SetValue(480d);
-            modelItem.Properties["Height"].SetValue(116d);
+#if VISUAL_STUDIO_DESIGNER
+            modelItem.Properties["Width"].SetValue(456d);
+            modelItem.Properties["Height"].SetValue(111d);
+#endif
         }
     }
 }

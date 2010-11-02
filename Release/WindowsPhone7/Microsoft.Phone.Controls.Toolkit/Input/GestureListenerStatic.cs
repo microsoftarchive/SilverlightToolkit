@@ -28,7 +28,7 @@ namespace Microsoft.Phone.Controls
         private static List<UIElement> _elements;
 
         private static Point _gestureOrigin;
-        private static bool _useGestureOrigin;
+        private static bool _gestureOriginChanged;
         private static Nullable<Orientation> _gestureOrientation;
 
         private static Point _cumulativeDelta;
@@ -36,8 +36,11 @@ namespace Microsoft.Phone.Controls
 
         private static Point _finalVelocity;
 
-        private static Point _pinch0;
-        private static Point _pinch1;
+        private static Point _pinchOrigin;
+        private static Point _pinchOrigin2;
+
+        private static Point _lastSamplePosition;
+        private static Point _lastSamplePosition2;
 
         private static bool _isPinching;
         private static bool _flicked;
@@ -86,7 +89,6 @@ namespace Microsoft.Phone.Controls
             {
                 // The user was not in the middle of a gesture, but one has started.
                 _gestureOrigin = gestureOrigin;
-                _useGestureOrigin = true;
                 TouchStart();
             }
             else if (_isInTouch && !newIsInTouch)
@@ -120,7 +122,11 @@ namespace Microsoft.Phone.Controls
             _cumulativeDelta.X = _cumulativeDelta.Y = _cumulativeDelta2.X = _cumulativeDelta2.Y = 0;
             _finalVelocity.X = _finalVelocity.Y = 0;
             _isDragging = _flicked = false;
-            _elements = null;
+            _elements = new List<UIElement>(VisualTreeHelper.FindElementsInHostCoordinates(_gestureOrigin, Application.Current.RootVisual));
+            _gestureOriginChanged = false;
+            
+            RaiseGestureEvent((helper) => helper.GestureBegin, () => new GestureEventArgs(_gestureOrigin, _gestureOrigin), false);
+            
             ProcessTouchPanelEvents();
             _timer.Start();
         }
@@ -139,6 +145,9 @@ namespace Microsoft.Phone.Controls
         private static void TouchComplete()
         {
             ProcessTouchPanelEvents();
+            
+            RaiseGestureEvent((helper) => helper.GestureCompleted, () => new GestureEventArgs(_gestureOrigin, _lastSamplePosition), false);
+
             _elements = null;
             _gestureOrientation = null;
             _timer.Stop();
@@ -156,8 +165,6 @@ namespace Microsoft.Phone.Controls
 
             GeneralTransform deltaTransform = null;
 
-            bool clearHitTestElements = false;
-
             while (TouchPanel.IsGestureAvailable)
             {
                 GestureSample sample = TouchPanel.ReadGesture();
@@ -170,14 +177,12 @@ namespace Microsoft.Phone.Controls
                 Point sampleDelta2 = sample.Delta2.ToPoint();
                 GetTranslatedDelta(ref deltaTransform, ref sampleDelta2, ref _cumulativeDelta2, sample.GestureType != GestureType.Flick);
 
-                if (_elements == null)
+                // Example: if a drag becomes a pinch, or vice-versa, we want to change the elements receiving the event
+                if (_elements == null || _gestureOriginChanged)
                 {
-                    if (!_useGestureOrigin)
-                    {
-                        _gestureOrigin = samplePosition;
-                    }
-                    _useGestureOrigin = false;
+                    _gestureOrigin = samplePosition;
                     _elements = new List<UIElement>(VisualTreeHelper.FindElementsInHostCoordinates(_gestureOrigin, Application.Current.RootVisual));
+                    _gestureOriginChanged = false;
                 }
 
                 if (!_gestureOrientation.HasValue && (sampleDelta.X != 0 || sampleDelta.Y != 0))
@@ -188,15 +193,15 @@ namespace Microsoft.Phone.Controls
                 switch (sample.GestureType)
                 {
                     case GestureType.Tap:
-                        RaiseGestureEvent((helper) => helper.Tap, () => new GestureEventArgs(samplePosition), false);
+                        RaiseGestureEvent((helper) => helper.Tap, () => new GestureEventArgs(_gestureOrigin, samplePosition), false);
                         break;
 
                     case GestureType.DoubleTap:
-                        RaiseGestureEvent((helper) => helper.DoubleTap, () => new GestureEventArgs(samplePosition), false);
+                        RaiseGestureEvent((helper) => helper.DoubleTap, () => new GestureEventArgs(_gestureOrigin, samplePosition), false);
                         break;
 
                     case GestureType.Hold:
-                        RaiseGestureEvent((helper) => helper.Hold, () => new GestureEventArgs(samplePosition), false);
+                        RaiseGestureEvent((helper) => helper.Hold, () => new GestureEventArgs(_gestureOrigin, samplePosition), false);
                         break;
 
                     case GestureType.FreeDrag:
@@ -210,6 +215,7 @@ namespace Microsoft.Phone.Controls
 
                             delta.X += sampleDelta.X;
                             delta.Y += sampleDelta.Y;
+                            _lastSamplePosition = samplePosition;
                         }
                         break;
 
@@ -219,20 +225,20 @@ namespace Microsoft.Phone.Controls
                             if (delta.X != 0 || delta.Y != 0)
                             {
                                 // raise drag
-                                RaiseGestureEvent((helper) => helper.DragDelta, () => new DragDeltaGestureEventArgs(_gestureOrigin, delta, _gestureOrientation.Value), false);
+                                RaiseGestureEvent((helper) => helper.DragDelta, () => new DragDeltaGestureEventArgs(_gestureOrigin, samplePosition, delta, _gestureOrientation.Value), false);
                                 delta.X = delta.Y = 0;
                             }
                         }
 
                         if (_isDragging)
                         {
-                            RaiseGestureEvent((helper) => helper.DragCompleted, () => new DragCompletedGestureEventArgs(_gestureOrigin, _cumulativeDelta, _gestureOrientation.Value, _finalVelocity), false);
-                            clearHitTestElements = true;
+                            RaiseGestureEvent((helper) => helper.DragCompleted, () => new DragCompletedGestureEventArgs(_gestureOrigin, _lastSamplePosition, _cumulativeDelta, _gestureOrientation.Value, _finalVelocity), false);
                             delta.X = delta.Y = 0;
                         }
 
                         _cumulativeDelta.X = _cumulativeDelta.Y = 0;
                         _flicked = _isDragging = false;
+                        _gestureOriginChanged = true;
                         break;
 
                     case GestureType.Flick:
@@ -247,32 +253,29 @@ namespace Microsoft.Phone.Controls
                             if (!_isPinching)
                             {
                                 _isPinching = true;
-                                _pinch0 = samplePosition;
-                                _pinch1 = samplePosition2;
-                                RaiseGestureEvent((helper) => helper.PinchStarted, () => new PinchStartedGestureEventArgs(_pinch0, _pinch1), true);
+                                _pinchOrigin = samplePosition;
+                                _pinchOrigin2 = samplePosition2;
+                                RaiseGestureEvent((helper) => helper.PinchStarted, () => new PinchStartedGestureEventArgs(_pinchOrigin, _pinchOrigin2, _pinchOrigin, _pinchOrigin2), true);
                             }
 
-                            RaiseGestureEvent((helper) => helper.PinchDelta, () => new PinchGestureEventArgs(_pinch0, _pinch1, samplePosition, samplePosition2), false);
+                            _lastSamplePosition = samplePosition;
+                            _lastSamplePosition2 = samplePosition2;
+                            RaiseGestureEvent((helper) => helper.PinchDelta, () => new PinchGestureEventArgs(_pinchOrigin, _pinchOrigin2, samplePosition, samplePosition2), false);
                         }
                         break;
 
                     case GestureType.PinchComplete:
                         _isPinching = false;
-                        RaiseGestureEvent((helper) => helper.PinchCompleted, () => new PinchGestureEventArgs(_pinch0, _pinch1, samplePosition, samplePosition2), false);
+                        RaiseGestureEvent((helper) => helper.PinchCompleted, () => new PinchGestureEventArgs(_pinchOrigin, _pinchOrigin2, _lastSamplePosition, _lastSamplePosition2), false);
                         _cumulativeDelta.X = _cumulativeDelta.Y = _cumulativeDelta2.X = _cumulativeDelta2.Y = 0;
-                        clearHitTestElements = true;                        
+                        _gestureOriginChanged = true;                        
                         break;
                 }
             }
 
             if (!_flicked && (delta.X != 0 || delta.Y != 0))
             {
-                RaiseGestureEvent((helper) => helper.DragDelta, () => new DragDeltaGestureEventArgs(_gestureOrigin, delta, _gestureOrientation.Value), false);
-            }
-
-            if (clearHitTestElements)
-            {
-                _elements = null;
+                RaiseGestureEvent((helper) => helper.DragDelta, () => new DragDeltaGestureEventArgs(_gestureOrigin, _lastSamplePosition, delta, _gestureOrientation.Value), false);
             }
         }
 

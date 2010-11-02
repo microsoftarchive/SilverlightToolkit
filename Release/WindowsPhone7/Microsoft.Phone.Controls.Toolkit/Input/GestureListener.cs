@@ -4,6 +4,7 @@
 // All other rights reserved.
 
 using System;
+using System.Windows;
 
 namespace Microsoft.Phone.Controls
 {
@@ -24,6 +25,16 @@ namespace Microsoft.Phone.Controls
 
     public partial class GestureListener
     {
+        /// <summary>
+        /// The GestureBegin event.
+        /// </summary>
+        public event EventHandler<GestureEventArgs> GestureBegin;
+
+        /// <summary>
+        /// The GestureCompleted event.
+        /// </summary>
+        public event EventHandler<GestureEventArgs> GestureCompleted;
+
         /// <summary>
         /// The Tap event (touch, release, no movement).
         /// </summary>

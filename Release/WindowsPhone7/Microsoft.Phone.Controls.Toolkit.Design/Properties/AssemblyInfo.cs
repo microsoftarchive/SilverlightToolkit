@@ -1,8 +1,14 @@
-﻿using System;
+﻿// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Phone.Controls.Design;
 using Microsoft.Windows.Design.Metadata;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -39,3 +45,5 @@ using Microsoft.Windows.Design.Metadata;
 [assembly: CLSCompliant(true)]
 
 [assembly: ProvideMetadata(typeof(MetadataStore))]
+
+[assembly: NeutralResourcesLanguage("en-us")]

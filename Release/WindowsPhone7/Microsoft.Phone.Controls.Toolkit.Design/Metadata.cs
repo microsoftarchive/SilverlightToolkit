@@ -23,7 +23,7 @@ namespace Microsoft.Phone.Controls.Design
         /// <summary>
         /// Stores the string used to refer to the "Common Properties" section.
         /// </summary>
-        private const string CommonProperties = "Common Properties";
+        public static readonly string CommonProperties = "Common Properties";
 
         /// <summary>
         /// Gets the attribute table.
@@ -71,19 +71,34 @@ namespace Microsoft.Phone.Controls.Design
                 attributeTableBuilder.AddCustomAttributes(typeof(MenuItem), "ItemContainerStyle", new DescriptionAttribute("Gets or sets the Style that is applied to the container element generated for each item."));
                 attributeTableBuilder.AddCustomAttributes(typeof(MenuItem), "Header", new TypeConverterAttribute(typeof(StringConverter)));
 
+                // Add attributes for ListPicker
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), new DescriptionAttribute("Class that implements a flexible list-picking experience with a custom interface for few/many items."));
+
+                // Add attributes for ListPicker properties
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "SelectedIndex", new CategoryAttribute(CommonProperties));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "SelectedItem", new CategoryAttribute(CommonProperties));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "FullModeItemTemplate", new CategoryAttribute(CommonProperties));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "Header", new CategoryAttribute(CommonProperties));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "FullModeHeader", new CategoryAttribute(CommonProperties));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "ListPickerMode", new DescriptionAttribute("Gets or sets the ListPickerMode (ex: Normal/Expanded/Full)."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "SelectedIndex", new DescriptionAttribute("Gets or sets the index of the selected item."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "SelectedItem", new DescriptionAttribute("Gets or sets the selected item."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "FullModeItemTemplate", new DescriptionAttribute("Gets or sets the DataTemplate used to display each item when ListPickerMode is set to Full."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "Header", new DescriptionAttribute("Gets or sets the header of the control."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "HeaderTemplate", new DescriptionAttribute("Gets or sets the template used to display the control's header."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "FullModeHeader", new DescriptionAttribute("Gets or sets the header to use when ListPickerMode is set to Full."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "ItemCountThreshold", new DescriptionAttribute("Gets or sets the maximum number of items for which Expanded mode will be used (default: 5)."));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "Header", new TypeConverterAttribute(typeof(StringConverter)));
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPicker), "FullModeHeader", new TypeConverterAttribute(typeof(StringConverter)));
+
+                // Add attributes for ListPickerItem
+                attributeTableBuilder.AddCustomAttributes(typeof(ListPickerItem), new DescriptionAttribute("Class that implements a container for the ListPicker control."));
+
                 // Add attributes for Separator
                 attributeTableBuilder.AddCustomAttributes(typeof(Separator), new DescriptionAttribute("Control that is used to separate items in items controls."));
 
-                // Add attributes for ToggleSwitch
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), new DescriptionAttribute("Represents a switch that can be toggled between two states."));
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), new FeatureAttribute(typeof(ToggleSwitchInitializer)));
-
-                // Add attributes for ToggleSwitch properties
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), "Header", new CategoryAttribute(CommonProperties));
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), "Header", new DescriptionAttribute("Gets or sets the header."));
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), "Header", new TypeConverterAttribute(typeof(StringConverter)));
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), "SwitchForeground", new CategoryAttribute("Brushes"));
-                attributeTableBuilder.AddCustomAttributes(typeof(ToggleSwitch), "SwitchForeground", new DescriptionAttribute("The switch foreground."));
+                // ToggleSwitch
+                attributeTableBuilder.AddTable(new ToggleSwitchMetadata().CreateTable());
 
                 // Add attributes for WrapPanel
                 attributeTableBuilder.AddCustomAttributes(typeof(WrapPanel), new DescriptionAttribute("Positions child elements sequentially from left to right or top to bottom. When elements extend beyond the panel edge, elements are positioned in the next row or column."));
@@ -126,6 +141,12 @@ namespace Microsoft.Phone.Controls.Design
                 attributeTableBuilder.AddCustomAttributes(typeof(DatePicker), new ToolboxBrowsableAttribute(true));
                 attributeTableBuilder.AddCustomAttributes(typeof(TimePicker), new ToolboxBrowsableAttribute(true));
                 attributeTableBuilder.AddCustomAttributes(typeof(MenuItem), new ToolboxBrowsableAttribute(true));
+
+                // AutoCompleteBox
+                attributeTableBuilder.AddTable(new AutoCompleteBoxMetadata().CreateTable());
+
+                // Transitions
+                attributeTableBuilder.AddTable(new TransitionsMetadata().CreateTable());
 
                 return attributeTableBuilder.CreateTable();
             }

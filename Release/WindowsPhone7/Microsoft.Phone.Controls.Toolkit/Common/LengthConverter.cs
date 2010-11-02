@@ -5,12 +5,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace System.Windows
+#if WINDOWS_PHONE
+namespace Microsoft.Phone.Controls
+#else
+namespace System.Windows.Controls
+#endif
 {
     /// <summary>
     /// Converts instances of other types to and from instances of a double that
