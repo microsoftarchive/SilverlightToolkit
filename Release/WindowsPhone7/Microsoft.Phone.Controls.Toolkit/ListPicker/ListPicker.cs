@@ -115,16 +115,33 @@ namespace Microsoft.Phone.Controls
                     {
                         _page.ApplicationBar.IsVisible = _savedApplicationBarIsVisible;
                     }
-                    _page.BackKeyPress -= HandlePageBackKeyPress;
-                    _page = null;
                 }
                 if (null != _frame)
                 {
                     _frame.OrientationChanged -= HandleFrameOrientationChanged;
                 }
             }
+            if ((ListPickerMode.Expanded == oldValue) || (ListPickerMode.Full == oldValue))
+            {
+                if (null != _page)
+                {
+                    _page.BackKeyPress -= HandlePageBackKeyPress;
+                    _page = null;
+                }
+            }
 
             // Hook up to relevant events
+            if ((ListPickerMode.Expanded == newValue) || (ListPickerMode.Full == newValue))
+            {
+                if (null != _frame)
+                {
+                    _page = _frame.Content as PhoneApplicationPage;
+                    if (null != _page)
+                    {
+                        _page.BackKeyPress += HandlePageBackKeyPress;
+                    }
+                }
+            }
             if ((ListPickerMode.Full == newValue) && !DesignerProperties.IsInDesignTool)
             {
                 _savedSystemTrayIsVisible = SystemTray.IsVisible;
@@ -133,7 +150,6 @@ namespace Microsoft.Phone.Controls
                 {
                     AdjustPopupChildForCurrentOrientation(_frame);
                     _frame.OrientationChanged += HandleFrameOrientationChanged;
-                    _page = _frame.Content as PhoneApplicationPage;
                     if (null != _page)
                     {
                         if (null != _page.ApplicationBar)
@@ -141,7 +157,6 @@ namespace Microsoft.Phone.Controls
                             _savedApplicationBarIsVisible = _page.ApplicationBar.IsVisible;
                             _page.ApplicationBar.IsVisible = false;
                         }
-                        _page.BackKeyPress += HandlePageBackKeyPress;
                     }
                 }
                 if (null != _fullModeSelectorPart)

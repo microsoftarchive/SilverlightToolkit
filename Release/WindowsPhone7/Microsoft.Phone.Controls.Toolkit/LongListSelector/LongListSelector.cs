@@ -75,10 +75,12 @@ namespace Microsoft.Phone.Controls
         private INotifyCollectionChanged _rootCollection;
         private List<INotifyCollectionChanged> _groupCollections;
 
-        private LinkedList<ContentPresenter> _resolvedItems = new LinkedList<ContentPresenter>();
         private int _resolvedFirstIndex;
+        private int _resolvedCount;
         private int _screenFirstIndex;
         private int _screenCount;
+
+        private bool _balanceNeededForSizeChanged;
 
         #region ItemsSource DependencyProperty
 
@@ -339,7 +341,7 @@ namespace Microsoft.Phone.Controls
 
         #endregion
 
-        #region ShowHeader DependencyProperty
+        #region ShowListHeader DependencyProperty
 
         /// <summary>
         /// Controls whether or not the ListHeader is shown.
@@ -360,7 +362,7 @@ namespace Microsoft.Phone.Controls
         {
             LongListSelector control = (LongListSelector)obj;
 
-            if (control.HasListHeader)
+            if (control.HasListHeader && control._flattenedItems != null)
             {
                 if (control.ShowListHeader)
                 {
@@ -379,7 +381,7 @@ namespace Microsoft.Phone.Controls
 
         #endregion
 
-        #region ShowFooter DependencyProperty
+        #region ShowListFooter DependencyProperty
 
         /// <summary>
         /// Controls whether or not the ListFooter is shown.
@@ -400,7 +402,7 @@ namespace Microsoft.Phone.Controls
         {
             LongListSelector control = (LongListSelector)obj;
 
-            if (control.HasListFooter)
+            if (control.HasListFooter && control._flattenedItems != null)
             {
                 if (control.ShowListFooter)
                 {
@@ -422,6 +424,7 @@ namespace Microsoft.Phone.Controls
         #region SelectedItem DependencyProperty
 
         private bool _setSelectionInternal;
+        private bool _selectedItemChanged;
         private object[] EmptyList = { };
         private object[] _selectionList = new Object[1];
 
@@ -447,21 +450,33 @@ namespace Microsoft.Phone.Controls
 
         private void OnSelectedItemChanged(DependencyPropertyChangedEventArgs e)
         {
+            _selectedItemChanged = true;
+
             if (!_setSelectionInternal)
             {
-                SelectionChangedEventHandler handler = SelectionChanged;
-                if (handler != null)
-                {
-                    _selectionList[0] = e.NewValue;
-                    handler(this, new SelectionChangedEventArgs(EmptyList, _selectionList));
-                }
+                RaiseSelectionChangedEvent(e.NewValue);
+            }
+        }
+
+        private void RaiseSelectionChangedEvent(object newSelection)
+        {
+            SelectionChangedEventHandler handler = SelectionChanged;
+            if (handler != null)
+            {
+                _selectionList[0] = newSelection;
+                handler(this, new SelectionChangedEventArgs(EmptyList, _selectionList));
             }
         }
 
         private void SetSelectedItemInternal(object newSelectedItem)
-        {
+        {          
             _setSelectionInternal = true;
+            _selectedItemChanged = false;
             SelectedItem = newSelectedItem;
+            if (_selectedItemChanged)
+            {
+                RaiseSelectionChangedEvent(newSelectedItem);
+            }
             _setSelectionInternal = false;
         }
 
@@ -716,13 +731,28 @@ namespace Microsoft.Phone.Controls
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public ICollection<object> GetItemsInView()
         {
-            object[] items = new object[_screenCount];
+            return GetItemsWithContainers(true, false);
+        }
 
-            for (int index = 0; index < _screenCount; ++index)
+        /// <summary>
+        /// Used to return either containers or items for either all items with containers or just the 
+        /// visible ones, as specified by the parameters. 
+        /// </summary>
+        /// <param name="onlyItemsInView">When true, will return values for only items that are in view.</param>
+        /// <param name="getContainers">When true, will return the containers rather than the items.</param>
+        /// <returns>A collection of values as specified above.</returns>
+        public ICollection<object> GetItemsWithContainers(bool onlyItemsInView, bool getContainers)
+        {
+            int start = onlyItemsInView ? _screenFirstIndex : _resolvedFirstIndex;
+            int count = onlyItemsInView ? _screenCount : _resolvedCount;
+
+            object[] items = new object[count];
+
+            for (int index = start; index < start + count; ++index)
             {
-                items[index] = _flattenedItems[_screenFirstIndex + index].Item;
+                items[index - start] = getContainers ? _flattenedItems[index].ContentPresenter : _flattenedItems[index].Item;
             }
-
+        
             return items;
         }
 
@@ -977,7 +1007,7 @@ namespace Microsoft.Phone.Controls
             if (!_ignoreNextTap)
             {
                 ContentPresenter cp = (ContentPresenter)sender;
-                SelectedItem = cp.Content;
+                SetSelectedItemInternal(cp.Content);
             }
         }
 
@@ -997,6 +1027,7 @@ namespace Microsoft.Phone.Controls
             {
                 // See comment in the call below. Necessary here for when the last item is removed.
                 CollapseRecycledElements();
+                _resolvedFirstIndex = _resolvedCount = _screenFirstIndex = _screenCount = 0;
                 return;
             }
 
@@ -1008,21 +1039,22 @@ namespace Microsoft.Phone.Controls
             ContentPresenter cc;
             double top = 0, bottom = 0;
 
-            if (_resolvedItems.Count > 0)
+            if (_resolvedCount > 0)
             {
                 // Remove first?
 
-                cc = _resolvedItems.First.Value;
+                cc = FirstResolved.ContentPresenter;
+
                 top = Canvas.GetTop(cc);
                 bottom = top + cc.DesiredSize.Height;
 
-                while (_resolvedItems.Count > 0 && bottom + scrollPosition < viewportTop)
+                while (_resolvedCount > 0 && bottom + scrollPosition < viewportTop)
                 {
                     RecycleFirst();
 
-                    if (_resolvedItems.Count > 0)
+                    if (_resolvedCount > 0)
                     {
-                        cc = _resolvedItems.First.Value;
+                        cc = FirstResolved.ContentPresenter;
                         top = Canvas.GetTop(cc);
                         bottom = top + cc.DesiredSize.Height;
                     }
@@ -1030,43 +1062,42 @@ namespace Microsoft.Phone.Controls
 
                 // Remove last?
 
-                if (_resolvedItems.Count > 0)
+                if (_resolvedCount > 0)
                 {
-                    cc = _resolvedItems.Last.Value;
+                    cc = LastResolved.ContentPresenter;
                     top = Canvas.GetTop(cc);
                     bottom = top + cc.DesiredSize.Height;
 
-                    while (_resolvedItems.Count > 0 && top + scrollPosition > viewportBottom)
+                    while (_resolvedCount > 0 && top + scrollPosition > viewportBottom)
                     {
                         RecycleLast();
 
-                        if (_resolvedItems.Count > 0)
+                        if (_resolvedCount > 0)
                         {
-                            cc = _resolvedItems.Last.Value;
+                            cc = LastResolved.ContentPresenter;
                             top = Canvas.GetTop(cc);
                             bottom = top + cc.DesiredSize.Height;
                         }
                     }
                 }
 
-                if (_resolvedItems.Count == 0)
+                if (_resolvedCount == 0)
                 {
                     ResetMinMax();
                 }
             }
 
             // Empty list?
-            bool appendExtra = _resolvedItems.Count == 0 && _resolvedFirstIndex == 0;
+            bool appendExtra = _resolvedCount == 0 && _resolvedFirstIndex == 0;
 
-            if (_resolvedItems.Count == 0)
+            if (_resolvedCount == 0)
             {
                 //Debug.WriteLine("Adding first element");
                 _resolvedFirstIndex = Math.Max(0, Math.Min(_resolvedFirstIndex, _flattenedItems.Count - 1));
 
                 var t = _flattenedItems[_resolvedFirstIndex];
-                cc = GetAndAddElementFor(t.ItemType, t.Item);
-                _resolvedItems.AddLast(cc);
-                cc.SetExtraData(_resolvedItems.Last, _resolvedFirstIndex);
+                cc = GetAndAddElementFor(t);
+                cc.SetExtraData(_resolvedFirstIndex, cc.DesiredSize.Height);
                 top = 0;
                 Canvas.SetTop(cc, top);
                 bottom = cc.DesiredSize.Height;
@@ -1079,7 +1110,7 @@ namespace Microsoft.Phone.Controls
 
             // Prepend?
 
-            cc = _resolvedItems.First.Value;
+            cc = FirstResolved.ContentPresenter;
             top = Canvas.GetTop(cc);
             bottom = top + cc.DesiredSize.Height;
 
@@ -1097,9 +1128,8 @@ namespace Microsoft.Phone.Controls
                     _resolvedFirstIndex = Math.Max(0, Math.Min(_resolvedFirstIndex, _flattenedItems.Count - 1));
                     var t = _flattenedItems[--_resolvedFirstIndex];
                     //Debug.WriteLine("Adding {0}", t.Item);
-                    cc = GetAndAddElementFor(t.ItemType, t.Item);
-                    _resolvedItems.AddFirst(cc);
-                    cc.SetExtraData(_resolvedItems.First, _resolvedFirstIndex);
+                    cc = GetAndAddElementFor(t);
+                    cc.SetExtraData(_resolvedFirstIndex, cc.DesiredSize.Height);
                     bottom = top;
                     top = bottom - cc.DesiredSize.Height;
                     Canvas.SetTop(cc, top);
@@ -1114,7 +1144,7 @@ namespace Microsoft.Phone.Controls
 
             // Append?
 
-            cc = _resolvedItems.Last.Value;
+            cc = LastResolved.ContentPresenter;
             top = Canvas.GetTop(cc);
             bottom = top + cc.DesiredSize.Height;
 
@@ -1125,20 +1155,19 @@ namespace Microsoft.Phone.Controls
                 viewportBottom += ActualHeight * _bufferSizeCache;
             }
 
-            while (bottom + scrollPosition <= viewportBottom && _resolvedFirstIndex + _resolvedItems.Count < _flattenedItems.Count)
+            while (bottom + scrollPosition <= viewportBottom && _resolvedFirstIndex + _resolvedCount < _flattenedItems.Count)
             {
                 _resolvedFirstIndex = Math.Max(0, Math.Min(_resolvedFirstIndex, _flattenedItems.Count - 1));
-                var t = _flattenedItems[_resolvedFirstIndex + _resolvedItems.Count];
+                var t = _flattenedItems[_resolvedFirstIndex + _resolvedCount];
                 //Debug.WriteLine("Adding {0}", t.Item);
-                cc = GetAndAddElementFor(t.ItemType, t.Item);
-                _resolvedItems.AddLast(cc);
-                cc.SetExtraData(_resolvedItems.Last, _resolvedFirstIndex + _resolvedItems.Count - 1);
+                cc = GetAndAddElementFor(t);
+                cc.SetExtraData(_resolvedFirstIndex + _resolvedCount - 1, cc.DesiredSize.Height);
                 top = bottom;
                 Canvas.SetTop(cc, top);
                 bottom = top + cc.DesiredSize.Height;
             }
 
-            if (_resolvedFirstIndex + _resolvedItems.Count == _flattenedItems.Count)
+            if (_resolvedFirstIndex + _resolvedCount == _flattenedItems.Count)
             {
                 _minimumPanelScroll = ActualHeight - bottom;
                 if (_minimumPanelScroll > _maximumPanelScroll)
@@ -1152,9 +1181,10 @@ namespace Microsoft.Phone.Controls
 
             _screenFirstIndex = 0;
             _screenCount = 0;
-            int itemIndex = _resolvedFirstIndex;
-            foreach (ContentPresenter cp in _resolvedItems)
+
+            for (int itemIndex = _resolvedFirstIndex; itemIndex < _resolvedFirstIndex + _resolvedCount; ++itemIndex)
             {
+                ContentPresenter cp = _flattenedItems[itemIndex].ContentPresenter;
                 top = Canvas.GetTop(cp) + scrollPosition;
                 bottom = top + cp.DesiredSize.Height;
 
@@ -1170,7 +1200,6 @@ namespace Microsoft.Phone.Controls
                 {
                     break;
                 }
-                ++itemIndex;
             }
 
             // Adjust the scrollbar
@@ -1192,36 +1221,53 @@ namespace Microsoft.Phone.Controls
             // When AnimateTo is called, but the location of the item is not know (because it is not resolved) then
             // the list is just scrolled in the right direction until the item is discovered to be in the resolved 
             // items list.
-            if (_scrollingTowards >= _resolvedFirstIndex && _scrollingTowards < _resolvedFirstIndex + _resolvedItems.Count)
+            if (_scrollingTowards >= _resolvedFirstIndex && _scrollingTowards < _resolvedFirstIndex + _resolvedCount)
             {
                 // Since the specified item now has a known location, scroll to it.
                 AnimateTo(_flattenedItems[_scrollingTowards].Item);
             }
         }
 
+        private ItemTuple FirstResolved
+        {
+            get
+            {
+                return _flattenedItems[_resolvedFirstIndex];
+            }
+        }
+
+        private ItemTuple LastResolved
+        {
+            get
+            {
+                int index = _resolvedFirstIndex + _resolvedCount - 1;
+                return _flattenedItems[index];
+            }
+        }
+
         private void RecycleFirst()
         {
-            if (_resolvedItems.Count > 0)
+            if (_resolvedCount > 0)
             {
                 var t = _flattenedItems[_resolvedFirstIndex++];
-                RemoveAndAddToRecycleBin(t.ItemType, _resolvedItems.First.Value);
-                _resolvedItems.RemoveFirst();
+                RemoveAndAddToRecycleBin(t);
             }
         }
 
         private void RecycleLast()
         {
-            if (_resolvedItems.Count > 0)
+            if (_resolvedCount > 0)
             {
-                var t = _flattenedItems[_resolvedFirstIndex + _resolvedItems.Count - 1];
-                RemoveAndAddToRecycleBin(t.ItemType, _resolvedItems.Last.Value);
-                _resolvedItems.RemoveLast();
+                var t = _flattenedItems[_resolvedFirstIndex + _resolvedCount - 1];
+                RemoveAndAddToRecycleBin(t);
             }
         }
 
-        private void RemoveAndAddToRecycleBin(ItemType itemType, ContentPresenter cp)
+        private void RemoveAndAddToRecycleBin(ItemTuple tuple)
         {
-            switch (itemType)
+            ContentPresenter cp = tuple.ContentPresenter;
+
+            switch (tuple.ItemType)
             {
                 case ItemType.Item:
                     _recycledItems.Push(cp);
@@ -1247,9 +1293,11 @@ namespace Microsoft.Phone.Controls
             {
                 handler(this, new LinkUnlinkEventArgs(cp));
             }
-            
+            tuple.ContentPresenter = null;
             cp.Content = null;
-            cp.SetExtraData(null, -1);
+            cp.SetExtraData(-1, 0);
+
+            --_resolvedCount;
         }
 
         private void CollapseRecycledElements()
@@ -1303,7 +1351,7 @@ namespace Microsoft.Phone.Controls
 
         private void RecycleAllItems()
         {
-            while (_resolvedItems.Count > 0)
+            while (_resolvedCount > 0)
             {
                 RecycleFirst();
             }
@@ -1311,12 +1359,12 @@ namespace Microsoft.Phone.Controls
             _resolvedFirstIndex = 0;
         }
 
-        private ContentPresenter GetAndAddElementFor(ItemType itemType, object item)
+        private ContentPresenter GetAndAddElementFor(ItemTuple tuple)
         {
             ContentPresenter cp = null;
             bool isNew = false;
 
-            switch (itemType)
+            switch (tuple.ItemType)
             {
                 case ItemType.Item:
                     if (_recycledItems.Count > 0)
@@ -1401,7 +1449,7 @@ namespace Microsoft.Phone.Controls
                 {
                     cp.Width = _availableSize.Width;
                 }
-                cp.Content = item;
+                cp.Content = tuple.Item;
                 cp.Visibility = Visibility.Visible;
             }
 
@@ -1410,83 +1458,74 @@ namespace Microsoft.Phone.Controls
             {
                 handler(this, new LinkUnlinkEventArgs(cp));
             }
-
-            cp.Measure(_availableSize);
-
+            
+            tuple.ContentPresenter = cp;
+            cp.Measure(_availableSize);            
+            ++_resolvedCount;
             return cp;
         }
 
-        private bool _balanceNeeded;
-
         private void OnItemSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            // This will get called when items get containers as well as when an item that already
+            // have containers are changed. The initial container size is saved after the Measure
+            // call in Balance, and updated here if necessary. It is compared to the incoming size
+            // to see if the size of the container really changed or if the event is being raised
+            // because the container was recycled.
+
             ContentPresenter cp = sender as ContentPresenter;
-            bool localBalanceNeeded = false;
+            double delta = e.NewSize.Height - e.PreviousSize.Height;
+            _minimumPanelScroll -= delta;
 
             if (cp != null)
             {
-                LinkedListNode<ContentPresenter> node;
                 int index;
-                cp.GetExtraData(out node, out index);
+                double lastDesiredHeight;
+                cp.GetExtraData(out index, out lastDesiredHeight);
 
-                if (index != -1)
+                if (lastDesiredHeight == e.NewSize.Height)
                 {
-                    if (index < _screenFirstIndex && node != _resolvedItems.Last)
+                    return;
+                }
+                
+                cp.SetExtraData(index, e.NewSize.Height);
+
+                if (index < _screenFirstIndex)
+                {
+                    // Adjust the item that changed and all previous items
+                    while (index >= _resolvedFirstIndex)
                     {
-                        double oldTop = Canvas.GetTop(node.Value);
-                        LinkedListNode<ContentPresenter> nextNode = node.Next;
-                        double nextTop = Canvas.GetTop(nextNode.Value);
-                        double top = nextTop - node.Value.DesiredSize.Height;
-                        if (top != oldTop)
-                        {
-                            localBalanceNeeded = true;
-
-                            Canvas.SetTop(node.Value, top);
-                            node = node.Previous;
-
-                            while (node != null)
-                            {
-                                top -= node.Value.DesiredSize.Height;
-                                Canvas.SetTop(node.Value, top);
-                                node = node.Previous;
-                            }
-                        }
-
+                        double top = Canvas.GetTop(_flattenedItems[index].ContentPresenter);
+                        top -= delta;
+                        Canvas.SetTop(_flattenedItems[index].ContentPresenter, top);
+                        --index;
                     }
-                    else
+                }
+                else
+                {
+                    // Adjust items AFTER the item that changed
+                    int resolvedLastIndex = _resolvedFirstIndex + _resolvedCount - 1;
+                    ++index; // The item that changed size doesn't have to move
+                    while (index <= resolvedLastIndex)
                     {
-                        double top = Canvas.GetTop(node.Value) + node.Value.DesiredSize.Height;
-                        node = node.Next;
-
-                        while (node != null)
-                        {
-                            double oldTop = Canvas.GetTop(node.Value);
-                            if (oldTop == top)
-                            {
-                                break;
-                            }
-                            
-                            Canvas.SetTop(node.Value, top);
-
-                            top += node.Value.DesiredSize.Height;
-                            node = node.Next;
-
-                            localBalanceNeeded = true;
-                        }
+                        double top = Canvas.GetTop(_flattenedItems[index].ContentPresenter);
+                        top += delta;
+                        Canvas.SetTop(_flattenedItems[index].ContentPresenter, top);
+                        ++index;
                     }
+                }
 
-                    if (localBalanceNeeded && !_balanceNeeded)
-                    {
-                        _balanceNeeded = true;
-                        LayoutUpdated += LongListSelector_LayoutUpdated;
-                    }
+                if (!_balanceNeededForSizeChanged)
+                {
+                    _balanceNeededForSizeChanged = true;
+                    LayoutUpdated += LongListSelector_LayoutUpdated;
                 }
             }
         }
 
         void LongListSelector_LayoutUpdated(object sender, EventArgs e)
         {
-            _balanceNeeded = false;
+            _balanceNeededForSizeChanged = false;
             LayoutUpdated -= LongListSelector_LayoutUpdated;
 
             Balance();
@@ -1509,11 +1548,11 @@ namespace Microsoft.Phone.Controls
 
             _flattenedItems = new List<ItemTuple>();
             _firstGroup = null;
-            
-            SelectedItem = null;
+
+            SetSelectedItemInternal(null);
 
             _resolvedFirstIndex = 0;
-            _resolvedItems.Clear();
+            _resolvedCount = 0;
 
             _firstGroup = null;
 
@@ -1686,7 +1725,6 @@ namespace Microsoft.Phone.Controls
                 int groupHeaderOffset = GroupHeaderTemplate != null ? 1 : 0;
                 int groupFooterOffset = GroupFooterTemplate != null ? 1 : 0;
 
-
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
@@ -1751,13 +1789,18 @@ namespace Microsoft.Phone.Controls
 
             ResetMinMax();
             Balance();
-            BounceBack(true);
+            if (BounceBack(true))
+            {
+                // The group could have been inserted at the beginning of the list, when 
+                // there are not enough items to fill the screen.
+                Balance();
+            }
         }
 
         private static IList GetItemsInGroup(object group)
         {
             IList itemsList = group as IList;
-            if (group != null)
+            if (itemsList != null)
             {
                 return itemsList;
             }
@@ -1775,59 +1818,94 @@ namespace Microsoft.Phone.Controls
 
             return items;
         }
-    
+
+        /// <summary>
+        /// Returns true if the group has no items
+        /// </summary>
+        /// <param name="group">The group to check.</param>
+        /// <returns>True if the group has no items.</returns>
+        private static bool IsGroupEmpty(object group)
+        {
+            IList itemsList = group as IList;
+            if (itemsList != null)
+            {
+                return itemsList.Count == 0;
+            }
+
+            IEnumerator itemEnum = ((IEnumerable)group).GetEnumerator();
+            return !itemEnum.MoveNext();
+        }
+
         void OnGroupCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             object group = sender;
             int groupHeaderOffset = GroupHeaderTemplate != null ? 1 : 0;
             int groupFooterOffset = GroupFooterTemplate != null ? 1 : 0;
+            bool displayAllGroups = DisplayAllGroups;
             int itemsInGroupCount;
+            
             int offset = GetGroupOffset(group, out itemsInGroupCount);
 
             IList groupList = group as IList;
-            if (groupList != null && e.Action == NotifyCollectionChangedAction.Add && groupList.Count == e.NewItems.Count)
+            if (!displayAllGroups && groupList != null && e.Action == NotifyCollectionChangedAction.Add && groupList.Count == e.NewItems.Count)
             {
                 if (groupHeaderOffset == 1)
                 {
-                    OnAdd(offset, ItemType.GroupHeader, group, new object[] { group });
+                    OnAdd(offset, ItemType.GroupHeader, group, new object[] { group });                    
                 }
 
                 if (groupFooterOffset == 1)
                 {
-                    OnAdd(offset + 1, ItemType.GroupFooter, group, new object[] { group });
+                    OnAdd(offset + groupHeaderOffset, ItemType.GroupFooter, group, new object[] { group });
                 }
             }
-                      
+
+            offset += groupHeaderOffset;
+          
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    OnAdd(e.NewStartingIndex + offset + 1, ItemType.Item, group, e.NewItems);
+                    OnAdd(e.NewStartingIndex + offset, ItemType.Item, group, e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    OnRemove(e.OldStartingIndex + offset, e.OldItems.Count);
+                    {
+                        int count = e.OldItems.Count;
+                        if (IsGroupEmpty(group) && !displayAllGroups)
+                        {
+                            // The last items in the group are going away; remove the group, too.
+                            offset -= groupHeaderOffset;
+                            count += groupHeaderOffset + groupFooterOffset;
+                        }
+                        OnRemove(e.OldStartingIndex + offset, count);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     if (e.NewItems.Count != 1)
                     {
                         throw new NotSupportedException();
                     }
-                    OnReplace(offset + groupHeaderOffset + e.NewStartingIndex, e.NewItems[0]);
+                    OnReplace(offset + e.NewStartingIndex, e.NewItems[0]);
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     if (DisplayAllGroups)
                     {
-                        OnRemove(offset + groupHeaderOffset, itemsInGroupCount);
+                        OnRemove(offset, itemsInGroupCount);
                     }
                     else
                     {
-                        OnRemove(offset, itemsInGroupCount + groupHeaderOffset + groupFooterOffset);
+                        OnRemove(offset - groupHeaderOffset, itemsInGroupCount + groupHeaderOffset + groupFooterOffset);
                     }
                     break;
             }
 
             ResetMinMax();
             Balance();
-            BounceBack(true);
+            if (BounceBack(true))
+            {
+                // The group could have been inserted at the beginning of the list, when 
+                // there are not enough items to fill the screen.
+                Balance();
+            }
         }
 
         private int GetGroupOffset(object group)
@@ -1836,42 +1914,19 @@ namespace Microsoft.Phone.Controls
             return GetGroupOffset(group, out dummy);
         }
 
+        // Returns the first offset after all preceding groups. This could be 
+        // the position of the group header, the first group item (if there is 
+        // no header) or the place where the group should be inserted.
         private int GetGroupOffset(object group, out int itemsInGroupCount)
         {
-            int offset = 0;
-            int groupHeaderOffset = GroupHeaderTemplate != null ? 1 : 0;
-            int groupFooterOffset = GroupFooterTemplate != null ? 1 : 0;
-            bool displayAllGroups = DisplayAllGroups;
+            int listHeaderOffset = HasListHeader && ShowListHeader ? 1 : 0;
+            int listFooterOffset = HasListFooter && ShowListFooter ? 1 : 0;
 
-            if (HasListHeader && ShowListHeader)
-            {
-                ++offset;
-            }
-
-            foreach (object g in ItemsSource)
-            {
-                IList glist = g as IList;
-                if (glist != null)
-                {
-                    if (glist.Count > 0 || displayAllGroups)
-                    {
-                        if (g.Equals(group))
-                        {
-                            itemsInGroupCount = glist.Count;
-                            return offset;
-                        }
-                        offset += groupHeaderOffset + glist.Count + groupFooterOffset;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
+            int offset = listHeaderOffset;
 
             itemsInGroupCount = 0;
             int itemsCount = _flattenedItems.Count;
-            for (offset = 0; offset < itemsCount; ++offset)
+            for (offset = listHeaderOffset; offset < itemsCount - listFooterOffset; ++offset)
             {
                 if (_flattenedItems[offset].Group != null && _flattenedItems[offset].Group.Equals(group))
                 {
@@ -1898,12 +1953,12 @@ namespace Microsoft.Phone.Controls
                 }
             }
 
-            return -1;
+            return offset;
         }
 
         private void OnAdd(int startingIndex, ItemType itemType, object group, IList newItems)
         {
-            int resolvedLastIndex = _resolvedFirstIndex + _resolvedItems.Count - 1;
+            int resolvedLastIndex = _resolvedFirstIndex + _resolvedCount - 1;
 
             // Perform the Add operation
 
@@ -1919,7 +1974,7 @@ namespace Microsoft.Phone.Controls
                 
                 if (startingIndex <= _resolvedFirstIndex)
                 {
-                    if (_resolvedItems.Count > 0)
+                    if (_resolvedCount > 0)
                     {
                         _resolvedFirstIndex += newItems.Count;
                     }
@@ -1942,7 +1997,7 @@ namespace Microsoft.Phone.Controls
             }
             else
             {
-                int removeCount = _resolvedItems.Count - startingIndex + _resolvedFirstIndex;
+                int removeCount = _resolvedCount - startingIndex + _resolvedFirstIndex;
 
                 while (removeCount-- > 0)
                 {
@@ -1958,7 +2013,7 @@ namespace Microsoft.Phone.Controls
         {
             int endIndex = startingIndex + count - 1;
 
-            int resolvedLastIndex = _resolvedFirstIndex + _resolvedItems.Count - 1;
+            int resolvedLastIndex = _resolvedFirstIndex + _resolvedCount - 1;
 
             // If the operation is completely outside the bounds of the resolved items,
             // then it can just happen.
@@ -1974,9 +2029,11 @@ namespace Microsoft.Phone.Controls
             }
             else 
             {
-                if (_screenFirstIndex <= startingIndex)
+                if (startingIndex >= _screenFirstIndex)
                 {
-                    int removeCount = _resolvedItems.Count - startingIndex + _resolvedFirstIndex;
+                    // The deletion point is either on the screen or after the screen.
+
+                    int removeCount = resolvedLastIndex - startingIndex + 1;
 
                     while (removeCount-- > 0)
                     {
@@ -1985,21 +2042,21 @@ namespace Microsoft.Phone.Controls
                 }
                 else
                 {
-                    int removeCount = startingIndex - _resolvedFirstIndex + 1;
-                    int saveRemovedCount = removeCount;
+                    // The deletion starts before the screen
 
-                    while (removeCount-- > 0)
+                    int recycleCount = Math.Min(_resolvedCount, startingIndex - _resolvedFirstIndex + 1);
+
+                    while (recycleCount-- > 0)
                     {
                         RecycleFirst();
                     }
 
-                    _resolvedFirstIndex -= saveRemovedCount;
+                    _resolvedFirstIndex -= count;
                 }
             }
 
             // Perform the remove operation
             _flattenedItems.RemoveRange(startingIndex, count);
-
         }
 
         /// <summary>
@@ -2009,7 +2066,7 @@ namespace Microsoft.Phone.Controls
         /// <param name="item">The new item.</param>
         private void OnReplace(int index, object item)
         {
-            int resolvedLastIndex = _resolvedFirstIndex + _resolvedItems.Count - 1;
+            int resolvedLastIndex = _resolvedFirstIndex + _resolvedCount - 1;
 
             if (index >= _resolvedFirstIndex && index <= resolvedLastIndex)
             {
@@ -2048,13 +2105,13 @@ namespace Microsoft.Phone.Controls
             if (to != newTo)
             {
                 // Adjust the duration
-                double originalDelta = Math.Abs(_panningTransform.Y - to);
+                double originalDelta = Math.Max(Math.Abs(_panningTransform.Y - to), 1);
                 double modifiedDelta = Math.Abs(_panningTransform.Y - newTo);
                 double factor = modifiedDelta / originalDelta;
 
                 // If factor > 0, the edge has been detected, but it hasn't gone too far yet, so readjust the animation. 
                 // If factor < 0, somehow scrolling has gone past the edge already, so snap back.
-                duration = factor > 0 ? new Duration(TimeSpan.FromMilliseconds(_panelAnimation.Duration.TimeSpan.Milliseconds * factor)) : _panDuration;
+                duration = factor <= 1 && factor >= 0 && duration.HasTimeSpan ? new Duration(TimeSpan.FromMilliseconds(duration.TimeSpan.Milliseconds * factor)) : _panDuration;
 
                 to = newTo;
             }
@@ -2080,13 +2137,13 @@ namespace Microsoft.Phone.Controls
                 double newTo = GetCoercedScrollPosition(to, IsBouncy);
                 if (newTo != _panelAnimation.To.Value)
                 {
-                    double originalDelta = _panelAnimation.To.Value - _panelAnimation.From.Value;
+                    double originalDelta = Math.Max(_panelAnimation.To.Value - _panelAnimation.From.Value, 1);
                     double remainingDelta = newTo - _panningTransform.Y;
                     double factor = remainingDelta / originalDelta;
 
                     // If factor > 0, the edge has been detected, but it hasn't gone too far yet, so readjust the animation. 
                     // If factor < 0, somehow scrolling has gone past the edge already, so snap back.
-                    Duration duration = factor > 0 ? new Duration(TimeSpan.FromMilliseconds(_panelAnimation.Duration.TimeSpan.Milliseconds * factor)) : _panDuration;
+                    Duration duration = factor <= 1 && factor >= 0 && _panelAnimation.Duration.HasTimeSpan ? new Duration(TimeSpan.FromMilliseconds(_panelAnimation.Duration.TimeSpan.Milliseconds * factor)) : _panDuration;
 
                     AnimatePanel(duration, _panelAnimation.EasingFunction, newTo);
                 }
@@ -2120,15 +2177,15 @@ namespace Microsoft.Phone.Controls
             _isAnimating = false;
         }
 
-        private void BounceBack(bool immediately)
+        private bool BounceBack(bool immediately)
         {
-            if (_panningTransform == null || _resolvedItems.Count == 0)
+            if (_panningTransform == null || _resolvedCount == 0)
             {
-                return;
+                return false;
             }
 
             double to = _panningTransform.Y;
-            double top = Canvas.GetTop(_resolvedItems.First.Value);
+            double top = Canvas.GetTop(FirstResolved.ContentPresenter);
 
             double newTo = top > -to ? -top : GetCoercedScrollPosition(to, false);
 
@@ -2142,21 +2199,34 @@ namespace Microsoft.Phone.Controls
                 {
                     AnimatePanel(_panDuration, _panEase, newTo);
                 }
+
+                return true;
             }
+
+            return false;
         }
 
-        private void ScrollToGroup(object group)
+        /// <summary>
+        /// Instantly jump to the selected group.
+        /// </summary>
+        /// <param name="group">The group to jump to</param>
+        public void ScrollToGroup(object group)
         {
             double scrollTarget = 0;
             bool foundTarget = false;
 
-            // First check to see if group is already visible
-            int index = _resolvedFirstIndex;
-            foreach (ContentPresenter cc in _resolvedItems)
+            if (group == null)
             {
-                if (cc.Content != null && cc.Content.Equals(group) && _flattenedItems[index].ItemType == ItemType.GroupHeader)
+                return;
+            }
+
+            // First check to see if group is already visible
+            for (int index = _resolvedFirstIndex; index < _resolvedFirstIndex + _resolvedCount; ++index)
+            {
+                ContentPresenter cp = _flattenedItems[index].ContentPresenter;
+                if (cp.Content != null && cp.Content.Equals(group) && _flattenedItems[index].ItemType == ItemType.GroupHeader)
                 {
-                    scrollTarget = -Canvas.GetTop(cc);
+                    scrollTarget = -Canvas.GetTop(cp);
                     foundTarget = true;
                     break;
                 }
@@ -2237,23 +2307,14 @@ namespace Microsoft.Phone.Controls
 
         private int GetResolvedIndex(object item, out ContentPresenter contentPresenter)
         {
-            int index = 0;
-
-            if (_resolvedItems.Count > 0)
+            if (_resolvedCount > 0)
             {
-                var node = _resolvedItems.First;
-
-                while (node != null)
+                for (int index = _resolvedFirstIndex; index < _resolvedFirstIndex + _resolvedCount; ++index)
                 {
-                    if (node.Value.Content == item)
+                    if (_flattenedItems[index].Item == item)
                     {
-                        contentPresenter = node.Value;
+                        contentPresenter = _flattenedItems[index].ContentPresenter;
                         return index;
-                    }
-                    else
-                    {
-                        ++index;
-                        node = node.Next;
                     }
                 }
             }
@@ -2277,6 +2338,44 @@ namespace Microsoft.Phone.Controls
             public ItemType ItemType;
             public object Group;
             public object Item;
+            public ContentPresenter ContentPresenter;
         }
+
+        
+    //    private void ComputeResolvedFirstAndCount(out int first, out int count)
+    //    {
+    //        first = -1; count = 0;
+
+    //        bool done = false;
+
+    //        for (int index = 0; index < _flattenedItems.Count; ++index)
+    //        {
+    //            if (_flattenedItems[index].ContentPresenter != null)
+    //            {
+    //                if (done)
+    //                {
+    //                    throw new InvalidOperationException();
+    //                }
+
+    //                if (first == -1)
+    //                {
+    //                    first = index;
+    //                }
+
+    //                ++count;
+    //            }
+    //            else if (first != -1)
+    //            {
+    //                done = true;
+    //            }
+    //        }
+
+    //        if (first == -1)
+    //        {
+    //            first = 0;
+    //        }
+
+    //        Debug.WriteLine("Resolved first {0} count {1}", first, count);
+    //    }
     }
 }

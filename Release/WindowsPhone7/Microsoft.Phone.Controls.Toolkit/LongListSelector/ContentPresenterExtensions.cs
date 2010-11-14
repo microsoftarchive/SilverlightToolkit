@@ -15,34 +15,34 @@ namespace Microsoft.Phone.Controls
     {
         private class ExtraData
         {
-            public LinkedListNode<ContentPresenter> Node;
             public int ResolvedIndex;
+            public double LastDesiredHeight;
         }
 
-        public static void GetExtraData(this ContentPresenter cp, out LinkedListNode<ContentPresenter> node, out int resolvedIndex)
+        public static void GetExtraData(this ContentPresenter cp, out int resolvedIndex, out double lastDesiredHeight)
         {
             ExtraData extraData = cp.Tag as ExtraData;
             if (extraData != null)
             {
-                node = extraData.Node;
                 resolvedIndex = extraData.ResolvedIndex;
+                lastDesiredHeight = extraData.LastDesiredHeight;
             }
             else
             {
-                node = null;
                 resolvedIndex = -1;
+                lastDesiredHeight = 0;
             }
         }
 
-        public static void SetExtraData(this ContentPresenter cp, LinkedListNode<ContentPresenter> node, int resolvedIndex)
+        public static void SetExtraData(this ContentPresenter cp, int resolvedIndex, double lastDesiredHeight)
         {
             ExtraData extraData = cp.Tag as ExtraData;
             if (extraData == null)
             {
-                cp.Tag = extraData = new ExtraData();
+                cp.Tag = extraData = new ExtraData();                
             }
-            extraData.Node = node;
             extraData.ResolvedIndex = resolvedIndex;
+            extraData.LastDesiredHeight = lastDesiredHeight;
         }
     }
 }

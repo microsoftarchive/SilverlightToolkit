@@ -125,7 +125,7 @@
     <Compile Include="Input\GestureListenerStatic.cs" />
     <Compile Include="Input\GestureService.cs" />
     <Compile Include="LongListSelector\ContentPresenterExtensions.cs" />
-    <Compile Include="LongListSelector\LinkUnlinkEventArgs.cs" />
+    <Compile Include="LongListSelector\LongListSelectorEventArgs.cs" />
     <Compile Include="LongListSelector\LongListSelectorGroup.cs" />
     <Compile Include="LongListSelector\LongListSelectorItemsControl.cs" />
     <Compile Include="ListPicker\ListPicker.cs" />

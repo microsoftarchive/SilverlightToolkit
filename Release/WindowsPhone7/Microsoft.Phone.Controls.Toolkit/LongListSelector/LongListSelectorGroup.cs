@@ -40,22 +40,77 @@ namespace Microsoft.Phone.Controls
             }
         }
 
+        /// <summary>
+        /// Close the group view unconditionally (do not raise the GroupViewClosingEventArgs event.)
+        /// </summary>
+        public void CloseGroupView()
+        {
+            ClosePopup(null, false);
+        }
+
+        /// <summary>
+        /// This event will be raised when the group Popup's IsOpen has been set to true.
+        /// </summary>
+        public event EventHandler<GroupViewOpenedEventArgs> GroupViewOpened;
+        
+        /// <summary>
+        /// This event will be raised then the group Popup is about to close.
+        /// </summary>
+        public event EventHandler<GroupViewClosingEventArgs> GroupViewClosing;
+
         private void OpenPopup()
         {
             SaveSystemState(false, false);
             BuildPopup();
             AttachToPageEvents();
             _groupSelectorPopup.IsOpen = true;
+
+            // This has to happen eventually anyway, and this forces the ItemsControl to 
+            // expand it's template, populate it's items etc.
+            UpdateLayout(); 
+
+
+            SafeRaise.Raise(GroupViewOpened, this, () => { return new GroupViewOpenedEventArgs(_itemsControl); });
         }
 
-        private void ClosePopup()
+        /// <summary>
+        /// Close the group popup.
+        /// </summary>
+        /// <param name="selectedGroup">The selected group.</param>
+        /// <param name="raiseEvent">Should the GroupPopupClosing event be raised.</param>
+        /// <returns>True if the event was not raised or if it was raised and e.Handled is false.</returns>
+        private bool ClosePopup(object selectedGroup, bool raiseEvent)
         {
-            RestoreSystemState();
-            _groupSelectorPopup.IsOpen = false;
-            DetachFromPageEvents();
-            _groupSelectorPopup.Child = null;
-            _border = null;
-            _itemsControl = null;
+            if (raiseEvent)
+            {
+                GroupViewClosingEventArgs args = new GroupViewClosingEventArgs(_itemsControl, selectedGroup);
+
+                var handlers = GroupViewClosing;
+                if (handlers != null)
+                {
+                    foreach (EventHandler<GroupViewClosingEventArgs> handler in handlers.GetInvocationList())
+                    {
+                        handler(this, args);
+                        if (args.Handled)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if (_groupSelectorPopup != null)
+            {
+                RestoreSystemState();
+                _groupSelectorPopup.IsOpen = false;
+                DetachFromPageEvents();
+                _groupSelectorPopup.Child = null;
+                _border = null;
+                _itemsControl = null;
+                _groupSelectorPopup = null;
+            }
+
+            return true;
         }
 
         private void BuildPopup()
@@ -107,8 +162,10 @@ namespace Microsoft.Phone.Controls
 
         private void itemsControl_GroupSelected(object sender, LongListSelector.GroupSelectedEventArgs e)
         {
-            ClosePopup();
-            ScrollToGroup(e.Group);
+            if (ClosePopup(e.Group, true))
+            {
+                ScrollToGroup(e.Group);
+            }
         }
 
         private void AttachToPageEvents()
@@ -138,7 +195,7 @@ namespace Microsoft.Phone.Controls
         private void page_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
-            ClosePopup();
+            ClosePopup(null, true);
         }
 
         void page_OrientationChanged(object sender, OrientationChangedEventArgs e)
