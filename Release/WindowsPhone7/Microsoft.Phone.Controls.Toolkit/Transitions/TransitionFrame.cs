@@ -5,9 +5,10 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Diagnostics;
 
 namespace Microsoft.Phone.Controls
 {
@@ -37,6 +38,12 @@ namespace Microsoft.Phone.Controls
         /// Indicates whether a navigation is forward.
         /// </summary>
         private bool _isForwardNavigation;
+
+        /// <summary>
+        /// Determines whether to set the new content to the first or second
+        /// <see cref="T:System.Windows.Controls.ContentPresenter"/>.
+        /// </summary>
+        private bool _useFirstAsNew;
         
         /// <summary>
         /// The first <see cref="T:System.Windows.Controls.ContentPresenter"/>.
@@ -49,10 +56,14 @@ namespace Microsoft.Phone.Controls
         private ContentPresenter _secondContentPresenter;
 
         /// <summary>
-        /// Determines whether to set the new content to the first or second
-        /// <see cref="T:System.Windows.Controls.ContentPresenter"/>.
+        /// The old <see cref="T:System.Windows.Controls.ContentPresenter"/>.
         /// </summary>
-        private bool _useFirstContentPresenter;
+        private ContentPresenter _oldContentPresenter;
+
+        /// <summary>
+        /// The new <see cref="T:System.Windows.Controls.ContentPresenter"/>.
+        /// </summary>
+        private ContentPresenter _newContentPresenter;
 
         /// <summary>
         /// Default constructor.
@@ -84,78 +95,6 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
-        /// Gets the backward in
-        /// <see cref="T:Microsoft.Phone.Controls.ITransition"/>
-        /// for the
-        /// <see cref="T:System.Windows.UIElement"/>.
-        /// </summary>
-        /// <param name="element">The <see cref="T:System.Windows.UIElement"/>.</param>
-        /// <returns>The <see cref="T:Microsoft.Phone.Controls.ITransition"/>.</returns>
-        private static TransitionElement BackwardIn(UIElement element)
-        {
-            NavigationTransition navigationTransition = TransitionService.GetNavigationInTransition(element);
-            if (navigationTransition == null)
-            {
-                return null;
-            }
-            return navigationTransition.Backward;
-        }
-
-        /// <summary>
-        /// Gets the backward out
-        /// <see cref="T:Microsoft.Phone.Controls.ITransition"/>
-        /// for the
-        /// <see cref="T:System.Windows.UIElement"/>.
-        /// </summary>
-        /// <param name="element">The <see cref="T:System.Windows.UIElement"/>.</param>
-        /// <returns>The <see cref="T:Microsoft.Phone.Controls.ITransition"/>.</returns>
-        private static TransitionElement BackwardOut(UIElement element)
-        {
-            NavigationTransition navigationTransition = TransitionService.GetNavigationOutTransition(element);
-            if (navigationTransition == null)
-            {
-                return null;
-            }
-            return navigationTransition.Backward;
-        }
-
-        /// <summary>
-        /// Gets the forward in
-        /// <see cref="T:Microsoft.Phone.Controls.ITransition"/>
-        /// for the
-        /// <see cref="T:System.Windows.UIElement"/>.
-        /// </summary>
-        /// <param name="element">The <see cref="T:System.Windows.UIElement"/>.</param>
-        /// <returns>The <see cref="T:Microsoft.Phone.Controls.ITransition"/>.</returns>
-        private static TransitionElement ForwardIn(UIElement element)
-        {
-            NavigationTransition navigationTransition = TransitionService.GetNavigationInTransition(element);
-            if (navigationTransition == null)
-            {
-                return null;
-            }
-            return navigationTransition.Forward;
-        }
-
-        /// <summary>
-        /// Gets the forward out
-        /// <see cref="T:Microsoft.Phone.Controls.ITransition"/>
-        /// for the
-        /// <see cref="T:System.Windows.UIElement"/>.
-        /// </summary>
-        /// <param name="element">The <see cref="T:System.Windows.UIElement"/>.</param>
-        /// <returns>The <see cref="T:Microsoft.Phone.Controls.ITransition"/>.</returns>
-        private static TransitionElement ForwardOut(UIElement element)
-        {
-            NavigationTransition navigationTransition = TransitionService.GetNavigationOutTransition(element);
-            if (navigationTransition == null)
-            {
-                return null;
-            }
-            return navigationTransition.Forward;
-        }
-
-        /// <summary>
         /// Called when the value of the
         /// <see cref="P:System.Windows.Controls.ContentControl.Content"/>
         /// property changes.
@@ -171,51 +110,60 @@ namespace Microsoft.Phone.Controls
             {
                 return;
             }
-            TransitionElement oldTransitionElement = null;
-            TransitionElement newTransitionElement = null;
-            if (_isForwardNavigation)
+            if (_useFirstAsNew)
             {
-                if (oldElement != null)
-                {
-                    oldTransitionElement = ForwardOut(oldElement);
-                }
-                newTransitionElement = ForwardIn(newElement);
+                _newContentPresenter = _firstContentPresenter;
+                _oldContentPresenter = _secondContentPresenter;
             }
             else
             {
-                if (oldElement != null)
-                {
-                    oldTransitionElement = BackwardOut(oldElement);
-                }
-                newTransitionElement = BackwardIn(newElement);
+                _newContentPresenter = _secondContentPresenter;
+                _oldContentPresenter = _firstContentPresenter;
             }
-            ContentPresenter oldContentPresenter = null;
-            ContentPresenter newContentPresenter = null;
-            if (_useFirstContentPresenter)
-            {
-                newContentPresenter = _firstContentPresenter;
-                oldContentPresenter = _secondContentPresenter;
-            }
-            else
-            {
-                newContentPresenter = _secondContentPresenter;
-                oldContentPresenter = _firstContentPresenter;
-            }
-            _useFirstContentPresenter = !_useFirstContentPresenter;
-            newContentPresenter.Opacity = 0;
-            newContentPresenter.Visibility = Visibility.Visible;
-            newContentPresenter.Content = newElement;
-            oldContentPresenter.Opacity = 1;
-            oldContentPresenter.Visibility = Visibility.Visible;
+            _useFirstAsNew = !_useFirstAsNew;
+            NavigationOutTransition navigationOutTransition = null;
+            NavigationInTransition navigationInTransition = null;
+            ITransition oldTransition = null;
             ITransition newTransition = null;
-            if (newTransitionElement != null)
+            if (oldElement != null)
             {
-                newElement.UpdateLayout();
-                newTransition = newTransitionElement.GetTransition(newElement);
+                navigationOutTransition = TransitionService.GetNavigationOutTransition(oldElement);
+                TransitionElement oldTransitionElement = null;
+                if (navigationOutTransition != null)
+                {
+                    oldTransitionElement = _isForwardNavigation ? navigationOutTransition.Forward : navigationOutTransition.Backward;
+                }
+                if (oldTransitionElement != null)
+                {
+                    oldTransition = oldTransitionElement.GetTransition(oldElement);
+                    _oldContentPresenter.CacheMode = new BitmapCache();
+                    _oldContentPresenter.IsHitTestVisible = false;
+                }
             }
-            if (oldTransitionElement != null)
+            if (newElement != null)
             {
-                ITransition oldTransition = oldTransitionElement.GetTransition(oldElement);
+                navigationInTransition = TransitionService.GetNavigationInTransition(newElement);
+                TransitionElement newTransitionElement = null;
+                if (navigationInTransition != null)
+                {
+                    newTransitionElement = _isForwardNavigation ? navigationInTransition.Forward : navigationInTransition.Backward;
+                }
+                if (newTransitionElement != null)
+                {
+                    newElement.UpdateLayout();
+                    newTransition = newTransitionElement.GetTransition(newElement);
+                    _newContentPresenter.CacheMode = new BitmapCache();
+                    _newContentPresenter.IsHitTestVisible = false;
+                }
+            }
+            _newContentPresenter.Opacity = 0;
+            _newContentPresenter.Visibility = Visibility.Visible;
+            _newContentPresenter.Content = newElement;
+            _oldContentPresenter.Opacity = 1;
+            _oldContentPresenter.Visibility = Visibility.Visible;
+            _oldContentPresenter.Content = oldElement;
+            if (oldTransition != null)
+            {
                 if (oldTransition.GetCurrentState() != ClockState.Stopped)
                 {
                     oldTransition.Stop();
@@ -223,43 +171,70 @@ namespace Microsoft.Phone.Controls
                 oldTransition.Completed += delegate
                 {
                     oldTransition.Stop();
-                    TransitionNewElement(oldContentPresenter, newContentPresenter, newTransition);
+                    _oldContentPresenter.CacheMode = null;
+                    _oldContentPresenter.IsHitTestVisible = true;
+                    if (navigationOutTransition != null)
+                    {
+                        navigationOutTransition.OnEndTransition();
+                    }
+                    TransitionNewElement(newTransition, navigationInTransition);
                 };
-                oldTransition.Begin();
+                Dispatcher.BeginInvoke(delegate
+                {
+                    Dispatcher.BeginInvoke(delegate
+                    {
+                        if (navigationOutTransition != null)
+                        {
+                            navigationOutTransition.OnBeginTransition();
+                        }
+                        oldTransition.Begin();
+                    });
+                });
             }
             else
             {
-                TransitionNewElement(oldContentPresenter, newContentPresenter, newTransition);
+                TransitionNewElement(newTransition, navigationInTransition);
             }
         }
 
         /// <summary>
         /// Transitions the new <see cref="T:System.Windows.UIElement"/>.
         /// </summary>
-        /// <param name="oldContentPresenter">The old <see cref="T:System.Windows.Controls.ContentPresenter"/>.</param>
-        /// <param name="newContentPresenter">The new <see cref="T:System.Windows.Controls.ContentPresenter"/>.</param>
-        /// <param name="transition">The <see cref="T:Microsoft.Phone.Controls.ITransition"/>.</param>
-        private static void TransitionNewElement(ContentPresenter oldContentPresenter, ContentPresenter newContentPresenter, ITransition transition)
+        /// <param name="newTransition">The <see cref="T:Microsoft.Phone.Controls.ITransition"/> for the new <see cref="T:System.Windows.UIElement"/>.</param>
+        /// <param name="navigationInTransition">The <see cref="T:Microsoft.Phone.Controls.NavigationInTransition"/>  for the new <see cref="T:System.Windows.UIElement"/>.</param>
+        private void TransitionNewElement(ITransition newTransition, NavigationInTransition navigationInTransition)
         {
-            oldContentPresenter.Visibility = Visibility.Collapsed;
-            oldContentPresenter.Content = null;
-            if (transition == null)
+            _oldContentPresenter.Visibility = Visibility.Collapsed;
+            _oldContentPresenter.Content = null;
+            if (newTransition == null)
             {
-                newContentPresenter.Opacity = 1;
+                _newContentPresenter.IsHitTestVisible = true;
+                _newContentPresenter.Opacity = 1;
+                return;
             }
-            else
+            if (newTransition.GetCurrentState() != ClockState.Stopped)
             {
-                if (transition.GetCurrentState() != ClockState.Stopped)
+                newTransition.Stop();
+            }
+            newTransition.Completed += delegate
+            {
+                newTransition.Stop();
+                _newContentPresenter.CacheMode = null;
+                _newContentPresenter.IsHitTestVisible = true;
+                if (navigationInTransition != null)
                 {
-                    transition.Stop();
+                    navigationInTransition.OnEndTransition();
                 }
-                transition.Completed += delegate
+            };
+            Dispatcher.BeginInvoke(delegate
+            {
+                if (navigationInTransition != null)
                 {
-                    transition.Stop();
-                };
-                newContentPresenter.Opacity = 1;
-                transition.Begin();
-            }
+                    navigationInTransition.OnBeginTransition();
+                }
+                _newContentPresenter.Opacity = 1;
+                newTransition.Begin();
+            });
         }
     }
 }

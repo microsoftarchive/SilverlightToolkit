@@ -33,6 +33,16 @@ namespace Microsoft.Phone.Controls
             DependencyProperty.Register("Forward", typeof(TransitionElement), typeof(NavigationTransition), null);
 
         /// <summary>
+        /// The navigation transition will begin.
+        /// </summary>
+        public event RoutedEventHandler BeginTransition;
+
+        /// <summary>
+        /// The navigation transition has ended.
+        /// </summary>
+        public event RoutedEventHandler EndTransition;
+
+        /// <summary>
         /// Gets or sets the backward
         /// <see cref="T:Microsoft.Phone.Controls.NavigationTransition"/>.
         /// </summary>
@@ -61,6 +71,28 @@ namespace Microsoft.Phone.Controls
             set
             {
                 SetValue(ForwardProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Triggers <see cref="E:Microsoft.Phone.Controls.NavigationTransition.BeginTransition"/>.
+        /// </summary>
+        internal void OnBeginTransition()
+        {
+            if (BeginTransition != null)
+            {
+                BeginTransition(this, new RoutedEventArgs());
+            }
+        }
+
+        /// <summary>
+        /// Triggers <see cref="E:Microsoft.Phone.Controls.NavigationTransition.EndTransition"/>.
+        /// </summary>
+        internal void OnEndTransition()
+        {
+            if (EndTransition != null)
+            {
+                EndTransition(this, new RoutedEventArgs());
             }
         }
     }

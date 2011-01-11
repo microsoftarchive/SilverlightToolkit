@@ -64,7 +64,7 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Set this to true if the application will handle the popup closing and scrolling to the group.
         /// </summary>
-        public bool Handled { get; set; }
+        public bool Cancel { get; set; }
     }
 
 }

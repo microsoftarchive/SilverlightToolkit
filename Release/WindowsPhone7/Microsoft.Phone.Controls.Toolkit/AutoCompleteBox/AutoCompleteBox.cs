@@ -1580,7 +1580,9 @@ namespace System.Windows.Controls
             {
                 if (TextBox != null && TextBox.SelectionLength == 0)
                 {
+#if !WINDOWS_PHONE
                     TextBox.SelectAll();
+#endif
 #if WINDOWS_PHONE
                     TextBox.Focus();
 #endif
@@ -1590,10 +1592,12 @@ namespace System.Windows.Controls
             {
                 IsDropDownOpen = false;
                 _userCalledPopulate = false;
+#if !WINDOWS_PHONE
                 if (TextBox != null)
                 {
                     TextBox.Select(TextBox.Text.Length, 0);
                 }
+#endif
             }
         }
 

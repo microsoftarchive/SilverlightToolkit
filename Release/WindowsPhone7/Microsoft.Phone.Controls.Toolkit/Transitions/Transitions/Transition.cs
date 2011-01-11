@@ -141,8 +141,14 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private void Restore()
         {
-            _element.CacheMode = _cacheMode;
-            _element.IsHitTestVisible = _isHitTestVisible;
+            if (!(_cacheMode is BitmapCache))
+            {
+                _element.CacheMode = _cacheMode;
+            }
+            if (_isHitTestVisible)
+            {
+                _element.IsHitTestVisible = _isHitTestVisible;
+            }
         }
 
         /// <summary>
@@ -164,12 +170,15 @@ namespace Microsoft.Phone.Controls
         private void Save()
         {
             _cacheMode = _element.CacheMode;
-            if (_cacheMode == null)
+            if (!(_cacheMode is BitmapCache))
             {
                 _element.CacheMode = new BitmapCache();
             }
             _isHitTestVisible = _element.IsHitTestVisible;
-            _element.IsHitTestVisible = false;
+            if (_isHitTestVisible)
+            {
+                _element.IsHitTestVisible = false;
+            }
         }
 
         /// <summary>

@@ -83,19 +83,13 @@ namespace Microsoft.Phone.Controls
         {
             if (raiseEvent)
             {
-                GroupViewClosingEventArgs args = new GroupViewClosingEventArgs(_itemsControl, selectedGroup);
+                GroupViewClosingEventArgs args = null;
+                
+                SafeRaise.Raise(GroupViewClosing, this, () => { return args = new GroupViewClosingEventArgs(_itemsControl, selectedGroup); });
 
-                var handlers = GroupViewClosing;
-                if (handlers != null)
+                if (args != null && args.Cancel)
                 {
-                    foreach (EventHandler<GroupViewClosingEventArgs> handler in handlers.GetInvocationList())
-                    {
-                        handler(this, args);
-                        if (args.Handled)
-                        {
-                            return false;
-                        }
-                    }
+                    return false;
                 }
             }
 

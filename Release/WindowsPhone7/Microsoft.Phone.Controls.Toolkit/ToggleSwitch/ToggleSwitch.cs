@@ -233,6 +233,10 @@ namespace Microsoft.Phone.Controls
                 _toggleButton.Click += ClickHandler;
                 _toggleButton.IsChecked = IsChecked;
             }
+            IsEnabledChanged += delegate
+            {
+                ChangeVisualState(true);
+            };
             ChangeVisualState(false);
         }
 

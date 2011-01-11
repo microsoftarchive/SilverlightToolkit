@@ -38,13 +38,20 @@ namespace Microsoft.Phone.Controls
         private Storyboard _panelStoryboard;
         private DoubleAnimation _panelAnimation;
         private DateTime _gestureStart;
-        private DispatcherTimer _stopTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(200) };
+
+        // Timer that controls how long it takes before a flick will be stopped on a touch down
+        private DispatcherTimer _stopTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(50) };
         private bool _ignoreNextTap;
         private bool _firstDragDuringFlick;
         private double _lastFlickVelocity;
-        private static readonly Duration _panDuration = new Duration(TimeSpan.FromMilliseconds(200));
+
+        // Duration used for animations while panning, instead of matching finger position exactly
+        private static readonly Duration _panDuration = new Duration(TimeSpan.FromMilliseconds(100));
         private readonly IEasingFunction _panEase = new ExponentialEase();
-        private static readonly TimeSpan _flickStopWaitTime = TimeSpan.FromMilliseconds(200);
+
+        // Time that dragging will wait before deciding that a flick is not happening
+        private static readonly TimeSpan _flickStopWaitTime = TimeSpan.FromMilliseconds(20);
+
         private int _scrollingTowards = -1;
 
         private const double BufferSizeDefault = 1.0;
@@ -1891,7 +1898,7 @@ namespace Microsoft.Phone.Controls
                     {
                         OnRemove(offset, itemsInGroupCount);
                     }
-                    else
+                    else if (itemsInGroupCount > 0)
                     {
                         OnRemove(offset - groupHeaderOffset, itemsInGroupCount + groupHeaderOffset + groupFooterOffset);
                     }
@@ -1910,47 +1917,53 @@ namespace Microsoft.Phone.Controls
 
         private int GetGroupOffset(object group)
         {
-            int dummy;
-            return GetGroupOffset(group, out dummy);
+            int listHeaderOffset = HasListHeader && ShowListHeader ? 1 : 0;
+            int listFooterOffset = HasListFooter && ShowListFooter ? 1 : 0;
+
+            bool displayAll = DisplayAllGroups;
+            int groupHeaderOffset = GroupHeaderTemplate != null ? 1 : 0;
+            int groupFooterOffset = GroupFooterTemplate != null ? 1 : 0;
+
+            int offset = listHeaderOffset;
+
+            foreach (IList g in ItemsSource)
+            {
+                if (g.Equals(group))
+                {
+                    break;
+                }
+
+                if (displayAll || g.Count > 0)
+                {
+                    offset += groupHeaderOffset + groupFooterOffset;
+                }
+
+                offset += g.Count;
+            }
+
+            return offset;
         }
 
         // Returns the first offset after all preceding groups. This could be 
         // the position of the group header, the first group item (if there is 
         // no header) or the place where the group should be inserted.
+        // We have to count the items this way because this is used when clearing
+        // a group, and the items will already have been removed from the group so
+        // we can't get the count from there.
         private int GetGroupOffset(object group, out int itemsInGroupCount)
         {
-            int listHeaderOffset = HasListHeader && ShowListHeader ? 1 : 0;
-            int listFooterOffset = HasListFooter && ShowListFooter ? 1 : 0;
+            int offset = GetGroupOffset(group);
 
-            int offset = listHeaderOffset;
-
+            int lastGroupOffset = offset;
             itemsInGroupCount = 0;
-            int itemsCount = _flattenedItems.Count;
-            for (offset = listHeaderOffset; offset < itemsCount - listFooterOffset; ++offset)
+            while (lastGroupOffset < _flattenedItems.Count && group.Equals(_flattenedItems[lastGroupOffset].Group))
             {
-                if (_flattenedItems[offset].Group != null && _flattenedItems[offset].Group.Equals(group))
+                if (_flattenedItems[lastGroupOffset].ItemType == ItemType.Item)
                 {
-                    int tempOffset = offset;
-
-                    while (tempOffset < itemsCount)
-                    {
-                        if (_flattenedItems[tempOffset].Group != null && _flattenedItems[tempOffset].Group.Equals(group))
-                        {
-                            if (_flattenedItems[tempOffset].ItemType == ItemType.Item)
-                            {
-                                ++itemsInGroupCount;
-                            }
-                        }
-                        else
-                        {
-                            return offset;
-                        }
-
-                        ++tempOffset;
-                    }
-
-                    return offset;
+                    ++itemsInGroupCount;
                 }
+
+                ++lastGroupOffset;               
             }
 
             return offset;
