@@ -1925,20 +1925,40 @@ namespace Microsoft.Phone.Controls
             int groupFooterOffset = GroupFooterTemplate != null ? 1 : 0;
 
             int offset = listHeaderOffset;
-
-            foreach (IList g in ItemsSource)
+            
+            foreach (var g in ItemsSource)
             {
                 if (g.Equals(group))
                 {
                     break;
                 }
 
-                if (displayAll || g.Count > 0)
+                int groupCount = 0;
+
+                var groupList = g as IList;
+                if (groupList != null)
+                {
+                    groupCount = groupList.Count;
+                }
+                else
+                {
+                    var groupEnum = g as IEnumerable;
+                    if (groupEnum != null)
+                    {
+                        IEnumerator enumerator = groupEnum.GetEnumerator();
+                        while (enumerator.MoveNext())
+                        {
+                            ++groupCount;
+                        }
+                    }
+                }
+
+                if (displayAll || groupCount > 0)
                 {
                     offset += groupHeaderOffset + groupFooterOffset;
                 }
 
-                offset += g.Count;
+                offset += groupCount;
             }
 
             return offset;
