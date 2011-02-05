@@ -24,7 +24,7 @@ namespace Microsoft.Phone.Controls
     /// values for the
     /// <see cref="T:System.Windows.UIElement"/>.
     /// </summary>
-    internal class Transition : ITransition
+    public class Transition : ITransition
     {
         /// <summary>
         /// The original
