@@ -110,7 +110,14 @@ namespace Microsoft.Phone.Controls
         private void BuildPopup()
         {
             _groupSelectorPopup = new Popup();
-            _border = new Border() { Background = new SolidColorBrush(Color.FromArgb(0xa0, 0, 0, 0)) };
+
+            var bg = (Color)Resources["PhoneBackgroundColor"];
+            _border = new Border
+            { 
+                Background = new SolidColorBrush(
+                    Color.FromArgb(0xa0, bg.R, bg.G, bg.B))
+            };
+            
             GestureListener listener = GestureService.GetGestureListener(_border);
             listener.GestureBegin += HandleGesture;
             listener.GestureCompleted += HandleGesture;

@@ -607,7 +607,7 @@ namespace Microsoft.Phone.Controls
             listener.Flick += listener_Flick;
             listener.Tap += listener_Tap;
             Loaded += LongListSelector_Loaded;
-            Unloaded += LongListSelector_Unloaded;
+            Unloaded += LongListSelector_Unloaded;            
         }
 
         /// <summary>
@@ -824,6 +824,7 @@ namespace Microsoft.Phone.Controls
         void LongListSelector_Unloaded(object sender, RoutedEventArgs e)
         {
             _isLoaded = false;
+            RecycleAllItems();
         }
 
         /// <summary>
