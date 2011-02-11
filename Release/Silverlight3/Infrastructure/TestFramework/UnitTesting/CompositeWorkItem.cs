@@ -7,19 +7,19 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
+namespace Microsoft.Silverlight.Testing.Harness
 {
     /// <summary>
     /// TestWorkItem which can contain sub-tasks; the underlying work item is 
     /// not marked complete until the Children have completed or an Exception 
     /// is thrown.
     /// </summary>
-    public class CompositeWorkItem : WorkItem, ICompositeWorkItem
+    public class CompositeWorkItem : WorkItem
     {
         /// <summary>
         /// Store the underlying tasks.
         /// </summary>
-        private Queue<IWorkItem> _children;
+        private Queue<WorkItem> _children;
 
         /// <summary>
         /// Whether the TestTaskContainer::IsComplete should be set to true 
@@ -37,7 +37,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         /// </summary>
         public CompositeWorkItem()
         {
-            _children = new Queue<IWorkItem>();
+            _children = new Queue<WorkItem>();
             _finishWhenEmpty = true;
         }
 
@@ -61,13 +61,42 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
 
         /// <summary>
         /// Invoke the test container; in turn will execute child work items 
-        /// as needed.
+        /// as needed. Supports executing multiple items immediately for
+        /// performance reasons.
         /// </summary>
         /// <returns>True if additional work remains, False once IsComplete 
         /// is set to true.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Key part of the unit test engine")]
         public override bool Invoke() // return false when complete + event
         {
+            WorkItem workItem;
+            bool additionalWork;
+            bool canContinueImmediateExecution = false;
+
+            do
+            {
+                additionalWork = Invoke(out workItem);
+                if (workItem != null)
+                {
+                    canContinueImmediateExecution = workItem.CanExecuteImmediately;
+                }
+            }
+            while (additionalWork && canContinueImmediateExecution);
+            
+            return additionalWork;
+        }
+
+        /// <summary>
+        /// Invoke the test container; in turn will execute child work items 
+        /// as needed.
+        /// </summary>
+        /// <param name="usedWorkItem">The work item used for the invoke.</param>
+        /// <returns>True if additional work remains, False once IsComplete 
+        /// is set to true.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Key part of the unit test engine")]
+        private bool Invoke(out WorkItem usedWorkItem)
+        {
+            usedWorkItem = null;
+
             // On the first invoke, run the optional method
             if (!_invoked)
             {
@@ -76,7 +105,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             }
 
             // If this container is complete
-            if (IsComplete) 
+            if (IsComplete)
             {
                 ClearChildren();
                 return false;
@@ -98,12 +127,14 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             }
             
             // Examine the status of child work items
-            IWorkItem tt = Peek();
+            WorkItem tt = Peek();
             if (tt == null) 
             {
                 throw new InvalidOperationException(Properties.UnitTestMessage.CompositeWorkItem_Invoke_NoRemainingWorkItems);
                 // Should understand if this is a possible condition!
             }
+
+            usedWorkItem = tt;
 
             // Assumption: The task is running by default
             bool taskStillRunning = true;
@@ -119,7 +150,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
             }
             finally
             {
-                if (taskStillRunning == false) 
+                if (!taskStillRunning) 
                 {
                     if (RemainingWork)
                     {
@@ -155,7 +186,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         /// Dequeue a work item.
         /// </summary>
         /// <returns>A work item.</returns>
-        public IWorkItem Dequeue()
+        public WorkItem Dequeue()
         {
             return _children.Dequeue();
         }
@@ -164,9 +195,28 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         /// Add a new work item to the container to schedule it for invocation.
         /// </summary>
         /// <param name="item">New test work item to enqueue.</param>
-        public void Enqueue(IWorkItem item)
+        public void Enqueue(WorkItem item)
         {
             _children.Enqueue(item);
+        }
+
+        /// <summary>
+        /// Adds a new work item that will execute more quickly.
+        /// </summary>
+        /// <param name="item">The item of work.</param>
+        public void EnqueueQuick(WorkItem item)
+        {
+            item.CanExecuteImmediately = true;
+            Enqueue(item);
+        }
+
+        /// <summary>
+        /// Enqueues a callback or action that will quickly execute.
+        /// </summary>
+        /// <param name="action">The action or method.</param>
+        public void EnqueueQuick(Action action)
+        {
+            EnqueueQuick(new CallbackWorkItem(action));
         }
 
         /// <summary>
@@ -175,15 +225,14 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         /// <param name="action">The action.</param>
         public void Enqueue(Action action)
         {
-            CallbackWorkItem cwi = new CallbackWorkItem(action);
-            Enqueue(cwi);
+            Enqueue(new CallbackWorkItem(action));
         }
 
         /// <summary>
         /// Return the top work item, if any, from this container.
         /// </summary>
         /// <returns>Peek into any test work item.</returns>
-        public IWorkItem Peek()
+        public WorkItem Peek()
         {
             return _children.Peek();
         }
@@ -237,9 +286,10 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         /// <param name="e">Empty event arguments.</param>
         protected virtual void OnComplete(EventArgs e)
         {
-            if (Complete != null) 
+            var handler = Complete;
+            if (handler != null) 
             {
-                Complete(this, e);
+                handler(this, e);
             }
         }
 
@@ -250,10 +300,27 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Harness
         protected virtual void OnUnhandledException(Exception exception)
         {
             // REVIEW: Should this method take the actual Exception, or the actual EventArgs for containing it?
-            if (UnhandledException != null)
+            var handler = UnhandledException;
+            if (handler != null)
             {
-                UnhandledExceptionEventArgs eh = new UnhandledExceptionEventArgs(exception, false);
-                UnhandledException(this, eh);
+                handler(this, new UnhandledExceptionEventArgs(exception, false));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the task can execute
+        /// immediately.
+        /// </summary>
+        public override bool CanExecuteImmediately
+        {
+            get
+            {
+                return base.CanExecuteImmediately;
+            }
+            set
+            {
+                // Silently ignore this operation as it could cause unreliable
+                // results.
             }
         }
     }

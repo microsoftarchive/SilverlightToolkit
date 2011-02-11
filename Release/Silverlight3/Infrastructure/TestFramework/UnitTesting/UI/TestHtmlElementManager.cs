@@ -88,20 +88,23 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.UI
                 RemoveScratchElement();
             }
 
-            _scratchElement = HtmlPage.Document.CreateElement("div");
-            _scratchElement.SetAttribute("id", DefaultScratchElementID);
-
-            if (HtmlPage.Document.Body.Children.Count > 0)
+            if (HtmlPage.IsEnabled && HtmlPage.Document != null)
             {
-                HtmlElement first = HtmlPage.Document.Body.Children[0] as HtmlElement;
-                HtmlPage.Document.Body.AppendChild(_scratchElement, first);
-            }
-            else
-            {
-                HtmlPage.Document.Body.AppendChild(_scratchElement);
-            }
+                _scratchElement = HtmlPage.Document.CreateElement("div");
+                _scratchElement.SetAttribute("id", DefaultScratchElementID);
 
-            _dirty = false;
+                if (HtmlPage.Document.Body.Children.Count > 0)
+                {
+                    HtmlElement first = HtmlPage.Document.Body.Children[0] as HtmlElement;
+                    HtmlPage.Document.Body.AppendChild(_scratchElement, first);
+                }
+                else
+                {
+                    HtmlPage.Document.Body.AppendChild(_scratchElement);
+                }
+
+                _dirty = false;
+            }
         }
 
         /// <summary>
@@ -109,22 +112,26 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.UI
         /// </summary>
         private void RemoveScratchElement()
         {
-            if (_scratchElement == null)
+            if (HtmlPage.IsEnabled && HtmlPage.Document != null)
             {
-                _scratchElement = HtmlPage.Document.GetElementById(DefaultScratchElementID);
-            }
-            if (_scratchElement == null)
-            {
-                return;
+                if (_scratchElement == null)
+                {
+                    _scratchElement = HtmlPage.Document.GetElementById(DefaultScratchElementID);
+                }
+                if (_scratchElement == null)
+                {
+                    return;
+                }
+
+                HtmlElement parent = _scratchElement.Parent;
+                if (parent == null)
+                {
+                    return;
+                }
+
+                parent.RemoveChild(_scratchElement);
             }
 
-            HtmlElement parent = _scratchElement.Parent;
-            if (parent == null)
-            {
-                return;
-            }
-
-            parent.RemoveChild(_scratchElement);
             _scratchElement = null;
         }
     }

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Silverlight.Testing;
 
-namespace Microsoft.Silverlight.Testing.UnitTesting
+namespace Microsoft.Silverlight.Testing.Harness
 {
     /// <summary>
     /// A work item for tests to use which will call the delegate when the work 

@@ -4,9 +4,9 @@
 // All other rights reserved.
 
 using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Silverlight.Testing.UnitTesting;
-using UnitTestHarness = Microsoft.Silverlight.Testing.UnitTesting.Harness.UnitTestHarness;
+using Microsoft.Silverlight.Testing.Harness;
 
 namespace Microsoft.Silverlight.Testing
 {
@@ -46,7 +46,7 @@ namespace Microsoft.Silverlight.Testing
         /// </summary>
         /// <param name="testTaskObject">Asynchronous test task 
         /// instance.</param>
-        public virtual void EnqueueWorkItem(IWorkItem testTaskObject)
+        public virtual void EnqueueWorkItem(WorkItem testTaskObject)
         {
             if (UnitTestHarness.DispatcherStack.CurrentCompositeWorkItem != null)
             {
@@ -65,7 +65,18 @@ namespace Microsoft.Silverlight.Testing
         /// <param name="delay">The minimum time span to wait before continuing.</param>
         public virtual void EnqueueDelay(TimeSpan delay)
         {
-            EnqueueWorkItem(new SleepWorkItem(delay));
+            EnqueueWorkItem(CreateDelay(delay));
+        }
+
+        /// <summary>
+        /// Creates a delay work item instance.
+        /// </summary>
+        /// <param name="delay">The minimum time span to wait before continuing.</param>
+        /// <returns>Returns a new work item.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public WorkItem CreateDelay(TimeSpan delay)
+        {
+            return new SleepWorkItem(delay);
         }
 
         /// <summary>
@@ -74,7 +85,7 @@ namespace Microsoft.Silverlight.Testing
         /// </summary>
         /// <param name="milliseconds">The minimum number of milliseconds to wait
         /// until the delay is finished.</param>
-        public void EnqueueDelay(double milliseconds)
+        public virtual void EnqueueDelay(double milliseconds)
         {
             EnqueueDelay(TimeSpan.FromMilliseconds(milliseconds));
         }
@@ -88,8 +99,19 @@ namespace Microsoft.Silverlight.Testing
         /// Test will halt until this condition returns True.</param>
         public virtual void EnqueueConditional(Func<bool> conditionalDelegate)
         {
-            ConditionalWorkItem conditionalTask = new ConditionalWorkItem(conditionalDelegate);
-            EnqueueWorkItem(conditionalTask);
+            EnqueueWorkItem(CreateConditional(conditionalDelegate));
+        }
+
+        /// <summary>
+        /// Creates a conditional work item instance.
+        /// </summary>
+        /// <param name="conditionalDelegate">Conditional method or delegate. 
+        /// Test will halt until this condition returns True.</param>
+        /// <returns>Returns a new work item.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public WorkItem CreateConditional(Func<bool> conditionalDelegate)
+        {
+            return new ConditionalWorkItem(conditionalDelegate);
         }
 
         /// <summary>
@@ -98,7 +120,7 @@ namespace Microsoft.Silverlight.Testing
         /// </summary>
         public virtual void EnqueueTestComplete()
         {
-            EnqueueCallback(() => TestComplete());
+            EnqueueCallback(TestComplete);
         }
 
         /// <summary>
@@ -116,6 +138,18 @@ namespace Microsoft.Silverlight.Testing
         }
 
         /// <summary>
+        /// Creates a callback work item instance.
+        /// </summary>
+        /// <param name="testCallbackDelegate">Void-returning delegate, 
+        /// anonymous delegates work fine too.</param>
+        /// <returns>Returns a new work item.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public WorkItem CreateCallback(Action testCallbackDelegate)
+        {
+            return new CallbackWorkItem(testCallbackDelegate);
+        }
+
+        /// <summary>
         /// Adds a number of callback methods into the test task queue.
         /// </summary>
         /// <param name="actions">Set of Action instances.</param>
@@ -130,7 +164,6 @@ namespace Microsoft.Silverlight.Testing
             }
         }
 
-        // TODO: Remove obsolete methods in the next release
         #region Obsolete methods (marked obsolete in Nov. 2008)
         /// <summary>
         /// Sleep a minimum number of milliseconds before calling a test 
@@ -143,6 +176,7 @@ namespace Microsoft.Silverlight.Testing
         /// <param name="testCallback">Callback method to 
         /// execute after the minimum amount of time has 
         /// elapsed.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("The Sleep method, composed of a EnqueueDelay and EnqueueCallback method call, is obsolete and will be replaced in a future test framework release.")]
         public virtual void Sleep(int sleepMillisecondsMinimum, Action testCallback)
         {
@@ -154,6 +188,7 @@ namespace Microsoft.Silverlight.Testing
         /// Enqueue an action.  A shortcut for the EnqueueCallback.
         /// </summary>
         /// <param name="action">The action to enqueue.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("The Enqueue method is redundant with EnqueueCallback. Enqueue will be removed in a future release.")]
         public virtual void Enqueue(Action action)
         {
@@ -168,6 +203,7 @@ namespace Microsoft.Silverlight.Testing
         /// milliseconds to sleep.  The only guarantee to the tester is that the
         /// sleep will be >= this amount of ms, and NOT that there is precision 
         /// or an exact time.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("The EnqueueSleep API has been renamed to EnqueueDelay. The EnqueueSleep method will be removed from a future release.")]
         public virtual void EnqueueSleep(int sleepMillisecondsMinimum)
         {

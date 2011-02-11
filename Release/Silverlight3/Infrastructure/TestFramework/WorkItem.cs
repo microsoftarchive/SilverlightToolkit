@@ -15,8 +15,13 @@ namespace Microsoft.Silverlight.Testing
     /// It is possible that some implementations of a TestWorkItem may actually 
     /// contain a set of sub-tasks by implementing a composite pattern.
     /// </summary>
-    public class WorkItem : IWorkItem
+    public abstract class WorkItem
     {
+        /// <summary>
+        /// A value indicating whether the task can immediately execute.
+        /// </summary>
+        private bool _canExecuteImmediately;
+
         /// <summary>
         /// Invoke the task.  Return false only when the task is complete.
         /// </summary>
@@ -42,6 +47,18 @@ namespace Microsoft.Silverlight.Testing
         protected virtual void WorkItemComplete()
         {
             IsComplete = true;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the work item can be
+        /// executed immediately, and does not rely on special asynchronous
+        /// operation. Used for performance improvements. The setter is also
+        /// public.
+        /// </summary>
+        public virtual bool CanExecuteImmediately
+        {
+            get { return _canExecuteImmediately; }
+            set { _canExecuteImmediately = value; }
         }
     }
 }

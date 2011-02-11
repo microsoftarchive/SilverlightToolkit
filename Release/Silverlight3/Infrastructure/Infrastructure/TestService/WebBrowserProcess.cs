@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 
@@ -76,6 +77,7 @@ namespace Microsoft.Silverlight.Testing.Tools
         /// Gets a value indicating whether the browser process is currently
         /// running.
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep requests going.")]
         public override bool IsRunning
         {
             get
@@ -94,6 +96,7 @@ namespace Microsoft.Silverlight.Testing.Tools
         /// <summary>
         /// Gets or sets the process id.
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep requests going.")]
         protected int? Id
         {
             get { return _pid; }
@@ -148,6 +151,7 @@ namespace Microsoft.Silverlight.Testing.Tools
         /// <summary>
         /// Closes the process.
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep requests going.")]
         public override void Close()
         {
             try

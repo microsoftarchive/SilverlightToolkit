@@ -42,8 +42,8 @@ namespace Microsoft.Silverlight.Testing.Tools
             DateTime tabStartTime = tabProcess.StartTime;
             return (
                 from p in Process.GetProcessesByName("iexplore")
-                where p.MainWindowHandle != IntPtr.Zero
-                let diff = tabStartTime - p.StartTime
+                where (p.MainWindowHandle != IntPtr.Zero) && (p.Id != tabProcess.Id)
+                let diff = Math.Abs((p.StartTime - tabStartTime).TotalMilliseconds)
                 orderby diff
                 select p)
                 .FirstOrDefault();

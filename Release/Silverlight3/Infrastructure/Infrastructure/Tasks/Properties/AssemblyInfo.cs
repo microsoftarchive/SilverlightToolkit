@@ -13,13 +13,13 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft® Silverlight™ Toolkit")]
-[assembly: AssemblyCopyright("© Microsoft Corporation 2009")]
+[assembly: AssemblyCopyright("© Microsoft Corporation 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("9606b6f0-6960-49fa-92f1-9f0c4f3dc8fc")]
 
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.31118.0234")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: CLSCompliant(true)]

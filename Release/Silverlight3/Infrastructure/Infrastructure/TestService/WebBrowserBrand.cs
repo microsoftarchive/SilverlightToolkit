@@ -39,6 +39,11 @@ namespace Microsoft.Silverlight.Testing.Tools
         Opera,
 
         /// <summary>
+        /// Silverlight Out-of-Browser experience.
+        /// </summary>
+        OutOfBrowser,
+
+        /// <summary>
         /// Custom browser, used when a path to a browser is provided instead.
         /// </summary>
         Custom,

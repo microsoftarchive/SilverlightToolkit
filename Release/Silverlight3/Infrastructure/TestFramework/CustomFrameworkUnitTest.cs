@@ -6,8 +6,7 @@
 using System;
 using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Silverlight.Testing.UnitTesting;
-using Microsoft.Silverlight.Testing.UnitTesting.Harness;
+using Microsoft.Silverlight.Testing.Harness;
 
 namespace Microsoft.Silverlight.Testing
 {
@@ -58,11 +57,7 @@ namespace Microsoft.Silverlight.Testing
                 }
                 else
                 {
-                    // TODO: Better Exception message
-                    // NOTE: Removed assert; previously if a test was already 
-                    // completed, this would also throw an exception with 
-                    // another check
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException("The underlying dispatcher system that manages the test harness queue is not functioning properly.");
                 }
             }
         }

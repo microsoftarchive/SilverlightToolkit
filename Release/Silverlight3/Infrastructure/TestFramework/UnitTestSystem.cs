@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.Silverlight.Testing.Harness;
-using Microsoft.Silverlight.Testing.UnitTesting;
-using Microsoft.Silverlight.Testing.UnitTesting.Harness;
 using Microsoft.Silverlight.Testing.UnitTesting.Metadata;
 
 namespace Microsoft.Silverlight.Testing
@@ -22,22 +20,31 @@ namespace Microsoft.Silverlight.Testing
         /// <summary>
         /// Friendly unit test system name.
         /// </summary>
-        private const string SystemName = "Silverlight Unit Test Framework";
+        private const string UnitTestSystemName = "Silverlight Unit Test Framework";
 
         /// <summary>
-        /// Most recent test system instance.
+        /// Gets the test system name built into the assembly.
         /// </summary>
-        private static UnitTestSystem _system;
+        public static string SystemName { get { return UnitTestSystemName; } }
 
         /// <summary>
-        /// Gets a reference to the most recently run system's test harness.
+        /// Gets a string representing the file version attribute of the main
+        /// unit test framework assembly, if present.
         /// </summary>
-        public static ITestHarness CurrentHarness { get { return _system._harness; } }
-
-        /// <summary>
-        /// Gets a reference to the most recently run test system.
-        /// </summary>
-        public static UnitTestSystem CurrentSystem { get { return _system; } }
+        public static string FrameworkFileVersion
+        {
+            get
+            {
+                string version = "Unknown";
+                Assembly utf = typeof(UnitTestSystem).Assembly;
+                AssemblyFileVersionAttribute afva;
+                if (utf.TryGetAssemblyAttribute(out afva))
+                {
+                    version = afva.Version;
+                }
+                return version;
+            }
+        }
 
         /// <summary>
         /// Register another available unit test provider for the unit test system.
@@ -54,7 +61,7 @@ namespace Microsoft.Silverlight.Testing
         /// <summary>
         /// Test harness instance.
         /// </summary>
-        private ITestHarness _harness;
+        private UnitTestHarness _harness;
 
         /// <summary>
         /// Start a new unit test run.
@@ -69,24 +76,31 @@ namespace Microsoft.Silverlight.Testing
                 return;
             }
 
-            // Track the most recent system in use
-            _system = this;
-
             _harness = settings.TestHarness;
             if (_harness == null)
             {
                 throw new InvalidOperationException(Properties.UnitTestMessage.UnitTestSystem_Run_NoTestHarnessInSettings);
             }
-            _harness.Initialize(settings);
+
+            if (settings.TestService == null && !settings.TestServiceSetterCalled)
+            {
+                SetTestService(settings);
+            }
+
+            _harness.Settings = settings;
             _harness.TestHarnessCompleted += (sender, args) => OnTestHarnessCompleted(args);
-            _harness.Run();
+
+            if (settings.StartRunImmediately)
+            {
+                _harness.Run();
+            }
         }
 
         /// <summary>
         /// Prepares the default log manager.
         /// </summary>
         /// <param name="settings">The test harness settings.</param>
-        public static void SetStandardLogProviders(TestHarnessSettings settings)
+        public static void SetStandardLogProviders(UnitTestSettings settings)
         {
             // Debug provider
             DebugOutputProvider debugger = new DebugOutputProvider();
@@ -98,7 +112,7 @@ namespace Microsoft.Silverlight.Testing
             {
                 TryAddVisualStudioLogProvider(settings);
             }
-            finally
+            catch
             {
             }
 
@@ -110,7 +124,7 @@ namespace Microsoft.Silverlight.Testing
         /// XLinq is available and included in the application package.
         /// </summary>
         /// <param name="settings">The test harness settings object.</param>
-        private static void TryAddVisualStudioLogProvider(TestHarnessSettings settings)
+        private static void TryAddVisualStudioLogProvider(UnitTestSettings settings)
         {
             VisualStudioLogProvider trx = new VisualStudioLogProvider();
             settings.LogProviders.Add(trx);
@@ -138,9 +152,10 @@ namespace Microsoft.Silverlight.Testing
         /// <param name="args">The test harness completed event arguments.</param>
         private void OnTestHarnessCompleted(TestHarnessCompletedEventArgs args)
         {
-            if (TestHarnessCompleted != null)
+            var handler = TestHarnessCompleted;
+            if (handler != null)
             {
-                TestHarnessCompleted(this, args);
+                handler(this, args);
             }
         }
 
@@ -158,7 +173,7 @@ namespace Microsoft.Silverlight.Testing
             }
             SetStandardLogProviders(settings);
             settings.TestHarness = new UnitTestHarness();
-            // Not a default value for now
+            // Sets initial but user can override
             SetTestService(settings);
             return settings;
         }

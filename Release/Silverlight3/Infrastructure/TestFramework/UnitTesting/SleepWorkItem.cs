@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Microsoft.Silverlight.Testing.UnitTesting
+namespace Microsoft.Silverlight.Testing.Harness
 {
     /// <summary>
     /// Test work item type that does not complete until the sleep time has 

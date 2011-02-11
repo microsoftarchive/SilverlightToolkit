@@ -239,6 +239,7 @@ namespace Microsoft.Silverlight.Testing.Tools
         /// <param name="request">The request object.</param>
         /// <param name="response">The response object.</param>
         /// <param name="rootDirectory">The root directory for the service.</param>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep requests going.")]
         private static void ProcessGetRequest(HttpListenerRequest request, HttpListenerResponse response, string rootDirectory)
         {
             try
@@ -263,7 +264,7 @@ namespace Microsoft.Silverlight.Testing.Tools
             catch (HttpListenerException)
             {
             }
-            catch (Exception)
+            catch
             {
             }
         }
@@ -470,6 +471,7 @@ files, folders, and other information.
         /// <summary>
         /// Serve requests.
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep the thread processing regardless.")]
         public void ServeRequests()
         {
             _listenerThread = new Thread(new ThreadStart(StartShutdownMonitorThread));

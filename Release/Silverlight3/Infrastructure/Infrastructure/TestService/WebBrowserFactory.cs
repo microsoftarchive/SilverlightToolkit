@@ -57,6 +57,9 @@ namespace Microsoft.Silverlight.Testing.Tools
                 case WebBrowserBrand.Firefox:
                     return new Firefox();
 
+                case WebBrowserBrand.OutOfBrowser:
+                    throw new NotImplementedException("Out-of-Browser support not yet implemented.");
+
                 case WebBrowserBrand.Opera:
                 case WebBrowserBrand.Safari:
                     throw new NotImplementedException(string.Format(CultureInfo.CurrentUICulture, "The requested brand {0} is not current implemented."));
@@ -118,6 +121,11 @@ namespace Microsoft.Silverlight.Testing.Tools
                 case "APPLE SAFARI":
                 case "S":
                     return WebBrowserBrand.Safari;
+
+                case "OOB":
+                case "OUTOFBROWSER":
+                case "SLLAUNCHER":
+                    return WebBrowserBrand.OutOfBrowser;
 
                 case "CUSTOM":
                 default:

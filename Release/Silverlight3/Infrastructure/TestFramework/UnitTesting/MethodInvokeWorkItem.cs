@@ -6,7 +6,7 @@
 using System.Reflection;
 using Microsoft.Silverlight.Testing.UnitTesting.Metadata;
 
-namespace Microsoft.Silverlight.Testing.UnitTesting
+namespace Microsoft.Silverlight.Testing.Harness
 {
     /// <summary>
     /// A simple work item that invokes a method through the reflection 

@@ -4,6 +4,7 @@
 // All other rights reserved.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading;
 
@@ -90,6 +91,7 @@ namespace Microsoft.Silverlight.Testing.Tools
         /// <summary>
         /// Stops the host service.
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep requests going.")]
         public void Stop()
         {
             if (Service.Listening)

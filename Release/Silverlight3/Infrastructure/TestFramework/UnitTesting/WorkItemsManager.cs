@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Silverlight.Testing.UnitTesting
+namespace Microsoft.Silverlight.Testing.Harness
 {
     /// <summary>
     /// A special type dedicated to keeping a running stack of the dispatch 
@@ -18,21 +18,21 @@ namespace Microsoft.Silverlight.Testing.UnitTesting
         /// <summary>
         /// Dispatcher stack; a stack of work item containers.
         /// </summary>
-        private Stack<ICompositeWorkItem> _stack;
+        private Stack<CompositeWorkItem> _stack;
 
         /// <summary>
         /// Creates a new empty stack for work item containers.
         /// </summary>
         public WorkItemsManager()
         {
-            _stack = new Stack<ICompositeWorkItem>();
+            _stack = new Stack<CompositeWorkItem>();
         }
 
         /// <summary>
         /// Gets the current test work item dispatcher, which is the dispatcher 
         /// on the top of the stack.  Returns null if there is none.
         /// </summary>
-        public ICompositeWorkItem CurrentCompositeWorkItem
+        public CompositeWorkItem CurrentCompositeWorkItem
         {
             get { return (_stack.Count == 0) ? null : _stack.Peek(); }
         }
@@ -41,7 +41,7 @@ namespace Microsoft.Silverlight.Testing.UnitTesting
         /// Push a new dispatcher onto the stack.
         /// </summary>
         /// <param name="composite">The composite work item to push.</param>
-        public void Push(ICompositeWorkItem composite)
+        public void Push(CompositeWorkItem composite)
         {
             _stack.Push(composite);
         }
@@ -51,13 +51,13 @@ namespace Microsoft.Silverlight.Testing.UnitTesting
         /// </summary>
         /// <returns>Returns the top-most container.  Throws an 
         /// InvalidOperationException if none is available.</returns>
-        public ICompositeWorkItem Pop()
+        public CompositeWorkItem Pop()
         {
             if (CurrentCompositeWorkItem == null)
             {
                 throw new InvalidOperationException(Properties.UnitTestMessage.UnitTestHarness_RunNextStep_NoCompositeWorkItemsExist);
             }
-            ICompositeWorkItem queue = _stack.Peek();
+            CompositeWorkItem queue = _stack.Peek();
             if (queue != null)
             {
                 _stack.Pop();

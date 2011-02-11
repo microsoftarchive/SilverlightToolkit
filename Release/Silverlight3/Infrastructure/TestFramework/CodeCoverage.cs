@@ -8,7 +8,7 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.Silverlight.Testing.Harness;
-using Microsoft.Silverlight.Testing.Harness.Service;
+using Microsoft.Silverlight.Testing.Service;
 
 namespace Microsoft.Silverlight.Testing
 {
@@ -25,6 +25,11 @@ namespace Microsoft.Silverlight.Testing
         private static BitArray _blocks = new BitArray(0);
 
         /// <summary>
+        /// A counter of the hit blocks.
+        /// </summary>
+        private static int _hitBlocks;
+
+        /// <summary>
         /// Record that a basic block is being executed.
         /// </summary>
         /// <param name="id">Id of the basic block.</param>
@@ -35,7 +40,23 @@ namespace Microsoft.Silverlight.Testing
             {
                 _blocks.Length = block + 1;
             }
+
+            // Increment the hit blocks.
+            if (!_blocks[block])
+            {
+                _hitBlocks++;
+            }
+
+            // Store the hit
             _blocks[block] = true;
+        }
+
+        /// <summary>
+        /// Gets the current number of hit blocks.
+        /// </summary>
+        public static int HitBlockCount
+        {
+            get { return _blocks.Count; }
         }
 
         /// <summary>
@@ -43,7 +64,7 @@ namespace Microsoft.Silverlight.Testing
         /// the number of hit blocks, but it should return 0 always except 
         /// when at least one block is hit.
         /// </summary>
-        public static int HitBlockCount
+        public static int BlockCount
         {
             get { return _blocks.Count; }
         }

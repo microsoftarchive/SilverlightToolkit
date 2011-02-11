@@ -1,10 +1,11 @@
-﻿<!--
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
 // (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 -->
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,8 +18,31 @@
     <RootNamespace>Microsoft.Silverlight.Testing</RootNamespace>
     <AssemblyName>Microsoft.Silverlight.Testing</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName></SccProjectName>
+    <SccLocalPath></SccLocalPath>
+    <SccAuxPath></SccAuxPath>
+    <SccProvider></SccProvider>
     <DocumentationFile>..\bin\Microsoft.Silverlight.Testing.xml</DocumentationFile>
     <OutputPath>..\bin\</OutputPath>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,7 +53,9 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>..\bin\Microsoft.Silverlight.Testing.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,212 +66,306 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Windows" />
-    <Reference Include="mscorlib" />
-    <Reference Include="system" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Windows">
+    </Reference>
+    <Reference Include="mscorlib">
+    </Reference>
+    <Reference Include="system">
+    </Reference>
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Xml">
+    </Reference>
     <Reference Include="System.Net" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensions.cs" />
     <Compile Include="AsynchronousAttribute.cs" />
     <Compile Include="BugAttribute.cs" />
+    <Compile Include="Client\AdvancedButton.cs" />
+    <Compile Include="Client\BrushSelector.cs" />
+    <Compile Include="Client\CollectionHelper.cs" />
+    <Compile Include="Client\ColorSelectorConverter.cs" />
+    <Compile Include="Client\EnumerableExtensions.cs" />
+    <Compile Include="Client\FontWeightConverter.cs" />
+    <Compile Include="Client\FunctionalProgramming.cs" />
+    <Compile Include="Client\Header.xaml.cs">
+      <DependentUpon>Header.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\InvertedTypeNameVisibilityConverter.cs" />
+    <Compile Include="Client\ItemsControlExtensions.cs" />
+    <Compile Include="Client\LayoutTransformer.cs" />
+    <Compile Include="Client\MobileStartup.xaml.cs">
+      <DependentUpon>MobileStartup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\MobileTestExceptionDetails.xaml.cs">
+      <DependentUpon>MobileTestExceptionDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\MobileTestMethodDetails.xaml.cs">
+      <DependentUpon>MobileTestMethodDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\MobileTestPage.xaml.cs">
+      <DependentUpon>MobileTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\ResultsTreeView.cs" />
+    <Compile Include="Client\ResultsTreeViewItem.cs" />
+    <Compile Include="Client\Slide.cs">
+      <DependentUpon>Slide.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\SlideManager.cs" />
+    <Compile Include="Client\SlidePosition.cs" />
+    <Compile Include="Client\TagEditor.xaml.cs">
+      <DependentUpon>TagEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\TagExpressionEventArgs.cs" />
+    <Compile Include="Client\TestExceptionDetails.xaml.cs">
+      <DependentUpon>TestExceptionDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\TestMethodDetails.xaml.cs">
+      <DependentUpon>TestMethodDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\TimeHelper.cs" />
+    <Compile Include="Client\TreeViewConnectingLines.cs" />
+    <Compile Include="Client\TreeViewExtensions.cs" />
+    <Compile Include="Client\TreeViewItemCheckBox.cs" />
+    <Compile Include="Client\TreeViewItemConnectingLineInfo.cs" />
+    <Compile Include="Client\TreeViewItemIndentationConverter.cs" />
+    <Compile Include="Client\TypeNameVisibilityConverter.cs" />
+    <Compile Include="Client\ValidateExtensions.cs" />
+    <Compile Include="Client\VisibilityConverter.cs" />
+    <Compile Include="Client\VisualStates.cs" />
+    <Compile Include="Client\VisualTreeExtensions.cs" />
     <Compile Include="CodeCoverage.cs" />
     <Compile Include="CustomFrameworkUnitTest.cs" />
-    <Compile Include="Harness\Service\CodeCoverageProvider.cs" />
-    <Compile Include="Harness\Service\EnvironmentProvider.cs" />
-    <Compile Include="Harness\Service\Extensions.cs" />
-    <Compile Include="Harness\Service\IsolatedStorageSettingsProvider.cs" />
-    <Compile Include="Harness\Service\ProviderBase.cs" />
-    <Compile Include="Harness\Service\ServiceResult.cs" />
-    <Compile Include="Harness\Service\ServiceType.cs" />
-    <Compile Include="Harness\Service\SettingsProvider.cs" />
-    <Compile Include="Harness\Service\SilverlightTestService.cs" />
-    <Compile Include="Harness\Service\SilverlightTestService.ServiceVerifier.cs" />
-    <Compile Include="Harness\Service\TestReportingProvider.cs" />
-    <Compile Include="Harness\Service\TestServiceFeature.cs" />
-    <Compile Include="Harness\Service\WebCodeCoverageProvider.cs" />
-    <Compile Include="Harness\Service\WebEnvironmentProvider.cs" />
-    <Compile Include="Harness\Service\WebServiceResult.cs" />
-    <Compile Include="Harness\Service\WebSettingsProvider.cs" />
-    <Compile Include="Harness\Service\WebTestReportingProvider.cs" />
-    <Compile Include="Harness\Service\WebTestService.CrossThreadState.cs" />
-    <Compile Include="Harness\Service\WebTestService.cs" />
-    <Compile Include="Harness\Service\WebTestService.RequestData.cs" />
-    <Compile Include="Harness\TestServiceProvider.cs" />
+    <Compile Include="Client\DataManager.cs" />
+    <Compile Include="Client\TestAssemblyData.cs" />
+    <Compile Include="Client\TestMethodData.cs" />
+    <Compile Include="Service\CodeCoverageProvider.cs" />
+    <Compile Include="Service\EnvironmentProvider.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Service\IsolatedStorageSettingsProvider.cs" />
+    <Compile Include="Service\ProviderBase.cs" />
+    <Compile Include="Service\ServiceResult.cs" />
+    <Compile Include="Service\ServiceType.cs" />
+    <Compile Include="Service\SettingsProvider.cs" />
+    <Compile Include="Service\SilverlightTestService.cs" />
+    <Compile Include="Service\SilverlightTestService.ServiceVerifier.cs" />
+    <Compile Include="Service\TestReportingProvider.cs" />
+    <Compile Include="Service\TestServiceFeature.cs" />
+    <Compile Include="Service\WebCodeCoverageProvider.cs" />
+    <Compile Include="Service\WebEnvironmentProvider.cs" />
+    <Compile Include="Service\WebServiceResult.cs" />
+    <Compile Include="Service\WebSettingsProvider.cs" />
+    <Compile Include="Service\WebTestReportingProvider.cs" />
+    <Compile Include="Service\WebTestService.CrossThreadState.cs" />
+    <Compile Include="Service\WebTestService.cs" />
+    <Compile Include="Service\WebTestService.RequestData.cs" />
+    <Compile Include="UnitTesting\FastRunDispatcher.cs" />
+    <Compile Include="Client\TestClassData.cs" />
+    <Compile Include="Client\PropertyChangedBase.cs" />
+    <Compile Include="Client\TestRunData.cs" />
+    <Compile Include="UnitTesting\TestAssemblyCompletedEventArgs.cs" />
+    <Compile Include="UnitTesting\TestAssemblyStartingEventArgs.cs" />
+    <Compile Include="UnitTesting\TestClassCompletedEventArgs.cs" />
+    <Compile Include="UnitTesting\TestClassStartingEventArgs.cs" />
+    <Compile Include="UnitTesting\TestMethodStartingEventArgs.cs" />
+    <Compile Include="UnitTesting\TestRunStartingEventArgs.cs" />
+    <Compile Include="UnitTesting\TestServiceProvider.cs" />
+    <Compile Include="ITestPage.cs" />
     <Compile Include="TagAttribute.cs" />
-    <Compile Include="UnitTesting\Harness\HarnessExtensions.cs" />
-    <Compile Include="UnitTesting\Harness\IProvideDynamicTestMethods.cs" />
-    <Compile Include="UnitTesting\Harness\RetryTestRunFilter.cs" />
-    <Compile Include="UnitTesting\Harness\TagManager.cs" />
-    <Compile Include="UnitTesting\Harness\TagManager.ExpressionEvaluator.cs" />
-    <Compile Include="UnitTesting\Harness\TagManager.Tags.cs" />
-    <Compile Include="UnitTesting\Harness\TagTestRunFilter.cs" />
-    <Compile Include="UnitTesting\Harness\TestAssemblyHelper.cs" />
-    <Compile Include="UnitTesting\Harness\TestClassHelper.cs" />
-    <Compile Include="UnitTesting\Harness\TestMethodHelper.cs" />
-    <Compile Include="UnitTesting\Harness\TestMethodManager.Silverlight.cs" />
-    <Compile Include="UnitTesting\Harness\TestRunFilter.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestLogicFactory.cs" />
-    <Compile Include="UnitTesting\Harness\VisualStudioLogProvider.cs" />
-    <Compile Include="UnitTesting\Harness\VisualStudioLogProvider.Writer.cs" />
-    <Compile Include="UnitTesting\UI\TextFailuresLogProvider.cs" />
-    <Compile Include="UnitTesting\UI\BrowserInformation.cs" />
-    <Compile Include="UnitTesting\UI\HtmlPropertyGrid.cs" />
-    <Compile Include="UnitTesting\UI\ResultInspector.Details.cs" />
-    <Compile Include="UnitTesting\UI\ResultInspector.cs" />
-    <Compile Include="UnitTesting\UI\ResultInspector.ExceptionDetails.cs" />
-    <Compile Include="UnitTesting\UI\TestPage.xaml.cs">
+    <Compile Include="UnitTesting\HarnessExtensions.cs" />
+    <Compile Include="UnitTesting\IProvideDynamicTestMethods.cs" />
+    <Compile Include="UnitTesting\RetryTestRunFilter.cs" />
+    <Compile Include="UnitTesting\TagManager.cs" />
+    <Compile Include="UnitTesting\TagManager.ExpressionEvaluator.cs" />
+    <Compile Include="UnitTesting\TagManager.Tags.cs" />
+    <Compile Include="UnitTesting\TagTestRunFilter.cs" />
+    <Compile Include="UnitTesting\TestAssemblyHelper.cs" />
+    <Compile Include="UnitTesting\TestClassHelper.cs" />
+    <Compile Include="UnitTesting\TestMethodCompletedEventArgs.cs" />
+    <Compile Include="UnitTesting\TestMethodHelper.cs" />
+    <Compile Include="UnitTesting\TestRunFilter.cs" />
+    <Compile Include="UnitTesting\UnitTestHarnessEventArgs.cs" />
+    <Compile Include="UnitTesting\UnitTestHarnessEvents.cs" />
+    <Compile Include="UnitTesting\UnitTestLogicFactory.cs" />
+    <Compile Include="UnitTesting\VisualStudioLogProvider.cs" />
+    <Compile Include="UnitTesting\VisualStudioLogProvider.Writer.cs" />
+    <Compile Include="Client\ClassicTestPage.xaml.cs">
+      <DependentUpon>ClassicTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnitTesting\TextFailuresLogProvider.cs" />
+    <Compile Include="Client\TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UnitTesting\UI\TestRunProgress.cs" />
     <Compile Include="Properties\UnitTestMessage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UnitTestMessage.resx</DependentUpon>
     </Compile>
     <Compile Include="UnitTestSystem.Silverlight.cs" />
+    <Compile Include="WorkItemExtensions.cs" />
     <Compile Include="WorkItemTest.cs" />
     <Compile Include="ExclusiveAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IWorkItem.cs" />
     <Compile Include="PresentationTest.cs" />
     <Compile Include="SilverlightTest.cs" />
     <Compile Include="WorkItem.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestLogMessageWriter.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestHarness.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestLogDecorator.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestMessageConditional.cs" />
-    <Compile Include="UnitTesting\Harness\LazyMethodAssemblyInfo.cs" />
-    <Compile Include="UnitTesting\Metadata\IAssembly.cs" />
-    <Compile Include="UnitTesting\Metadata\IExpectedException.cs" />
-    <Compile Include="UnitTesting\Metadata\IHostType.cs" />
-    <Compile Include="UnitTesting\Metadata\IPriority.cs" />
-    <Compile Include="UnitTesting\Metadata\ITestClass.cs" />
-    <Compile Include="UnitTesting\Metadata\ITestMethod.cs" />
-    <Compile Include="UnitTesting\Metadata\ITestProperty.cs" />
-    <Compile Include="UnitTesting\Metadata\IUnitTestProvider.cs" />
-    <Compile Include="UnitTesting\Metadata\IWorkItemMetadata.cs" />
-    <Compile Include="UnitTesting\Metadata\StringEventArgs.cs" />
-    <Compile Include="UnitTesting\Metadata\UnitTestProviderCapabilities.cs" />
+    <Compile Include="UnitTesting\UnitTestLogMessageWriter.cs" />
+    <Compile Include="UnitTesting\UnitTestHarness.cs" />
+    <Compile Include="UnitTesting\UnitTestLogDecorator.cs" />
+    <Compile Include="UnitTesting\UnitTestMessageConditional.cs" />
+    <Compile Include="UnitTesting\LazyMethodAssemblyInfo.cs" />
+    <Compile Include="Metadata\IAssembly.cs" />
+    <Compile Include="Metadata\IExpectedException.cs" />
+    <Compile Include="Metadata\IHostType.cs" />
+    <Compile Include="Metadata\IPriority.cs" />
+    <Compile Include="Metadata\ITestClass.cs" />
+    <Compile Include="Metadata\ITestMethod.cs" />
+    <Compile Include="Metadata\ITestProperty.cs" />
+    <Compile Include="Metadata\IUnitTestProvider.cs" />
+    <Compile Include="Metadata\IWorkItemMetadata.cs" />
+    <Compile Include="Metadata\StringEventArgs.cs" />
+    <Compile Include="Metadata\UnitTestProviderCapabilities.cs" />
     <Compile Include="UnitTesting\SleepWorkItem.cs" />
-    <Compile Include="UnitTesting\UI\BrowserUtility.cs" />
-    <Compile Include="UnitTesting\UI\FailureEntry.cs" />
-    <Compile Include="UnitTesting\UI\FailureSummaryControl.cs" />
-    <Compile Include="UnitTesting\UI\TestHtmlElementManager.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\ExpectedException.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\Priority.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\ProviderAttributes.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\TestClass.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\TestMethod.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\TestProperty.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\UnitTestContext.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\UnitTestFrameworkAssembly.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\VsttProvider.cs" />
-    <Compile Include="UnitTesting\Metadata\VisualStudio\WorkItemMetadata.cs" />
-    <Compile Include="UnitTesting\UI\FailureControl.cs" />
+    <Compile Include="Metadata\VisualStudio\ExpectedException.cs" />
+    <Compile Include="Metadata\VisualStudio\Priority.cs" />
+    <Compile Include="Metadata\VisualStudio\ProviderAttributes.cs" />
+    <Compile Include="Metadata\VisualStudio\TestClass.cs" />
+    <Compile Include="Metadata\VisualStudio\TestMethod.cs" />
+    <Compile Include="Metadata\VisualStudio\TestProperty.cs" />
+    <Compile Include="Metadata\VisualStudio\UnitTestContext.cs" />
+    <Compile Include="Metadata\VisualStudio\UnitTestFrameworkAssembly.cs" />
+    <Compile Include="Metadata\VisualStudio\VsttProvider.cs" />
+    <Compile Include="Metadata\VisualStudio\WorkItemMetadata.cs" />
     <Compile Include="UnitTestSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestSettings.cs" />
-    <Compile Include="UnitTesting\UI\CurrentTestStatus.cs" />
-    <Compile Include="UnitTesting\UI\TestPanelManager.cs" />
-    <Compile Include="UnitTesting\UI\UnitTestWebpageLog.cs" />
-    <Compile Include="UnitTesting\Harness\ScenarioResult.cs" />
-    <Compile Include="UnitTesting\Harness\AssemblyManager.cs" />
-    <Compile Include="UnitTesting\ICompositeWorkItem.cs" />
-    <Compile Include="UnitTesting\Harness\LazyMethodInfo.cs" />
-    <Compile Include="UnitTesting\Harness\MethodContainer.cs" />
-    <Compile Include="UnitTesting\Harness\TestClassInstanceDictionary.cs" />
-    <Compile Include="UnitTesting\Harness\TestClassManager.cs" />
+    <Compile Include="UnitTesting\TestPanelManager.cs" />
+    <Compile Include="UnitTesting\ScenarioResult.cs" />
+    <Compile Include="UnitTesting\AssemblyManager.cs" />
+    <Compile Include="UnitTesting\LazyMethodInfo.cs" />
+    <Compile Include="UnitTesting\MethodContainer.cs" />
+    <Compile Include="UnitTesting\TestClassInstanceDictionary.cs" />
+    <Compile Include="UnitTesting\TestClassManager.cs" />
     <Compile Include="UnitTesting\WorkItemsManager.cs" />
-    <Compile Include="UnitTesting\Harness\TestMethodManager.cs" />
+    <Compile Include="UnitTesting\TestMethodManager.cs" />
     <Compile Include="UnitTesting\CompositeWorkItem.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestMethodContainer.cs" />
-    <Compile Include="UnitTesting\Harness\UnitTestCompositeWorkItem.cs" />
+    <Compile Include="UnitTesting\UnitTestMethodContainer.cs" />
+    <Compile Include="UnitTesting\UnitTestCompositeWorkItem.cs" />
     <Compile Include="UnitTesting\CallbackWorkItem.cs" />
     <Compile Include="UnitTesting\ConditionalWorkItem.cs" />
     <Compile Include="UnitTesting\MethodInvokeWorkItem.cs" />
-    <Compile Include="UnitTesting\Metadata\UnitTestProviders.cs" />
-    <Compile Include="Harness\DecoratorDictionary.cs" />
-    <Compile Include="Harness\ResourceUtility.cs" />
-    <Compile Include="Harness\LogMessageFactory.cs" />
-    <Compile Include="Harness\LogMessageWriter.cs" />
-    <Compile Include="Harness\LogDecorator.cs" />
-    <Compile Include="Harness\TestOutcome.cs" />
-    <Compile Include="Harness\TestStage.cs" />
-    <Compile Include="Harness\LogProvider.cs" />
-    <Compile Include="Harness\TestHarness.cs" />
-    <Compile Include="Harness\GlobalExceptionHandler.cs" />
-    <Compile Include="Harness\LogMessage.cs" />
-    <Compile Include="Harness\TestGranularity.cs" />
-    <Compile Include="Harness\DebugOutputProvider.cs" />
-    <Compile Include="Harness\ITestHarness.cs" />
-    <Compile Include="Harness\LogMessageType.cs" />
-    <Compile Include="Harness\ITestSettingsLogProvider.cs" />
-    <Compile Include="UI\WebpageHeaderLogProvider.cs" />
-    <Compile Include="UI\WebpageLogProvider.cs" />
-    <Compile Include="UI\WebpageLogProviderBase.cs" />
-    <Compile Include="Harness\TestHarnessCompletedEventArgs.cs" />
-    <Compile Include="Harness\RunDispatcher.cs" />
-    <Compile Include="Harness\TestHarnessSettings.cs" />
-    <Compile Include="UI\HtmlTestColumn.cs" />
-    <Compile Include="Html\CssPosition.cs" />
-    <Compile Include="Html\EventAttachment.cs" />
-    <Compile Include="Html\HtmlControlBase.cs" />
-    <Compile Include="Html\BorderStyle.cs" />
-    <Compile Include="Html\CssDisplay.cs" />
-    <Compile Include="Html\CssSize.cs" />
-    <Compile Include="Html\CssAttribute.cs" />
-    <Compile Include="Html\CssMargin.cs" />
-    <Compile Include="Html\CssPadding.cs" />
-    <Compile Include="Html\CssBox.cs" />
-    <Compile Include="Html\FontInfo.cs" />
-    <Compile Include="Html\FontNamesConverter.cs" />
-    <Compile Include="Html\FontSize.cs" />
-    <Compile Include="Html\FontUnit.cs" />
-    <Compile Include="Html\FontUnitConverter.cs" />
-    <Compile Include="Html\HtmlAnchor.cs" />
-    <Compile Include="Html\HtmlAttribute.cs" />
-    <Compile Include="Html\HtmlButton.cs" />
-    <Compile Include="Html\HtmlContainerControl.cs" />
-    <Compile Include="Html\HtmlControlCollection.cs" />
-    <Compile Include="Html\HtmlControlManager.cs" />
-    <Compile Include="Html\HtmlDiv.cs" />
-    <Compile Include="Html\HtmlElementWrapperBag.cs" />
-    <Compile Include="Html\HtmlElementWrapper.cs" />
-    <Compile Include="Html\HtmlEvent.cs" />
-    <Compile Include="Html\HtmlHeaderControl.cs" />
-    <Compile Include="Html\HtmlInputControl.cs" />
-    <Compile Include="Html\HtmlInputText.cs" />
-    <Compile Include="Html\HtmlLineBreak.cs" />
-    <Compile Include="Html\HtmlPageControl.cs" />
-    <Compile Include="Html\HtmlProperty.cs" />
-    <Compile Include="Html\Box.cs" />
-    <Compile Include="Html\CssBorder.cs" />
-    <Compile Include="Html\HtmlControl.cs" />
-    <Compile Include="Html\Extensions.cs" />
-    <Compile Include="Html\HtmlSpan.cs" />
-    <Compile Include="Html\HtmlTag.cs" />
-    <Compile Include="UI\Color.cs" />
-    <Compile Include="Html\BrowserScreenInformation.cs" />
-    <Compile Include="Html\Paragraph.cs" />
-    <Compile Include="Html\Size.cs" />
-    <Compile Include="Html\StyleProvider.cs" />
-    <Compile Include="Html\Unit.cs" />
-    <Compile Include="Html\UnitConverter.cs" />
-    <Compile Include="Html\UnitType.cs" />
-    <Compile Include="UI\ResultIndicatorColor.cs" />
-    <Compile Include="UI\TestColumnHeader.cs" />
-    <Compile Include="UI\TestStyleProvider.cs" />
-    <Compile Include="UI\WebBrowserTestPage.cs" />
-    <Compile Include="UI\WebBrowserTick.cs" />
-    <Compile Include="Harness\TestHarnessState.cs" />
-    <Compile Include="Harness\ReflectionUtility.cs" />
+    <Compile Include="Metadata\UnitTestProviders.cs" />
+    <Compile Include="UnitTesting\DecoratorDictionary.cs" />
+    <Compile Include="UnitTesting\ResourceUtility.cs" />
+    <Compile Include="UnitTesting\LogMessageFactory.cs" />
+    <Compile Include="UnitTesting\LogMessageWriter.cs" />
+    <Compile Include="UnitTesting\LogDecorator.cs" />
+    <Compile Include="UnitTesting\TestOutcome.cs" />
+    <Compile Include="UnitTesting\TestStage.cs" />
+    <Compile Include="UnitTesting\LogProvider.cs" />
+    <Compile Include="UnitTesting\GlobalExceptionHandler.cs" />
+    <Compile Include="UnitTesting\LogMessage.cs" />
+    <Compile Include="UnitTesting\TestGranularity.cs" />
+    <Compile Include="UnitTesting\DebugOutputProvider.cs" />
+    <Compile Include="UnitTesting\LogMessageType.cs" />
+    <Compile Include="UnitTesting\ITestSettingsLogProvider.cs" />
+    <Compile Include="UnitTesting\TestHarnessCompletedEventArgs.cs" />
+    <Compile Include="UnitTesting\RunDispatcher.cs" />
+    <Compile Include="UnitTesting\WebBrowserTick.cs" />
+    <Compile Include="UnitTesting\TestHarnessState.cs" />
+    <Compile Include="UnitTesting\ReflectionUtility.cs" />
+  </ItemGroup>
+  <!-- Silverlight SDK controls -->
+  <ItemGroup>
+    <Compile Include="Client\ClipboardHelper.cs" />
+    <Compile Include="Client\Controls\Common\BindingEvaluator.cs" />
+    <Compile Include="Client\Controls\Common\Dock.cs" />
+    <Compile Include="Client\Controls\Common\InteractionHelper.cs" />
+    <Compile Include="Client\Controls\Common\ItemsControlHelper.cs" />
+    <Compile Include="Client\Controls\Common\IUpdateVisualState.cs" />
+    <Compile Include="Client\Controls\Common\NumericExtensions.cs" />
+    <Compile Include="Client\Controls\Common\RoutedPropertyChangingEventArgs.cs" />
+    <Compile Include="Client\Controls\Common\RoutedPropertyChangingEventHandler.cs" />
+    <Compile Include="Client\Controls\Common\ScrollExtensions.cs" />
+    <Compile Include="Client\Controls\Common\TypeConverters.cs" />
+    <Compile Include="Client\Controls\Common\VisualStates.cs" />
+    <Compile Include="Client\Controls\Data\HierarchicalDataTemplate.cs" />
+    <Compile Include="Client\Controls\GlobalSuppressions.cs" />
+    <Compile Include="Client\Controls\GridSplitter\DragValidator.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.DefinitionAbstraction.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.DoubleUtil.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.GridResizeBehavior.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.GridResizeDirection.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.ResizeBehavior.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.SplitBehavior.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitter.TestHook.cs" />
+    <Compile Include="Client\Controls\GridSplitter\GridSplitterAutomationPeer.cs" />
+    <Compile Include="Client\Controls\GridSplitter\PreviewControl.cs" />
+    <Compile Include="Client\Controls\HeaderedItemsControl\HeaderedItemsControl.cs" />
+    <Compile Include="Client\Controls\TreeView\TreeView.cs" />
+    <Compile Include="Client\Controls\TreeView\TreeViewAutomationPeer.cs" />
+    <Compile Include="Client\Controls\TreeView\TreeViewItem.cs" />
+    <Compile Include="Client\Controls\TreeView\TreeViewItemAutomationPeer.cs" />
+    <Compile Include="Client\DataTemplateSelector.cs" />
+    <Compile Include="Client\InvertValueConverter.cs" />
+    <Compile Include="Client\IProvideResultReports.cs" />
+    <Compile Include="Client\Notification.cs">
+      <DependentUpon>Notifications.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Notifications.cs">
+      <DependentUpon>Notifications.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\TestApplicationInformation.cs" />
+    <Compile Include="IMobileTestPage.cs" />
+    <Compile Include="Service\SimpleXElement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Client\Controls\HeaderedItemsControl\HeaderedItemsControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="Client\Controls\TreeView\TreeView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="Client\Controls\TreeView\TreeViewItem.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Client\Controls\GridSplitter\GridSplitter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Client\Controls\Common\Common.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight" />
@@ -258,10 +378,115 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UnitTesting\UI\TestPage.xaml">
+    <Page Include="Client\ClassicTestPage.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="Client\ClientResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Page Include="Client\ClientButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\Header.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="Client\MobileClientResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <DefaultStyle Include="Client\LayoutTransformer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <Page Include="Client\MobileStartup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\MobileTestExceptionDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\MobileTestMethodDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\MobileTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <DefaultStyle Include="Client\Slide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="Client\Notifications.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <Page Include="Client\TagEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\TestExceptionDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\TestMethodDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\TestPage.xaml">
       <SubType>Page</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows">
+    </Reference>
+    <Reference Include="mscorlib">
+    </Reference>
+    <Reference Include="system">
+    </Reference>
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Xml">
+    </Reference>
+    <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />

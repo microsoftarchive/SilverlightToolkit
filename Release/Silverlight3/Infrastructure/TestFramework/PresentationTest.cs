@@ -6,8 +6,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
-using Microsoft.Silverlight.Testing.UnitTesting;
-using Microsoft.Silverlight.Testing.UnitTesting.UI;
+using Microsoft.Silverlight.Testing.Harness;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.Silverlight.Testing
@@ -24,10 +23,12 @@ namespace Microsoft.Silverlight.Testing
         /// <summary>
         /// Gets the test panel.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Enables future scenarios.")]
         public Panel TestPanel
         {
-            get { return TestPanelManager.Instance.TestPanel; }
+            get
+            {
+                return UnitTestHarness.TestPanelManager.TestPanel;
+            }
         }
     }
 }

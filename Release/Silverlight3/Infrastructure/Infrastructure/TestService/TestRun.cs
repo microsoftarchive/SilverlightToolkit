@@ -4,6 +4,7 @@
 // All other rights reserved.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -94,6 +95,7 @@ namespace Microsoft.Silverlight.Testing.Tools
         /// Executes a test run.
         /// </summary>
         /// <returns>Returns the result of the Silverlight Unit Test run.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Need to keep requests going.")]
         public bool Run()
         {
             try
