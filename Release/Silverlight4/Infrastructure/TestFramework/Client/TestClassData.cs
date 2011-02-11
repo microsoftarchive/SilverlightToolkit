@@ -43,7 +43,7 @@ namespace Microsoft.Silverlight.Testing.Client
             _parent = parent;
 
             Name = testClass.Name;
-            Namespace = testClass.Type.Namespace;
+            Namespace = testClass.Namespace;
         }
 
         /// <summary>

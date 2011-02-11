@@ -52,8 +52,21 @@ namespace Microsoft.Silverlight.Testing.Service
             {
                 get
                 {
-                    return Application.Current != null && Application.Current.Host != null && Application.Current.Host.Source != null ? 
-                        Application.Current.Host.Source : null;
+                    string scheme = "http://";
+                    if (Application.Current != null && Application.Current.Host != null && Application.Current.Host.Source != null)
+                    {
+                        // TODO: Need to understand better the cross-security
+                        // scenarios that customers are using for the service,
+                        // since they would need a custom service hosted on a
+                        // server for this to work. For now, we force to the
+                        // same URI but on the https:// scheme in those 
+                        // situations.
+                        if (Application.Current.Host.Source.Scheme == "https")
+                        {
+                            scheme = "https://";
+                        }
+                    }
+                    return new Uri(scheme + Hostname + ":" + Port + ServicePath);
                 }
             }
 
@@ -71,14 +84,8 @@ namespace Microsoft.Silverlight.Testing.Service
                     VerificationServiceName,
                     delegate(ServiceResult result)
                     {
-                        if (result != null && result.Successful)
-                        {
-                            success();
-                        }
-                        else
-                        {
-                            failure();
-                        }
+                        Action action = result != null && result.Successful ? success : failure;
+                        action();
                     });
             }
         }

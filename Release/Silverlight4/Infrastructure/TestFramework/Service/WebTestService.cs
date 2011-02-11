@@ -77,10 +77,8 @@ namespace Microsoft.Silverlight.Testing.Service
                 foreach (string key in arguments.Keys)
                 {
                     sb.Append(Uri.EscapeDataString(key));
-                    sb.Append(key);
                     sb.Append("/");
                     sb.Append(Uri.EscapeDataString(arguments[key]));
-                    sb.Append(arguments[key]);
                     sb.Append("/");
                 }
             }

@@ -146,8 +146,20 @@ namespace Microsoft.Silverlight.Testing.Client
             ScrollViewer sv = resultsTreeView.GetScrollHost();
 
             // Keep the current test visible in the tree view control
-            _harness.TestClassStarting += (x, xe) => resultsTreeView.SelectItem(_model.GetClassModel(xe.TestClass));
-            _harness.TestMethodStarting += (x, xe) => sv.ScrollToBottom();
+            _harness.TestClassStarting += (x, xe) =>
+                {
+                    if (resultsTreeView != null)
+                    {
+                        resultsTreeView.SelectItem(_model.GetClassModel(xe.TestClass));
+                    };
+                };
+            _harness.TestMethodStarting += (x, xe) =>
+                {
+                    if (sv != null)
+                    {
+                        sv.ScrollToBottom();
+                    }
+                };
             _harness.TestMethodCompleted += OnTestMethodCompleted;
             _harness.TestHarnessCompleted += OnTestHarnessCompleted;
             _harness.TestAssemblyStarting += OnTestAssemblyStarting;

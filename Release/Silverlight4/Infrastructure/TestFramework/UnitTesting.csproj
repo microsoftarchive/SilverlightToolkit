@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 // (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
@@ -8,7 +8,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FBACE883-73A3-45C6-BDBF-72C34EF57334}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -19,6 +19,10 @@
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SccProjectName></SccProjectName>
+    <SccLocalPath></SccLocalPath>
+    <SccAuxPath></SccAuxPath>
+    <SccProvider></SccProvider>
     <DocumentationFile>..\bin\Microsoft.Silverlight.Testing.xml</DocumentationFile>
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
@@ -48,7 +52,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Windows">
@@ -313,27 +317,27 @@
   </ItemGroup>
   <ItemGroup>
     <DefaultStyle Include="Client\Controls\HeaderedItemsControl\HeaderedItemsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DefaultStyle>
     <DefaultStyle Include="Client\Controls\TreeView\TreeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DefaultStyle>
     <DefaultStyle Include="Client\Controls\TreeView\TreeViewItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DefaultStyle>
   </ItemGroup>
   <ItemGroup>
     <DefaultStyle Include="Client\Controls\GridSplitter\GridSplitter.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DefaultStyle>
   </ItemGroup>
   <ItemGroup>
     <DefaultStyle Include="Client\Controls\Common\Common.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DefaultStyle>
   </ItemGroup>
@@ -350,68 +354,68 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Client\ClassicTestPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Resource Include="Client\ClientResources.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Resource>
     <Page Include="Client\ClientButtons.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\Header.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Resource Include="Client\MobileClientResources.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Resource>
     <DefaultStyle Include="Client\LayoutTransformer.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DefaultStyle>
     <Page Include="Client\MobileStartup.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\MobileTestExceptionDetails.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\MobileTestMethodDetails.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\MobileTestPage.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <DefaultStyle Include="Client\Slide.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DefaultStyle>
     <DefaultStyle Include="Client\Notifications.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DefaultStyle>
     <Page Include="Client\TagEditor.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\TestExceptionDetails.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\TestMethodDetails.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Client\TestPage.xaml">
       <SubType>Page</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

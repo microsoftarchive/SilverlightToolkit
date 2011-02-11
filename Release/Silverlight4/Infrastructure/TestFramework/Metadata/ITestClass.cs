@@ -59,6 +59,11 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Metadata
         string Name { get; }
 
         /// <summary>
+        /// Gets the namespace of the test class.
+        /// </summary>
+        string Namespace { get; }
+
+        /// <summary>
         /// Gets a reference to the parent test assembly metadata 
         /// instance.
         /// </summary>

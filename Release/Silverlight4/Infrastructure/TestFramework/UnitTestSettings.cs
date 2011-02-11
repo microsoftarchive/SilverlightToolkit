@@ -64,11 +64,30 @@ namespace Microsoft.Silverlight.Testing
         public IList<Assembly> TestAssemblies { get; private set; }
 
         /// <summary>
+        /// Backing field for the test service.
+        /// </summary>
+        private TestServiceProvider _testService;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the test service has been
+        /// directly set.
+        /// </summary>
+        internal bool TestServiceSetterCalled { get; set; }
+
+        /// <summary>
         /// Gets or sets the test service provider.  The test service lights up 
         /// advanced out-of-process communication, reporting, logging, and 
         /// other valuable services.
         /// </summary>
-        public TestServiceProvider TestService { get; set; }
+        public TestServiceProvider TestService
+        {
+            get { return _testService; }
+            set
+            {
+                _testService = value;
+                TestServiceSetterCalled = true;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the test harness.

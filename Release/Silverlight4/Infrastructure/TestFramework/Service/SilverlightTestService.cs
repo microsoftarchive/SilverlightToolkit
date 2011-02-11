@@ -103,7 +103,8 @@ namespace Microsoft.Silverlight.Testing.Service
             string testRun = "test_run";
             char[] seps = { '&', '?' };
 
-            UniqueTestRunIdentifier = "none";
+            // Set randmon Guid as test run id in case we can not get ID from test service.
+            UniqueTestRunIdentifier = Guid.NewGuid().ToString();
 
             if (Application.Current != null && Application.Current.Host != null && Application.Current.Host.Source != null)
             {

@@ -125,6 +125,14 @@ namespace Microsoft.Silverlight.Testing.UnitTesting.Metadata.VisualStudio
         }
 
         /// <summary>
+        /// Gets the namespace of the test class.
+        /// </summary>
+        public string Namespace
+        {
+            get { return _type.Namespace; }
+        }
+
+        /// <summary>
         /// Gets a collection of test method  wrapper instances.
         /// </summary>
         /// <returns>A collection of test method interface objects.</returns>

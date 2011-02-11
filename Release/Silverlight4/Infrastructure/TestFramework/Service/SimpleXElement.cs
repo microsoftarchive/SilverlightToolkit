@@ -203,7 +203,7 @@ namespace Microsoft.Silverlight.Testing.Service
         private void ParseInternal(XmlReader reader, bool isFirst)
         {
             bool wasFirst = false;
-            while (reader.Read())
+            do
             {
                 switch (reader.NodeType)
                 {
@@ -221,6 +221,10 @@ namespace Microsoft.Silverlight.Testing.Service
                                 {
                                     _attributes.Add(reader.Name, reader.Value);
                                 }
+                            }
+                            if (reader.IsEmptyElement)
+                            {
+                                return;
                             }
                         }
                         else
@@ -244,6 +248,7 @@ namespace Microsoft.Silverlight.Testing.Service
                         break;
                 }
             }
+            while (reader.Read());
         }
 
         /// <summary>
@@ -257,6 +262,8 @@ namespace Microsoft.Silverlight.Testing.Service
             {
                 OmitXmlDeclaration = true,
                 NamespaceHandling = NamespaceHandling.OmitDuplicates,
+                IndentChars = "  ",
+                Indent = true
             };
             using (XmlWriter w = XmlWriter.Create(sb, settings))
             {

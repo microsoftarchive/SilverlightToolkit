@@ -28,7 +28,7 @@ namespace Microsoft.Silverlight.Toolkit.Build.Tasks
         /// <summary>
         /// The Vstt namespace.
         /// </summary>
-        private static readonly XNamespace VsttNamespace = "http://microsoft.com/schemas/VisualStudio/TeamTest/2006";
+        private static readonly XNamespace VsttNamespace = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
 
         /// <summary>
         /// Set of known build folder names.

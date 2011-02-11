@@ -125,7 +125,7 @@
                         </Border>
 
                         <!-- Message -->
-                        <TextBlock Text="{Binding Result.Exception.Message}" Margin="4"/>
+                        <TextBlock Text="{Binding ExceptionMessage}" Margin="4"/>
 
                         <TextBox Text="{Binding SimplifiedExceptionStackTrace}" Margin="4" TextWrapping="Wrap"/>
 

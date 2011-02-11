@@ -82,8 +82,7 @@ namespace Microsoft.Silverlight.Testing
                 throw new InvalidOperationException(Properties.UnitTestMessage.UnitTestSystem_Run_NoTestHarnessInSettings);
             }
 
-            // Conside re-setting the test service only in our default case
-            if (settings.TestService is Service.SilverlightTestService)
+            if (settings.TestService == null && !settings.TestServiceSetterCalled)
             {
                 SetTestService(settings);
             }

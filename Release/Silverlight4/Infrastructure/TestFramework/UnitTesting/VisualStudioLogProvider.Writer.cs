@@ -40,7 +40,7 @@ namespace Microsoft.Silverlight.Testing.Harness
             /// The namespace for Visual Studio team test results.
             /// </summary>
             /// <remarks>Was of XNamespace type in XLinq implementation.</remarks>
-            private readonly string ResultsXmlNamespace = "http://microsoft.com/schemas/VisualStudio/TeamTest/2006";
+            private readonly string ResultsXmlNamespace = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
 
             /// <summary>
             /// Gets or sets the time that the test run started.
@@ -182,7 +182,7 @@ namespace Microsoft.Silverlight.Testing.Harness
             {
                 TestRun = CreateElement("TestRun");
 
-                TestRunConfiguration = CreateElement("TestRunConfiguration");
+                TestRunConfiguration = CreateElement("TestSettings");
                 TestRun.Add(TestRunConfiguration);
 
                 ResultSummary = CreateElement("ResultSummary");

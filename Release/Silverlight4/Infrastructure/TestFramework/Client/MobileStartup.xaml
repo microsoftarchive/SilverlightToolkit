@@ -85,7 +85,6 @@
                                 Background="{StaticResource PhoneBackgroundBrush}" />
                             <Button 
                                 Content="Run everything" 
-                                Height="18"
                                 Background="{StaticResource PhoneBackgroundBrush}"
                                 Click="OnCancelClicked" />
                         </StackPanel>

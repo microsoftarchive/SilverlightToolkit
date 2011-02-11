@@ -145,6 +145,15 @@ namespace Microsoft.Silverlight.Testing.Client
             }
         }
 
+        ///<summary>
+        /// Gets the exception message from the result, xml decoding 
+        /// any instances of less than or greater than.
+        ///</summary>
+        public string ExceptionMessage
+        {
+            get { return Result.Exception.Message.Replace("&lt;", "<").Replace("&gt;", ">"); }
+        }
+
         /// <summary>
         /// Backing field for known bugs.
         /// </summary>
