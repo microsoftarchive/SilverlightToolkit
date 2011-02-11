@@ -1,0 +1,89 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.PerformanceProgressBarSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="TOOLKIT SAMPLES" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="progress bar" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel>
+                <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource PhoneTextNormalStyle}"
+                    Text="The PerformanceProgressBar is a specialized progress bar implementation that exposes a single property, IsIndeterminate, that has better performance than the ProgressBar built into Silverlight for Windows Phone."/>
+
+                <CheckBox Content="Show performance progress bar"
+                      IsChecked="{Binding IsIndeterminate, ElementName=_performanceProgressBar, Mode=TwoWay}"/>
+
+                <CheckBox Content="Show standard progress bar"
+                      IsChecked="{Binding IsIndeterminate, ElementName=_standardProgressBar, Mode=TwoWay}"/>
+
+                <Button Content="Block the UI Thread"
+                        Click="Button_Click"/>
+
+                <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource PhoneTextSmallStyle}"
+                    Text="Unlike the standard ProgressBar, this control animates on the compositor thread."/>
+
+                <TextBlock
+                    Margin="12,12,12,0"
+                    TextWrapping="Wrap"
+                    Style="{StaticResource PhoneTextSmallStyle}"
+                    Text="It also smoothly fades the progress bar when the value changes."/>
+
+                <TextBlock
+                    Margin="12,12,12,0"
+                    TextWrapping="Wrap"
+                    Style="{StaticResource PhoneTextSmallStyle}"
+                    Text="For this demo, the accent color marks the performance progress bar, while red is the standard ProgressBar."/>
+
+                <TextBlock
+                    Margin="12,12,12,0"
+                    TextWrapping="Wrap"
+                    Style="{StaticResource PhoneTextSmallStyle}"
+                    Text="Press the button to block the UI thread for 4 seconds."/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <toolkit:PerformanceProgressBar
+            VerticalAlignment="Top"
+            x:Name="_performanceProgressBar"/>
+        <ProgressBar
+            VerticalAlignment="Top"
+            Background="{x:Null}"
+            Margin="0,10,0,0"
+            x:Name="_standardProgressBar"
+            Foreground="Red"/>
+    </Grid>
+
+</phone:PhoneApplicationPage>

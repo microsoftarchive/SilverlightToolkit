@@ -32,6 +32,16 @@ namespace PhoneToolkitSample
             NavigateTo("/Samples/TransitionsSample.xaml");
         }
 
+        private void OnTiltEffect(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("/Samples/TiltEffectSample.xaml");
+        }
+
+        private void OnPerformanceProgressBar(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("/Samples/PerformanceProgressBarSample.xaml");
+        }
+
         private void OnContextMenu(object sender, RoutedEventArgs e)
         {
             NavigateTo("/Samples/ContextMenuSample.xaml");

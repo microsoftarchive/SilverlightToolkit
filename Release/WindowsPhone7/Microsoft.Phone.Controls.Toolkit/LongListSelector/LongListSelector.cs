@@ -1919,7 +1919,7 @@ namespace Microsoft.Phone.Controls
         private int GetGroupOffset(object group)
         {
             int listHeaderOffset = HasListHeader && ShowListHeader ? 1 : 0;
-            int listFooterOffset = HasListFooter && ShowListFooter ? 1 : 0;
+            // int listFooterOffset = HasListFooter && ShowListFooter ? 1 : 0;
 
             bool displayAll = DisplayAllGroups;
             int groupHeaderOffset = GroupHeaderTemplate != null ? 1 : 0;
