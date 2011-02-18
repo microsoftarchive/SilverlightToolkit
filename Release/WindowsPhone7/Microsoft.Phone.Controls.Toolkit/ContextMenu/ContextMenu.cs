@@ -18,7 +18,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 #if WINDOWS_PHONE
 using Microsoft.Phone.Controls.Primitives;
-using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 #endif
 

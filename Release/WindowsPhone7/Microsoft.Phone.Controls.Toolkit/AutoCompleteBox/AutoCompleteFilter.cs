@@ -4,7 +4,7 @@
 // All other rights reserved.
 
 using System;
-using System.Windows.Controls;
+
 
 #if WINDOWS_PHONE
 namespace Microsoft.Phone.Controls

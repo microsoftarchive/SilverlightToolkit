@@ -108,7 +108,25 @@ namespace Microsoft.Phone.Controls
                     _fullModeSelectorPart.Loaded -= HandleFullModeSelectorPartLoaded;
                     _fullModeSelectorPart.ItemsSource = null;
                 }
-                SystemTray.IsVisible = _savedSystemTrayIsVisible;
+
+                Action restoreSystemTray = () =>
+                    {
+                        try
+                        {
+                            SystemTray.IsVisible = _savedSystemTrayIsVisible;
+                        }
+                        catch (InvalidOperationException)
+                        {
+                        }
+                    };
+                try
+                {
+                    restoreSystemTray();
+                }
+                catch (InvalidOperationException)
+                {
+                    Dispatcher.BeginInvoke(restoreSystemTray);
+                }
                 if (null != _page)
                 {
                     if (null != _page.ApplicationBar)
@@ -144,8 +162,25 @@ namespace Microsoft.Phone.Controls
             }
             if ((ListPickerMode.Full == newValue) && !DesignerProperties.IsInDesignTool)
             {
-                _savedSystemTrayIsVisible = SystemTray.IsVisible;
-                SystemTray.IsVisible = false;
+                Action saveTrayAndHide = () =>
+                    {
+                        try
+                        {
+                            _savedSystemTrayIsVisible = SystemTray.IsVisible;
+                            SystemTray.IsVisible = false;
+                        }
+                        catch (InvalidOperationException)
+                        {
+                        }
+                    };
+                try
+                {
+                    saveTrayAndHide();
+                }
+                catch (InvalidOperationException)
+                {
+                    Dispatcher.BeginInvoke(saveTrayAndHide);
+                }
                 if (null != _frame)
                 {
                     AdjustPopupChildForCurrentOrientation(_frame);

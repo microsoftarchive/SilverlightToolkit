@@ -3,12 +3,9 @@
 // Please see [###LICENSE_LINK###] for details.
 // All other rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
 
 namespace System.Windows.Controls

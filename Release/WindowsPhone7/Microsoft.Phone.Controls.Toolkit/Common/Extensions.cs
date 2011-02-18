@@ -4,7 +4,6 @@
 // All other rights reserved.
 
 using System;
-using System.Windows;
 using System.Windows.Media;
 
 #if WINDOWS_PHONE
