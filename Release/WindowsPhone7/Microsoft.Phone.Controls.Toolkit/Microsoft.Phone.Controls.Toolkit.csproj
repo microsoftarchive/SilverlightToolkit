@@ -20,7 +20,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PhoneToolkit.snk</AssemblyOriginatorKeyFile>
-    <SccProjectName</SccProjectName>
+    <SccProjectName></SccProjectName>
     <SccLocalPath></SccLocalPath>
     <SccAuxPath></SccAuxPath>
     <SccProvider></SccProvider>
