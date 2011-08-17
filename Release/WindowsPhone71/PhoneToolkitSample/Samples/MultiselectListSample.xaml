@@ -1,0 +1,117 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.MultiselectListSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="clr-namespace:PhoneToolkitSample.Data"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <!--Resources-->
+    <phone:PhoneApplicationPage.Resources>
+        <data:UnreadToBrushConverter x:Key="UnreadToBrushConverter"/>
+        <data:EmailCollection x:Key="EmailCollection"/>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--Transitions-->
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="TOOLKIT SAMPLE" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="multiselect" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0">
+            <toolkit:MultiselectList x:Name="EmailList" 
+                                     Margin="0,14,-12,0"
+                                     SelectionChanged="EmailList_SelectionChanged"
+                                     IsSelectionEnabledChanged="EmailList_IsSelectionEnabledChanged"
+                                     ItemsSource="{Binding Source={StaticResource EmailCollection}}">
+                <toolkit:MultiselectList.ItemContainerStyle>
+                    <Style TargetType="toolkit:MultiselectItem">
+                        <Setter Property="HintPanelHeight" Value="90"/>
+                    </Style>
+                </toolkit:MultiselectList.ItemContainerStyle>
+                <toolkit:MultiselectList.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,-14,0,24" Tap="ItemContent_Tap">
+                            <TextBlock Text="{Binding Sender}" 
+                                       Margin="0,0,0,-4"
+                                       FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                            <TextBlock Text="{Binding Subject}"
+                                       Margin="0,0,0,-4"
+                                       Foreground="{Binding Unread, Converter={StaticResource UnreadToBrushConverter}}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                            <TextBlock Text="{Binding Body}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </toolkit:MultiselectList.ItemTemplate>
+                <toolkit:MultiselectList.ItemInfoTemplate>
+                    <DataTemplate>
+                        <Border Width="74" Margin="0,9,24,0">
+                            <TextBlock Text="{Binding Time}"
+                                       HorizontalAlignment="Right"/>
+                        </Border>
+                    </DataTemplate>
+                </toolkit:MultiselectList.ItemInfoTemplate>
+            </toolkit:MultiselectList>
+        </Grid>
+    </Grid>
+
+    <!--ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="appbar_button1" 
+                                            IconUri="/Toolkit.Content/ApplicationBar.Select.png" 
+                                            Text="select" Click="select_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

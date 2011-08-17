@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PhoneToolkitSample</RootNamespace>
+    <AssemblyName>PhoneToolkitSample</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+      zh-CN; zh-TW; cs; da; nl-NL; en-GB;
+      fi; fr-FR; de-DE; el; hu; it-IT; ja; ko;
+      nb-NO; pl; pt-BR; pt-PT; ru; es-ES; sv-SE;
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>PhoneToolkitSample.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>PhoneToolkitSample.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AccentColorNameToBrush.cs" />
+    <Compile Include="Data\AllPeople.cs" />
+    <Compile Include="Data\ColorExtensions.cs" />
+    <Compile Include="Data\ConversationObject.cs" />
+    <Compile Include="Data\DateTimeCollection.cs" />
+    <Compile Include="Data\DateTimeObject.cs" />
+    <Compile Include="Data\GroupToForegroundBrushValueConverter.cs" />
+    <Compile Include="Data\EmailCollection.cs" />
+    <Compile Include="Data\EmailObject.cs" />
+    <Compile Include="Data\GroupToBackgroundBrushValueConverter.cs" />
+    <Compile Include="Data\InboxObject.cs" />
+    <Compile Include="Data\LoremIpsumWebsites.cs" />
+    <Compile Include="Data\PeopleByFirstName.cs" />
+    <Compile Include="Data\PeopleInGroup.cs" />
+    <Compile Include="Data\Person.cs" />
+    <Compile Include="Data\Tuple.cs" />
+    <Compile Include="Data\UnreadToBrushConverter.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Data\LoremIpsum.cs" />
+    <Compile Include="Data\Movie.cs" />
+    <Compile Include="Data\MoviesByCategory.cs" />
+    <Compile Include="Data\MoviesInCategory.cs" />
+    <Compile Include="Data\RandomPeople.cs" />
+    <Compile Include="HeaderedContentControl.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\AutoCompleteBoxSample.xaml.cs">
+      <DependentUpon>AutoCompleteBoxSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ContextMenuSample.xaml.cs">
+      <DependentUpon>ContextMenuSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\DateTimeConvertersSample.xaml.cs">
+      <DependentUpon>DateTimeConvertersSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\DateTimePickerSample.xaml.cs">
+      <DependentUpon>DateTimePickerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ExpanderViewSample.xaml.cs">
+      <DependentUpon>ExpanderViewSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\PhoneTextBoxSample.xaml.cs">
+      <DependentUpon>PhoneTextBoxSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\GestureSample.xaml.cs">
+      <DependentUpon>GestureSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\HubTileSample.xaml.cs">
+      <DependentUpon>HubTileSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ListPickerSample.xaml.cs">
+      <DependentUpon>ListPickerSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\LockablePivotSample.xaml.cs">
+      <DependentUpon>LockablePivotSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\LongListSelectorSample.xaml.cs">
+      <DependentUpon>LongListSelectorSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\MultiselectListSample.xaml.cs">
+      <DependentUpon>MultiselectListSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\NavigationTransitionSample1.xaml.cs">
+      <DependentUpon>NavigationTransitionSample1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\NavigationTransitionSample2.xaml.cs">
+      <DependentUpon>NavigationTransitionSample2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\PerformanceProgressBarSample.xaml.cs">
+      <DependentUpon>PerformanceProgressBarSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\PersonDetail.xaml.cs">
+      <DependentUpon>PersonDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TiltEffectSample.xaml.cs">
+      <DependentUpon>TiltEffectSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ToggleSwitchSample.xaml.cs">
+      <DependentUpon>ToggleSwitchSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TransitionsSample.xaml.cs">
+      <DependentUpon>TransitionsSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\WrapPanelSample.xaml.cs">
+      <DependentUpon>WrapPanelSample.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\AutoCompleteBoxSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ContextMenuSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\DateTimeConvertersSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\DateTimePickerSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\PhoneTextBoxSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ExpanderViewSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\GestureSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\HubTileSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ListPickerSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\LockablePivotSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\LongListSelectorSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\MultiselectListSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\NavigationTransitionSample1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\NavigationTransitionSample2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\PerformanceProgressBarSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\PersonDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\TiltEffectSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ToggleSwitchSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\TransitionsSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\WrapPanelSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\loremipsum.txt" />
+    <Content Include="Images\Beignets.jpg" />
+    <Content Include="Images\Dessert.jpg" />
+    <Content Include="Images\Fruits.jpg" />
+    <Content Include="Images\København.jpg" />
+    <Content Include="Images\Movie.jpg" />
+    <Content Include="Images\Mürren.jpg" />
+    <Content Include="Images\Neuschwanstein.jpg" />
+    <Content Include="Images\Paris.jpg" />
+    <Content Include="Images\Person.jpg" />
+    <Content Include="Images\Pretzel.jpg" />
+    <Content Include="Images\Seattle.jpg" />
+    <Content Include="Images\Shrimp.jpg" />
+    <Content Include="Images\SteakSandwich.jpg" />
+    <Content Include="Images\Venice.jpg" />
+    <Content Include="Images\Search.png" />
+    <Content Include="SplashScreenImage.jpg" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Phone.Controls.Toolkit\Microsoft.Phone.Controls.Toolkit.csproj">
+      <Project>{0754458A-7AFC-463A-B27D-2F6980522119}</Project>
+      <Name>Microsoft.Phone.Controls.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+</Project>

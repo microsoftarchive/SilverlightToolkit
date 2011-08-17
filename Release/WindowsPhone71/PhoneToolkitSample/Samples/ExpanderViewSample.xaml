@@ -1,0 +1,160 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.ExpanderViewSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="clr-namespace:PhoneToolkitSample.Data"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <!--Resources-->
+    <phone:PhoneApplicationPage.Resources>
+        <data:InboxObject x:Key="Inbox"/>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--Transitions-->
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="TOOLKIT SAMPLE" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="expanderview" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ListBox ItemsSource="{StaticResource Inbox}" Margin="12,0,0,0">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <toolkit:ExpanderView Margin="0,0,0,8" 
+                                                Header="{Binding}"
+                                                NonExpandableHeader="{Binding}"
+                                                Expander="{Binding}"
+                                                ItemsSource="{Binding}"
+                                                IsNonExpandable="{Binding HasSingleMessage}">
+                            <toolkit:ExpanderView.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LastMessageReceived.Sender}"  
+                                               Foreground="{StaticResource PhoneForegroundBrush}"
+                                               FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                               FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                </DataTemplate>
+                            </toolkit:ExpanderView.HeaderTemplate>
+                            <toolkit:ExpanderView.NonExpandableHeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <TextBlock Text="{Binding LastMessageReceived.Sender}"       
+                                                   Margin="0,8,0,-4"
+                                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                        <TextBlock Text="{Binding LastMessageReceived.Subject}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,-2"
+                                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <TextBlock Text="{Binding LastMessageReceived.Body}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,-2"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </toolkit:ExpanderView.NonExpandableHeaderTemplate>
+                            <toolkit:ExpanderView.ExpanderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Grid.Row="0" Grid.Column="1"
+                                               LineHeight="25" LineStackingStrategy="BlockLineHeight"
+                                               TextWrapping="Wrap">
+                                        <Run Text="{Binding LastMessageReceived.Subject}"
+                                             Foreground="{StaticResource PhoneSubtleBrush}"
+                                             FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                             FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <LineBreak/>
+                                        <Run Text="{Binding ContentInfo}"   
+                                             Foreground="{StaticResource PhoneSubtleBrush}"
+                                             FontSize="{StaticResource PhoneFontSizeNormal}"
+                                             FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </toolkit:ExpanderView.ExpanderTemplate>
+                            <toolkit:ExpanderView.ItemTemplate>
+                                <DataTemplate>
+                                    <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Sender}"       
+                                                   Margin="0,8,0,-4"
+                                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                            <TextBlock Text="{Binding Body}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,-2"
+                                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                        </StackPanel>
+                                    </ListBoxItem>
+                                </DataTemplate>
+                            </toolkit:ExpanderView.ItemTemplate>
+                        </toolkit:ExpanderView>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

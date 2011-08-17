@@ -1,0 +1,135 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+ <phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.ContextMenuSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:local="clr-namespace:PhoneToolkitSample.Samples"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" 
+                       Text="{StaticResource ApplicationTitle}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle"
+                       Text="contextmenu" 
+                       Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <ScrollViewer x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="last selection:" 
+                               Style="{StaticResource PhoneTextSubtleStyle}"/>
+                    <TextBlock Text="none" 
+                               x:Name="lastSelection" 
+                               Style="{StaticResource PhoneTextNormalStyle}"/>
+                </StackPanel>
+
+                <Button Margin="0,0"  
+                        VerticalAlignment="Center"
+                        Padding="12"
+                        Content="ContextMenu"
+                        FontSize="18">
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu>
+                            <!-- You can suppress tilt on indivudal menu items with TiltEffect.SuppressTilt="True" -->
+                            <toolkit:MenuItem Header="this is a menu item" Click="MenuItem_Click"/>
+                            <toolkit:MenuItem Header="this is another menu item" Click="MenuItem_Click"/>
+                            <toolkit:MenuItem Header="this is a yet another menu item" Click="MenuItem_Click"/>
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                </Button>
+                <Button Margin="0,0"  
+                        VerticalAlignment="Center"
+                        Padding="12"
+                        Content="ContextMenu with items bound to ICommands"
+                        FontSize="18">
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu>
+                            <toolkit:MenuItem Header="Always-on item" Command="{Binding AlwaysCommand}"/>
+                            <toolkit:MenuItem Header="Intermittent item" Command="{Binding IntermittentCommand}"/>
+                            <toolkit:MenuItem Header="Always-on item with param"
+                                              Command="{Binding AlwaysCommand}"
+                                              CommandParameter="param1"/>
+                            <toolkit:MenuItem Header="Intermittent item with param"
+                                              Command="{Binding IntermittentCommand}"
+                                              CommandParameter="param2"/>
+                            <toolkit:MenuItem Header="option 3" Click="MenuItem_Click"/>
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                </Button>
+                <Button Margin="0,0"  
+                        VerticalAlignment="Center"
+                        Padding="12"
+                        Content="ContextMenu with IsFadeEnabled=false"
+                        FontSize="18">
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu IsFadeEnabled="False">
+                            <toolkit:MenuItem Header="option 1" Click="MenuItem_Click"/>
+                            <toolkit:MenuItem Header="option 2" Click="MenuItem_Click"/>
+                            <toolkit:MenuItem Header="option 3" Click="MenuItem_Click"/>
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                </Button>
+                <Button Margin="0,0"  
+                        VerticalAlignment="Center"
+                        Padding="12"
+                        Content="ContextMenu with IsZoomEnabled=false"
+                        FontSize="18">
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu IsZoomEnabled="false">
+                            <toolkit:MenuItem Header="option 1" Click="MenuItem_Click"/>
+                            <toolkit:MenuItem Header="option 2" Click="MenuItem_Click"/>
+                            <toolkit:MenuItem Header="option 3" Click="MenuItem_Click"/>
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</phone:PhoneApplicationPage>

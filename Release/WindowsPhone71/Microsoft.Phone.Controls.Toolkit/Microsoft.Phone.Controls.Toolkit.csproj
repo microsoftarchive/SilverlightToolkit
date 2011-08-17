@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0754458A-7AFC-463A-B27D-2F6980522119}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Phone.Controls</RootNamespace>
+    <AssemblyName>Microsoft.Phone.Controls.Toolkit</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\PhoneToolkit.snk</AssemblyOriginatorKeyFile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\Bin\Debug\Microsoft.Phone.Controls.Toolkit.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Microsoft.Phone.Controls.Toolkit.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls" />
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoCompleteBox\AutoCompleteBox.cs" />
+    <Compile Include="AutoCompleteBox\AutoCompleteFilter.cs" />
+    <Compile Include="AutoCompleteBox\AutoCompleteFilterMode.cs" />
+    <Compile Include="AutoCompleteBox\AutoCompleteFilterPredicate.cs" />
+    <Compile Include="AutoCompleteBox\ISelectionAdapter.cs" />
+    <Compile Include="AutoCompleteBox\PopulatedEventArgs.cs" />
+    <Compile Include="AutoCompleteBox\PopulatedEventHandler.cs" />
+    <Compile Include="AutoCompleteBox\PopulatingEventArgs.cs" />
+    <Compile Include="AutoCompleteBox\PopulatingEventHandler.cs" />
+    <Compile Include="AutoCompleteBox\PopupHelper.cs" />
+    <Compile Include="AutoCompleteBox\SelectorSelectionAdapter.cs" />
+    <Compile Include="Common\BindingEvaluator.cs" />
+    <Compile Include="Common\CultureInfoExtensions.cs" />
+    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\InteractionHelper.cs" />
+    <Compile Include="Common\ItemsControlHelper.cs" />
+    <Compile Include="Common\IUpdateVisualState.cs" />
+    <Compile Include="Common\LengthConverter.cs" />
+    <Compile Include="Common\MathHelpers.cs" />
+    <Compile Include="Common\NumericExtensions.cs" />
+    <Compile Include="Common\PhoneHelper.cs" />
+    <Compile Include="Common\PhysicsConstants.cs" />
+    <Compile Include="Common\RoutedPropertyChangingEventArgs.cs" />
+    <Compile Include="Common\RoutedPropertyChangingEventHandler.cs" />
+    <Compile Include="Common\SafeRaise.cs" />
+    <Compile Include="Common\TemplatedVisualTreeExtensions.cs" />
+    <Compile Include="Common\TimeTypeConverter.cs" />
+    <Compile Include="Common\Tuple.cs" />
+    <Compile Include="Common\TypeConverters.cs" />
+    <Compile Include="Common\VisualStates.cs" />
+    <Compile Include="Common\VisualTreeExtensions.cs" />
+    <Compile Include="Common\WeakEventListener.cs" />
+    <Compile Include="Common\OpacityAnimator.cs" />
+    <Compile Include="Common\TransformAnimator.cs" />
+    <Compile Include="ContextMenu\ContextMenu.cs" />
+    <Compile Include="ContextMenu\ContextMenuService.cs" />
+    <Compile Include="ContextMenu\MenuBase.cs" />
+    <Compile Include="ContextMenu\MenuItem.cs" />
+    <Compile Include="ContextMenu\Separator.cs" />
+    <Compile Include="Data\HierarchicalDataTemplate.cs" />
+    <Compile Include="DateTimeConverters\DailyDateTimeConverter.cs" />
+    <Compile Include="DateTimeConverters\DateTimeFormatHelper.cs" />
+    <Compile Include="DateTimeConverters\FullViewDateTimeConverter.cs" />
+    <Compile Include="DateTimeConverters\HourlyDateTimeConverter.cs" />
+    <Compile Include="DateTimeConverters\ListViewDateTimeConverter.cs" />
+    <Compile Include="DateTimeConverters\RelativeTimeConverter.cs" />
+    <Compile Include="DateTimeConverters\ThreadDateTimeConverter.cs" />
+    <Compile Include="DateTimePickers\DataSource.cs" />
+    <Compile Include="DateTimePickers\DatePicker.cs" />
+    <Compile Include="DateTimePickers\DatePickerPage.xaml.cs">
+      <DependentUpon>DatePickerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimePickers\DateTimePickerBase.cs" />
+    <Compile Include="DateTimePickers\DateTimePickerPageBase.cs" />
+    <Compile Include="DateTimePickers\DateTimePickerResources.cs" />
+    <Compile Include="DateTimePickers\DateTimeWrapper.cs" />
+    <Compile Include="DateTimePickers\DateTimeValueChangedEventArgs.cs" />
+    <Compile Include="DateTimePickers\IDateTimePickerPage.cs" />
+    <Compile Include="DateTimePickers\RecurringDaysPicker.cs" />
+    <Compile Include="DateTimePickers\TimePicker.cs" />
+    <Compile Include="DateTimePickers\TimePickerPage.xaml.cs">
+      <DependentUpon>TimePickerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExpanderView\ExpanderView.cs" />
+    <Compile Include="PhoneTextBox\PhoneTextBox.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HeaderedItemsControl\HeaderedItemsControl.cs" />
+    <Compile Include="HubTile\HubTile.cs" />
+    <Compile Include="HubTile\HubTileConverters.cs" />
+    <Compile Include="HubTile\HubTileService.cs" />
+    <Compile Include="Input\GestureListener.cs" />
+    <Compile Include="Input\GestureHelperEventArgs.cs" />
+    <Compile Include="Input\GestureListenerStatic.cs" />
+    <Compile Include="Input\GestureService.cs" />
+    <Compile Include="ListPicker\ExpansionMode.cs" />
+    <Compile Include="ListPicker\ListPickerPage.xaml.cs">
+      <DependentUpon>ListPickerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.cs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.cs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.da.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.da.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.de-DE.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.de-DE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.el.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.el.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.en-GB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.en-GB.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.es-ES.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.es-ES.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.fi.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.fi.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.fr-FR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.hu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.hu.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.it-IT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.it-IT.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.ja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.ko.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.ko.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.nb-NO.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.nb-NO.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.nl-NL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.pl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.pl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.pt-BR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.pt-BR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.pt-PT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.pt-PT.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.sv-SE.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.sv-SE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.zh-CN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedResources\ControlResources.zh-TW.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControlResources.zh-TW.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LongListSelector\LongListSelectorEventArgs.cs" />
+    <Compile Include="LongListSelector\LongListSelectorGroup.cs" />
+    <Compile Include="LongListSelector\LongListSelectorItemsControl.cs" />
+    <Compile Include="ListPicker\ListPicker.cs" />
+    <Compile Include="ListPicker\ListPickerItem.cs" />
+    <Compile Include="ListPicker\ListPickerMode.cs" />
+    <Compile Include="LongListSelector\TemplatedListBox.cs" />
+    <Compile Include="LongListSelector\TemplatedListBoxItem.cs" />
+    <Compile Include="Primitives\ClipToBounds.cs" />
+    <Compile Include="Common\ItemsControlExtensions.cs" />
+    <Compile Include="MultiselectList\MultiselectItem.cs" />
+    <Compile Include="MultiselectList\MultiselectList.cs" />
+    <Compile Include="Primitives\LoopingSelectorDataSource.cs" />
+    <Compile Include="Primitives\LoopingSelector.cs" />
+    <Compile Include="Primitives\LoopingSelectorItem.cs" />
+    <Compile Include="LongListSelector\LongListSelector.cs" />
+    <Compile Include="Primitives\ToggleSwitchButton.cs" />
+    <Compile Include="ProgressBar\PerformanceProgressBar.cs" />
+    <Compile Include="ProgressBar\RelativeAnimatingContentControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tilt\TiltEffect.cs" />
+    <Compile Include="ToggleSwitch\OffOnConverter.cs" />
+    <Compile Include="ToggleSwitch\ToggleSwitch.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Transitions\NavigationInTransition.cs" />
+    <Compile Include="Transitions\NavigationOutTransition.cs" />
+    <Compile Include="Transitions\TransitionFrame.cs" />
+    <Compile Include="Transitions\ITransition.cs" />
+    <Compile Include="Transitions\NavigationTransition.cs" />
+    <Compile Include="Transitions\Transitions\RollTransition.cs" />
+    <Compile Include="Transitions\Transitions\Transition.cs" />
+    <Compile Include="Transitions\TransitionService.cs" />
+    <Compile Include="Transitions\Transitions\RotateTransitionMode.cs" />
+    <Compile Include="Transitions\Transitions\RotateTransition.cs" />
+    <Compile Include="Transitions\Transitions\SlideTransitionMode.cs" />
+    <Compile Include="Transitions\TransitionElement.cs" />
+    <Compile Include="Transitions\Transitions\SwivelTransition.cs" />
+    <Compile Include="Transitions\Transitions\SwivelTransitionMode.cs" />
+    <Compile Include="Transitions\Transitions\SlideTransition.cs" />
+    <Compile Include="Transitions\Transitions\TurnstileTransition.cs" />
+    <Compile Include="Transitions\Transitions.cs" />
+    <Compile Include="Transitions\Transitions\TurnstileTransitionMode.cs" />
+    <Compile Include="WrapPanel\OrientedSize.cs" />
+    <Compile Include="WrapPanel\WrapPanel.cs" />
+    <Compile Include="Pivot\LockablePivot.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DateTimePickers\DatePickerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DateTimePickers\TimePickerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ListPicker\ListPickerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\Roll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\RotateOut180Clockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\RotateOut180CounterClockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\RotateOut90Clockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\RotateOut90CounterClockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\SlideDownFadeIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\SlideUpFadeOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\SwivelBackwardIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transitions\Storyboards\SwivelBackwardOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Transitions\Storyboards\RotateIn180Clockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\RotateIn90Clockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\RotateIn180CounterClockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\RotateIn90CounterClockwise.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SlideRightFadeOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SlideRightFadeIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SlideLeftFadeOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SlideLeftFadeIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SlideDownFadeOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SlideUpFadeIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SwivelFullScreenOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\SwivelForwardOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\TurnstileForwardOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Transitions\Storyboards\TurnstileForwardIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.cs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.cs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.da.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.da.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.de-DE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.de-DE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.el.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.el.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.en-GB.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.en-GB.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.es-ES.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.es-ES.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.fi.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.fi.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.fr-FR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.fr-FR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.hu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.hu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.it-IT.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.it-IT.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.ja.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.ko.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.ko.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.nb-NO.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.nb-NO.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.nl-NL.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.nl-NL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.pl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.pl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.pt-BR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.pt-BR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.pt-PT.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.pt-PT.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.sv-SE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.sv-SE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.zh-CN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.zh-CN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizedResources\ControlResources.zh-TW.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlResources.zh-TW.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Transitions\Storyboards\TurnstileBackwardIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Transitions\Storyboards\TurnstileBackwardOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Transitions\Storyboards\SwivelForwardIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Transitions\Storyboards\SwivelFullScreenIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

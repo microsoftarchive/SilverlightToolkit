@@ -1,0 +1,76 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.WrapPanelSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <Grid x:Name="LayoutRoot">
+        <controls:Panorama Title="WrapPanel sample">
+
+            <controls:PanoramaItem Header="home">
+                <StackPanel>
+                    <Button Content="clear" Click="OnClear"/>
+                    <Button Content="+1 item" Tag="1" Click="OnAdd"/>
+                    <Button Content="+8 items" Tag="8" Click="OnAdd"/>
+                    <Button Content="+16 items" Tag="16" Click="OnAdd"/>
+                    <TextBlock Text="note" Style="{StaticResource PhoneTextLargeStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}">
+                        <TextBlock.Text>Tap items to remove them. The items handle the GestureListener.Tap event. See the code-behind for an example of how to hook it up in code.</TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="items" Orientation="Horizontal">
+                <toolkit:WrapPanel x:Name="wrapPanel" Orientation="Vertical"/>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="note">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}">
+                        <TextBlock.Text>This space intentionally left blank to provide you with a better Panorama experience for dynamic content (3+ items works best.)</TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+
+</phone:PhoneApplicationPage>

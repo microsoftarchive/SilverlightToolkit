@@ -1,0 +1,130 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.ListPickerSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:data="clr-namespace:PhoneToolkitSample.Data"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <Grid Background="Transparent">
+        <Grid.Resources>
+            <data:AccentColorNameToBrush x:Key="ColorNameToBrushConverter" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{StaticResource ApplicationTitle}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="list picker" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="12,0,12,0">
+            
+            <toolkit:ListPicker Header="Background">
+                <sys:String>dark</sys:String>
+                <sys:String>light</sys:String>
+                <sys:String>dazzle</sys:String>
+            </toolkit:ListPicker>
+            
+            <toolkit:ListPicker Header="Background" ExpansionMode="FullscreenOnly">
+                <sys:String>dark</sys:String>
+                <sys:String>light</sys:String>
+                <sys:String>dazzle</sys:String>
+                <toolkit:ListPicker.FullModeItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
+                            <TextBlock Text="{Binding}"
+                                       Margin="0 0 0 0"
+                                       FontSize="43" 
+                                       FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </toolkit:ListPicker.FullModeItemTemplate>
+            </toolkit:ListPicker>
+
+            
+            
+            <!-- For best performance, set the CacheMode on items below a ListPicker -->
+            <!-- that will be dropping down. -->
+
+            <toolkit:ListPicker ItemsSource="{Binding}" 
+                                Header="Accent color" 
+                                FullModeHeader="ACCENTS" 
+                                CacheMode="BitmapCache">
+                <toolkit:ListPicker.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="24" Height="24"/>
+                            <TextBlock Text="{Binding}" Margin="12 0 0 0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </toolkit:ListPicker.ItemTemplate>
+                <toolkit:ListPicker.FullModeItemTemplate>
+                    <DataTemplate>
+                       <StackPanel Orientation="Horizontal" Margin="0 21 0 20">
+                            <Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="43" Height="43"/>
+                            <TextBlock Text="{Binding}"
+                                       Margin="16 0 0 0"
+                                       FontSize="43"
+                                       FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </toolkit:ListPicker.FullModeItemTemplate>
+            </toolkit:ListPicker>
+
+            <toolkit:ListPicker Header="Print in colors" 
+                                SelectionMode="Multiple" 
+                                FullModeHeader="COLORS" 
+                                CacheMode="BitmapCache"
+                                x:Name="PrintInColors">
+                <sys:String>Cyan</sys:String>
+                <sys:String>Majenta</sys:String>
+                <sys:String>Yellow</sys:String>
+                <sys:String>Black</sys:String>
+            </toolkit:ListPicker>
+            
+            <toolkit:RecurringDaysPicker Header="Repeats" FullModeHeader="ALARM REPEATS ON" CacheMode="BitmapCache"/>
+            
+        </StackPanel>
+    </Grid>
+</phone:PhoneApplicationPage>

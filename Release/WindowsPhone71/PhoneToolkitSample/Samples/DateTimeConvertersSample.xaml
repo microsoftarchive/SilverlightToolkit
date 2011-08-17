@@ -1,0 +1,262 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+    
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.DateTimeConvertersSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"     
+    xmlns:data="clr-namespace:PhoneToolkitSample.Data"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--Resources-->
+    <phone:PhoneApplicationPage.Resources>
+        <data:DateTimeCollection x:Key="DateTimeCollection"/>
+        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="Margin" Value="12,0,0,12"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        </Style>
+        <toolkit:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
+        <toolkit:ThreadDateTimeConverter x:Key="ThreadDateTimeConverter"/>
+        <toolkit:ListViewDateTimeConverter x:Key="ListViewDateTimeConverter"/>
+        <toolkit:FullViewDateTimeConverter x:Key="FullViewDateTimeConverter"/>
+        <toolkit:HourlyDateTimeConverter x:Key="HourlyDateTimeConverter"/>
+        <toolkit:DailyDateTimeConverter x:Key="DailyDateTimeConverter"/>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--Transitions-->
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+
+    <!--LayoutRoot-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        
+        <!--Pivot Control-->
+        <controls:Pivot Title="DATE+TIME CONVERTERS">
+            
+            <!--Relative Time Converter-->
+            <controls:PivotItem Header="relative">
+                <ListBox ItemsSource="{Binding Source={StaticResource DateTimeCollection}}"  
+                            Style="{StaticResource ListBoxStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <TextBlock Margin="0,0,0,24" TextWrapping="Wrap"
+                                               FontSize="{StaticResource PhoneFontSizeNormal}">
+                                        Converts a DateTime object into a string the represents the elapsed time relatively to the present.
+                                    </TextBlock>
+                                    <ItemsPresenter/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="{Binding DateAndTime}"
+                                           FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding DateAndTime, Converter={StaticResource RelativeTimeConverter}}"
+                                           FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <!--ListView DateTime Converter-->
+            <controls:PivotItem Header="listview">
+                <ListBox ItemsSource="{Binding Source={StaticResource DateTimeCollection}}"
+                            Style="{StaticResource ListBoxStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <TextBlock Margin="0,0,0,24" TextWrapping="Wrap"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}">
+                                        Converts a DateTime object into a string appropriately formatted for list views. 
+                                        This format can be found in email. It never displays the year.
+                                    </TextBlock>
+                                    <ItemsPresenter/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="{Binding DateAndTime}"
+                                            FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                            Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding DateAndTime, Converter={StaticResource ListViewDateTimeConverter}}"
+                                            FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                            Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <!--FullView DateTime Converter-->
+            <controls:PivotItem Header="fullview">
+                <ListBox ItemsSource="{Binding Source={StaticResource DateTimeCollection}}"
+                            Style="{StaticResource ListBoxStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <TextBlock Margin="0,0,0,24" TextWrapping="Wrap"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}">
+                                        Converts a DateTime object into a string appropriately formatted to display full date and time information.
+                                        This format can be found in email. It never displays the year.
+                                    </TextBlock>
+                                    <ItemsPresenter/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="{Binding DateAndTime}"
+                                            Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding DateAndTime, Converter={StaticResource FullViewDateTimeConverter}}"
+                                            Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <!--Thread DateTime Converter-->
+            <controls:PivotItem Header="thread">
+                <ListBox ItemsSource="{Binding Source={StaticResource DateTimeCollection}}"
+                            Style="{StaticResource ListBoxStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <TextBlock Margin="0,0,0,24" TextWrapping="Wrap"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}">
+                                        Converts a DateTime object into a string appropriately formatted for threads. 
+                                        This format can be found in messaging. It never displays the year.
+                                    </TextBlock>
+                                    <ItemsPresenter/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="{Binding DateAndTime}"
+                                            FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                            Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding DateAndTime, Converter={StaticResource ThreadDateTimeConverter}}"
+                                            FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                            Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <!--Hourly DateTime Converter-->
+            <controls:PivotItem Header="hourly">
+                <ListBox ItemsSource="{Binding Source={StaticResource DateTimeCollection}}"
+                            Style="{StaticResource ListBoxStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <TextBlock Margin="0,0,0,24" TextWrapping="Wrap"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}">
+                                        Converts a DateTime object into a string appropriately formatted for hourly feeds. 
+                                        This format can be found in messaging.
+                                    </TextBlock>
+                                    <ItemsPresenter/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="{Binding DateAndTime}"                                               
+                                            Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding DateAndTime, Converter={StaticResource HourlyDateTimeConverter}}"
+                                            Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <!--Daily DateTime Converter-->
+            <controls:PivotItem Header="daily">
+                <ListBox ItemsSource="{Binding Source={StaticResource DateTimeCollection}}"
+                            Style="{StaticResource ListBoxStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <StackPanel>
+                                    <TextBlock Margin="0,0,0,24" TextWrapping="Wrap"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}">
+                                        Converts a DateTime object into a string appropriately formatted for daily feeds. This format can be found in the call history.
+                                    </TextBlock>
+                                    <ItemsPresenter/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="{Binding DateAndTime}"
+                                            Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding DateAndTime, Converter={StaticResource DailyDateTimeConverter}}"
+                                            Foreground="{StaticResource PhoneForegroundBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+
+</phone:PhoneApplicationPage>

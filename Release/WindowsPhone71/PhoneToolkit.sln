@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneToolkitSample", "PhoneToolkitSample\PhoneToolkitSample.csproj", "{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Phone.Controls.Toolkit", "Microsoft.Phone.Controls.Toolkit\Microsoft.Phone.Controls.Toolkit.csproj", "{0754458A-7AFC-463A-B27D-2F6980522119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Phone.Controls.Toolkit.Design", "Microsoft.Phone.Controls.Toolkit.Design\Microsoft.Phone.Controls.Toolkit.Design.csproj", "{AF13D696-5FAC-4A05-BE77-B8A1C971C5E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Phone.Controls.Toolkit.VisualStudio.Design", "Microsoft.Phone.Controls.Toolkit.VisualStudio.Design\Microsoft.Phone.Controls.Toolkit.VisualStudio.Design.csproj", "{BF8E3967-F531-440F-9AD9-C8330E96577B}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://vstfdevdiv:8080/devdiv
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PhoneToolkitSample\\PhoneToolkitSample.csproj
+		SccProjectName1 = PhoneToolkitSample
+		SccLocalPath1 = PhoneToolkitSample
+		SccProjectUniqueName2 = Microsoft.Phone.Controls.Toolkit\\Microsoft.Phone.Controls.Toolkit.csproj
+		SccProjectName2 = Microsoft.Phone.Controls.Toolkit
+		SccLocalPath2 = Microsoft.Phone.Controls.Toolkit
+		SccProjectUniqueName3 = Microsoft.Phone.Controls.Toolkit.Design\\Microsoft.Phone.Controls.Toolkit.Design.csproj
+		SccProjectName3 = Microsoft.Phone.Controls.Toolkit.Design
+		SccLocalPath3 = Microsoft.Phone.Controls.Toolkit.Design
+		SccProjectUniqueName4 = Microsoft.Phone.Controls.Toolkit.VisualStudio.Design\\Microsoft.Phone.Controls.Toolkit.VisualStudio.Design.csproj
+		SccProjectName4 = Microsoft.Phone.Controls.Toolkit.VisualStudio.Design
+		SccLocalPath4 = Microsoft.Phone.Controls.Toolkit.VisualStudio.Design
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51EBABF0-B4B9-4620-A3F2-4FF9083A46E2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0754458A-7AFC-463A-B27D-2F6980522119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0754458A-7AFC-463A-B27D-2F6980522119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0754458A-7AFC-463A-B27D-2F6980522119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0754458A-7AFC-463A-B27D-2F6980522119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF13D696-5FAC-4A05-BE77-B8A1C971C5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF13D696-5FAC-4A05-BE77-B8A1C971C5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF13D696-5FAC-4A05-BE77-B8A1C971C5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF13D696-5FAC-4A05-BE77-B8A1C971C5E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF8E3967-F531-440F-9AD9-C8330E96577B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF8E3967-F531-440F-9AD9-C8330E96577B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF8E3967-F531-440F-9AD9-C8330E96577B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF8E3967-F531-440F-9AD9-C8330E96577B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
