@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace System.Windows.Controls
+namespace PhoneToolkitSample.LocalControls
 {
     /// <summary>
     /// Provides the base implementation for controls that contain a single

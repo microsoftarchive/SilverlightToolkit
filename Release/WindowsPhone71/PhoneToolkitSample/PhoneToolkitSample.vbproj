@@ -100,8 +100,12 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AccentColorNameToBrush.vb" />
     <Compile Include="Data\AllPeople.vb" />
+    <Compile Include="Data\ColorExtensions.vb" />
+    <Compile Include="Data\GroupToBackgroundBrushValueConverter.vb" />
     <Compile Include="Data\GroupToBrushValueConverter.vb" />
+    <Compile Include="Data\GroupToForegroundBrushValueConverter.vb" />
     <Compile Include="Data\LoremIpsum.vb" />
     <Compile Include="Data\LoremIpsumWebsites.vb" />
     <Compile Include="Data\Movie.vb" />

@@ -8,7 +8,7 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls">
+  xmlns:controlsToolkit="clr-namespace:PhoneToolkitSample.LocalControls;assembly=PhoneToolkitSample">
 
     <Style TargetType="controlsToolkit:HeaderedContentControl">
         <Setter Property="HorizontalContentAlignment" Value="Left"/>

@@ -261,9 +261,9 @@
     </Content>
     <Content Include="Data\loremipsum.txt" />
     <Content Include="Images\Beignets.jpg" />
+    <Resource Include="Images\Copenhagen.jpg" />
     <Content Include="Images\Dessert.jpg" />
     <Content Include="Images\Fruits.jpg" />
-    <Content Include="Images\København.jpg" />
     <Content Include="Images\Movie.jpg" />
     <Content Include="Images\Mürren.jpg" />
     <Content Include="Images\Neuschwanstein.jpg" />
