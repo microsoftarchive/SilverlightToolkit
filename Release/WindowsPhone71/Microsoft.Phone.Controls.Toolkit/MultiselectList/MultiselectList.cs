@@ -104,7 +104,7 @@ namespace Microsoft.Phone.Controls
                 target.CloseSelection();
             }
 
-            DependencyPropertyChangedEventHandler handler = target.IsSelectionEnabledChanged;
+            var handler = target.IsSelectionEnabledChanged;
             if (handler != null)
             {
                 handler(obj, e);
@@ -182,7 +182,7 @@ namespace Microsoft.Phone.Controls
                 IsSelectionEnabled = true;
             }
 
-            SelectionChangedEventHandler handler = SelectionChanged;
+            var handler = SelectionChanged;
             if (handler != null)
             {
                 handler(this, new SelectionChangedEventArgs(removedItems, addedItems));

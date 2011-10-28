@@ -44,16 +44,18 @@ namespace PhoneToolkitSample.Samples
 
             b.BorderBrush = (SolidColorBrush)Resources["PhoneForegroundBrush"];
 
-            GestureListener listener = GestureService.GetGestureListener(b);
-            listener.Tap += new EventHandler<GestureEventArgs>(WrapPanelSample_Tap);
+            b.Tap += OnTapped;
 
             wrapPanel.Children.Add(b);
         }
 
-        void WrapPanelSample_Tap(object sender, GestureEventArgs e)
+        void OnTapped(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            Border b = (Border)sender;
-            wrapPanel.Children.Remove(b);
+            Border b = sender as Border;
+            if (null != b)
+            {
+                wrapPanel.Children.Remove(b);
+            }
         }
 
     }

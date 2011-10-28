@@ -83,6 +83,9 @@
                                                 Expander="{Binding}"
                                                 ItemsSource="{Binding}"
                                                 IsNonExpandable="{Binding HasSingleMessage}">
+                            
+                            <!-- The HeaderTemplate describes the header for an expandable item.
+                                 In the sample, it's the TextBlock for "Anne Wallace".-->
                             <toolkit:ExpanderView.HeaderTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding LastMessageReceived.Sender}"  
@@ -91,6 +94,56 @@
                                                FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
                                 </DataTemplate>
                             </toolkit:ExpanderView.HeaderTemplate>
+                            
+                            <!-- The ExpanderTemplate describes the template to the right of the line 
+                                 which represents the first sub-item in the expander view.
+                                 In the sample, it's the TextBlock for Anne Wallace's email conversation
+                                 "Where are we going for lunch today?" and the status of "3 messages, 0 unread".-->
+                            <toolkit:ExpanderView.ExpanderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Grid.Row="0" Grid.Column="1"
+                                               LineHeight="25" LineStackingStrategy="BlockLineHeight"
+                                               TextWrapping="Wrap">
+                                        <Run Text="{Binding LastMessageReceived.Subject}"
+                                             Foreground="{StaticResource PhoneSubtleBrush}"
+                                             FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                             FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <LineBreak/>
+                                        <Run Text="{Binding ContentInfo}"   
+                                             Foreground="{StaticResource PhoneSubtleBrush}"
+                                             FontSize="{StaticResource PhoneFontSizeNormal}"
+                                             FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </toolkit:ExpanderView.ExpanderTemplate>
+
+                            <!-- The ItemTemplate describes the template for all items once the expansion
+                                 has occured. In the sample, it's the template for all 3 of Anne Wallace's
+                                 emails in her conversation, where it displays the sender and the first line
+                                 of the message in the accent color. -->
+                            <toolkit:ExpanderView.ItemTemplate>
+                                <DataTemplate>
+                                    <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Sender}"       
+                                                   Margin="0,8,0,-4"
+                                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                            <TextBlock Text="{Binding Body}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,-2"
+                                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                        </StackPanel>
+                                    </ListBoxItem>
+                                </DataTemplate>
+                            </toolkit:ExpanderView.ItemTemplate>
+
+                            <!-- The NonExpandableHeaderTemplate describes the non-expandable case.
+                                 In the sample, it's the StackPanel for "Adriana Giorgi", 
+                                 the subject, and first line of her email.-->
                             <toolkit:ExpanderView.NonExpandableHeaderTemplate>
                                 <DataTemplate>
                                     <StackPanel toolkit:TiltEffect.IsTiltEnabled="True">
@@ -114,42 +167,6 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </toolkit:ExpanderView.NonExpandableHeaderTemplate>
-                            <toolkit:ExpanderView.ExpanderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Grid.Row="0" Grid.Column="1"
-                                               LineHeight="25" LineStackingStrategy="BlockLineHeight"
-                                               TextWrapping="Wrap">
-                                        <Run Text="{Binding LastMessageReceived.Subject}"
-                                             Foreground="{StaticResource PhoneSubtleBrush}"
-                                             FontSize="{StaticResource PhoneFontSizeNormal}" 
-                                             FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                        <LineBreak/>
-                                        <Run Text="{Binding ContentInfo}"   
-                                             Foreground="{StaticResource PhoneSubtleBrush}"
-                                             FontSize="{StaticResource PhoneFontSizeNormal}"
-                                             FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </toolkit:ExpanderView.ExpanderTemplate>
-                            <toolkit:ExpanderView.ItemTemplate>
-                                <DataTemplate>
-                                    <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True">
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Sender}"       
-                                                   Margin="0,8,0,-4"
-                                                   Foreground="{StaticResource PhoneForegroundBrush}"
-                                                   FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
-                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
-                                            <TextBlock Text="{Binding Body}"
-                                                   TextWrapping="Wrap"
-                                                   Margin="0,0,0,-2"
-                                                   Foreground="{StaticResource PhoneAccentBrush}"
-                                                   FontSize="{StaticResource PhoneFontSizeNormal}" 
-                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                                        </StackPanel>
-                                    </ListBoxItem>
-                                </DataTemplate>
-                            </toolkit:ExpanderView.ItemTemplate>
                         </toolkit:ExpanderView>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

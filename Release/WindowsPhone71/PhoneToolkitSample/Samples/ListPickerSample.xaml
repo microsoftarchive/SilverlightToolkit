@@ -58,73 +58,91 @@
             <TextBlock Text="list picker" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Margin="12,0,12,0">
-            
-            <toolkit:ListPicker Header="Background">
-                <sys:String>dark</sys:String>
-                <sys:String>light</sys:String>
-                <sys:String>dazzle</sys:String>
-            </toolkit:ListPicker>
-            
-            <toolkit:ListPicker Header="Background" ExpansionMode="FullscreenOnly">
-                <sys:String>dark</sys:String>
-                <sys:String>light</sys:String>
-                <sys:String>dazzle</sys:String>
-                <toolkit:ListPicker.FullModeItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
-                            <TextBlock Text="{Binding}"
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="12,0,12,0">
+                
+                <!-- 
+                    ListPicker does not support its items set directly to a UIElement.
+                    You should set items to data and use templates to configure the view.
+                    Data can be set like below, by directly setting the Items to a list of strings.
+                    The other option is to use databinding.
+                -->
+                <toolkit:ListPicker Header="Background">
+                    <sys:String>dark</sys:String>
+                    <sys:String>light</sys:String>
+                    <sys:String>dazzle</sys:String>
+                </toolkit:ListPicker>
+
+                <toolkit:ListPicker Header="Background" ExpansionMode="FullscreenOnly">
+                    <sys:String>dark</sys:String>
+                    <sys:String>light</sys:String>
+                    <sys:String>dazzle</sys:String>
+                    <toolkit:ListPicker.FullModeItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
+                                <TextBlock Text="{Binding}"
                                        Margin="0 0 0 0"
                                        FontSize="43" 
                                        FontFamily="{StaticResource PhoneFontFamilyLight}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </toolkit:ListPicker.FullModeItemTemplate>
-            </toolkit:ListPicker>
+                            </StackPanel>
+                        </DataTemplate>
+                    </toolkit:ListPicker.FullModeItemTemplate>
+                </toolkit:ListPicker>
 
-            
-            
-            <!-- For best performance, set the CacheMode on items below a ListPicker -->
-            <!-- that will be dropping down. -->
 
-            <toolkit:ListPicker ItemsSource="{Binding}" 
+
+                <!-- For best performance, set the CacheMode on items below a ListPicker -->
+                <!-- that will be dropping down. -->
+
+                <toolkit:ListPicker ItemsSource="{Binding}" 
                                 Header="Accent color" 
                                 FullModeHeader="ACCENTS" 
                                 CacheMode="BitmapCache">
-                <toolkit:ListPicker.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="24" Height="24"/>
-                            <TextBlock Text="{Binding}" Margin="12 0 0 0"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </toolkit:ListPicker.ItemTemplate>
-                <toolkit:ListPicker.FullModeItemTemplate>
-                    <DataTemplate>
-                       <StackPanel Orientation="Horizontal" Margin="0 21 0 20">
-                            <Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="43" Height="43"/>
-                            <TextBlock Text="{Binding}"
+                    <toolkit:ListPicker.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="24" Height="24"/>
+                                <TextBlock Text="{Binding}" Margin="12 0 0 0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </toolkit:ListPicker.ItemTemplate>
+                    <toolkit:ListPicker.FullModeItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0 21 0 20">
+                                <Rectangle Fill="{Binding Converter={StaticResource ColorNameToBrushConverter}}" Width="43" Height="43"/>
+                                <TextBlock Text="{Binding}"
                                        Margin="16 0 0 0"
                                        FontSize="43"
                                        FontFamily="{StaticResource PhoneFontFamilyLight}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </toolkit:ListPicker.FullModeItemTemplate>
-            </toolkit:ListPicker>
+                            </StackPanel>
+                        </DataTemplate>
+                    </toolkit:ListPicker.FullModeItemTemplate>
+                </toolkit:ListPicker>
 
-            <toolkit:ListPicker Header="Print in colors" 
+                <toolkit:ListPicker Header="Print in colors" 
                                 SelectionMode="Multiple" 
                                 FullModeHeader="COLORS" 
                                 CacheMode="BitmapCache"
                                 x:Name="PrintInColors">
-                <sys:String>Cyan</sys:String>
-                <sys:String>Majenta</sys:String>
-                <sys:String>Yellow</sys:String>
-                <sys:String>Black</sys:String>
-            </toolkit:ListPicker>
-            
-            <toolkit:RecurringDaysPicker Header="Repeats" FullModeHeader="ALARM REPEATS ON" CacheMode="BitmapCache"/>
-            
-        </StackPanel>
+                    <sys:String>Cyan</sys:String>
+                    <sys:String>Majenta</sys:String>
+                    <sys:String>Yellow</sys:String>
+                    <sys:String>Black</sys:String>
+                </toolkit:ListPicker>
+
+                <toolkit:RecurringDaysPicker Header="Repeats" FullModeHeader="ALARM REPEATS ON" CacheMode="BitmapCache"/>
+                
+                <toolkit:ListPicker Header="Another Background">
+                    <sys:String>dark</sys:String>
+                    <sys:String>light</sys:String>
+                    <sys:String>dazzle</sys:String>
+                </toolkit:ListPicker>
+                <toolkit:ListPicker Header="One more">
+                    <sys:String>dark</sys:String>
+                    <sys:String>light</sys:String>
+                    <sys:String>dazzle</sys:String>
+                </toolkit:ListPicker>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </phone:PhoneApplicationPage>

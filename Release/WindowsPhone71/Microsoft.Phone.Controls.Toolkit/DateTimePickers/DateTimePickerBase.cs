@@ -69,7 +69,7 @@ namespace Microsoft.Phone.Controls
         /// <param name="e">The event data.</param>
         protected virtual void OnValueChanged(DateTimeValueChangedEventArgs e)
         {
-            EventHandler<DateTimeValueChangedEventArgs> handler = ValueChanged;
+            var handler = ValueChanged;
             if (null != handler)
             {
                 handler(this, e);
@@ -181,7 +181,7 @@ namespace Microsoft.Phone.Controls
             // Unhook from old template
             if (null != _dateButtonPart)
             {
-                _dateButtonPart.Click -= new RoutedEventHandler(HandleDateButtonClick);
+                _dateButtonPart.Click -= OnDateButtonClick;
             }
 
             base.OnApplyTemplate();
@@ -190,11 +190,11 @@ namespace Microsoft.Phone.Controls
             _dateButtonPart = GetTemplateChild(ButtonPartName) as ButtonBase;
             if (null != _dateButtonPart)
             {
-                _dateButtonPart.Click += new RoutedEventHandler(HandleDateButtonClick);
+                _dateButtonPart.Click += OnDateButtonClick;
             }
         }
 
-        private void HandleDateButtonClick(object sender, RoutedEventArgs e)
+        private void OnDateButtonClick(object sender, RoutedEventArgs e)
         {
             OpenPickerPage();
         }
@@ -229,9 +229,9 @@ namespace Microsoft.Phone.Controls
                         TransitionService.SetNavigationOutTransition(frameContentWhenOpenedAsUIElement, null);
                     }
 
-                    _frame.Navigated += new NavigatedEventHandler(HandleFrameNavigated);
-                    _frame.NavigationStopped += new NavigationStoppedEventHandler(HandleFrameNavigationStoppedOrFailed);
-                    _frame.NavigationFailed += new NavigationFailedEventHandler(HandleFrameNavigationStoppedOrFailed);
+                    _frame.Navigated += OnFrameNavigated;
+                    _frame.NavigationStopped += OnFrameNavigationStoppedOrFailed;
+                    _frame.NavigationFailed += OnFrameNavigationStoppedOrFailed;
 
                     _frame.Navigate(PickerPageUri);
                 }
@@ -244,9 +244,9 @@ namespace Microsoft.Phone.Controls
             // Unhook from events
             if (null != _frame)
             {
-                _frame.Navigated -= new NavigatedEventHandler(HandleFrameNavigated);
-                _frame.NavigationStopped -= new NavigationStoppedEventHandler(HandleFrameNavigationStoppedOrFailed);
-                _frame.NavigationFailed -= new NavigationFailedEventHandler(HandleFrameNavigationStoppedOrFailed);
+                _frame.Navigated -= OnFrameNavigated;
+                _frame.NavigationStopped -= OnFrameNavigationStoppedOrFailed;
+                _frame.NavigationFailed -= OnFrameNavigationStoppedOrFailed;
 
                 // Restore host page transitions for the completed "popup" navigation
                 UIElement frameContentWhenOpenedAsUIElement = _frameContentWhenOpened as UIElement;
@@ -272,7 +272,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandleFrameNavigated(object sender, NavigationEventArgs e)
+        private void OnFrameNavigated(object sender, NavigationEventArgs e)
         {
             if (e.Content == _frameContentWhenOpened)
             {
@@ -290,7 +290,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandleFrameNavigationStoppedOrFailed(object sender, EventArgs e)
+        private void OnFrameNavigationStoppedOrFailed(object sender, EventArgs e)
         {
             // Abort
             ClosePickerPage();

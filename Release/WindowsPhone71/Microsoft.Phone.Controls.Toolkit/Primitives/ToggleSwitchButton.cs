@@ -203,7 +203,7 @@ namespace Microsoft.Phone.Controls.Primitives
             {
                 VisualStateManager.GoToState(this, DraggingState, useTransitions);
             }
-            else if (IsChecked == true)
+            else if (IsChecked ?? false)
             {
                 VisualStateManager.GoToState(this, CheckedState, useTransitions);
             }
@@ -218,7 +218,7 @@ namespace Microsoft.Phone.Controls.Primitives
         /// </summary>
         protected override void OnToggle()
         {
-            IsChecked = IsChecked == true ? false : true;
+            IsChecked = !(IsChecked ?? false);
             ChangeVisualState(true);
         }
 
@@ -229,17 +229,17 @@ namespace Microsoft.Phone.Controls.Primitives
         {
             if (_track != null)
             {
-                _track.SizeChanged -= SizeChangedHandler;
+                _track.SizeChanged -= OnSizeChanged;
             }
             if (_thumb != null)
             {
-                _thumb.SizeChanged -= SizeChangedHandler;
+                _thumb.SizeChanged -= OnSizeChanged;
             }
             if (_root != null)
             {
-                _root.ManipulationStarted -= ManipulationStartedHandler;
-                _root.ManipulationDelta -= ManipulationDeltaHandler;
-                _root.ManipulationCompleted -= ManipulationCompletedHandler;
+                _root.ManipulationStarted -= OnManipulationStarted;
+                _root.ManipulationDelta -= OnManipulationDelta;
+                _root.ManipulationCompleted -= OnManipulationCompleted;
             }
 
             base.OnApplyTemplate();
@@ -253,12 +253,12 @@ namespace Microsoft.Phone.Controls.Primitives
 
             if (_root != null && _track != null && _thumb != null && (_backgroundTranslation != null || _thumbTranslation != null))
             {
-                _root.ManipulationStarted += ManipulationStartedHandler;
-                _root.ManipulationDelta += ManipulationDeltaHandler;
-                _root.ManipulationCompleted += ManipulationCompletedHandler;
+                _root.ManipulationStarted += OnManipulationStarted;
+                _root.ManipulationDelta += OnManipulationDelta;
+                _root.ManipulationCompleted += OnManipulationCompleted;
 
-                _track.SizeChanged += SizeChangedHandler;
-                _thumb.SizeChanged += SizeChangedHandler;
+                _track.SizeChanged += OnSizeChanged;
+                _thumb.SizeChanged += OnSizeChanged;
             }
             ChangeVisualState(false);
         }
@@ -268,7 +268,7 @@ namespace Microsoft.Phone.Controls.Primitives
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void ManipulationStartedHandler(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
+        private void OnManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
         {
             e.Handled = true;
             _isDragging = true;
@@ -282,7 +282,7 @@ namespace Microsoft.Phone.Controls.Primitives
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void ManipulationDeltaHandler(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        private void OnManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {
             e.Handled = true;
             double horizontalChange = e.DeltaManipulation.Translation.X;
@@ -295,14 +295,14 @@ namespace Microsoft.Phone.Controls.Primitives
             }
         }
 
-        private void ManipulationCompletedHandler(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        private void OnManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
             e.Handled = true;
             _isDragging = false;
             bool click = false;
             if (_wasDragged)
             {
-                double edge = IsChecked == true ? _checkedTranslation : _uncheckedTranslation;
+                double edge = (IsChecked ?? false) ? _checkedTranslation : _uncheckedTranslation;
                 if (Translation != edge)
                 {
                     click = true;
@@ -316,7 +316,13 @@ namespace Microsoft.Phone.Controls.Primitives
             {
                 OnClick();
             }
+
             _wasDragged = false;
+        }
+
+        protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
+        {
+            // Overrides parent method which causes events to fire multiple times.
         }
 
         /// <summary>
@@ -325,7 +331,7 @@ namespace Microsoft.Phone.Controls.Primitives
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             _track.Clip = new RectangleGeometry { Rect = new Rect(0, 0, _track.ActualWidth, _track.ActualHeight) };
             _checkedTranslation = _track.ActualWidth - _thumb.ActualWidth - _thumb.Margin.Left - _thumb.Margin.Right;

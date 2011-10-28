@@ -39,7 +39,7 @@ namespace Microsoft.Phone.Controls
                     {
                         object previousSelectedItem = _selectedItem;
                         _selectedItem = valueWrapper;
-                        EventHandler<SelectionChangedEventArgs> handler = SelectionChanged;
+                        var handler = SelectionChanged;
                         if (null != handler)
                         {
                             handler(this, new SelectionChangedEventArgs(new object[] { previousSelectedItem }, new object[] { _selectedItem }));

@@ -48,7 +48,7 @@ namespace Microsoft.Phone.Controls
                 ContentPresenter cc = sender as ContentPresenter;
                 if (cc != null)
                 {
-                    GroupSelectedEventHandler handler = GroupSelected;
+                    var handler = GroupSelected;
                     if (handler != null)
                     {
                         GroupSelectedEventArgs args = new GroupSelectedEventArgs(cc.Content);

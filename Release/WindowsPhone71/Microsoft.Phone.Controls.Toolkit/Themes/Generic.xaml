@@ -187,7 +187,7 @@
                                 ContentTemplate="{TemplateBinding HeaderTemplate}"
                                 FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                 FontSize="{StaticResource PhoneFontSizeNormal}"
-                                Foreground="{StaticResource PhoneBorderBrush}"
+                                Foreground="{StaticResource PhoneSubtleBrush}"
                                 HorizontalAlignment="Left"
                                 IsTabStop="False"
                                 Margin="-1,0,0,0"
@@ -1420,7 +1420,16 @@
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="ExpansionStates">
                                     <VisualStateGroup.States>
-                                        <VisualState x:Name="Collapsed"/>
+                                        <VisualState x:Name="Collapsed">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" 
+                                                                 Storyboard.TargetName="ItemsCanvas"
+                                                                 Duration="0" To="0"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)" 
+                                                                 Storyboard.TargetName="ItemsCanvas"
+                                                                 Duration="0" To="0.0"/>
+                                            </Storyboard>
+                                        </VisualState>
                                         <VisualState x:Name="Expanded">
                                             <Storyboard>
                                                 <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" 
@@ -1685,6 +1694,7 @@
                                         VerticalAlignment="Bottom"
                                         Margin="{StaticResource PhoneMargin}"
                                         FontSize="{StaticResource PhoneFontSizeNormal}"
+                                        Opacity="0"
                                         x:Name="LengthIndicator">
                                 <TextBlock.RenderTransform >
                                     <TranslateTransform />
@@ -1704,9 +1714,8 @@
                                                 Background="Transparent"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
-                                                Margin="7,0,7,0"
-                                                Visibility="{TemplateBinding ActualHintVisibility}"
-                                                />
+                                                Margin="3,0,3,0"
+                                                Visibility="{TemplateBinding ActualHintVisibility}"/>
                                 <ContentControl x:Name="ContentElement"
                                                 BorderThickness="0" 
                                                 HorizontalContentAlignment="Stretch"
@@ -1763,6 +1772,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
+    
+    
 </ResourceDictionary>

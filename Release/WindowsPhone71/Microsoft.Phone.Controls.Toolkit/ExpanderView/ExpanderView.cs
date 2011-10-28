@@ -88,6 +88,11 @@ namespace Microsoft.Phone.Controls
         private ItemsPresenter _presenter;
 
         /// <summary>
+        /// Canvas template part
+        /// </summary>
+        private Canvas _itemsCanvas;
+
+        /// <summary>
         /// Expander Panel template part.
         /// </summary>
         private Grid _expanderPanel;
@@ -385,8 +390,10 @@ namespace Microsoft.Phone.Controls
             _expandedStateAnimation = (base.GetTemplateChild(ExpandedState) as VisualState).Storyboard.Children[0] as DoubleAnimation;
             _expandedToCollapsedFrame = base.GetTemplateChild(ExpandedToCollapsedKeyFrame) as EasingDoubleKeyFrame;
             _collapsedToExpandedFrame = base.GetTemplateChild(CollapsedToExpandedKeyFrame) as EasingDoubleKeyFrame;
+            _itemsCanvas = base.GetTemplateChild("ItemsCanvas") as Canvas;
             _presenter = base.GetTemplateChild(Presenter) as ItemsPresenter;
-
+            _presenter.SizeChanged += OnPresenterSizeChanged;
+            
             if (_expanderPanel != null)
             {
                 _expanderPanel.Tap += OnExpanderPanelTap;
@@ -401,15 +408,15 @@ namespace Microsoft.Phone.Controls
         public ExpanderView()
         {
             DefaultStyleKey = typeof(ExpanderView);
-            SizeChanged += ExpanderView_SizeChanged;
+            SizeChanged += OnSizeChanged;
         }
 
         /// <summary>
         /// Recalculates the size of the presenter to match its parent.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ExpanderView_SizeChanged(object sender, SizeChangedEventArgs e)
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event args</param>
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_presenter != null)
             {
@@ -421,6 +428,20 @@ namespace Microsoft.Phone.Controls
                 GeneralTransform gt = parent.TransformToVisual(_presenter);
                 Point childToParentCoordinates = gt.Transform(new Point(0, 0));
                 _presenter.Width = parent.RenderSize.Width + childToParentCoordinates.X;
+            }
+        }
+
+        /// <summary>
+        /// Recalculates size of canvas based on the size change for the presenter.
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event args</param>
+        private void OnPresenterSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (null != _itemsCanvas && null != _presenter && IsExpanded)
+            {
+                // Already expanded, so we need to update the height of the canvas directly.
+                _itemsCanvas.Height = _presenter.DesiredSize.Height;
             }
         }
 

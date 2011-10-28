@@ -1749,7 +1749,7 @@ namespace System.Windows.Controls
         /// contains the event data.</param>
         protected virtual void OnPopulating(PopulatingEventArgs e)
         {
-            PopulatingEventHandler handler = Populating;
+            var handler = Populating;
             if (handler != null)
             {
                 handler(this, e);
@@ -1766,7 +1766,7 @@ namespace System.Windows.Controls
         /// that contains the event data.</param>
         protected virtual void OnPopulated(PopulatedEventArgs e)
         {
-            PopulatedEventHandler handler = Populated;
+            var handler = Populated;
             if (handler != null)
             {
                 handler(this, e);
@@ -1783,7 +1783,7 @@ namespace System.Windows.Controls
         /// that contains the event data.</param>
         protected virtual void OnSelectionChanged(SelectionChangedEventArgs e)
         {
-            SelectionChangedEventHandler handler = SelectionChanged;
+            var handler = SelectionChanged;
             if (handler != null)
             {
                 handler(this, e);
@@ -1800,7 +1800,7 @@ namespace System.Windows.Controls
         /// that contains the event data.</param>
         protected virtual void OnDropDownOpening(RoutedPropertyChangingEventArgs<bool> e)
         {
-            RoutedPropertyChangingEventHandler<bool> handler = DropDownOpening;
+            var handler = DropDownOpening;
             if (handler != null)
             {
                 handler(this, e);
@@ -1817,7 +1817,7 @@ namespace System.Windows.Controls
         /// that contains the event data.</param>
         protected virtual void OnDropDownOpened(RoutedPropertyChangedEventArgs<bool> e)
         {
-            RoutedPropertyChangedEventHandler<bool> handler = DropDownOpened;
+            var handler = DropDownOpened;
             if (handler != null)
             {
                 handler(this, e);
@@ -1834,7 +1834,7 @@ namespace System.Windows.Controls
         /// that contains the event data.</param>
         protected virtual void OnDropDownClosing(RoutedPropertyChangingEventArgs<bool> e)
         {
-            RoutedPropertyChangingEventHandler<bool> handler = DropDownClosing;
+            var handler = DropDownClosing;
             if (handler != null)
             {
                 handler(this, e);
@@ -1851,7 +1851,7 @@ namespace System.Windows.Controls
         /// which contains the event data.</param>
         protected virtual void OnDropDownClosed(RoutedPropertyChangedEventArgs<bool> e)
         {
-            RoutedPropertyChangedEventHandler<bool> handler = DropDownClosed;
+            var handler = DropDownClosed;
             if (handler != null)
             {
                 handler(this, e);
@@ -1908,7 +1908,7 @@ namespace System.Windows.Controls
         /// that contains the event data.</param>
         protected virtual void OnTextChanged(RoutedEventArgs e)
         {
-            RoutedEventHandler handler = TextChanged;
+            var handler = TextChanged;
             if (handler != null)
             {
                 handler(this, e);

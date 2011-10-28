@@ -166,21 +166,21 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Gets or sets the owning object for the ContextMenu.
         /// </summary>
-        internal DependencyObject Owner
+        public DependencyObject Owner
         {
             get { return _owner; }
-            set
+            internal set
             {
                 if (null != _owner)
                 {
                     FrameworkElement ownerFrameworkElement = _owner as FrameworkElement;
                     if (null != ownerFrameworkElement)
                     {
-                        ownerFrameworkElement.Hold -= HandleOwnerHold;
-                        ownerFrameworkElement.Loaded -= HandleOwnerLoaded;
-                        ownerFrameworkElement.Unloaded -= HandleOwnerUnloaded;
+                        ownerFrameworkElement.Hold -= OnOwnerHold;
+                        ownerFrameworkElement.Loaded -= OnOwnerLoaded;
+                        ownerFrameworkElement.Unloaded -= OnOwnerUnloaded;
 
-                        HandleOwnerUnloaded(null, null);
+                        OnOwnerUnloaded(null, null);
                     }
                 }
                 _owner = value;
@@ -189,9 +189,9 @@ namespace Microsoft.Phone.Controls
                     FrameworkElement ownerFrameworkElement = _owner as FrameworkElement;
                     if (null != ownerFrameworkElement)
                     {
-                        ownerFrameworkElement.Hold += HandleOwnerHold;
-                        ownerFrameworkElement.Loaded += HandleOwnerLoaded;
-                        ownerFrameworkElement.Unloaded += HandleOwnerUnloaded;
+                        ownerFrameworkElement.Hold += OnOwnerHold;
+                        ownerFrameworkElement.Loaded += OnOwnerLoaded;
+                        ownerFrameworkElement.Unloaded += OnOwnerUnloaded;
 
                         // Owner *may* already be live and have fired its Loaded event - hook up manually if necessary
                         DependencyObject parent = ownerFrameworkElement;
@@ -200,7 +200,7 @@ namespace Microsoft.Phone.Controls
                             parent = VisualTreeHelper.GetParent(parent);
                             if ((null != parent) && (parent == _rootVisual))
                             {
-                                HandleOwnerLoaded(null, null);
+                                OnOwnerLoaded(null, null);
                                 break;
                             }
                         }
@@ -356,9 +356,10 @@ namespace Microsoft.Phone.Controls
             SetRenderTransform();
             UpdateVisualStates(true);
 
-            if (null != Opened)
+            var handler = Opened;
+            if (null != handler)
             {
-                Opened.Invoke(this, e);
+                handler(this, e);
             }
         }
 
@@ -409,9 +410,10 @@ namespace Microsoft.Phone.Controls
         {
             UpdateVisualStates(true);
 
-            if (null != Closed)
+            var handler = Closed;
+            if (null != handler)
             {
-                Closed.Invoke(this, e);
+                handler(this, e);
             }
         }
 
@@ -425,7 +427,7 @@ namespace Microsoft.Phone.Controls
             _openingStoryboard = new List<Storyboard>();
 
             // Temporarily hook LayoutUpdated to find out when Application.Current.RootVisual gets set.
-            LayoutUpdated += HandleLayoutUpdated;
+            LayoutUpdated += OnLayoutUpdated;
         }
 
         /// <summary>
@@ -438,7 +440,7 @@ namespace Microsoft.Phone.Controls
             {
                 foreach (Storyboard sb in _openingStoryboard)
                 {
-                    sb.Completed -= HandleStoryboardCompleted;
+                    sb.Completed -= OnStoryboardCompleted;
                 }
                 _openingStoryboard.Clear();
             }
@@ -462,7 +464,7 @@ namespace Microsoft.Phone.Controls
                             if ((OpenVisibilityStateName == state.Name || OpenLandscapeVisibilityStateName == state.Name || OpenReversedVisibilityStateName == state.Name || OpenLandscapeReversedVisibilityStateName == state.Name) && (null != state.Storyboard))
                             {
                                 _openingStoryboard.Add(state.Storyboard);
-                                state.Storyboard.Completed += HandleStoryboardCompleted;
+                                state.Storyboard.Completed += OnStoryboardCompleted;
                             }
                         }
                     }
@@ -561,7 +563,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleStoryboardCompleted(object sender, EventArgs e)
+        private void OnStoryboardCompleted(object sender, EventArgs e)
         {
             _openingStoryboardPlaying = false;
         }
@@ -583,15 +585,21 @@ namespace Microsoft.Phone.Controls
                     _openingStoryboardReleaseThreshold = DateTime.UtcNow.AddSeconds(0.3);
                 }
 
-                if (_rootVisual.Orientation.IsPortrait())
+                if (_rootVisual != null && _rootVisual.Orientation.IsPortrait())
                 {
-                    _outerPanel.Orientation = Orientation.Vertical;
+                    if (_outerPanel != null)
+                    {
+                        _outerPanel.Orientation = Orientation.Vertical;
+                    }
 
                     stateName = _reversed ? OpenReversedVisibilityStateName : OpenVisibilityStateName;
                 }
                 else
                 {
-                    _outerPanel.Orientation = Orientation.Horizontal;
+                    if (_outerPanel != null)
+                    {
+                        _outerPanel.Orientation = Orientation.Horizontal;
+                    }
 
                     stateName = _reversed ? OpenLandscapeReversedVisibilityStateName : OpenLandscapeVisibilityStateName;
                 }
@@ -672,14 +680,14 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleLayoutUpdated(object sender, EventArgs e)
+        private void OnLayoutUpdated(object sender, EventArgs e)
         {
             if (null != Application.Current.RootVisual)
             {
                 // Application.Current.RootVisual is valid now
                 InitializeRootVisual();
                 // Unhook event
-                LayoutUpdated -= HandleLayoutUpdated;
+                LayoutUpdated -= OnLayoutUpdated;
             }
         }
 
@@ -688,7 +696,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleRootVisualMouseMove(object sender, MouseEventArgs e)
+        private void OnRootVisualMouseMove(object sender, MouseEventArgs e)
         {
             _mousePosition = e.GetPosition(null);
         }
@@ -698,7 +706,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleRootVisualManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        private void OnRootVisualManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
             // Breaking contact during the ContextMenu show animation should cancel the ContextMenu
             if (_openingStoryboardPlaying && (DateTime.UtcNow <= _openingStoryboardReleaseThreshold))
@@ -712,18 +720,13 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleOwnerHold(object sender, System.Windows.Input.GestureEventArgs e)
+        private void OnOwnerHold(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (!IsOpen)
             {
                 OpenPopup(e.GetPosition(null));
                 e.Handled = true;
             }
-        }
-
-        private void HandlePopupIgnore(object sender, GestureEventArgs e)
-        {
-            e.Handled = true;
         }
 
         /// <summary>
@@ -754,11 +757,11 @@ namespace Microsoft.Phone.Controls
         {
             if (null != oldValue)
             {
-                oldValue.StateChanged -= HandleEventThatClosesContextMenu;
+                oldValue.StateChanged -= OnEventThatClosesContextMenu;
             }
             if (null != newValue)
             {
-                newValue.StateChanged += HandleEventThatClosesContextMenu;
+                newValue.StateChanged += OnEventThatClosesContextMenu;
             }
         }
 
@@ -767,7 +770,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleEventThatClosesContextMenu(object sender, EventArgs e)
+        private void OnEventThatClosesContextMenu(object sender, EventArgs e)
         {
             // Close the ContextMenu because the elements and/or layout is likely to have changed significantly
             IsOpen = false;
@@ -778,7 +781,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleOwnerLoaded(object sender, RoutedEventArgs e)
+        private void OnOwnerLoaded(object sender, RoutedEventArgs e)
         {
             if (null == _page) // Don't want to attach to BackKeyPress twice
             {
@@ -788,7 +791,7 @@ namespace Microsoft.Phone.Controls
                     _page = _rootVisual.Content as PhoneApplicationPage;
                     if (_page != null)
                     {
-                        _page.BackKeyPress += HandlePageBackKeyPress;
+                        _page.BackKeyPress += OnPageBackKeyPress;
                         SetBinding(ApplicationBarMirrorProperty, new Binding { Source = _page, Path = new PropertyPath("ApplicationBar") });
                     }
                 }
@@ -800,17 +803,17 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleOwnerUnloaded(object sender, RoutedEventArgs e)
+        private void OnOwnerUnloaded(object sender, RoutedEventArgs e)
         {
             if (null != _rootVisual)
             {
-                _rootVisual.MouseMove -= HandleRootVisualMouseMove;
-                _rootVisual.ManipulationCompleted -= HandleRootVisualManipulationCompleted;
-                _rootVisual.OrientationChanged -= HandleEventThatClosesContextMenu;
+                _rootVisual.MouseMove -= OnRootVisualMouseMove;
+                _rootVisual.ManipulationCompleted -= OnRootVisualManipulationCompleted;
+                _rootVisual.OrientationChanged -= OnEventThatClosesContextMenu;
             }
             if (_page != null)
             {
-                _page.BackKeyPress -= HandlePageBackKeyPress;
+                _page.BackKeyPress -= OnPageBackKeyPress;
                 ClearValue(ApplicationBarMirrorProperty);
                 _page = null;
             }
@@ -821,7 +824,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandlePageBackKeyPress(object sender, CancelEventArgs e)
+        private void OnPageBackKeyPress(object sender, CancelEventArgs e)
         {
             if (IsOpen)
             {
@@ -863,14 +866,14 @@ namespace Microsoft.Phone.Controls
                     PhoneApplicationFrame;
                 if (null != _rootVisual)
                 {
-                    _rootVisual.MouseMove -= HandleRootVisualMouseMove;
-                    _rootVisual.MouseMove += HandleRootVisualMouseMove;
+                    _rootVisual.MouseMove -= OnRootVisualMouseMove;
+                    _rootVisual.MouseMove += OnRootVisualMouseMove;
 
-                    _rootVisual.ManipulationCompleted -= HandleRootVisualManipulationCompleted;
-                    _rootVisual.ManipulationCompleted += HandleRootVisualManipulationCompleted;
+                    _rootVisual.ManipulationCompleted -= OnRootVisualManipulationCompleted;
+                    _rootVisual.ManipulationCompleted += OnRootVisualManipulationCompleted;
 
-                    _rootVisual.OrientationChanged -= HandleEventThatClosesContextMenu;
-                    _rootVisual.OrientationChanged += HandleEventThatClosesContextMenu;
+                    _rootVisual.OrientationChanged -= OnEventThatClosesContextMenu;
+                    _rootVisual.OrientationChanged += OnEventThatClosesContextMenu;
                 }
             }
         }
@@ -917,7 +920,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleContextMenuOrRootVisualSizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnContextMenuOrRootVisualSizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateContextMenuPlacement();
         }
@@ -927,7 +930,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleOverlayMouseButtonUp(object sender, MouseButtonEventArgs e)
+        private void OnOverlayMouseButtonUp(object sender, MouseButtonEventArgs e)
         {
             // If they clicked in the context menu, then don't close
             List<UIElement> list = VisualTreeHelper.FindElementsInHostCoordinates(e.GetPosition(null), _rootVisual) as List<UIElement>;
@@ -1097,21 +1100,7 @@ namespace Microsoft.Phone.Controls
             }
 
             _overlay = new Canvas { Background = new SolidColorBrush(Colors.Transparent) };
-            _overlay.MouseLeftButtonUp += HandleOverlayMouseButtonUp;
-            
-
-            // Capture all the gesture listener events so no element below the overlay will get gesture events.
-            GestureListener g = GestureService.GetGestureListener(_overlay);
-            g.DoubleTap += HandlePopupIgnore;
-            g.DragStarted += HandlePopupIgnore;
-            g.DragDelta += HandlePopupIgnore;
-            g.DragCompleted += HandlePopupIgnore;
-            g.Flick += HandlePopupIgnore;
-            g.Hold += HandlePopupIgnore;
-            g.PinchStarted += HandlePopupIgnore;
-            g.PinchDelta += HandlePopupIgnore;
-            g.PinchCompleted += HandlePopupIgnore;
-            g.Tap += HandlePopupIgnore;
+            _overlay.MouseLeftButtonUp += OnOverlayMouseButtonUp;
 
             if (IsZoomEnabled && (null != _rootVisual))
             {
@@ -1246,7 +1235,7 @@ namespace Microsoft.Phone.Controls
                     ApplicationBarIconButton button = obj as ApplicationBarIconButton;
                     if (null != button)
                     {
-                        button.Click += HandleEventThatClosesContextMenu;
+                        button.Click += OnEventThatClosesContextMenu;
                         _applicationBarIconButtons.Add(button);
                     }
                 }
@@ -1256,29 +1245,16 @@ namespace Microsoft.Phone.Controls
 
             _popup = new Popup { Child = _overlay };
 
-            // Capture all the gesture listener events so no element below the popup will get gesture events.
-            g = GestureService.GetGestureListener(this);
-            g.DoubleTap += HandlePopupIgnore;
-            g.DragStarted += HandlePopupIgnore;
-            g.DragDelta += HandlePopupIgnore;
-            g.DragCompleted += HandlePopupIgnore;
-            g.Flick += HandlePopupIgnore;
-            g.Hold += HandlePopupIgnore;
-            g.PinchStarted += HandlePopupIgnore;
-            g.PinchDelta += HandlePopupIgnore;
-            g.PinchCompleted += HandlePopupIgnore;
-            g.Tap += HandlePopupIgnore;
-
             _popup.Opened += (s, e) =>
             {
                 // When the popup is actually opened, call our OnOpened method
                 OnOpened(new RoutedEventArgs());
             };
 
-            SizeChanged += HandleContextMenuOrRootVisualSizeChanged;
+            SizeChanged += OnContextMenuOrRootVisualSizeChanged;
             if (null != _rootVisual)
             {
-                _rootVisual.SizeChanged += HandleContextMenuOrRootVisualSizeChanged;
+                _rootVisual.SizeChanged += OnContextMenuOrRootVisualSizeChanged;
             }
 
             UpdateContextMenuPlacement();
@@ -1352,16 +1328,16 @@ namespace Microsoft.Phone.Controls
                     _overlay = null;
                 }
             }
-            SizeChanged -= new SizeChangedEventHandler(HandleContextMenuOrRootVisualSizeChanged);
+            SizeChanged -= OnContextMenuOrRootVisualSizeChanged;
             if (null != _rootVisual)
             {
-                _rootVisual.SizeChanged -= new SizeChangedEventHandler(HandleContextMenuOrRootVisualSizeChanged);
+                _rootVisual.SizeChanged -= OnContextMenuOrRootVisualSizeChanged;
             }
 
             // Remove Click handler for ApplicationBar Buttons
             foreach (ApplicationBarIconButton button in _applicationBarIconButtons)
             {
-                button.Click -= HandleEventThatClosesContextMenu;
+                button.Click -= OnEventThatClosesContextMenu;
             }
             _applicationBarIconButtons.Clear();
 

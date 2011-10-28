@@ -57,6 +57,11 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private bool _cachedIsIndeterminate;
 
+        /// <summary>
+        /// Gets or sets a value indicating the cached IsIndeterminate binding expression.
+        /// </summary>
+        private BindingExpression _cachedIsIndeterminateBindingExpression;
+
         #region public bool ActualIsIndeterminate
         /// <summary>
         /// Gets or sets the value indicating whether the actual indeterminate
@@ -147,6 +152,7 @@ namespace Microsoft.Phone.Controls
             }
 
             _progressBar = GetTemplateChild(EmbeddedProgressBarName) as ProgressBar;
+            _cachedIsIndeterminateBindingExpression = GetBindingExpression(PerformanceProgressBar.IsIndeterminateProperty);
 
             UpdateVisualStates(false);
         }
@@ -190,6 +196,7 @@ namespace Microsoft.Phone.Controls
             if (_progressBar != null)
             {
                 _cachedIsIndeterminate = IsIndeterminate;
+                _cachedIsIndeterminateBindingExpression = GetBindingExpression(PerformanceProgressBar.IsIndeterminateProperty);
                 _progressBar.IsIndeterminate = false;
             }
         }
@@ -198,7 +205,15 @@ namespace Microsoft.Phone.Controls
         {
             if (_progressBar != null)
             {
-                IsIndeterminate = _cachedIsIndeterminate;
+                if (_cachedIsIndeterminateBindingExpression != null)
+                {
+                    SetBinding(PerformanceProgressBar.IsIndeterminateProperty, _cachedIsIndeterminateBindingExpression.ParentBinding);
+                }
+                else
+                {
+                    IsIndeterminate = _cachedIsIndeterminate;
+                }
+
                 _progressBar.SetBinding(ProgressBar.IsIndeterminateProperty, new Binding() { Source = this, Path = ActualIsIndeterminatePath });
             }
         }

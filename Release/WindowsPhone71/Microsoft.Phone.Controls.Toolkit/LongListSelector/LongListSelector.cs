@@ -66,7 +66,7 @@ namespace Microsoft.Phone.Controls
         #endregion
 
         /// <summary>
-        /// Reference to the ListBox hosed in this control.
+        /// Reference to the ListBox hosted in this control.
         /// </summary>
         private TemplatedListBox _listBox;
 
@@ -74,6 +74,11 @@ namespace Microsoft.Phone.Controls
         /// Reference to the visual state group for scrolling.
         /// </summary>
         private VisualStateGroup _scrollGroup;
+
+        /// <summary>
+        /// Reference to the visual state group for  vertical compression.
+        /// </summary>
+        private VisualStateGroup _verticalCompressionGroup;
 
         /// <summary>
         /// // Used to listen for changes in the ItemsSource 
@@ -102,8 +107,8 @@ namespace Microsoft.Phone.Controls
             {
                 if (_listBox != null && _listBox.SelectedItem != null)
                 {
-                    ItemTuple tuple = (ItemTuple)_listBox.SelectedItem;
-                    if (tuple.ItemType == ItemType.Item)
+                    LongListSelectorItem tuple = (LongListSelectorItem)_listBox.SelectedItem;
+                    if (tuple.ItemType == LongListSelectorItemType.Item)
                         return tuple.Item;
                 }
                 return null;
@@ -118,7 +123,7 @@ namespace Microsoft.Phone.Controls
                     }
                     else
                     {
-                        foreach (ItemTuple tuple in _listBox.ItemsSource)
+                        foreach (LongListSelectorItem tuple in _listBox.ItemsSource)
                         {
                             if (tuple.Item == value)
                             {
@@ -157,6 +162,15 @@ namespace Microsoft.Phone.Controls
         /// Gets whether or not the user is manipulating the list, or if an inertial animation is taking place.
         /// </summary>
         public bool IsScrolling
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets whether or not stretching is taking place.
+        /// </summary>
+        public bool IsStretching
         {
             get;
             private set;
@@ -454,7 +468,7 @@ namespace Microsoft.Phone.Controls
             
             if (control._listBox != null)
             {
-                Collection<ItemTuple> tuples = (Collection<ItemTuple>)control._listBox.ItemsSource;
+                Collection<LongListSelectorItem> tuples = (Collection<LongListSelectorItem>)control._listBox.ItemsSource;
                 if (control.ShowListHeader)
                 {
                     control.AddListHeader(tuples);
@@ -490,7 +504,7 @@ namespace Microsoft.Phone.Controls
 
             if (control._listBox != null)
             {
-                Collection<ItemTuple> tuples = (Collection<ItemTuple>)control._listBox.ItemsSource;
+                Collection<LongListSelectorItem> tuples = (Collection<LongListSelectorItem>)control._listBox.ItemsSource;
                 if (control.ShowListFooter)
                 {
                     control.AddListFooter(tuples);
@@ -584,14 +598,14 @@ namespace Microsoft.Phone.Controls
         {
             if (_listBox != null && item != null)
             {
-                ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
-                ItemTuple lastTuple = tuples[tuples.Count - 1];
+                ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
+                LongListSelectorItem lastTuple = tuples[tuples.Count - 1];
                 
                 _listBox.ScrollIntoView(lastTuple);
 
                 UpdateLayout();
 
-                foreach (ItemTuple tuple in _listBox.ItemsSource)
+                foreach (LongListSelectorItem tuple in _listBox.ItemsSource)
                 {
                     if (tuple.Item != null && tuple.Item.Equals(item))
                     {
@@ -739,11 +753,16 @@ namespace Microsoft.Phone.Controls
                 FrameworkElement element = VisualTreeHelper.GetChild(sv, 0) as FrameworkElement;
                 if (element != null)
                 {
-                    //_scrollGroup = element.FindVisualState("ScrollStates");
                     _scrollGroup = VisualStates.TryGetVisualStateGroup(sv, "ScrollStates");
                     if (_scrollGroup != null)
                     {
                         _scrollGroup.CurrentStateChanging += OnScrollStateChanging;
+                    }
+
+                    _verticalCompressionGroup = VisualStates.TryGetVisualStateGroup(sv, "VerticalCompressionStates");
+                    if(_verticalCompressionGroup != null)
+                    {
+                        _verticalCompressionGroup.CurrentStateChanging += OnStretchStateChanging;
                     }
                 }
             }
@@ -760,7 +779,7 @@ namespace Microsoft.Phone.Controls
         {
             if (_listBox != null)
             {
-                ObservableCollection<ItemTuple> tuples = new ObservableCollection<ItemTuple>();
+                ObservableCollection<LongListSelectorItem> tuples = new ObservableCollection<LongListSelectorItem>();
                 
                 AddListHeader(tuples);
 
@@ -773,7 +792,7 @@ namespace Microsoft.Phone.Controls
                     {
                         foreach (object item in ItemsSource)
                         {
-                            tuples.Add(new ItemTuple() { Item = item, ItemType = ItemType.Item });
+                            tuples.Add(new LongListSelectorItem() { Item = item, ItemType = LongListSelectorItemType.Item });
                         }
                     }
                 }
@@ -808,12 +827,12 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Adds a list header to the given list.
         /// </summary>
-        private void AddListHeader(IList<ItemTuple> tuples)
+        private void AddListHeader(IList<LongListSelectorItem> tuples)
         {
             if (HasListHeader && ShowListHeader &&  // Adds the list header if it got a template or if it's a UI element itself.
-                (tuples.Count == 0 || tuples[0].ItemType != ItemType.ListHeader))   // Also, make sure its not already there
+                (tuples.Count == 0 || tuples[0].ItemType != LongListSelectorItemType.ListHeader))   // Also, make sure its not already there
             {
-                tuples.Insert(0, new ItemTuple() { Item = ListHeader, ItemType = ItemType.ListHeader });
+                tuples.Insert(0, new LongListSelectorItem() { Item = ListHeader, ItemType = LongListSelectorItemType.ListHeader });
             }
         }
         /// <summary>
@@ -821,15 +840,15 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private void AddListHeader()
         {
-            AddListHeader((ObservableCollection<ItemTuple>)_listBox.ItemsSource);
+            AddListHeader((ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource);
         }
 
         /// <summary>
         /// Removes the list header from the given list.
         /// </summary>
-        private static void RemoveListHeader(IList<ItemTuple> tuples)
+        private static void RemoveListHeader(IList<LongListSelectorItem> tuples)
         {
-            if (tuples.Count > 0 && tuples[0].ItemType == ItemType.ListHeader)
+            if (tuples.Count > 0 && tuples[0].ItemType == LongListSelectorItemType.ListHeader)
             {
                 tuples.RemoveAt(0);
             }
@@ -840,18 +859,18 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private void RemoveListHeader()
         {
-            RemoveListHeader((ObservableCollection<ItemTuple>)_listBox.ItemsSource);
+            RemoveListHeader((ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource);
         }
 
         /// <summary>
         /// Adds a list footer to the given list.
         /// </summary>
-        private void AddListFooter(IList<ItemTuple> tuples)
+        private void AddListFooter(IList<LongListSelectorItem> tuples)
         {
             if (HasListFooter && ShowListFooter &&  // Adds the list footer if it got a template or if it's a UI element itself.
-                (tuples.Count == 0 || tuples[tuples.Count - 1].ItemType != ItemType.ListFooter))   // Also, make sure its not already there
+                (tuples.Count == 0 || tuples[tuples.Count - 1].ItemType != LongListSelectorItemType.ListFooter))   // Also, make sure its not already there
             {
-                tuples.Add(new ItemTuple() { Item = ListFooter, ItemType = ItemType.ListFooter });
+                tuples.Add(new LongListSelectorItem() { Item = ListFooter, ItemType = LongListSelectorItemType.ListFooter });
             }
         }
 
@@ -860,16 +879,16 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private void AddListFooter()
         {
-            AddListFooter((ObservableCollection<ItemTuple>)_listBox.ItemsSource);
+            AddListFooter((ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource);
         }
 
         /// <summary>
         /// Removes the list footer from the given list.
         /// </summary>
-        private static void RemoveListFooter(IList<ItemTuple> tuples)
+        private static void RemoveListFooter(IList<LongListSelectorItem> tuples)
         {
-            ItemTuple lastTuple = tuples[tuples.Count - 1];
-            if (lastTuple != null && lastTuple.ItemType == ItemType.ListFooter)
+            LongListSelectorItem lastTuple = tuples[tuples.Count - 1];
+            if (lastTuple != null && lastTuple.ItemType == LongListSelectorItemType.ListFooter)
             {
                 tuples.RemoveAt(tuples.Count - 1);
             }
@@ -880,7 +899,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private void RemoveListFooter()
         {
-            RemoveListFooter((ObservableCollection<ItemTuple>)_listBox.ItemsSource);
+            RemoveListFooter((ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource);
         }
         #endregion
 
@@ -900,13 +919,13 @@ namespace Microsoft.Phone.Controls
                 // Adds the group header
                 if (GroupHeaderTemplate != null)
                 {
-                    tuples.Add(new ItemTuple() { Item = group, ItemType = ItemType.GroupHeader });
+                    tuples.Add(new LongListSelectorItem() { Item = group, ItemType = LongListSelectorItemType.GroupHeader });
                 }
 
                 // For each group header, add its items
                 foreach (object item in group)
                 {
-                    tuples.Add(new ItemTuple() { Item = item, ItemType = ItemType.Item, Group = group });
+                    tuples.Add(new LongListSelectorItem() { Item = item, ItemType = LongListSelectorItemType.Item, Group = group });
                     groupHasItems = true;
                 }
 
@@ -915,7 +934,7 @@ namespace Microsoft.Phone.Controls
                 {
                     if (GroupFooterTemplate != null)
                     {
-                        tuples.Add(new ItemTuple() { Item = group, ItemType = ItemType.GroupFooter });
+                        tuples.Add(new LongListSelectorItem() { Item = group, ItemType = LongListSelectorItemType.GroupFooter });
                     }
                 }
                 // Otherwise, remove the group header
@@ -957,7 +976,7 @@ namespace Microsoft.Phone.Controls
             }
 
             IEnumerable groups = ItemsSource;
-            ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
+            ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
 
             if (groups != null)
             {
@@ -971,10 +990,10 @@ namespace Microsoft.Phone.Controls
                         // Adds the group header
                         if (addHeaders && GroupHeaderTemplate != null && itemsCount > 0)
                         {
-                            tuples.Insert(indexInListBox, new ItemTuple
+                            tuples.Insert(indexInListBox, new LongListSelectorItem
                             { 
                                 Item = group, 
-                                ItemType = ItemType.GroupHeader 
+                                ItemType = LongListSelectorItemType.GroupHeader 
                             });
                         }
 
@@ -983,10 +1002,10 @@ namespace Microsoft.Phone.Controls
                         // Adds the group footer
                         if (addFooters && GroupFooterTemplate != null && itemsCount > 0)
                         {
-                            tuples.Insert(indexInListBox - 1, new ItemTuple
+                            tuples.Insert(indexInListBox - 1, new LongListSelectorItem
                             { 
                                 Item = group, 
-                                ItemType = ItemType.GroupFooter 
+                                ItemType = LongListSelectorItemType.GroupFooter 
                             });
                         }
                     }
@@ -1021,11 +1040,11 @@ namespace Microsoft.Phone.Controls
         /// <param name="removeFooters">Specifies whether or not to remove group footers.</param>
         private void RemoveAllGroupHeadersAndFooters(bool removeHeaders, bool removeFooters)
         {
-            ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
+            ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
             for (int i = 0; i < tuples.Count; ++i)
             {
-                if ((removeHeaders && tuples[i].ItemType == ItemType.GroupHeader) ||
-                    (removeFooters && tuples[i].ItemType == ItemType.GroupFooter))
+                if ((removeHeaders && tuples[i].ItemType == LongListSelectorItemType.GroupHeader) ||
+                    (removeFooters && tuples[i].ItemType == LongListSelectorItemType.GroupFooter))
                 {
                     tuples.RemoveAt(i--);   // the -- is there so we don't skip tuples
                 }
@@ -1070,23 +1089,23 @@ namespace Microsoft.Phone.Controls
         /// <param name="newGroupsIndex">Insertion index relative to the collection.</param>
         private void InsertNewGroups(IList newGroups, int newGroupsIndex)
         {
-            ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
+            ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
 
             // 1 - Builds items tuples for the new groups
-            List<ItemTuple> newGroupsTuples = new List<ItemTuple>();
+            List<LongListSelectorItem> newGroupsTuples = new List<LongListSelectorItem>();
             
             foreach (object group in newGroups)
             {
                 AddGroup(group, newGroupsTuples);
             }
 
-            if(newGroupsTuples.Count > 0)
+            if (newGroupsTuples.Count > 0)
             {
                 // 2 - Finds insertion index in the list box
                 int insertIndex = GetGroupIndexInListBox(newGroupsIndex);
 
                 // 3 - Inserts the new items into the list box
-                foreach (ItemTuple tuple in newGroupsTuples)
+                foreach (LongListSelectorItem tuple in newGroupsTuples)
                 {
                     tuples.Insert(insertIndex++, tuple);
                 }
@@ -1103,17 +1122,17 @@ namespace Microsoft.Phone.Controls
         /// <param name="group">Group into which the items are inserted. Can be null if IsFlatList == true</param>
         private void InsertNewItems(IList newItems, int newItemsIndex, IEnumerable group)
         {
-            ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
+            ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
 
             // 1 - Builds items tuples for the new items
-            List<ItemTuple> newItemsTuples = new List<ItemTuple>();
+            List<LongListSelectorItem> newItemsTuples = new List<LongListSelectorItem>();
             foreach (object item in newItems)
             {
-                newItemsTuples.Add(new ItemTuple
+                newItemsTuples.Add(new LongListSelectorItem
                 { 
                     Group = group, 
                     Item = item, 
-                    ItemType = ItemType.Item 
+                    ItemType = LongListSelectorItemType.Item 
                 });
             }
 
@@ -1134,7 +1153,7 @@ namespace Microsoft.Phone.Controls
                         {
                             if (groupWasNotDisplayed)
                             {
-                                tuples.Insert(insertIndex, new ItemTuple() { ItemType = ItemType.GroupHeader, Item = group });
+                                tuples.Insert(insertIndex, new LongListSelectorItem() { ItemType = LongListSelectorItemType.GroupHeader, Item = group });
                             }
                             ++insertIndex;
                         }
@@ -1142,14 +1161,14 @@ namespace Microsoft.Phone.Controls
                         insertIndex += newItemsIndex;
 
                         // 3 - Inserts the new items into the list box
-                        foreach (ItemTuple tuple in newItemsTuples)
+                        foreach (LongListSelectorItem tuple in newItemsTuples)
                         {
                             tuples.Insert(insertIndex++, tuple);
                         }
 
                         if (groupWasNotDisplayed && GroupFooterTemplate != null)
                         {
-                            tuples.Insert(insertIndex++, new ItemTuple() { ItemType = ItemType.GroupFooter, Item = group });
+                            tuples.Insert(insertIndex++, new LongListSelectorItem() { ItemType = LongListSelectorItemType.GroupFooter, Item = group });
                         }
                     }
                     ++i;
@@ -1164,7 +1183,7 @@ namespace Microsoft.Phone.Controls
                 }
 
                 // 3 - Inserts the new items into the list box
-                foreach (ItemTuple tuple in newItemsTuples)
+                foreach (LongListSelectorItem tuple in newItemsTuples)
                 {
                     tuples.Insert(insertIndex++, tuple);
                 }
@@ -1180,7 +1199,7 @@ namespace Microsoft.Phone.Controls
         /// <param name="oldGroupsIndex">Start index relative to the root collection.</param>
         private void RemoveOldGroups(IList oldGroups, int oldGroupsIndex)
         {
-            ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
+            ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
 
             // 1 - Find the index at which we start removing groups
             int removeStartIndex = 0;
@@ -1228,7 +1247,7 @@ namespace Microsoft.Phone.Controls
         /// <param name="group">Group from which items are removed. Can be null if IsFlatList == true.</param>
         private void RemoveOldItems(IList oldItems, int oldItemsIndex, IEnumerable group)
         {
-            ObservableCollection<ItemTuple> tuples = (ObservableCollection<ItemTuple>)_listBox.ItemsSource;
+            ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
 
             // 1 - Finds the remove index in the listbox
             // Since a single group might be referenced by more than one, we might need to update more than one group
@@ -1291,7 +1310,7 @@ namespace Microsoft.Phone.Controls
         /// <returns>Returns, for a group, an index relative to the templated list box from an index relative to the root collection.</returns>
         private int GetGroupIndexInListBox(int indexInLLS)
         {
-            int indexInListBox = 0, index = 0;
+            int indexInListBox = 0, index = 0, groupItems = 0;
 
             if (HasListHeader && ShowListHeader)
             {
@@ -1314,7 +1333,12 @@ namespace Microsoft.Phone.Controls
                     var groupAsEnumerable = group as IEnumerable;
                     if (groupAsEnumerable != null)
                     {
-                        indexInListBox += GetItemsCountFromGroup(groupAsEnumerable);
+                        groupItems = GetItemsCountFromGroup(groupAsEnumerable);
+
+                        if(groupItems > 0)
+                        {
+                            indexInListBox += groupItems + 1;
+                        }
                     }
                 }
             }
@@ -1377,10 +1401,6 @@ namespace Microsoft.Phone.Controls
             {
                 ++count;
             }
-            else if (GroupHeaderTemplate != null)
-            {
-                --count;
-            }
             
             return count;
         }
@@ -1392,7 +1412,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="itemType">Item type for which to update the template.</param>
         /// <param name="newTemplate">New template that will replace the old one.</param>
-        private void UpdateItemsTemplate(ItemType itemType, DataTemplate newTemplate)
+        private void UpdateItemsTemplate(LongListSelectorItemType itemType, DataTemplate newTemplate)
         {
             if (_listBox != null)
             {
@@ -1400,7 +1420,7 @@ namespace Microsoft.Phone.Controls
                 IEnumerable<TemplatedListBoxItem> items = _listBox.GetLogicalChildrenByType<TemplatedListBoxItem>(false);
                 foreach (TemplatedListBoxItem item in items)
                 {
-                    ItemTuple tuple = (ItemTuple)item.Tuple;
+                    LongListSelectorItem tuple = (LongListSelectorItem)item.Tuple;
                     if (tuple.ItemType == itemType)
                     {
                         item.ContentTemplate = newTemplate;
@@ -1411,19 +1431,19 @@ namespace Microsoft.Phone.Controls
                 // are linked (realized)
                 switch (itemType)
                 {
-                    case ItemType.ListHeader:
+                    case LongListSelectorItemType.ListHeader:
                         _listBox.ListHeaderTemplate = newTemplate;
                         break;
-                    case ItemType.ListFooter:
+                    case LongListSelectorItemType.ListFooter:
                         _listBox.ListFooterTemplate = newTemplate;
                         break;
-                    case ItemType.GroupHeader:
+                    case LongListSelectorItemType.GroupHeader:
                         _listBox.GroupHeaderTemplate = newTemplate;
                         break;
-                    case ItemType.GroupFooter:
+                    case LongListSelectorItemType.GroupFooter:
                         _listBox.GroupFooterTemplate = newTemplate;
                         break;
-                    case ItemType.Item:
+                    case LongListSelectorItemType.Item:
                         _listBox.ItemTemplate = newTemplate;
                         break;
                 }
@@ -1445,7 +1465,7 @@ namespace Microsoft.Phone.Controls
 
             if (e.Property == ListHeaderTemplateProperty)
             {
-                lls.UpdateItemsTemplate(ItemType.ListHeader, newTemplate);
+                lls.UpdateItemsTemplate(LongListSelectorItemType.ListHeader, newTemplate);
 
                 // If the old value was null, we might need to add the list header.
                 if (e.OldValue == null)
@@ -1461,7 +1481,7 @@ namespace Microsoft.Phone.Controls
             }
             else if (e.Property == ListFooterTemplateProperty)
             {
-                lls.UpdateItemsTemplate(ItemType.ListFooter, newTemplate);
+                lls.UpdateItemsTemplate(LongListSelectorItemType.ListFooter, newTemplate);
 
                 // If the old value was null, we might need to add the list footer.
                 if (e.OldValue == null)
@@ -1477,7 +1497,7 @@ namespace Microsoft.Phone.Controls
             }
             else if (e.Property == GroupHeaderProperty)
             {
-                lls.UpdateItemsTemplate(ItemType.GroupHeader, newTemplate);
+                lls.UpdateItemsTemplate(LongListSelectorItemType.GroupHeader, newTemplate);
 
                 // If the old value was null, this means we might need to add group headers to the listbox
                 if (e.OldValue == null)
@@ -1493,7 +1513,7 @@ namespace Microsoft.Phone.Controls
             }
             else if(e.Property == GroupFooterProperty)
             {
-                lls.UpdateItemsTemplate(ItemType.GroupFooter, newTemplate);
+                lls.UpdateItemsTemplate(LongListSelectorItemType.GroupFooter, newTemplate);
 
                 // If the old value was null, this means we might need to add group footers to the listbox
                 if (e.OldValue == null)
@@ -1509,7 +1529,7 @@ namespace Microsoft.Phone.Controls
             }
             else if (e.Property == ItemsTemplateProperty)
             {
-                lls.UpdateItemsTemplate(ItemType.Item, newTemplate);
+                lls.UpdateItemsTemplate(LongListSelectorItemType.Item, newTemplate);
             }
         }
         #endregion
@@ -1532,10 +1552,10 @@ namespace Microsoft.Phone.Controls
         {
             // Group navigation
             //var group = (from t in (IEnumerable<object>)e.AddedItems where ((ItemTuple)t).ItemType == ItemType.GroupHeader select (ItemTuple)t).FirstOrDefault();
-            ItemTuple group = null;
-            foreach (ItemTuple tuple in e.AddedItems)
+            LongListSelectorItem group = null;
+            foreach (LongListSelectorItem tuple in e.AddedItems)
             {
-                if (tuple.ItemType == ItemType.GroupHeader)
+                if (tuple.ItemType == LongListSelectorItemType.GroupHeader)
                 {
                     group = tuple;
                     break;
@@ -1553,20 +1573,20 @@ namespace Microsoft.Phone.Controls
 
                 if (handler != null)
                 {
-                    List<ItemTuple> addedItems = new List<ItemTuple>();
-                    List<ItemTuple> removedItems = new List<ItemTuple>();
+                    List<LongListSelectorItem> addedItems = new List<LongListSelectorItem>();
+                    List<LongListSelectorItem> removedItems = new List<LongListSelectorItem>();
 
-                    foreach (ItemTuple tuple in e.AddedItems)
+                    foreach (LongListSelectorItem tuple in e.AddedItems)
                     {
-                        if (tuple.ItemType == ItemType.Item)
+                        if (tuple.ItemType == LongListSelectorItemType.Item)
                         {
                             addedItems.Add(tuple);
                         }
                     }
 
-                    foreach (ItemTuple tuple in e.RemovedItems)
+                    foreach (LongListSelectorItem tuple in e.RemovedItems)
                     {
-                        if (tuple.ItemType == ItemType.Item)
+                        if (tuple.ItemType == LongListSelectorItemType.Item)
                         {
                             removedItems.Add(tuple);
                         }
@@ -1645,17 +1665,28 @@ namespace Microsoft.Phone.Controls
             {
                 ScrollingStarted(this, null);
             }
-            else if (e.NewState.Name == NotScrollingState && ScrollingStarted != null)
+            else if (e.NewState.Name == NotScrollingState && ScrollingCompleted != null)
             {
                 ScrollingCompleted(this, null);
             }
-            else if (e.NewState.Name == CompressionTop && StretchingTop != null)
+        }
+        #endregion
+
+        #region OnScrollStateChanging(...)
+        /// <summary>
+        /// Called when the scrolling state of the list box changes.
+        /// </summary>
+        private void OnStretchStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            IsStretching = e.NewState.Name == CompressionBottom || e.NewState.Name == CompressionTop;
+
+            if (e.NewState.Name == CompressionTop && StretchingTop != null)
             {
-                    StretchingTop(this, null);
+                StretchingTop(this, null);
             }
             else if (e.NewState.Name == CompressionBottom && StretchingBottom != null)
             {
-               StretchingBottom(this, null);
+                StretchingBottom(this, null);
             }
             else if (e.NewState.Name == NoVerticalCompression && StretchingCompleted != null)
             {
@@ -1690,11 +1721,11 @@ namespace Microsoft.Phone.Controls
         }
         #endregion
 
-        #region ItemType enum
+        #region LongListSelectorItemType enum
         /// <summary>
         /// Describes different items.
         /// </summary>
-        internal enum ItemType
+        public enum LongListSelectorItemType
         {
             Unknown,
             Item,
@@ -1705,13 +1736,13 @@ namespace Microsoft.Phone.Controls
         }
         #endregion
 
-        #region ItemTuple class
+        #region LongListSelectorItem class
         /// <summary>
         /// Holds information about an item.
         /// </summary>
-        internal class ItemTuple
+        public class LongListSelectorItem
         {
-            public ItemType ItemType 
+            public LongListSelectorItemType ItemType 
             { 
                 get; 
                 set; 

@@ -49,7 +49,7 @@ namespace Microsoft.Phone.Controls
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification="Need static ctor for more than instantiation")]
         static GestureListener()
         {
-            Touch.FrameReported += new TouchFrameEventHandler(Touch_FrameReported); 
+            Touch.FrameReported += OnTouchFrameReported; 
             
             TouchPanel.EnabledGestures =
                 GestureType.Tap |
@@ -62,7 +62,7 @@ namespace Microsoft.Phone.Controls
                 GestureType.PinchComplete;
 
             _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(100) };
-            _timer.Tick += new EventHandler(OnTimerTick);
+            _timer.Tick += OnTimerTick;
         }
 
         /// <summary>
@@ -70,10 +70,10 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void Touch_FrameReported(object sender, TouchFrameEventArgs e)
+        private static void OnTouchFrameReported(object sender, TouchFrameEventArgs e)
         {
             bool newIsInTouch = false;
-            Point gestureOrigin = new Point(0,0);
+            Point gestureOrigin = new Point(0, 0);
 
             foreach (TouchPoint point in e.GetTouchPoints(null))
             {
@@ -279,21 +279,26 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private static void GetTranslatedDelta(ref GeneralTransform deltaTransform, ref Point sampleDelta, ref Point cumulativeDelta, bool addToCumulative)
+        private static void GetTranslatedDelta(
+            ref GeneralTransform deltaTransform, 
+            ref Point sampleDelta, 
+            ref Point cumulativeDelta, 
+            bool addToCumulative)
         {
             if (sampleDelta.X != 0 || sampleDelta.Y != 0)
             {
-                if (deltaTransform == null)
+                if (deltaTransform == null && Application.Current.RootVisual != null)
                 {
                     deltaTransform = GetInverseRootTransformNoOffset();
                 }
-
-                sampleDelta = deltaTransform.Transform(sampleDelta);
-
-                if (addToCumulative)
+                if (deltaTransform != null)
                 {
-                    cumulativeDelta.X += sampleDelta.X;
-                    cumulativeDelta.Y += sampleDelta.Y;
+                    sampleDelta = deltaTransform.Transform(sampleDelta);
+                    if (addToCumulative)
+                    {
+                        cumulativeDelta.X += sampleDelta.X;
+                        cumulativeDelta.Y += sampleDelta.Y;
+                    }
                 }
             }
         }

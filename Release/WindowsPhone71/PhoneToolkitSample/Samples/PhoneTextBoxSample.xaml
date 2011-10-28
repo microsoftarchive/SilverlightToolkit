@@ -30,7 +30,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="TOOLKIT SAMPLE" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{StaticResource ApplicationTitle}" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="phonetextbox" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
@@ -42,7 +42,7 @@
                     <toolkit:PhoneTextBox Hint="Last Name"
                                          MaxLength="40"
                                          LengthIndicatorVisible="True" 
-                                         LengthIndicatorTheshold="10" />
+                                         LengthIndicatorThreshold="10" />
                     <toolkit:PhoneTextBox Hint="Subject"
                                           MaxLength="200"
                                           LengthIndicatorVisible="True"

@@ -58,12 +58,12 @@ namespace Microsoft.Phone.Controls.Primitives
             _tertiarySelectorPart = tertiarySelector;
 
             // Hook up to interesting events
-            _primarySelectorPart.DataSource.SelectionChanged += new EventHandler<SelectionChangedEventArgs>(HandleDataSourceSelectionChanged);
-            _secondarySelectorPart.DataSource.SelectionChanged += new EventHandler<SelectionChangedEventArgs>(HandleDataSourceSelectionChanged);
-            _tertiarySelectorPart.DataSource.SelectionChanged += new EventHandler<SelectionChangedEventArgs>(HandleDataSourceSelectionChanged);
-            _primarySelectorPart.IsExpandedChanged += new DependencyPropertyChangedEventHandler(HandleSelectorIsExpandedChanged);
-            _secondarySelectorPart.IsExpandedChanged += new DependencyPropertyChangedEventHandler(HandleSelectorIsExpandedChanged);
-            _tertiarySelectorPart.IsExpandedChanged += new DependencyPropertyChangedEventHandler(HandleSelectorIsExpandedChanged);
+            _primarySelectorPart.DataSource.SelectionChanged += OnDataSourceSelectionChanged;
+            _secondarySelectorPart.DataSource.SelectionChanged += OnDataSourceSelectionChanged;
+            _tertiarySelectorPart.DataSource.SelectionChanged += OnDataSourceSelectionChanged;
+            _primarySelectorPart.IsExpandedChanged += OnSelectorIsExpandedChanged;
+            _secondarySelectorPart.IsExpandedChanged += OnSelectorIsExpandedChanged;
+            _tertiarySelectorPart.IsExpandedChanged += OnSelectorIsExpandedChanged;
 
             // Hide all selectors
             _primarySelectorPart.Visibility = Visibility.Collapsed;
@@ -92,7 +92,7 @@ namespace Microsoft.Phone.Controls.Primitives
                             if ((ClosedVisibilityStateName == state.Name) && (null != state.Storyboard))
                             {
                                 _closedStoryboard = state.Storyboard;
-                                _closedStoryboard.Completed += new EventHandler(HandleClosedStoryboardCompleted);
+                                _closedStoryboard.Completed += OnClosedStoryboardCompleted;
                             }
                         }
                     }
@@ -110,12 +110,12 @@ namespace Microsoft.Phone.Controls.Primitives
                         if ("DONE" == button.Text)
                         {
                             button.Text = LocalizedResources.ControlResources.DateTimePickerDoneText;
-                            button.Click += new EventHandler(HandleDoneButtonClick);
+                            button.Click += OnDoneButtonClick;
                         }
                         else if ("CANCEL" == button.Text)
                         {
                             button.Text = LocalizedResources.ControlResources.DateTimePickerCancelText;
-                            button.Click += new EventHandler(HandleCancelButtonClick);
+                            button.Click += OnCancelButtonClick;
                         }
                     }
                 }
@@ -125,7 +125,7 @@ namespace Microsoft.Phone.Controls.Primitives
             VisualStateManager.GoToState(this, OpenVisibilityStateName, true);
         }
 
-        private void HandleDataSourceSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnDataSourceSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Push the selected item to all selectors
             DataSource dataSource = (DataSource)sender;
@@ -134,7 +134,7 @@ namespace Microsoft.Phone.Controls.Primitives
             _tertiarySelectorPart.DataSource.SelectedItem = dataSource.SelectedItem;
         }
 
-        private void HandleSelectorIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void OnSelectorIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
             {
@@ -145,7 +145,7 @@ namespace Microsoft.Phone.Controls.Primitives
             }
         }
 
-        private void HandleDoneButtonClick(object sender, EventArgs e)
+        private void OnDoneButtonClick(object sender, EventArgs e)
         {
             // Commit the value and close
             Debug.Assert((_primarySelectorPart.DataSource.SelectedItem == _secondarySelectorPart.DataSource.SelectedItem) && (_secondarySelectorPart.DataSource.SelectedItem == _tertiarySelectorPart.DataSource.SelectedItem));
@@ -153,7 +153,7 @@ namespace Microsoft.Phone.Controls.Primitives
             ClosePickerPage();
         }
 
-        private void HandleCancelButtonClick(object sender, EventArgs e)
+        private void OnCancelButtonClick(object sender, EventArgs e)
         {
             // Close without committing a value
             _value = null;
@@ -185,11 +185,11 @@ namespace Microsoft.Phone.Controls.Primitives
             }
             else
             {
-                HandleClosedStoryboardCompleted(null, null);
+                OnClosedStoryboardCompleted(null, null);
             }
         }
 
-        private void HandleClosedStoryboardCompleted(object sender, EventArgs e)
+        private void OnClosedStoryboardCompleted(object sender, EventArgs e)
         {
             // Close the picker page
             NavigationService.GoBack();

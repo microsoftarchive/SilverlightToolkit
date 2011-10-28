@@ -7,7 +7,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,12 +111,12 @@ namespace Microsoft.Phone.Controls
                         if ("DONE" == button.Text)
                         {
                             button.Text = LocalizedResources.ControlResources.DateTimePickerDoneText;
-                            button.Click += HandleDoneButtonClick;
+                            button.Click += OnDoneButtonClick;
                         }
                         else if ("CANCEL" == button.Text)
                         {
                             button.Text = LocalizedResources.ControlResources.DateTimePickerCancelText;
-                            button.Click += HandleCancelButtonClick;
+                            button.Click += OnCancelButtonClick;
                         }
                     }
                 }
@@ -125,7 +124,7 @@ namespace Microsoft.Phone.Controls
 
             SetupListItems(-90);
 
-            PlaneProjection headerProjection = (PlaneProjection) HeaderTitle.Projection;
+            PlaneProjection headerProjection = (PlaneProjection)HeaderTitle.Projection;
             if (null == headerProjection)
             {
                 headerProjection = new PlaneProjection();
@@ -135,7 +134,7 @@ namespace Microsoft.Phone.Controls
 
             Picker.Opacity = 1;
 
-            Dispatcher.BeginInvoke(() => 
+            Dispatcher.BeginInvoke(() =>
                 {
                     IsOpen = true;
                 });
@@ -152,7 +151,7 @@ namespace Microsoft.Phone.Controls
             // Add a projection for each list item and turn it to -90 (rotationX) so it is hidden.
             for (int x = 0; x < Picker.Items.Count; x++)
             {
-                ListBoxItem item = (ListBoxItem)Picker.ItemContainerGenerator.ContainerFromIndex(x);
+                FrameworkElement item = (FrameworkElement)Picker.ItemContainerGenerator.ContainerFromIndex(x);
                 if (null != item)
                 {
                     PlaneProjection p = (PlaneProjection)item.Projection;
@@ -206,11 +205,11 @@ namespace Microsoft.Phone.Controls
             {
                 Picker.ItemTemplate = FullModeItemTemplate;
             }
-            
+
             if (SelectionMode == SelectionMode.Single)
             {
                 ApplicationBar.IsVisible = false;
-                
+
                 Picker.SelectedItem = SelectedItem;
             }
             else
@@ -228,7 +227,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandleDoneButtonClick(object sender, EventArgs e)
+        private void OnDoneButtonClick(object sender, EventArgs e)
         {
             // Commit the value and close
             SelectedItem = Picker.SelectedItem;
@@ -236,7 +235,7 @@ namespace Microsoft.Phone.Controls
             ClosePickerPage();
         }
 
-        private void HandleCancelButtonClick(object sender, EventArgs e)
+        private void OnCancelButtonClick(object sender, EventArgs e)
         {
             // Close without committing a value
             SelectedItem = null;
@@ -267,7 +266,7 @@ namespace Microsoft.Phone.Controls
             IsOpen = false;
         }
 
-        private void HandleClosedStoryboardCompleted(object sender, EventArgs e)
+        private void OnClosedStoryboardCompleted(object sender, EventArgs e)
         {
             // Close the picker page
             NavigationService.GoBack();
@@ -369,14 +368,14 @@ namespace Microsoft.Phone.Controls
 
                 if (!IsOpen)
                 {
-                    mainBoard.Completed += HandleClosedStoryboardCompleted;
+                    mainBoard.Completed += OnClosedStoryboardCompleted;
                 }
 
                 mainBoard.Begin();
             }
             else if (!IsOpen)
             {
-                HandleClosedStoryboardCompleted(null, null);
+                OnClosedStoryboardCompleted(null, null);
             }           
         }
 
@@ -445,8 +444,8 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Is used in code behind.")]
-        private void Picker_Tap(object sender, GestureEventArgs e)
+
+        private void OnPickerTapped(object sender, System.Windows.Input.GestureEventArgs e)
         {
             // We listen to the tap event because SelectionChanged does not fire if the user picks the already selected item.
 

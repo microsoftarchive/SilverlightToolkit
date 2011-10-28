@@ -353,14 +353,14 @@ namespace Microsoft.Phone.Controls.Primitives
         }
         #endregion
 
-        void LoopingSelector_SizeChanged(object sender, SizeChangedEventArgs e)
+        void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             _centeringTransform.Y = Math.Round(e.NewSize.Height / 2);
             Clip = new RectangleGeometry() { Rect = new Rect(0, 0, e.NewSize.Width, e.NewSize.Height) };
             UpdateData();
         }
 
-        void wrapper_Click(object sender, EventArgs e)
+        void OnWrapperClick(object sender, EventArgs e)
         {
             if (_state == State.Normal)
             {
@@ -757,13 +757,13 @@ namespace Microsoft.Phone.Controls.Primitives
         private void CreateEventHandlers()
         {
 
-            SizeChanged += new SizeChangedEventHandler(LoopingSelector_SizeChanged);
+            SizeChanged += OnSizeChanged;
             
-            this.ManipulationStarted += new EventHandler<ManipulationStartedEventArgs>(OnManipulationStarted);
-            this.ManipulationCompleted += new EventHandler<ManipulationCompletedEventArgs>(OnManipulationCompleted);
-            this.ManipulationDelta += new EventHandler<ManipulationDeltaEventArgs>(OnManipulationDelta);
+            this.ManipulationStarted += OnManipulationStarted;
+            this.ManipulationCompleted += OnManipulationCompleted;
+            this.ManipulationDelta += OnManipulationDelta;
 
-            this.Tap += new EventHandler<System.Windows.Input.GestureEventArgs>(OnTap);
+            this.Tap += OnTap;
 
             AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(LoopingSelector_MouseLeftButtonDown), true);
             AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(LoopingSelector_MouseLeftButtonUp), true);
@@ -782,7 +782,7 @@ namespace Microsoft.Phone.Controls.Primitives
                 wrapper.Height = ItemSize.Height;
                 wrapper.Padding = ItemMargin;
 
-                wrapper.Click += new EventHandler<EventArgs>(wrapper_Click);
+                wrapper.Click += OnWrapperClick;
             }
 
             wrapper.DataContext = wrapper.Content = content;

@@ -62,6 +62,7 @@ namespace Microsoft.Phone.Controls
         private TranslateTransform _itemsPresenterTranslateTransformPart;
         private bool _updatingSelection;
         private int _deferredSelectedIndex = -1;
+        private object _deferredSelectedItem = null;
 
         private object _frameContentWhenOpened;
         private NavigationInTransition _savedNavigationInTransition;
@@ -86,7 +87,17 @@ namespace Microsoft.Phone.Controls
         /// If this delegate is implemented, default summarizing behavior can be achieved by returning 
         /// null instead of a string.
         /// </summary>
-        public Func<IList, string> SummaryForSelectedItemsDelegate { get; set; }
+        public Func<IList, string> SummaryForSelectedItemsDelegate
+        {
+            get { return (Func<IList, string>)GetValue(SummaryForSelectedItemsDelegateProperty); }
+            set { SetValue(SummaryForSelectedItemsDelegateProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the SummaryForSelectedItemsDelegate DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty SummaryForSelectedItemsDelegateProperty =
+            DependencyProperty.Register("SummaryForSelectedItemsDelegate", typeof(Func<IList, string>), typeof(ListPicker), null);
 
         /// <summary>
         /// Gets or sets the ListPickerMode (ex: Normal/Expanded/Full).
@@ -114,13 +125,13 @@ namespace Microsoft.Phone.Controls
             {
                 if (null != _page)
                 {
-                    _page.BackKeyPress -= HandlePageBackKeyPress;
+                    _page.BackKeyPress -= OnPageBackKeyPress;
                     _page = null;
                 }
 
                 if (null != _frame)
                 {
-                    _frame.ManipulationStarted -= HandleFrameManipulationStarted;
+                    _frame.ManipulationStarted -= OnFrameManipulationStarted;
                     _frame = null;
                 }
             }
@@ -133,7 +144,7 @@ namespace Microsoft.Phone.Controls
                     _frame = Application.Current.RootVisual as PhoneApplicationFrame;
                     if (null != _frame)
                     {
-                        _frame.AddHandler(ManipulationStartedEvent, new EventHandler<ManipulationStartedEventArgs>(HandleFrameManipulationStarted), true);
+                        _frame.AddHandler(ManipulationStartedEvent, new EventHandler<ManipulationStartedEventArgs>(OnFrameManipulationStarted), true);
                     }
                 }
 
@@ -142,7 +153,7 @@ namespace Microsoft.Phone.Controls
                     _page = _frame.Content as PhoneApplicationPage;
                     if (null != _page)
                     {
-                        _page.BackKeyPress += HandlePageBackKeyPress;
+                        _page.BackKeyPress += OnPageBackKeyPress;
                     }
                 }
             }
@@ -289,8 +300,23 @@ namespace Microsoft.Phone.Controls
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "SelectedItem", Justification = "Property name.")]
         private void OnSelectedItemChanged(object oldValue, object newValue)
         {
+            if (null == Items || Items.Count == 0)
+            {
+                if (null == Template)
+                {
+                    // Can't set the value now; remember it for later
+                    _deferredSelectedItem = newValue;
+                    return;
+                }
+                else
+                {
+                    throw new InvalidOperationException(Properties.Resources.InvalidSelectedItem);
+                }
+            }
+
             // Validate new value
-            int newValueIndex = newValueIndex = (null != newValue) ? Items.IndexOf(newValue) : -1;
+            int newValueIndex = (null != newValue) ? Items.IndexOf(newValue) : -1;
+
             if ((-1 == newValueIndex) && (0 < Items.Count))
             {
                 throw new InvalidOperationException(Properties.Resources.InvalidSelectedItem);
@@ -315,7 +341,7 @@ namespace Microsoft.Phone.Controls
             }
 
             // Fire SelectionChanged event
-            SelectionChangedEventHandler handler = SelectionChanged;
+            var handler = SelectionChanged;
             if (null != handler)
             {
                 IList removedItems = (null == oldValue) ? new object[0] : new object[] { oldValue };
@@ -519,10 +545,11 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Gets the selected items.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification="Want to allow this to be bound to.")]
         public IList SelectedItems
         {
             get { return (IList)GetValue(SelectedItemsProperty); }
-            private set { SetValue(SelectedItemsProperty, value); }
+            set { SetValue(SelectedItemsProperty, value); }
         }
 
         /// <summary>
@@ -545,7 +572,7 @@ namespace Microsoft.Phone.Controls
             UpdateSummary(newValue);
 
             // Fire SelectionChanged event
-            SelectionChangedEventHandler handler = SelectionChanged;
+            var handler = SelectionChanged;
             if (null != handler)
             {
                 IList removedItems = new List<object>();
@@ -609,7 +636,7 @@ namespace Microsoft.Phone.Controls
             // Unhook any remaining event handlers
             if (null != _frame)
             {
-                _frame.ManipulationStarted -= HandleFrameManipulationStarted;
+                _frame.ManipulationStarted -= OnFrameManipulationStarted;
                 _frame = null;
             }
         }
@@ -622,7 +649,7 @@ namespace Microsoft.Phone.Controls
             // Unhook from old elements
             if (null != _itemsPresenterHostParent)
             {
-                _itemsPresenterHostParent.SizeChanged -= HandleItemsPresenterHostParentSizeChanged;
+                _itemsPresenterHostParent.SizeChanged -= OnItemsPresenterHostParentSizeChanged;
             }
             _storyboard.Stop();
 
@@ -638,7 +665,7 @@ namespace Microsoft.Phone.Controls
 
             if (null != _itemsPresenterHostParent)
             {
-                _itemsPresenterHostParent.SizeChanged += HandleItemsPresenterHostParentSizeChanged;
+                _itemsPresenterHostParent.SizeChanged += OnItemsPresenterHostParentSizeChanged;
             }
             if (null != _itemsPresenterHostPart)
             {
@@ -680,6 +707,11 @@ namespace Microsoft.Phone.Controls
                 SelectedIndex = _deferredSelectedIndex;
                 _deferredSelectedIndex = -1;
             }
+            if (null != _deferredSelectedItem)
+            {
+                SelectedItem = _deferredSelectedItem;
+                _deferredSelectedItem = null;
+            }
 
             OnSelectionModeChanged(SelectionMode);
             OnSelectedItemsChanged(SelectedItems, SelectedItems);
@@ -715,8 +747,8 @@ namespace Microsoft.Phone.Controls
 
             // Hook up to interesting events
             ContentControl container = (ContentControl)element;
-            container.ManipulationCompleted += HandleContainerManipulationCompleted;
-            container.SizeChanged += HandleListPickerItemSizeChanged;
+            container.Tap += OnContainerTap;
+            container.SizeChanged += OnListPickerItemSizeChanged;
 
             // Size for selected item if it's this one
             if (object.Equals(item, SelectedItem))
@@ -736,8 +768,8 @@ namespace Microsoft.Phone.Controls
 
             // Unhook from events
             ContentControl container = (ContentControl)element;
-            container.ManipulationCompleted -= HandleContainerManipulationCompleted;
-            container.SizeChanged -= HandleListPickerItemSizeChanged;
+            container.Tap -= OnContainerTap;
+            container.SizeChanged -= OnListPickerItemSizeChanged;
         }
 
         /// <summary>
@@ -789,7 +821,7 @@ namespace Microsoft.Phone.Controls
             Dispatcher.BeginInvoke(() => SizeForAppropriateView(false));
         }
 
-        private bool IsValidManipulation(object OriginalSource, double x, double y)
+        private bool IsValidManipulation(object OriginalSource, Point p)
         {
             DependencyObject element = OriginalSource as DependencyObject;
 
@@ -798,7 +830,7 @@ namespace Microsoft.Phone.Controls
                 if (_itemsPresenterHostPart == element || _multipleSelectionModeSummary == element || _border == element)
                 {
                     double Padding = 11.0;
-                    return (x > 0 && y > 0 - Padding && x < _border.RenderSize.Width && y < _border.RenderSize.Height + Padding);
+                    return (p.X > 0 && p.Y > 0 - Padding && p.X < _border.RenderSize.Width && p.Y < _border.RenderSize.Height + Padding);
                 }
 
                 element = VisualTreeHelper.GetParent(element);
@@ -806,6 +838,35 @@ namespace Microsoft.Phone.Controls
             return false;
         }
 
+        /// <summary>
+        /// Handles the tap event.
+        /// </summary>
+        /// <param name="e">Event args</param>
+        protected override void OnTap(System.Windows.Input.GestureEventArgs e)
+        {
+            if (null == e)
+            {
+                throw new ArgumentNullException("e");
+            }
+
+            if (ListPickerMode == ListPickerMode.Normal)
+            {
+                if (!IsEnabled)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                Point p = e.GetPosition((UIElement)e.OriginalSource);
+                if (IsValidManipulation(e.OriginalSource, p))
+                {
+                    if (Open())
+                    {
+                        e.Handled = true;
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Called when the ManipulationStarted event occurs.
         /// </summary>
@@ -819,15 +880,25 @@ namespace Microsoft.Phone.Controls
 
             base.OnManipulationStarted(e);
 
-            if (!IsEnabled)
+            if (ListPickerMode == ListPickerMode.Normal)
             {
-                e.Complete();
-                return;
-            }
+                if (!IsEnabled)
+                {
+                    e.Complete();
+                    return;
+                }
 
-            if (IsValidManipulation(e.OriginalSource, e.ManipulationOrigin.X, e.ManipulationOrigin.Y)) 
-            {
-                IsHighlighted = true;
+                Point p = e.ManipulationOrigin;
+
+                if (e.OriginalSource != e.ManipulationContainer)
+                {
+                    p = e.ManipulationContainer.TransformToVisual((UIElement)e.OriginalSource).Transform(p);
+                }
+
+                if (IsValidManipulation(e.OriginalSource, p))
+                {
+                    IsHighlighted = true;
+                }
             }
         }
 
@@ -844,16 +915,26 @@ namespace Microsoft.Phone.Controls
 
             base.OnManipulationDelta(e);
 
-            if (!IsEnabled)
+            if (ListPickerMode == ListPickerMode.Normal)
             {
-                e.Complete();
-                return;
-            }
+                if (!IsEnabled)
+                {
+                    e.Complete();
+                    return;
+                }
 
-            if (!IsValidManipulation(e.OriginalSource, e.ManipulationOrigin.X, e.ManipulationOrigin.Y))
-            {
-                IsHighlighted = false;
-                e.Complete();
+                Point p = e.ManipulationOrigin;
+
+                if (e.OriginalSource != e.ManipulationContainer)
+                {
+                    p = e.ManipulationContainer.TransformToVisual((UIElement)e.OriginalSource).Transform(p);
+                }
+
+                if (!IsValidManipulation(e.OriginalSource, p))
+                {
+                    IsHighlighted = false;
+                    e.Complete();
+                }
             }
         }
 
@@ -875,15 +956,10 @@ namespace Microsoft.Phone.Controls
                 return;
             }
 
-            // Style box to look unselected
-            IsHighlighted = false;
-
-            if (IsValidManipulation(e.OriginalSource, e.ManipulationOrigin.X, e.ManipulationOrigin.Y) && 0 < Items.Count)
+            if (ListPickerMode == ListPickerMode.Normal)
             {
-                if (Open())
-                {
-                    e.Handled = true;
-                }
+                // Style box to look unselected
+                IsHighlighted = false;
             }
         }
 
@@ -918,7 +994,7 @@ namespace Microsoft.Phone.Controls
             return false;
         }
 
-        private void HandleItemsPresenterHostParentSizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnItemsPresenterHostParentSizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Pass width through the Canvas
             if (null != _itemsPresenterPart)
@@ -930,7 +1006,7 @@ namespace Microsoft.Phone.Controls
             _itemsPresenterHostParent.Clip = new RectangleGeometry { Rect = new Rect(new Point(), e.NewSize) };
         }
 
-        private void HandleListPickerItemSizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnListPickerItemSizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Update size accordingly
             ContentControl container = (ContentControl)sender;
@@ -940,7 +1016,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandlePageBackKeyPress(object sender, CancelEventArgs e)
+        private void OnPageBackKeyPress(object sender, CancelEventArgs e)
         {
             // Revert to Normal mode
             ListPickerMode = ListPickerMode.Normal;
@@ -1034,7 +1110,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandleFrameManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        private void OnFrameManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
             if (ListPickerMode.Expanded == ListPickerMode)
             {
@@ -1053,7 +1129,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandleContainerManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        private void OnContainerTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (ListPickerMode.Expanded == ListPickerMode)
             {
@@ -1150,9 +1226,9 @@ namespace Microsoft.Phone.Controls
                         
                     }
 
-                    _frame.Navigated += new NavigatedEventHandler(HandleFrameNavigated);
-                    _frame.NavigationStopped += new NavigationStoppedEventHandler(HandleFrameNavigationStoppedOrFailed);
-                    _frame.NavigationFailed += new NavigationFailedEventHandler(HandleFrameNavigationStoppedOrFailed);
+                    _frame.Navigated += OnFrameNavigated;
+                    _frame.NavigationStopped += OnFrameNavigationStoppedOrFailed;
+                    _frame.NavigationFailed += OnFrameNavigationStoppedOrFailed;
 
                     _hasPickerPageOpen = true;
 
@@ -1166,9 +1242,9 @@ namespace Microsoft.Phone.Controls
             // Unhook from events
             if (null != _frame)
             {
-                _frame.Navigated -= new NavigatedEventHandler(HandleFrameNavigated);
-                _frame.NavigationStopped -= new NavigationStoppedEventHandler(HandleFrameNavigationStoppedOrFailed);
-                _frame.NavigationFailed -= new NavigationFailedEventHandler(HandleFrameNavigationStoppedOrFailed);
+                _frame.Navigated -= OnFrameNavigated;
+                _frame.NavigationStopped -= OnFrameNavigationStoppedOrFailed;
+                _frame.NavigationFailed -= OnFrameNavigationStoppedOrFailed;
 
                 // Restore host page transitions for the completed "popup" navigation
                 UIElement frameContentWhenOpenedAsUIElement = _frameContentWhenOpened as UIElement;
@@ -1200,7 +1276,7 @@ namespace Microsoft.Phone.Controls
             }
         }
 
-        private void HandleFrameNavigated(object sender, NavigationEventArgs e)
+        private void OnFrameNavigated(object sender, NavigationEventArgs e)
         {
             if (e.Content == _frameContentWhenOpened)
             {
@@ -1255,7 +1331,7 @@ namespace Microsoft.Phone.Controls
             }        
         }
 
-        private void HandleFrameNavigationStoppedOrFailed(object sender, EventArgs e)
+        private void OnFrameNavigationStoppedOrFailed(object sender, EventArgs e)
         {
             // Abort
             ListPickerMode = ListPickerMode.Normal;

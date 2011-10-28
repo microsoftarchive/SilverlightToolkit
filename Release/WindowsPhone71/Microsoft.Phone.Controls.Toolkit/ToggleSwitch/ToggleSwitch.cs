@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
+using Microsoft.Phone.Controls.Primitives;
 
 namespace Microsoft.Phone.Controls
 {
@@ -20,7 +21,7 @@ namespace Microsoft.Phone.Controls
     /// <QualityBand>Preview</QualityBand>
     [TemplateVisualState(Name = NormalState, GroupName = CommonStates)]
     [TemplateVisualState(Name = DisabledState, GroupName = CommonStates)]
-    [TemplatePart(Name = SwitchPart, Type = typeof(ToggleButton))]
+    [TemplatePart(Name = SwitchPart, Type = typeof(ToggleSwitchButton))]
     public class ToggleSwitch : ContentControl
     {
         /// <summary>
@@ -151,7 +152,7 @@ namespace Microsoft.Phone.Controls
         /// <see cref="System.Windows.Controls.Primitives.ToggleButton"/>
         /// template part.
         /// </summary>
-        private ToggleButton _toggleButton;
+        private ToggleSwitchButton _toggleButton;
 
         /// <summary>
         /// Whether the content was set.
@@ -220,18 +221,18 @@ namespace Microsoft.Phone.Controls
 
             if (_toggleButton != null)
             {
-                _toggleButton.Checked -= CheckedHandler;
-                _toggleButton.Unchecked -= UncheckedHandler;
-                _toggleButton.Indeterminate -= IndeterminateHandler;
-                _toggleButton.Click -= ClickHandler;
+                _toggleButton.Checked -= OnChecked;
+                _toggleButton.Unchecked -= OnUnchecked;
+                _toggleButton.Indeterminate -= OnIndeterminate;
+                _toggleButton.Click -= OnClick;
             }
-            _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
+            _toggleButton = GetTemplateChild(SwitchPart) as ToggleSwitchButton;
             if (_toggleButton != null)
             {
-                _toggleButton.Checked += CheckedHandler;
-                _toggleButton.Unchecked += UncheckedHandler;
-                _toggleButton.Indeterminate += IndeterminateHandler;
-                _toggleButton.Click += ClickHandler;
+                _toggleButton.Checked += OnChecked;
+                _toggleButton.Unchecked += OnUnchecked;
+                _toggleButton.Indeterminate += OnIndeterminate;
+                _toggleButton.Click += OnClick;
                 _toggleButton.IsChecked = IsChecked;
             }
             IsEnabledChanged += delegate
@@ -248,7 +249,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void CheckedHandler(object sender, RoutedEventArgs e)
+        private void OnChecked(object sender, RoutedEventArgs e)
         {
             IsChecked = true;
             SafeRaise.Raise(Checked, this, e);
@@ -261,7 +262,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void UncheckedHandler(object sender, RoutedEventArgs e)
+        private void OnUnchecked(object sender, RoutedEventArgs e)
         {
             IsChecked = false;
             SafeRaise.Raise(Unchecked, this, e);
@@ -274,7 +275,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void IndeterminateHandler(object sender, RoutedEventArgs e)
+        private void OnIndeterminate(object sender, RoutedEventArgs e)
         {
             IsChecked = null;
             SafeRaise.Raise(Indeterminate, this, e);
@@ -287,7 +288,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event information.</param>
-        private void ClickHandler(object sender, RoutedEventArgs e)
+        private void OnClick(object sender, RoutedEventArgs e)
         {
             SafeRaise.Raise(Click, this, e);
         }

@@ -650,6 +650,11 @@ namespace Microsoft.Phone.Controls
                 Math.Min(Math.Max(touchPoint.X / (centerPoint.X * 2), 0), 1),
                 Math.Min(Math.Max(touchPoint.Y / (centerPoint.Y * 2), 0), 1));
 
+            if (double.IsNaN(normalizedPoint.X) || double.IsNaN(normalizedPoint.Y))
+            {
+                return;
+            }
+
             // Shell values
             double xMagnitude = Math.Abs(normalizedPoint.X - 0.5);
             double yMagnitude = Math.Abs(normalizedPoint.Y - 0.5);

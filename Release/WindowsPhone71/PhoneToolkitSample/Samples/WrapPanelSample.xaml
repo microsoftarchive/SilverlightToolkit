@@ -54,7 +54,7 @@
                     <Button Content="+16 items" Tag="16" Click="OnAdd"/>
                     <TextBlock Text="note" Style="{StaticResource PhoneTextLargeStyle}"/>
                     <TextBlock TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}">
-                        <TextBlock.Text>Tap items to remove them. The items handle the GestureListener.Tap event. See the code-behind for an example of how to hook it up in code.</TextBlock.Text>
+                        <TextBlock.Text>Tap items to remove them. The items handle the Tap event. See the code-behind for an example of how to hook it up in code.</TextBlock.Text>
                     </TextBlock>
                 </StackPanel>
             </controls:PanoramaItem>

@@ -76,11 +76,11 @@ namespace Microsoft.Phone.Controls
         {
             if (null != oldValue)
             {
-                oldValue.CanExecuteChanged -= new EventHandler(HandleCanExecuteChanged);
+                oldValue.CanExecuteChanged -= OnCanExecuteChanged;
             }
             if (null != newValue)
             {
-                newValue.CanExecuteChanged += new EventHandler(HandleCanExecuteChanged);
+                newValue.CanExecuteChanged += OnCanExecuteChanged;
             }
             UpdateIsEnabled(true);
         }
@@ -128,9 +128,9 @@ namespace Microsoft.Phone.Controls
         public MenuItem()
         {
             DefaultStyleKey = typeof(MenuItem);
-            IsEnabledChanged += new DependencyPropertyChangedEventHandler(HandleIsEnabledChanged);
+            IsEnabledChanged += OnIsEnabledChanged;
             SetValue(TiltEffect.IsTiltEnabledProperty, true);
-            Loaded += new RoutedEventHandler(HandleLoaded);
+            Loaded += OnLoaded;
             UpdateIsEnabled(false);
         }
 
@@ -252,7 +252,7 @@ namespace Microsoft.Phone.Controls
             // WPF-compatibility by allowing the ContextMenu to close before the command
             // executes. However, it breaks the Clipboard.SetText scenario because the
             // call to SetText is no longer in direct response to user input.
-            RoutedEventHandler handler = Click;
+            var handler = Click;
             if (null != handler)
             {
                 handler(this, new RoutedEventArgs());
@@ -268,7 +268,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object sender, EventArgs e)
         {
             UpdateIsEnabled(true);
         }
@@ -294,7 +294,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ChangeVisualState(true);
         }
@@ -304,7 +304,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             ChangeVisualState(false);
         }

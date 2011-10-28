@@ -156,7 +156,7 @@
                                          GroupTag="Places"/>
                         <toolkit:HubTile Grid.Row="3" Grid.Column="0"
                                          Margin="12,12,0,0" 
-                                         Source="/Images/København.jpg"
+                                         Source="/Images/Copenhagen.jpg"
                                          Title="Denmark"
                                          IsFrozen="True"
                                          GroupTag="Places"/>

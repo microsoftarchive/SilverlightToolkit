@@ -510,7 +510,7 @@ namespace System.Windows.Controls
         /// <param name="e">The event data.</param>
         private void OnClosed(EventArgs e)
         {
-            EventHandler handler = Closed;
+            var handler = Closed;
             if (handler != null)
             {
                 handler(this, e);
@@ -650,7 +650,7 @@ namespace System.Windows.Controls
         /// <param name="e">The event data.</param>
         private void OnFocusChanged(EventArgs e)
         {
-            EventHandler handler = FocusChanged;
+            var handler = FocusChanged;
             if (handler != null)
             {
                 handler(this, e);
@@ -663,7 +663,7 @@ namespace System.Windows.Controls
         /// <param name="e">The event data.</param>
         private void OnUpdateVisualStates(EventArgs e)
         {
-            EventHandler handler = UpdateVisualStates;
+            var handler = UpdateVisualStates;
             if (handler != null)
             {
                 handler(this, e);

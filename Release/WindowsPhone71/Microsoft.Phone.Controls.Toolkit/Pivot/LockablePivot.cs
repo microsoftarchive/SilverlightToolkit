@@ -40,6 +40,41 @@ namespace Microsoft.Phone.Controls
         private bool _isLocked   = false;
         private bool _isUpdating = false;
 
+        #region public bool IsLocked
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is locked.
+        /// </summary>
+        public bool IsLocked
+        {
+            get { return (bool)GetValue(IsLockedProperty); }
+            set { SetValue(IsLockedProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the IsLocked dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsLockedProperty =
+            DependencyProperty.Register(
+                "IsLocked",
+                typeof(bool),
+                typeof(LockablePivot),
+                new PropertyMetadata(false, OnIsLockedPropertyChanged));
+
+        /// <summary>
+        /// IsLockedProperty property changed handler.
+        /// </summary>
+        /// <param name="d">LockablePivot that changed its IsLocked.</param>
+        /// <param name="e">Event arguments.</param>
+        private static void OnIsLockedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            LockablePivot source = d as LockablePivot;
+            if (source != null)
+            {
+                source.OnIsLockedChanged((bool)e.NewValue);
+            }
+        }
+        #endregion public bool IsLocked
+
         private struct HeaderAnimationInfo
         {
             public double opacity;
@@ -123,6 +158,27 @@ namespace Microsoft.Phone.Controls
             // We've transitioned to another pivot item, so existing
             // animation information is no longer valid.
             _animInfo = null;
+        }
+
+        private void OnIsLockedChanged(bool newValue)
+        {
+            _isLocked = newValue;
+            _isUpdating = true;
+
+            if (_isLocked)
+            {
+                _savedIndex = SelectedIndex;
+
+                FadeOutHeaders();
+                SaveAndRemoveItems();
+            }
+            else
+            {
+                RestoreItems();
+                FadeInHeaders();
+            }
+
+            _isUpdating = false;
         }
 
         // We create and store the animation information for the current
@@ -226,40 +282,6 @@ namespace Microsoft.Phone.Controls
                     _animTime
                     );
             }    
-        }
-
-        /// <summary>
-        /// Sets or Gets the navigation lock mode.
-        /// </summary>
-        public bool IsLocked
-        {
-            get
-            {
-                return _isLocked;
-            }
-            set
-            {
-                if (value != _isLocked)
-                {
-                    _isLocked = !_isLocked;
-                    _isUpdating = true;
-
-                    if (_isLocked)
-                    {
-                        _savedIndex = SelectedIndex;
-
-                        FadeOutHeaders();
-                        SaveAndRemoveItems();
-                    }
-                    else
-                    {
-                        RestoreItems();
-                        FadeInHeaders();
-                    }
-
-                    _isUpdating = false;
-                }
-            }
         }
     }
 }

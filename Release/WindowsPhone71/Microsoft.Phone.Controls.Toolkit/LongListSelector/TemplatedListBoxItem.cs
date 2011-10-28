@@ -14,6 +14,6 @@ namespace Microsoft.Phone.Controls.Primitives
     /// <QualityBand>Preview</QualityBand>
     internal class TemplatedListBoxItem : ListBoxItem
     {
-        public LongListSelector.ItemTuple Tuple { get; set; }
+        public LongListSelector.LongListSelectorItem Tuple { get; set; }
     }
 }

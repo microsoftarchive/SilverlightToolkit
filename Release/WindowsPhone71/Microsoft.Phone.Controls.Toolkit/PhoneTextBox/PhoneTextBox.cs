@@ -297,7 +297,7 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Threshold after which the length indicator will appear.
         /// </summary>
-        public int LengthIndicatorTheshold
+        public int LengthIndicatorThreshold
         {
             get { return (int)base.GetValue(LengthIndicatorThresholdProperty); }
             set { base.SetValue(LengthIndicatorThresholdProperty, value); }
@@ -313,7 +313,7 @@ namespace Microsoft.Phone.Controls
                 return;
             }
 
-            if (phoneTextBox.LengthIndicatorTheshold < 0)
+            if (phoneTextBox.LengthIndicatorThreshold < 0)
             {
                 phoneTextBox._ignorePropertyChange = true;
                 phoneTextBox.SetValue(LengthIndicatorThresholdProperty, args.OldValue);
@@ -360,11 +360,11 @@ namespace Microsoft.Phone.Controls
                 return;
             }
 
-            LengthIndicator.Text = String.Format("{0}/{1}", Text.Length, ((DisplayedMaxLength > 0) ? DisplayedMaxLength : MaxLength));
-
             if (LengthIndicatorVisible)
             {
-                if (Text.Length >= LengthIndicatorTheshold)
+                LengthIndicator.Text = String.Format("{0}/{1}", Text.Length, ((DisplayedMaxLength > 0) ? DisplayedMaxLength : MaxLength));
+
+                if (Text.Length >= LengthIndicatorThreshold)
                 {
                     VisualStateManager.GoToState(this, LengthIndicatorVisibleState, false);
                 }
@@ -400,6 +400,24 @@ namespace Microsoft.Phone.Controls
             set { base.SetValue(ActionIconProperty, value); }
         }
 
+
+        /// <summary>
+        /// Gets or sets whether the ActionItem is hidden when there is not text entered in the PhoneTextBox.
+        /// </summary>
+        public bool HidesActionItemWhenEmpty
+        {
+            get { return (bool)GetValue(HidesActionItemWhenEmptyProperty); }
+            set { SetValue(HidesActionItemWhenEmptyProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the HidesActionItemWhenEmpty DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty HidesActionItemWhenEmptyProperty =
+            DependencyProperty.Register("HidesActionItemWhenEmpty", typeof(bool), typeof(PhoneTextBox), new PropertyMetadata(false, OnActionIconChanged));
+
+        
+
         /// <summary>
         /// Action Icon Tapped event.
         /// </summary>
@@ -419,7 +437,7 @@ namespace Microsoft.Phone.Controls
         {
             if (ActionIconBorder != null)
             {
-                if (ActionIcon == null)
+                if (ActionIcon == null || (HidesActionItemWhenEmpty && Text == String.Empty))
                 {
                     ActionIconBorder.Visibility = Visibility.Collapsed;
                     HintBorder.Padding = new Thickness(0);
@@ -441,7 +459,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">The sender object</param>
         /// <param name="e">The RoutedEventArgs for the event</param>
-        private void ActionIconTappedHandler(object sender, RoutedEventArgs e)
+        private void OnActionIconTapped(object sender, RoutedEventArgs e)
         {
             _ignoreFocus = true;
 
@@ -489,12 +507,12 @@ namespace Microsoft.Phone.Controls
 
             if (TextBox != null)
             {
-                TextBox.TextChanged -= HandleTextChanged;
+                TextBox.TextChanged -= OnTextChanged;
             }
 
             if (ActionIconBorder != null)
             {
-                ActionIconBorder.MouseLeftButtonDown -= ActionIconTappedHandler;
+                ActionIconBorder.MouseLeftButtonDown -= OnActionIconTapped;
             }
 
             RootGrid = GetTemplateChild(RootGridName) as Grid;
@@ -525,12 +543,12 @@ namespace Microsoft.Phone.Controls
 
             if (TextBox != null)
             {
-                TextBox.TextChanged += HandleTextChanged;
+                TextBox.TextChanged += OnTextChanged;
             }
 
             if (ActionIconBorder != null)
             {
-                ActionIconBorder.MouseLeftButtonDown += ActionIconTappedHandler;
+                ActionIconBorder.MouseLeftButtonDown += OnActionIconTapped;
                 UpdateActionIconVisibility(); // Add back the padding if needed.
             }
 
@@ -545,10 +563,11 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="sender">Sender TextBox</param>
         /// <param name="e">Event arguments</param>
-        private void HandleTextChanged(object sender, RoutedEventArgs e)
+        private void OnTextChanged(object sender, RoutedEventArgs e)
         {
             UpdateLengthIndicatorVisibility();
-
+            UpdateActionIconVisibility();
+            UpdateHintVisibility();
             ResizeTextBox();
         }
     }

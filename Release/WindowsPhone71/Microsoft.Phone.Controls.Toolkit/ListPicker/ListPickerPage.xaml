@@ -81,7 +81,7 @@
             </Setter>
         </Style>
     </phone:PhoneApplicationPage.Resources>
-    
+
     <Grid Background="{StaticResource PhoneChromeBrush}" x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -98,7 +98,7 @@
             Margin="24 12 12 12">
             <TextBlock.Projection>
                 <PlaneProjection RotationX="-90"/>
-            </TextBlock.Projection>  
+            </TextBlock.Projection>
         </TextBlock> 
 
         <!-- List of Items -->
@@ -108,11 +108,8 @@
             ItemsSource="{Binding}"
             Opacity="0"
             toolkit:TiltEffect.IsTiltEnabled="True"
-            Margin="24 12 0 0">
-            <toolkit:GestureService.GestureListener>
-                <toolkit:GestureListener Tap="Picker_Tap"/>
-            </toolkit:GestureService.GestureListener>
-        </ListBox>
+            Margin="24 12 0 0" 
+            Tap="OnPickerTapped"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

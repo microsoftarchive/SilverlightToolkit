@@ -20,11 +20,11 @@ namespace PhoneToolkitSample.Samples
         {
             InitializeComponent();
             _viewModel = new ViewModel();
-            _viewModel.Notify += new EventHandler<CommandEventArgs>(viewModel_Notify);
+            _viewModel.Notify += OnViewModelNotify;
             LayoutRoot.DataContext = _viewModel;
         }
 
-        void viewModel_Notify(object sender, CommandEventArgs e)
+        void OnViewModelNotify(object sender, CommandEventArgs e)
         {
             lastSelection.Text = string.Format("ICommand: {0}", e.Message);
         }
@@ -55,14 +55,14 @@ namespace PhoneToolkitSample.Samples
         public ViewModel()
         {
             AlwaysCommand = new AlwaysICommand();
-            ((AlwaysICommand)AlwaysCommand).Notify += new EventHandler<CommandEventArgs>(OnNotify);
+            ((AlwaysICommand)AlwaysCommand).Notify += OnNotify;
             IntermittentCommand = new IntermittentICommand();
-            ((IntermittentICommand)IntermittentCommand).Notify += new EventHandler<CommandEventArgs>(OnNotify);
+            ((IntermittentICommand)IntermittentCommand).Notify += OnNotify;
         }
 
         private void OnNotify(object sender, CommandEventArgs e)
         {
-            EventHandler<CommandEventArgs> notify = Notify;
+            var notify = Notify;
             if (notify != null)
             {
                 notify(this, e);
@@ -79,8 +79,8 @@ namespace PhoneToolkitSample.Samples
         public event EventHandler CanExecuteChanged;
         public void Execute(object parameter)
         {
-            EventHandler unused = CanExecuteChanged;
-            EventHandler<CommandEventArgs> notify = Notify;
+            var unused = CanExecuteChanged;
+            var notify = Notify;
             if (notify != null)
             {
                 notify(this, new CommandEventArgs("AlwaysICommand - " + (parameter ?? "[null]")));
@@ -102,7 +102,7 @@ namespace PhoneToolkitSample.Samples
                 var handler = CanExecuteChanged;
                 if (null != handler)
                 {
-                    handler.Invoke(this, EventArgs.Empty);
+                    handler(this, EventArgs.Empty);
                 }
             };
             timer.Start();
@@ -115,7 +115,7 @@ namespace PhoneToolkitSample.Samples
         public void Execute(object parameter)
         {
             Debug.Assert(_canExecute);
-            EventHandler<CommandEventArgs> notify = Notify;
+            var notify = Notify;
             if (notify != null){
                 notify(this, new CommandEventArgs("IntermittentICommand - " + (parameter ?? "[null]")));
             }
@@ -137,8 +137,8 @@ namespace PhoneToolkitSample.Samples
         public event EventHandler CanExecuteChanged;
         public void Execute(object parameter)
         {
-            EventHandler unused = CanExecuteChanged;
-            EventHandler<CommandEventArgs> notify = Notify;
+            var unused = CanExecuteChanged;
+            var notify = Notify;
             if (notify != null)
             {
                 notify(this, new CommandEventArgs("StringICommand - " + (parameter ?? "[null]")));

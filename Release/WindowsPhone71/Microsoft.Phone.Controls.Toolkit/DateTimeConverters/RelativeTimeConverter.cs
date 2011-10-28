@@ -246,7 +246,7 @@ namespace Microsoft.Phone.Controls
 
             string result;
 
-            DateTime given = (DateTime)value;
+            DateTime given = ((DateTime)value).ToLocalTime();
 
             DateTime current = DateTime.Now;
 
@@ -256,8 +256,10 @@ namespace Microsoft.Phone.Controls
 
             if (DateTimeFormatHelper.IsFutureDateTime(current, given))
             {
-                // Future dates and times are not supported.
-                throw new NotSupportedException(Properties.Resources.NonSupportedDateTime);
+                // Future dates and times are not supported, but to prevent crashing an app
+                // if the time they receive from a server is slightly ahead of the phone's clock
+                // we'll just default to the minimum, which is "2 seconds ago".
+                result = GetPluralTimeUnits(2, PluralSecondStrings);
             }
 
             if (difference.TotalSeconds > Year)

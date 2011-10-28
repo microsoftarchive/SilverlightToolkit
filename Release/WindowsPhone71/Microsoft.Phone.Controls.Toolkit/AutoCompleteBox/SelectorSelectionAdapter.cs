@@ -204,7 +204,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            SelectionChangedEventHandler handler = SelectionChanged;
+            var handler = SelectionChanged;
             if (handler != null)
             {
                 handler(sender, e);
@@ -315,7 +315,7 @@ namespace System.Windows.Controls
         /// <param name="e">The event data.</param>
         private void OnCommit(object sender, RoutedEventArgs e)
         {
-            RoutedEventHandler handler = Commit;
+            var handler = Commit;
             if (handler != null)
             {
                 handler(sender, e);
@@ -341,7 +341,7 @@ namespace System.Windows.Controls
         /// <param name="e">The event data.</param>
         private void OnCancel(object sender, RoutedEventArgs e)
         {
-            RoutedEventHandler handler = Cancel;
+            var handler = Cancel;
             if (handler != null)
             {
                 handler(sender, e);
