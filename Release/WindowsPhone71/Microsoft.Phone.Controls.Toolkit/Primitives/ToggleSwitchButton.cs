@@ -320,6 +320,10 @@ namespace Microsoft.Phone.Controls.Primitives
             _wasDragged = false;
         }
 
+        /// <summary>
+        /// Handles the mouse leave event.
+        /// </summary>
+        /// <param name="e">The event arguments.</param>
         protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
         {
             // Overrides parent method which causes events to fire multiple times.

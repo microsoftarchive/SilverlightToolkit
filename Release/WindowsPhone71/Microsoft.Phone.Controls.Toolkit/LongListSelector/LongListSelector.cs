@@ -1720,48 +1720,5 @@ namespace Microsoft.Phone.Controls
             }
         }
         #endregion
-
-        #region LongListSelectorItemType enum
-        /// <summary>
-        /// Describes different items.
-        /// </summary>
-        public enum LongListSelectorItemType
-        {
-            Unknown,
-            Item,
-            GroupHeader,
-            GroupFooter,
-            ListHeader,
-            ListFooter
-        }
-        #endregion
-
-        #region LongListSelectorItem class
-        /// <summary>
-        /// Holds information about an item.
-        /// </summary>
-        public class LongListSelectorItem
-        {
-            public LongListSelectorItemType ItemType 
-            { 
-                get; 
-                set; 
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Assists in debugging.")]
-            public object Group
-            {
-                get;
-                set;
-            }
-
-            public object Item 
-            { 
-                get; 
-                set; 
-            }
-        }
-        #endregion
-
     }
 }

@@ -64,25 +64,25 @@ namespace Microsoft.Phone.Controls.Primitives
             base.PrepareContainerForItemOverride(element, item);
 
             DataTemplate template = null;
-            LongListSelector.LongListSelectorItem itemTuple = item as LongListSelector.LongListSelectorItem;
+            LongListSelectorItem itemTuple = item as LongListSelectorItem;
             
             if (itemTuple != null)
             {
                 switch (itemTuple.ItemType)
                 {
-                    case LongListSelector.LongListSelectorItemType.ListHeader:
+                    case LongListSelectorItemType.ListHeader:
                         template = this.ListHeaderTemplate;
                         break;
-                    case LongListSelector.LongListSelectorItemType.ListFooter:
+                    case LongListSelectorItemType.ListFooter:
                         template = this.ListFooterTemplate;
                         break;
-                    case LongListSelector.LongListSelectorItemType.GroupHeader:
+                    case LongListSelectorItemType.GroupHeader:
                         template = this.GroupHeaderTemplate;
                         break;
-                    case LongListSelector.LongListSelectorItemType.GroupFooter:
+                    case LongListSelectorItemType.GroupFooter:
                         template = this.GroupFooterTemplate;
                         break;
-                    case LongListSelector.LongListSelectorItemType.Item:
+                    case LongListSelectorItemType.Item:
                         template = this.ItemTemplate;
                         break;
                 }
@@ -109,7 +109,7 @@ namespace Microsoft.Phone.Controls.Primitives
         /// <param name="item">The item.</param>
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
-            LongListSelector.LongListSelectorItem itemTuple = item as LongListSelector.LongListSelectorItem;
+            LongListSelectorItem itemTuple = item as LongListSelectorItem;
 
             if (itemTuple != null)
             {

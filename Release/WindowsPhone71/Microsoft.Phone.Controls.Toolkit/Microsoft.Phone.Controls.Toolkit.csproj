@@ -128,6 +128,8 @@
       <DependentUpon>TimePickerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExpanderView\ExpanderView.cs" />
+    <Compile Include="LongListSelector\LongListSelectorItem.cs" />
+    <Compile Include="LongListSelector\LongListSelectorItemType.cs" />
     <Compile Include="PhoneTextBox\PhoneTextBox.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HeaderedItemsControl\HeaderedItemsControl.cs" />

@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.Phone.Controls
 {
@@ -303,6 +305,7 @@ namespace Microsoft.Phone.Controls
             set { base.SetValue(LengthIndicatorThresholdProperty, value); }
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "The property name is the appropriate value to throw.")]
         private static void OnLengthIndicatorThresholdChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             PhoneTextBox phoneTextBox = sender as PhoneTextBox;
@@ -343,6 +346,7 @@ namespace Microsoft.Phone.Controls
             set { base.SetValue(DisplayedMaxLengthProperty, value); }
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "The property name is the appropriate value to throw.")]
         private static void DisplayedMaxLengthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             PhoneTextBox phoneTextBox = sender as PhoneTextBox;
@@ -353,6 +357,11 @@ namespace Microsoft.Phone.Controls
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Globalization", 
+            "CA1303:Do not pass literals as localized parameters", 
+            MessageId = "System.Windows.Controls.TextBlock.set_Text(System.String)",
+            Justification = "At this time the length indicator is not culture-specific or retrieved from the resources.")]
         private void UpdateLengthIndicatorVisibility()
         {
             if (RootGrid == null || LengthIndicator == null)
@@ -360,23 +369,22 @@ namespace Microsoft.Phone.Controls
                 return;
             }
 
+            bool isHidden = true;
             if (LengthIndicatorVisible)
             {
-                LengthIndicator.Text = String.Format("{0}/{1}", Text.Length, ((DisplayedMaxLength > 0) ? DisplayedMaxLength : MaxLength));
+                // The current implementation is culture invariant.
+                LengthIndicator.Text = String.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0}/{1}", Text.Length, 
+                    ((DisplayedMaxLength > 0) ? DisplayedMaxLength : MaxLength));
 
                 if (Text.Length >= LengthIndicatorThreshold)
                 {
-                    VisualStateManager.GoToState(this, LengthIndicatorVisibleState, false);
-                }
-                else
-                {
-                    VisualStateManager.GoToState(this, LengthIndicatorHiddenState, false);
+                    isHidden = false;
                 }
             }
-            else
-            {
-                VisualStateManager.GoToState(this, LengthIndicatorHiddenState, false);
-            }
+
+            VisualStateManager.GoToState(this, isHidden ? LengthIndicatorHiddenState : LengthIndicatorVisibleState, false);
         }
 
         #endregion
@@ -437,7 +445,7 @@ namespace Microsoft.Phone.Controls
         {
             if (ActionIconBorder != null)
             {
-                if (ActionIcon == null || (HidesActionItemWhenEmpty && Text == String.Empty))
+                if (ActionIcon == null || (HidesActionItemWhenEmpty && string.IsNullOrEmpty(Text)))
                 {
                     ActionIconBorder.Visibility = Visibility.Collapsed;
                     HintBorder.Padding = new Thickness(0);

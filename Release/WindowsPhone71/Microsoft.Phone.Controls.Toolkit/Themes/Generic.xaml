@@ -438,6 +438,7 @@
     </Style>
 
     <Style TargetType="controls:LongListSelector">
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>

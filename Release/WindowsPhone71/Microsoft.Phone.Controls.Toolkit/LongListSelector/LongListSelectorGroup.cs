@@ -32,15 +32,15 @@ namespace Microsoft.Phone.Controls
         {
             SaveSystemState(false, false);
             BuildPopup();
-            AttachToPageEvents();            
+            AttachToPageEvents();
             _groupSelectorPopup.IsOpen = true;
 
             // This has to happen eventually anyway, and this forces the ItemsControl to 
             // expand it's template, populate it's items etc.
-            UpdateLayout();            
+            UpdateLayout();
         }
 
-        void popup_Opened(object sender, EventArgs e)
+        private void popup_Opened(object sender, EventArgs e)
         {
             SafeRaise.Raise(GroupViewOpened, this, () => { return new GroupViewOpenedEventArgs(_itemsControl); });
         }
@@ -84,7 +84,18 @@ namespace Microsoft.Phone.Controls
             _groupSelectorPopup = new Popup();
             _groupSelectorPopup.Opened += popup_Opened;
 
-            var bg = (Color)Resources["PhoneBackgroundColor"];
+            // Support the background color jumping through. Note that the 
+            // alpha channel will be ignored, unless it is a purely transparent
+            // value (such as when a user uses Transparent as the background
+            // on the control).
+            SolidColorBrush background = Background as SolidColorBrush;
+            Color bg = (Color)Resources["PhoneBackgroundColor"];
+            if (background != null 
+                && background.Color != null 
+                && background.Color.A > 0)
+            {
+                bg = background.Color;
+            }
             _border = new Border
             {
                 Background = new SolidColorBrush(
