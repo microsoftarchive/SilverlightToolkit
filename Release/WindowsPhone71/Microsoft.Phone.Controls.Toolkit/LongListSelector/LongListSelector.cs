@@ -63,6 +63,16 @@ namespace Microsoft.Phone.Controls
         /// The absense of vertical compression state name.
         /// </summary>
         private const string NoVerticalCompression = "NoVerticalCompression";
+
+        /// <summary>
+        /// The vertical compression state name.
+        /// </summary>
+        private const string VerticalCompressionStateName = "VerticalCompression";
+
+        /// <summary>
+        /// The name of the scroll states visual state group.
+        /// </summary>
+        private const string ScrollStatesGroupName = "ScrollStates";
         #endregion
 
         /// <summary>
@@ -753,13 +763,13 @@ namespace Microsoft.Phone.Controls
                 FrameworkElement element = VisualTreeHelper.GetChild(sv, 0) as FrameworkElement;
                 if (element != null)
                 {
-                    _scrollGroup = VisualStates.TryGetVisualStateGroup(sv, "ScrollStates");
+                    _scrollGroup = VisualStates.TryGetVisualStateGroup(sv, ScrollStatesGroupName);
                     if (_scrollGroup != null)
                     {
                         _scrollGroup.CurrentStateChanging += OnScrollStateChanging;
                     }
 
-                    _verticalCompressionGroup = VisualStates.TryGetVisualStateGroup(sv, "VerticalCompressionStates");
+                    _verticalCompressionGroup = VisualStates.TryGetVisualStateGroup(sv, VerticalCompressionStateName);
                     if(_verticalCompressionGroup != null)
                     {
                         _verticalCompressionGroup.CurrentStateChanging += OnStretchStateChanging;
@@ -985,7 +995,7 @@ namespace Microsoft.Phone.Controls
                     var groupAsEnumerable = group as IEnumerable;
                     if (groupAsEnumerable != null)
                     {
-                        int itemsCount = GetItemsCountFromGroup(groupAsEnumerable);
+                        int itemsCount = GetHeadersAndItemsCountFromGroup(groupAsEnumerable);
 
                         // Adds the group header
                         if (addHeaders && GroupHeaderTemplate != null && itemsCount > 0)
@@ -1209,7 +1219,7 @@ namespace Microsoft.Phone.Controls
                 IEnumerable group = ((IList)ItemsSource)[oldGroupsIndex - 1] as IEnumerable;
                 if (group != null)
                 {
-                    removeStartIndex += GetItemsCountFromGroup(group);
+                    removeStartIndex += GetHeadersAndItemsCountFromGroup(group);
                 }
             }
             else
@@ -1310,7 +1320,7 @@ namespace Microsoft.Phone.Controls
         /// <returns>Returns, for a group, an index relative to the templated list box from an index relative to the root collection.</returns>
         private int GetGroupIndexInListBox(int indexInLLS)
         {
-            int indexInListBox = 0, index = 0, groupItems = 0;
+            int indexInListBox = 0, index = 0;
 
             if (HasListHeader && ShowListHeader)
             {
@@ -1333,12 +1343,7 @@ namespace Microsoft.Phone.Controls
                     var groupAsEnumerable = group as IEnumerable;
                     if (groupAsEnumerable != null)
                     {
-                        groupItems = GetItemsCountFromGroup(groupAsEnumerable);
-
-                        if(groupItems > 0)
-                        {
-                            indexInListBox += groupItems + 1;
-                        }
+                        indexInListBox += GetHeadersAndItemsCountFromGroup(groupAsEnumerable);
                     }
                 }
             }
@@ -1362,7 +1367,7 @@ namespace Microsoft.Phone.Controls
                 IEnumerable group = g as IEnumerable;
                 if (group != null)
                 {
-                    count += GetItemsCountFromGroup(group);
+                    count += GetHeadersAndItemsCountFromGroup(group);
                 }
             }
             
@@ -1376,7 +1381,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="group">Group from which to retrieve the items count.</param>
         /// <returns>Returns the number of items in a group including the group header.</returns>
-        private int GetItemsCountFromGroup(IEnumerable group)
+        private int GetHeadersAndItemsCountFromGroup(IEnumerable group)
         {
             int count = 0;
 
@@ -1392,7 +1397,7 @@ namespace Microsoft.Phone.Controls
 
             bool groupHasItems = count > 1;
 
-            if (GroupHeaderTemplate != null)
+            if ((groupHasItems || DisplayAllGroups) && GroupHeaderTemplate != null)
             {
                 ++count;
             }
