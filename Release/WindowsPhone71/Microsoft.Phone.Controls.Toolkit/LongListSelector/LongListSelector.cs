@@ -162,7 +162,7 @@ namespace Microsoft.Phone.Controls
         /// Gets whether a list header is shown.
         /// </summary>
         private bool HasListHeader { get { return ListHeaderTemplate != null || ListHeader is UIElement; } }
-        
+
         /// <summary>
         /// Gets whether a list footer is shown.
         /// </summary>
@@ -475,7 +475,7 @@ namespace Microsoft.Phone.Controls
         private static void OnShowListHeaderChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             LongListSelector control = (LongListSelector)obj;
-            
+
             if (control._listBox != null)
             {
                 Collection<LongListSelectorItem> tuples = (Collection<LongListSelectorItem>)control._listBox.ItemsSource;
@@ -524,7 +524,7 @@ namespace Microsoft.Phone.Controls
                     RemoveListFooter(tuples);
                 }
             }
-            
+
         }
 
         #endregion
@@ -610,7 +610,7 @@ namespace Microsoft.Phone.Controls
             {
                 ObservableCollection<LongListSelectorItem> tuples = (ObservableCollection<LongListSelectorItem>)_listBox.ItemsSource;
                 LongListSelectorItem lastTuple = tuples[tuples.Count - 1];
-                
+
                 _listBox.ScrollIntoView(lastTuple);
 
                 UpdateLayout();
@@ -664,7 +664,7 @@ namespace Microsoft.Phone.Controls
 
         // Obsolete:
 
-        #region AnimateTo(...)        
+        #region AnimateTo(...)
         /// <summary>
         /// Animate the scrolling of the list to the specified item.
         /// </summary>
@@ -736,7 +736,7 @@ namespace Microsoft.Phone.Controls
                 _listBox.Link -= OnLink;
                 _listBox.Unlink -= OnUnlink;
             }
-            
+
             if (_scrollGroup != null)
             {
                 _scrollGroup.CurrentStateChanging -= OnScrollStateChanging;
@@ -770,7 +770,7 @@ namespace Microsoft.Phone.Controls
                     }
 
                     _verticalCompressionGroup = VisualStates.TryGetVisualStateGroup(sv, VerticalCompressionStateName);
-                    if(_verticalCompressionGroup != null)
+                    if (_verticalCompressionGroup != null)
                     {
                         _verticalCompressionGroup.CurrentStateChanging += OnStretchStateChanging;
                     }
@@ -790,11 +790,11 @@ namespace Microsoft.Phone.Controls
             if (_listBox != null)
             {
                 ObservableCollection<LongListSelectorItem> tuples = new ObservableCollection<LongListSelectorItem>();
-                
+
                 AddListHeader(tuples);
 
                 UnsubscribleFromAllCollections();
-                
+
                 // if it's a flat list, add the items without grouping.
                 if (IsFlatList)
                 {
@@ -925,7 +925,7 @@ namespace Microsoft.Phone.Controls
             if (group != null)
             {
                 bool groupHasItems = false;
-                
+
                 // Adds the group header
                 if (GroupHeaderTemplate != null)
                 {
@@ -963,7 +963,7 @@ namespace Microsoft.Phone.Controls
 
             }
         }
-        #endregion  
+        #endregion
 
         #region AddGroupHeadersAndFooters(...)
         /// <summary>
@@ -1001,9 +1001,9 @@ namespace Microsoft.Phone.Controls
                         if (addHeaders && GroupHeaderTemplate != null && itemsCount > 0)
                         {
                             tuples.Insert(indexInListBox, new LongListSelectorItem
-                            { 
-                                Item = group, 
-                                ItemType = LongListSelectorItemType.GroupHeader 
+                            {
+                                Item = group,
+                                ItemType = LongListSelectorItemType.GroupHeader
                             });
                         }
 
@@ -1013,9 +1013,9 @@ namespace Microsoft.Phone.Controls
                         if (addFooters && GroupFooterTemplate != null && itemsCount > 0)
                         {
                             tuples.Insert(indexInListBox - 1, new LongListSelectorItem
-                            { 
-                                Item = group, 
-                                ItemType = LongListSelectorItemType.GroupFooter 
+                            {
+                                Item = group,
+                                ItemType = LongListSelectorItemType.GroupFooter
                             });
                         }
                     }
@@ -1103,7 +1103,7 @@ namespace Microsoft.Phone.Controls
 
             // 1 - Builds items tuples for the new groups
             List<LongListSelectorItem> newGroupsTuples = new List<LongListSelectorItem>();
-            
+
             foreach (object group in newGroups)
             {
                 AddGroup(group, newGroupsTuples);
@@ -1139,10 +1139,10 @@ namespace Microsoft.Phone.Controls
             foreach (object item in newItems)
             {
                 newItemsTuples.Add(new LongListSelectorItem
-                { 
-                    Group = group, 
-                    Item = item, 
-                    ItemType = LongListSelectorItemType.Item 
+                {
+                    Group = group,
+                    Item = item,
+                    ItemType = LongListSelectorItemType.Item
                 });
             }
 
@@ -1244,7 +1244,7 @@ namespace Microsoft.Phone.Controls
             {
                 collection.CollectionChanged -= OnCollectionChanged;
             }
-            
+
         }
         #endregion
 
@@ -1306,7 +1306,7 @@ namespace Microsoft.Phone.Controls
                 {
                     ++removeIndex;
                 }
-                for(int i = 0; i < oldItems.Count; ++i)
+                for (int i = 0; i < oldItems.Count; ++i)
                     tuples.RemoveAt(removeIndex);
             }
         }
@@ -1370,7 +1370,7 @@ namespace Microsoft.Phone.Controls
                     count += GetHeadersAndItemsCountFromGroup(group);
                 }
             }
-            
+
             return count;
         }
         #endregion
@@ -1395,7 +1395,7 @@ namespace Microsoft.Phone.Controls
                 count += group.Cast<object>().Count();
             }
 
-            bool groupHasItems = count > 1;
+            bool groupHasItems = count > 0;
 
             if ((groupHasItems || DisplayAllGroups) && GroupHeaderTemplate != null)
             {
@@ -1406,7 +1406,7 @@ namespace Microsoft.Phone.Controls
             {
                 ++count;
             }
-            
+
             return count;
         }
         #endregion
@@ -1516,7 +1516,7 @@ namespace Microsoft.Phone.Controls
                 }
 
             }
-            else if(e.Property == GroupFooterProperty)
+            else if (e.Property == GroupFooterProperty)
             {
                 lls.UpdateItemsTemplate(LongListSelectorItemType.GroupFooter, newTemplate);
 
@@ -1600,7 +1600,7 @@ namespace Microsoft.Phone.Controls
                     handler(this, new SelectionChangedEventArgs(removedItems, addedItems));
                 }
             }
-            
+
         }
         #endregion
 
