@@ -575,7 +575,6 @@ namespace Microsoft.Phone.Controls
         {
             UpdateLengthIndicatorVisibility();
             UpdateActionIconVisibility();
-            UpdateHintVisibility();
             ResizeTextBox();
         }
     }
