@@ -399,7 +399,7 @@ namespace Microsoft.Phone.Controls
 
                     formatInfo_GetShortTime = (DateTimeFormatInfo)CultureInfo.CurrentCulture.DateTimeFormat.Clone();
 
-                    result.Append(formatInfo_GetSuperShortTime.LongTimePattern);
+                    result.Append(formatInfo_GetShortTime.LongTimePattern);
                     seconds = rxSeconds.Match(result.ToString()).Value;
                     result.Replace(seconds, string.Empty);
 
