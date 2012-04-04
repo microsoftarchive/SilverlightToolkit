@@ -300,7 +300,7 @@ namespace Microsoft.Phone.Controls
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "SelectedItem", Justification = "Property name.")]
         private void OnSelectedItemChanged(object oldValue, object newValue)
         {
-            if (null == Items || Items.Count == 0)
+            if (newValue != null && (null == Items || Items.Count == 0))
             {
                 if (null == Template)
                 {
