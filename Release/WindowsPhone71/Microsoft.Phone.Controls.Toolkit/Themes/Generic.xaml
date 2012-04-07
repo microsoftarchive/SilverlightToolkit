@@ -60,7 +60,7 @@
                                             Storyboard.TargetName="BackgroundTranslation"
                                             Storyboard.TargetProperty="(TranslateTransform.X)"
                                             Duration="0"
-                                            To="68">
+                                            To="69">
                                             <DoubleAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="15" EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -69,7 +69,7 @@
                                             Storyboard.TargetName="ThumbTranslation"
                                             Storyboard.TargetProperty="(TranslateTransform.X)"
                                             Duration="0"
-                                            To="68">
+                                            To="69">
                                             <DoubleAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="15" EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -94,12 +94,12 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="SwitchRoot" Background="Transparent" Height="95" Width="136">
-                            <Grid x:Name="SwitchTrack" Width="88">
-                                <Grid x:Name="SwitchBottom" Background="{TemplateBinding SwitchForeground}" Height="32">
+                            <Grid x:Name="SwitchTrack" Width="89">
+                                <Grid x:Name="SwitchBottom" Background="{TemplateBinding SwitchForeground}" Height="34">
                                     <Rectangle
                                         x:Name="SwitchBackground"
                                         Fill="{TemplateBinding Background}"
-                                        Width="76"
+                                        Width="77"
                                         Height="20"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center">
@@ -107,7 +107,7 @@
                                             <TranslateTransform x:Name="BackgroundTranslation"/>
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
-                                    <Border BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="2">
+                                    <Border BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="3">
                                         <Border BorderBrush="{StaticResource PhoneBackgroundBrush}" BorderThickness="4"/>
                                     </Border>
                                 </Grid>
@@ -117,7 +117,7 @@
                                     BorderThickness="4,0"
                                     Margin="-4,0"
                                     Width="28"
-                                    Height="36"
+                                    Height="38"
                                     HorizontalAlignment="Left">
                                     <Border.RenderTransform>
                                         <TranslateTransform x:Name="ThumbTranslation"/>
