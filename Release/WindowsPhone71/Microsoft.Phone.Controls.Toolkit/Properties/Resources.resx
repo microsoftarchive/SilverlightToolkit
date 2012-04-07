@@ -161,14 +161,6 @@
     <value>Invalid argument. Future dates and times are not supported.</value>
     <comment>Exception thrown when a DateTime converter receives a future DateTime as argument.</comment>
   </data>
-  <data name="Off" xml:space="preserve">
-    <value>Off</value>
-    <comment>ToggleSwitch string.</comment>
-  </data>
-  <data name="On" xml:space="preserve">
-    <value>On</value>
-    <comment>ToggleSwitch string.</comment>
-  </data>
   <data name="RoutedPropertyChangingEventArgs_CancelSet_InvalidOperation" xml:space="preserve">
     <value>The RoutedPropertyChangingEvent cannot be canceled!</value>
     <comment>Exception thrown when setting Cancel property while IsCancelable is false.</comment>

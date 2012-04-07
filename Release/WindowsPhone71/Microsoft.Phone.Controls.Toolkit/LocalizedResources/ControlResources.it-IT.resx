@@ -273,4 +273,12 @@
     <value>{0}</value>
     <comment>Default text for "on {0}" as used by the RelativeTimeConverter, where {0} is the localized string for Tuesday.</comment>
   </data>
+  <data name="Off" xml:space="preserve">
+    <value>No</value>
+    <comment>Default text for "Off" for ToggleSwitch.</comment>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>Sì</value>
+    <comment>Default text for "On" for ToggleSwitch.</comment>
+  </data>
 </root>

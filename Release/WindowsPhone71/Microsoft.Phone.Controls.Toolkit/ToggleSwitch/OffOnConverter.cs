@@ -6,6 +6,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using Microsoft.Phone.Controls.LocalizedResources;
 using Microsoft.Phone.Controls.Properties;
 
 namespace Microsoft.Phone.Controls
@@ -17,12 +18,15 @@ namespace Microsoft.Phone.Controls
     public class OffOnConverter : IValueConverter
     {
         /// <summary>
-        /// Converts a value.
+        /// Converts a boolean to the equivalent On or Off string.
         /// </summary>
-        /// <param name="value">The value produced by the binding source.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
+        /// <param name="value">The given boolean.</param>
+        /// <param name="targetType">
+        /// The type corresponding to the binding property, which must be of
+        /// <see cref="T:System.String"/>.
+        /// </param>
+        /// <param name="parameter">(Not used).</param>
+        /// <param name="culture">(Not used).</param>
         /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -36,19 +40,19 @@ namespace Microsoft.Phone.Controls
             }
             if (value is bool? || value == null)
             {
-                return (bool?)value == true ? Resources.On : Resources.Off;
+                return (bool?)value == true ? ControlResources.On : ControlResources.Off;
             }
             throw new ArgumentException(Resources.UnexpectedType, "value");
         }
 
         /// <summary>
-        /// Converts a value.
+        /// Not implemented.
         /// </summary>
-        /// <param name="value">The value produced by the binding source.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        /// <param name="value">(Not used).</param>
+        /// <param name="targetType">(Not used).</param>
+        /// <param name="parameter">(Not used).</param>
+        /// <param name="culture">(Not used).</param>
+        /// <returns>null</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
