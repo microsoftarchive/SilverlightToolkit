@@ -126,7 +126,7 @@
                                         x:Name="ThumbCenter"
                                         BorderBrush="{StaticResource PhoneForegroundBrush}"
                                         BorderThickness="2"
-                                        Background="White"/>
+                                        Background="{StaticResource PhoneForegroundBrush}" />
                                 </Border>
                             </Grid>
                         </Grid>
