@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -24,7 +25,9 @@ namespace Microsoft.Phone.Controls
     {
         private const string StateKey_Value = "ListPickerPage_State_Value";
 
-        private PageOrientation lastOrientation;
+        private PageOrientation _lastOrientation;
+
+        private IList<WeakReference> _itemsToAnimate;
 
         /// <summary>
         /// Gets or sets the string of text to display as the header of the page.
@@ -98,7 +101,7 @@ namespace Microsoft.Phone.Controls
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             OrientationChanged += OnOrientationChanged;
-            lastOrientation = Orientation;
+            _lastOrientation = Orientation;
 
             // Customize the ApplicationBar Buttons by providing the right text
             if (null != ApplicationBar)
@@ -122,6 +125,8 @@ namespace Microsoft.Phone.Controls
                 }
             }
 
+            // Add a projection for each list item and turn it to -90 
+            // (rotationX) so it is hidden.            
             SetupListItems(-90);
 
             PlaneProjection headerProjection = (PlaneProjection)HeaderTitle.Projection;
@@ -138,7 +143,6 @@ namespace Microsoft.Phone.Controls
                 {
                     IsOpen = true;
                 });
-                
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
@@ -148,10 +152,11 @@ namespace Microsoft.Phone.Controls
 
         private void SetupListItems(double degree)
         {
-            // Add a projection for each list item and turn it to -90 (rotationX) so it is hidden.
-            for (int x = 0; x < Picker.Items.Count; x++)
+            _itemsToAnimate = ItemsControlExtensions.GetItemsInViewPort(Picker);
+
+            for (int i = 0; i < _itemsToAnimate.Count; i++)
             {
-                FrameworkElement item = (FrameworkElement)Picker.ItemContainerGenerator.ContainerFromIndex(x);
+                FrameworkElement item = (FrameworkElement)_itemsToAnimate[i].Target;
                 if (null != item)
                 {
                     PlaneProjection p = (PlaneProjection)item.Projection;
@@ -309,7 +314,7 @@ namespace Microsoft.Phone.Controls
                         HeaderTitle.Margin = new Thickness(20, 12, 12, 12);
                         Picker.Margin = new Thickness(8, 12, 0, 0);
 
-                        transitionElement.Mode = (lastOrientation == PageOrientation.LandscapeLeft) ?
+                        transitionElement.Mode = (_lastOrientation == PageOrientation.LandscapeLeft) ?
                         RotateTransitionMode.In90Counterclockwise : RotateTransitionMode.In90Clockwise;
 
                         break;
@@ -318,14 +323,14 @@ namespace Microsoft.Phone.Controls
                         HeaderTitle.Margin = new Thickness(72, 0, 0, 0);
                         Picker.Margin = new Thickness(60, 0, 0, 0);
 
-                        transitionElement.Mode = (lastOrientation == PageOrientation.LandscapeRight) ?
+                        transitionElement.Mode = (_lastOrientation == PageOrientation.LandscapeRight) ?
                         RotateTransitionMode.In180Counterclockwise : RotateTransitionMode.In90Clockwise;
                         break;
                     case PageOrientation.LandscapeRight:
                         HeaderTitle.Margin = new Thickness(20, 0, 0, 0);
                         Picker.Margin = new Thickness(8, 0, 0, 0);
 
-                        transitionElement.Mode = (lastOrientation == PageOrientation.PortraitUp) ? 
+                        transitionElement.Mode = (_lastOrientation == PageOrientation.PortraitUp) ? 
                         RotateTransitionMode.In90Counterclockwise : RotateTransitionMode.In180Clockwise;
                         break;
                 }
@@ -339,13 +344,22 @@ namespace Microsoft.Phone.Controls
             };
             transition.Begin();
 
-            lastOrientation = newOrientation;
+            _lastOrientation = newOrientation;
         }
 
         private void UpdateVisualState(bool useTransitions)
         {
             if (useTransitions)
             {
+                // If the Picker is scrolling stop it from moving, this is both
+                // consistant with Metro and allows for attaching the animations
+                // to the correct, in view items.
+                ScrollViewer scrollViewer = Picker.GetVisualChildren().OfType<ScrollViewer>().FirstOrDefault();
+                if (scrollViewer != null)
+                {
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset);
+                }                
+               
                 if (!IsOpen)
                 {
                     SetupListItems(0);
@@ -356,15 +370,12 @@ namespace Microsoft.Phone.Controls
                 Storyboard headerBoard = AnimationForElement(HeaderTitle, 0);
                 mainBoard.Children.Add(headerBoard);
 
-                IList<WeakReference> itemsInView = ItemsControlExtensions.GetItemsInViewPort(Picker);
-                for (int i = 0; i < itemsInView.Count; i++)
+                for (int i = 0; i < _itemsToAnimate.Count; i++)
                 {
-                    FrameworkElement element = (FrameworkElement)itemsInView[i].Target;
+                    FrameworkElement element = (FrameworkElement)_itemsToAnimate[i].Target;
                     Storyboard board = AnimationForElement(element, i + 1);
                     mainBoard.Children.Add(board);
                 }
-
-                Dispatcher.BeginInvoke(UpdateOutOfViewItems);
 
                 if (!IsOpen)
                 {
@@ -408,42 +419,6 @@ namespace Microsoft.Phone.Controls
 
             return board;
         }
-
-        /// <summary>
-        /// Go through all the items that were not visible on the page and set their properties accordingly without animation.
-        /// </summary>
-        private void UpdateOutOfViewItems()
-        {
-            IList<WeakReference> itemsInView = ItemsControlExtensions.GetItemsInViewPort(Picker);
-
-            for (int k = 0; k < Picker.Items.Count; k++)
-            {
-                FrameworkElement item = (FrameworkElement)Picker.ItemContainerGenerator.ContainerFromIndex(k);
-
-                if (item != null)
-                {
-                    bool found = false;
-                    foreach (WeakReference refr in itemsInView)
-                    {
-                        if (refr.Target == item)
-                        {
-                            found = true;
-                        }
-                    }
-
-                    if (!found)
-                    {
-                        item.Opacity = (IsOpen) ? 1 : 0;
-                        PlaneProjection p = item.Projection as PlaneProjection;
-                        if (null != p)
-                        {
-                            p.RotationX = 0;
-                        }
-                    }
-                }
-            }
-        }
-
 
         private void OnPickerTapped(object sender, System.Windows.Input.GestureEventArgs e)
         {

@@ -142,6 +142,14 @@
                     <sys:String>light</sys:String>
                     <sys:String>dazzle</sys:String>
                 </toolkit:ListPicker>
+
+                <toolkit:ListPicker x:Name="RegionList" Header="System Locale">
+                    <toolkit:ListPicker.FullModeItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="0 24 24 24" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle2Style}" />
+                        </DataTemplate>
+                    </toolkit:ListPicker.FullModeItemTemplate>
+                </toolkit:ListPicker>
             </StackPanel>
         </ScrollViewer>
     </Grid>
