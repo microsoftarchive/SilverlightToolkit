@@ -69,7 +69,7 @@ namespace Microsoft.Phone.Controls
         }
 
         private static readonly DependencyProperty IsOpenProperty =
-            DependencyProperty.Register("isOIsOpenpen", 
+            DependencyProperty.Register("IsOpen", 
                                         typeof(bool), 
                                         typeof(ListPickerPage), 
                                         new PropertyMetadata(false, new PropertyChangedCallback(OnIsOpenChanged)));
