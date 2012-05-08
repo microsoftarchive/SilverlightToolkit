@@ -69,9 +69,9 @@ namespace Microsoft.Phone.Controls
         }
 
         private static readonly DependencyProperty IsOpenProperty =
-            DependencyProperty.Register("IsOpen", 
-                                        typeof(bool), 
-                                        typeof(ListPickerPage), 
+            DependencyProperty.Register("IsOpen",
+                                        typeof(bool),
+                                        typeof(ListPickerPage),
                                         new PropertyMetadata(false, new PropertyChangedCallback(OnIsOpenChanged)));
 
         private static void OnIsOpenChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -125,8 +125,8 @@ namespace Microsoft.Phone.Controls
                 }
             }
 
-            // Add a projection for each list item and turn it to -90 
-            // (rotationX) so it is hidden.            
+            // Add a projection for each list item and turn it to -90
+            // (rotationX) so it is hidden.
             SetupListItems(-90);
 
             PlaneProjection headerProjection = (PlaneProjection)HeaderTitle.Projection;
@@ -174,7 +174,7 @@ namespace Microsoft.Phone.Controls
         /// Called when a page becomes the active page in a frame.
         /// </summary>
         /// <param name="e">An object that contains the event data.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e) 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (null == e)
             {
@@ -304,15 +304,15 @@ namespace Microsoft.Phone.Controls
             RotateTransition transitionElement = new RotateTransition();
 
             // Adjust padding if possible
-            
+
             if (null != MainGrid)
             {
                 switch (newOrientation)
                 {
                     case PageOrientation.Portrait:
                     case PageOrientation.PortraitUp:
-                        HeaderTitle.Margin = new Thickness(20, 12, 12, 12);
-                        Picker.Margin = new Thickness(8, 12, 0, 0);
+                        HeaderTitle.Margin = new Thickness(24, 12, 12, 12);
+                        Picker.Margin = new Thickness(24, 12, 0, 0);
 
                         transitionElement.Mode = (_lastOrientation == PageOrientation.LandscapeLeft) ?
                         RotateTransitionMode.In90Counterclockwise : RotateTransitionMode.In90Clockwise;
@@ -320,17 +320,17 @@ namespace Microsoft.Phone.Controls
                         break;
                     case PageOrientation.Landscape:
                     case PageOrientation.LandscapeLeft:
-                        HeaderTitle.Margin = new Thickness(72, 0, 0, 0);
-                        Picker.Margin = new Thickness(60, 0, 0, 0);
+                        HeaderTitle.Margin = new Thickness(24, 24, 0, 0);
+                        Picker.Margin = new Thickness(24, 24, 0, 0);
 
                         transitionElement.Mode = (_lastOrientation == PageOrientation.LandscapeRight) ?
                         RotateTransitionMode.In180Counterclockwise : RotateTransitionMode.In90Clockwise;
                         break;
                     case PageOrientation.LandscapeRight:
-                        HeaderTitle.Margin = new Thickness(20, 0, 0, 0);
-                        Picker.Margin = new Thickness(8, 0, 0, 0);
+                        HeaderTitle.Margin = new Thickness(24, 24, 0, 0);
+                        Picker.Margin = new Thickness(24, 24, 0, 0);
 
-                        transitionElement.Mode = (_lastOrientation == PageOrientation.PortraitUp) ? 
+                        transitionElement.Mode = (_lastOrientation == PageOrientation.PortraitUp) ?
                         RotateTransitionMode.In90Counterclockwise : RotateTransitionMode.In180Clockwise;
                         break;
                 }
@@ -358,8 +358,8 @@ namespace Microsoft.Phone.Controls
                 if (scrollViewer != null)
                 {
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset);
-                }                
-               
+                }
+
                 if (!IsOpen)
                 {
                     SetupListItems(0);
@@ -387,7 +387,7 @@ namespace Microsoft.Phone.Controls
             else if (!IsOpen)
             {
                 OnClosedStoryboardCompleted(null, null);
-            }           
+            }
         }
 
         private Storyboard AnimationForElement(FrameworkElement element, int index)
