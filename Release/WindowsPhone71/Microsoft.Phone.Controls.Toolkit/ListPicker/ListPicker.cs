@@ -84,7 +84,7 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Gets or sets the delegate, which is called to summarize a list of selections into a string.
         /// If not implemented, the default summarizing behavior will be used.
-        /// If this delegate is implemented, default summarizing behavior can be achieved by returning 
+        /// If this delegate is implemented, default summarizing behavior can be achieved by returning
         /// null instead of a string.
         /// </summary>
         public Func<IList, string> SummaryForSelectedItemsDelegate
@@ -173,7 +173,7 @@ namespace Microsoft.Phone.Controls
 
 
         /// <summary>
-        /// Whether the list picker is highlighted. 
+        /// Whether the list picker is highlighted.
         /// This occurs when the user is manipulating the box or when in expanded mode.
         /// </summary>
         private bool IsHighlighted
@@ -183,9 +183,9 @@ namespace Microsoft.Phone.Controls
         }
 
         private static readonly DependencyProperty IsHighlightedProperty =
-            DependencyProperty.Register("IsHighlighted", 
+            DependencyProperty.Register("IsHighlighted",
                                         typeof(bool),
-                                        typeof(ListPicker), 
+                                        typeof(ListPicker),
                                         new PropertyMetadata(false, new PropertyChangedCallback(OnIsHighlightedChanged)));
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Microsoft.Phone.Controls
         {
             UpdateVisualStates(true);
         }
-        
+
         /// <summary>
         /// Gets or sets the index of the selected item.
         /// </summary>
@@ -473,8 +473,8 @@ namespace Microsoft.Phone.Controls
             "PickerPageUri", typeof(Uri), typeof(ListPicker), null);
 
         /// <summary>
-        /// Gets or sets how the list picker expands when tapped. 
-        /// This property has an effect only when SelectionMode is Single. 
+        /// Gets or sets how the list picker expands when tapped.
+        /// This property has an effect only when SelectionMode is Single.
         /// When SelectionMode is Multiple, the ExpansionMode will be treated as FullScreenOnly.
         /// ExpansionAllowed will only expand when the number of items is less than or equalt to ItemCountThreshold
         /// Single by default.
@@ -697,7 +697,7 @@ namespace Microsoft.Phone.Controls
                     _storyboard.Children.Remove(_translateAnimation);
                 }
             }
-            
+
             SetBinding(ShadowItemTemplateProperty, new Binding("ItemTemplate") { Source = this });
 
 
@@ -1035,7 +1035,7 @@ namespace Microsoft.Phone.Controls
                     break;
                 case ListPickerMode.Full:
                     // Nothing to do
-                    break;
+                    return;
             }
 
             // Play the height/translation animations
@@ -1223,7 +1223,7 @@ namespace Microsoft.Phone.Controls
                         TransitionService.SetNavigationInTransition(frameContentWhenOpenedAsUIElement, null);
                         _savedNavigationOutTransition = TransitionService.GetNavigationOutTransition(frameContentWhenOpenedAsUIElement);
                         TransitionService.SetNavigationOutTransition(frameContentWhenOpenedAsUIElement, null);
-                        
+
                     }
 
                     _frame.Navigated += OnFrameNavigated;
@@ -1239,7 +1239,10 @@ namespace Microsoft.Phone.Controls
 
         private void ClosePickerPage()
         {
+            if (null == _frame)
+            {
             // Unhook from events
+                _frame = Application.Current.RootVisual as PhoneApplicationFrame;
             if (null != _frame)
             {
                 _frame.Navigated -= OnFrameNavigated;
@@ -1259,6 +1262,7 @@ namespace Microsoft.Phone.Controls
 
                 _frame = null;
                 _frameContentWhenOpened = null;
+            }
             }
 
             // Commit the value if available
@@ -1328,7 +1332,7 @@ namespace Microsoft.Phone.Controls
                         }
                     }
                 }
-            }        
+            }
         }
 
         private void OnFrameNavigationStoppedOrFailed(object sender, EventArgs e)
