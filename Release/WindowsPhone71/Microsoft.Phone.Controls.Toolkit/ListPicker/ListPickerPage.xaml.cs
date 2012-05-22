@@ -279,7 +279,10 @@ namespace Microsoft.Phone.Controls
         private void OnClosedStoryboardCompleted(object sender, EventArgs e)
         {
             // Close the picker page
-            NavigationService.GoBack();
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
         }
 
         /// <summary>
