@@ -268,6 +268,11 @@ namespace Microsoft.Phone.Controls
 
         private void ClosePickerPage()
         {
+            // Prevent user from selecting an item as the picker is closing,
+            // disabling the control would cause the UI to change so instead
+            // it's hidden from hittesting.
+            Picker.IsHitTestVisible = false;
+
             IsOpen = false;
         }
 
