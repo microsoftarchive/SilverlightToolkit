@@ -12,7 +12,7 @@
         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
         <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="60">
             <EasingDoubleKeyFrame.EasingFunction>
-                <ExponentialEase EasingMode="EaseIn" Exponent="1"/>
+                <ExponentialEase EasingMode="EaseIn" Exponent="6"/>
             </EasingDoubleKeyFrame.EasingFunction>
         </EasingDoubleKeyFrame>
     </DoubleAnimationUsingKeyFrames>

@@ -23,8 +23,8 @@ namespace Microsoft.Phone.Controls
     {
         private static DispatcherTimer _timer;
 
-        private static bool _isInTouch; 
-        
+        private static bool _isInTouch;
+
         private static List<UIElement> _elements;
 
         private static Point _gestureOrigin;
@@ -49,8 +49,8 @@ namespace Microsoft.Phone.Controls
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification="Need static ctor for more than instantiation")]
         static GestureListener()
         {
-            Touch.FrameReported += OnTouchFrameReported; 
-            
+            Touch.FrameReported += OnTouchFrameReported;
+
             TouchPanel.EnabledGestures =
                 GestureType.Tap |
                 GestureType.DoubleTap |
@@ -93,7 +93,7 @@ namespace Microsoft.Phone.Controls
             }
             else if (_isInTouch && !newIsInTouch)
             {
-                // The user was in the middle of a gesture, but there are no active 
+                // The user was in the middle of a gesture, but there are no active
                 // touch points anymore.
                 TouchComplete();
             }
@@ -104,9 +104,9 @@ namespace Microsoft.Phone.Controls
             }
             else
             {
-                // Possible error condition? The user was not in the middle of a 
+                // Possible error condition? The user was not in the middle of a
                 // gesture, but a Touch.FrameReported event was received with no
-                // active touch points. We should poll the TouchPanel just to be 
+                // active touch points. We should poll the TouchPanel just to be
                 // safe, but do so in such a way that resets the state.
                 TouchStart();
             }
@@ -124,9 +124,9 @@ namespace Microsoft.Phone.Controls
             _isDragging = _flicked = false;
             _elements = new List<UIElement>(VisualTreeHelper.FindElementsInHostCoordinates(_gestureOrigin, Application.Current.RootVisual));
             _gestureOriginChanged = false;
-            
+
             RaiseGestureEvent((helper) => helper.GestureBegin, () => new GestureEventArgs(_gestureOrigin, _gestureOrigin), false);
-            
+
             ProcessTouchPanelEvents();
             _timer.Start();
         }
@@ -145,7 +145,7 @@ namespace Microsoft.Phone.Controls
         private static void TouchComplete()
         {
             ProcessTouchPanelEvents();
-            
+
             RaiseGestureEvent((helper) => helper.GestureCompleted, () => new GestureEventArgs(_gestureOrigin, _lastSamplePosition), false);
 
             _elements = null;
@@ -155,7 +155,17 @@ namespace Microsoft.Phone.Controls
 
         static void OnTimerTick(object sender, EventArgs e)
         {
-            ProcessTouchPanelEvents();
+            try
+            {
+                ProcessTouchPanelEvents();
+            }
+            catch
+            {
+                // In certain rare conditions TouchPanel.IsGestureAvailable will
+                // throw an exception due to an internal race condition in XNA.
+                // The exception can be ignored and the next call to the method
+                // will succeed.
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
@@ -268,7 +278,7 @@ namespace Microsoft.Phone.Controls
                         _isPinching = false;
                         RaiseGestureEvent((helper) => helper.PinchCompleted, () => new PinchGestureEventArgs(_pinchOrigin, _pinchOrigin2, _lastSamplePosition, _lastSamplePosition2), false);
                         _cumulativeDelta.X = _cumulativeDelta.Y = _cumulativeDelta2.X = _cumulativeDelta2.Y = 0;
-                        _gestureOriginChanged = true;                        
+                        _gestureOriginChanged = true;
                         break;
                 }
             }
@@ -280,9 +290,9 @@ namespace Microsoft.Phone.Controls
         }
 
         private static void GetTranslatedDelta(
-            ref GeneralTransform deltaTransform, 
-            ref Point sampleDelta, 
-            ref Point cumulativeDelta, 
+            ref GeneralTransform deltaTransform,
+            ref Point sampleDelta,
+            ref Point cumulativeDelta,
             bool addToCumulative)
         {
             if (sampleDelta.X != 0 || sampleDelta.Y != 0)
@@ -310,7 +320,7 @@ namespace Microsoft.Phone.Controls
             MatrixTransform matrixTransform = transform as MatrixTransform;
             if (matrixTransform != null)
             {
-                Matrix matrix = matrixTransform.Matrix; 
+                Matrix matrix = matrixTransform.Matrix;
                 matrix.OffsetX = matrix.OffsetY = 0;
                 matrixTransform.Matrix = matrix;
             }
