@@ -1,0 +1,266 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  x:Class="Microsoft.Phone.Testing.Client.TestMethodDetails"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+  xmlns:viewmodel="clr-namespace:Microsoft.Phone.Testing.Client"
+  mc:Ignorable="d"
+  FontFamily="{StaticResource PhoneFontFamilyNormal}"
+  FontSize="{StaticResource PhoneFontSizeNormal}"
+  Foreground="{StaticResource PhoneForegroundBrush}"
+  d:DesignHeight="696" 
+  d:DesignWidth="480"
+  d:DataContext="{d:DesignInstance Type=viewmodel:TestMethodData}">
+
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Microsoft.Phone.Toolkit.Testing;component/Client/Resources/FrameworkResources.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+      <TextBlock x:Name="ApplicationTitle" 
+                 Text="{Binding Source={StaticResource AppStrings}, 
+                                Path=AppStrings.AppTitle, 
+                                ValidatesOnNotifyDataErrors=False}"
+                 Style="{StaticResource PhoneTextNormalStyle}"/>
+      <TextBox Text="{Binding Path=Name, ValidatesOnNotifyDataErrors=False}"               
+               Margin="9,0,0,0"
+               Style="{StaticResource PhoneReadOnlyTextBoxLargeStyle}"
+               Foreground="{Binding Path=Passed, ValidatesOnNotifyDataErrors=False, Converter={StaticResource MethodPassedConverter}}"/>
+      <TextBox Text="{Binding Path=Description, ValidatesOnNotifyDataErrors=False}"
+               TextWrapping="Wrap"
+               Margin="9,5,0,0"
+               Style="{StaticResource PhoneReadOnlyTextBoxSubtleStyle}" 
+               Visibility="{Binding Path=HasDescriptionVisibility, ValidatesOnNotifyDataErrors=False}" />
+    </StackPanel>
+
+    <ScrollViewer Grid.Row="1">
+
+      <Grid Margin="12,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+                
+        <TextBlock Text="result" 
+                   Style="{StaticResource PhoneTextNormalStyle}" 
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight" />
+        <TextBox Text="{Binding Path=Result.Result, ValidatesOnNotifyDataErrors=False}"
+                 Grid.Column="1"
+                 Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"
+                 Foreground="{Binding Path=Passed, ValidatesOnNotifyDataErrors=False, Converter={StaticResource MethodPassedConverter}}"/>
+
+        <TextBlock Text="assembly" 
+                   Grid.Row="1" 
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight"/>
+        <TextBox Text="{Binding Path=Parent.Parent.Name,ValidatesOnNotifyDataErrors=False}" 
+                 Grid.Row="1" 
+                 Grid.Column="1" 
+                 TextWrapping="Wrap"
+                 Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+        <TextBlock Text="namespace" 
+                   Grid.Row="2" 
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight"/>
+        <TextBox Text="{Binding Path=Parent.Namespace,ValidatesOnNotifyDataErrors=False}"
+                 Grid.Row="2" 
+                 Grid.Column="1" 
+                 TextWrapping="Wrap"
+                 Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+        <TextBlock Text="class" Grid.Row="3" 
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight"/>
+        <TextBox Text="{Binding Path=Parent.Name,ValidatesOnNotifyDataErrors=False}" 
+                 Grid.Row="3" 
+                 Grid.Column="1" 
+                 TextWrapping="Wrap"
+                 Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+        <TextBlock Text="execution time" 
+                   Grid.Row="4" 
+                   Grid.ColumnSpan="2" 
+                   Style="{StaticResource PhoneTextSubtleStyle}"
+                   FontSize="34" 
+                   FontFamily="Segoe WP SemiLight"
+                   Margin="12,20"/>
+
+        <TextBlock Text="started" 
+                   Grid.Row="5" 
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight"/>
+        <TextBox Text="{Binding Path=Result.Started,ValidatesOnNotifyDataErrors=False}" 
+                 Grid.Row="5" 
+                 Grid.Column="1"
+                 Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+        <TextBlock Text="finished" 
+                   Grid.Row="6" 
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight"/>
+        <TextBox Text="{Binding Path=Result.Finished}" 
+                 Grid.Row="6" 
+                 Grid.Column="1" 
+                 Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+        <TextBlock Text="elapsed" 
+                   Grid.Row="7" 
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   FontSize="26" 
+                   FontFamily="Segoe WP SemiLight"/>
+        <TextBox Text="{Binding Path=ReadableElapsedTime,ValidatesOnNotifyDataErrors=False}" 
+                   Grid.Row="7" 
+                   Grid.Column="1" 
+                   Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+        <StackPanel Margin="0,12,0,0" Grid.Row="8" Grid.ColumnSpan="2">
+
+          <!-- if KnownBugs != null -->
+          <StackPanel Visibility="{Binding Path=KnownBugs, Converter={StaticResource VisibilityConverter}}">
+            <!-- Title -->
+            <TextBlock Text="known issues"
+                       Style="{StaticResource PhoneTextSubtleStyle}"
+                       FontSize="34" 
+                       Margin="12,20"
+                       FontFamily="Segoe WP SemiLight"/>
+
+            <!-- if Passed == true -->
+            <TextBlock Text="These issues are marked as known for this test and resulted in it being marked as a success:" 
+                       Visibility="{Binding Path=Passed, Converter={StaticResource VisibilityConverter}}"
+                       LineHeight="20"
+                       LineStackingStrategy="BlockLineHeight"
+                       TextWrapping="Wrap"
+                       Margin="12,0,0,0"/>
+
+            <!--If Passed == false -->
+            <Grid Visibility="{Binding Path=Passed, Converter={StaticResource VisibilityConverter}, ConverterParameter=Collapsed}">
+              <TextBlock Text="These known issues should be marked fixed. The test passed otherwise."
+                         LineHeight="20"
+                         LineStackingStrategy="BlockLineHeight"
+                         TextWrapping="Wrap"
+                         Margin="12,0,0,0"/>
+            </Grid>
+
+            <!-- KnownBugs-->
+            <ItemsControl ItemsSource="{Binding Path=KnownBugs}" 
+                          ItemTemplate="{StaticResource BulletListDataTemplate}" />
+          </StackPanel>
+
+          <!-- if FixexBugs != null-->
+          <StackPanel Visibility="{Binding Path=FixedBugs, Converter={StaticResource VisibilityConverter}}">
+            <!-- Title -->
+            <TextBlock Text="fixed issues" 
+                       Style="{StaticResource PhoneTextSubtleStyle}"
+                       FontSize="34" 
+                       Margin="12,20"
+                       FontFamily="Segoe WP SemiLight"/>
+            <!--if Passed == false -->
+            <TextBlock Text="These issues were marked as fixed, but should still be investigated for this failing test:" 
+                       Visibility="{Binding Path=Passed, Converter={StaticResource VisibilityConverter}, ConverterParameter=Collapsed}"
+                       LineHeight="20"
+                       Margin="12,0,0,0"
+                       LineStackingStrategy="BlockLineHeight"
+                       TextWrapping="Wrap"/>
+
+            <!-- FixedBugs -->
+            <ItemsControl ItemsSource="{Binding Path=FixedBugs}" 
+                          ItemTemplate="{StaticResource BulletListDataTemplate}" />
+          </StackPanel>
+
+          <!-- if SimplifiedExpectedExceptionName != null -->
+          <StackPanel Visibility="{Binding Path=SimplifiedExpectedExceptionName, Converter={StaticResource VisibilityConverter}}">
+            <!-- Title -->
+            <TextBlock Text="expected exception (negative test)" 
+                       Style="{StaticResource PhoneTextSubtleStyle}"
+                       FontSize="34" 
+                       Margin="12,20"
+                       FontFamily="Segoe WP SemiLight" />
+            <TextBlock Text="This test expected an exception of type" Margin="12,0,0,0" />
+            <HyperlinkButton Content="{Binding Path=SimplifiedExpectedExceptionName, ValidatesOnNotifyDataErrors=False}"
+                             NavigateUri="{Binding Path=Result.TestMethod.ExpectedException, ValidatesOnNotifyDataErrors=False, Converter={StaticResource DocViewConverter}}"
+                             HorizontalContentAlignment="Left"/>
+          </StackPanel>
+
+          <!-- if Result.Exception != null -->
+          <StackPanel Visibility="{Binding Path=Result.Exception, Converter={StaticResource VisibilityConverter}}">
+            <!-- Title -->
+            <TextBlock Text="exception details" 
+                       Style="{StaticResource PhoneTextSubtleStyle}"
+                       FontSize="34" 
+                       Margin="12"
+                       FontFamily="Segoe WP SemiLight" />
+
+            <!-- Exception Name -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+              <StackPanel>
+                <HyperlinkButton Content="{Binding Path=SimplifiedExceptionName, ValidatesOnNotifyDataErrors=False}"
+                                 NavigateUri="{Binding Path=Result.Exception, ValidatesOnNotifyDataErrors=False, Converter={StaticResource DocViewConverter}}"
+                                 HorizontalContentAlignment="Left"/>
+                <TextBlock Text=" was unhandled" Margin="12,0,0,0" />
+              </StackPanel>
+            </StackPanel>
+
+            <!-- Message -->
+            <TextBox Text="{Binding Path=Result.Exception.Message}"
+                       TextWrapping="Wrap"
+                       Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+            <!-- StackTrace -->
+            <TextBox Text="{Binding Path=SimplifiedExceptionStackTrace}" 
+                     Margin="12" 
+                     TextWrapping="Wrap"
+                     Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}"/>
+
+            <!-- if Result.Exception.InnerException != null -->
+            <StackPanel Visibility="{Binding Path=Result.Exception.InnerException, Converter={StaticResource VisibilityConverter}}">
+              <TextBlock Text="This test result also contained an inner exception" Margin="12,0,0,0"/>
+              <StackPanel Orientation="Horizontal">
+                <HyperlinkButton Content="{Binding Path=SimplifiedInnerExceptionName, ValidatesOnNotifyDataErrors=False}"
+                               NavigateUri="{Binding Path=Result.Exception.InnerException, ValidatesOnNotifyDataErrors=False, Converter={StaticResource DocViewConverter}}"
+                                 HorizontalContentAlignment="Left"/>
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+
+        </StackPanel>
+      </Grid>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

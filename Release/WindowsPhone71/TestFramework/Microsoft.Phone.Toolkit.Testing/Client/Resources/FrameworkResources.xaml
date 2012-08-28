@@ -1,0 +1,229 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:resources="clr-namespace:Microsoft.Phone.Testing.Client.Resources"
+  xmlns:syscontrols="clr-namespace:System.Windows.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+  xmlns:converters="clr-namespace:Microsoft.Phone.Testing.Client.Converters">
+
+  <!-- String Resources -->
+  <resources:ResourceWrapper x:Key="AppStrings" />
+
+  <!--Converters -->
+  <converters:MethodPassedColorConverter x:Key="MethodPassedConverter"/>
+  <converters:FixTextLengthStyleConverter x:Key="TextLengthConverter"/>
+  <converters:VisibilityConverter x:Key="VisibilityConverter" />
+  <converters:DocViewUriConverter x:Key="DocViewConverter"/>
+
+  <!-- ##  Basics  ##  -->
+  <!-- Colors -->
+  <Color x:Key="PassColor">#FFA2C139</Color>
+  <Color x:Key="FailColor">#FFE51400</Color>
+  <Color x:Key="SelectedCounterBackgroundColor">#66333333</Color>
+  <Color x:Key="SelectedCounterBorderColor">#66666666</Color>
+
+  <!-- Brushes -->
+  <SolidColorBrush x:Key="PassBrush" Color="{StaticResource PassColor}" />
+  <SolidColorBrush x:Key="FailBrush" Color="{StaticResource FailColor}" />
+  <SolidColorBrush x:Key="TotalBrush" Color="{StaticResource PhoneForegroundColor}" />
+  <SolidColorBrush x:Key="SelectedCounterBackgroundBrush" Color="{StaticResource SelectedCounterBackgroundColor}"/>
+  <SolidColorBrush x:Key="SelectedCounterBorderBrush" Color="{StaticResource SelectedCounterBorderColor}"/>
+  <SolidColorBrush x:Key="SectionBackgroundBrush" Color="{StaticResource PhoneAccentColor}" Opacity="0.5"/>
+
+
+  <!-- Data Templates -->
+  <!-- Bullet List -->
+  <DataTemplate x:Key="BulletListDataTemplate">
+    <StackPanel Orientation="Horizontal">
+      <Rectangle Fill="{StaticResource PhoneAccentBrush}" Height="8" Width="8" />
+      <TextBox Text="{Binding}" 
+               Style="{StaticResource PhoneReadOnlyTextBoxNormalStyle}" 
+               TextWrapping="Wrap"
+               Margin="2,0"/>
+    </StackPanel>
+  </DataTemplate>
+
+  <!--  ##  Styles ##  -->
+
+  <!-- Counter Button-->
+  <Style x:Key="CounterButtonStyle" TargetType="Button">
+    <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    <Setter Property="Opacity" Value="1"/>
+    <Setter Property="IsEnabled" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal"/>
+                <VisualState x:Name="MouseOver"/>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneForegroundBrush}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneForegroundBrush}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Disabled" />
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" Margin="{StaticResource PhoneTouchTargetOverhang}">
+              <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Selected Counter Button -->
+  <Style x:Key="SelectedCounterButtonStyle" TargetType="Button">
+    <Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    <Setter Property="Opacity" Value="1"/>
+    <Setter Property="IsEnabled" Value="False" />
+    <Setter Property="BorderThickness" Value="3"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal"/>
+                <VisualState x:Name="MouseOver"/>
+                <VisualState x:Name="Pressed"/>
+                <VisualState x:Name="Disabled">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SelectedCounterBackgroundBrush}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SelectedCounterBorderBrush}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" Margin="{StaticResource PhoneTouchTargetOverhang}">
+              <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Headered Items Control  -->
+  <Style TargetType="syscontrols:HeaderedItemsControl">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="syscontrols:HeaderedItemsControl">
+          <Grid x:Name="Root">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ContentControl x:Name="HeaderContent"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"/>
+            <ItemsPresenter x:Name="Items"
+                            Margin="12,0,0,0"
+                            Grid.Row="1" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- ReadOnly TextBoxes -->
+  <Style x:Key="PhoneReadOnlyTextBoxBase" TargetType="TextBox">
+    <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}" />
+    <Setter Property="FontSize" Value="26" />
+    <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+    <Setter Property="Margin" Value="{StaticResource PhoneHorizontalMargin}"/>
+    <Setter Property="IsReadOnly" Value="True"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <ContentPresenter x:Name="ContentElement"/>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="PhoneReadOnlyTextBoxLargeStyle" TargetType="TextBox" BasedOn="{StaticResource PhoneReadOnlyTextBoxBase}">
+    <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyLight}"/>
+    <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeLarge}"/>
+  </Style>
+
+  <Style x:Key="PhoneReadOnlyTextBoxSubtleStyle" TargetType="TextBox" BasedOn="{StaticResource PhoneReadOnlyTextBoxBase}">
+    <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
+  </Style>
+
+  <Style x:Key="PhoneReadOnlyTextBoxNormalStyle" TargetType="TextBox" BasedOn="{StaticResource PhoneReadOnlyTextBoxBase}">
+
+  </Style>
+
+  <Style x:Key="PhoneReadOnlyTextBoxAccentStyle" TargetType="TextBox" BasedOn="{StaticResource PhoneReadOnlyTextBoxBase}">
+    <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiLight}"/>
+    <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}"/>
+  </Style>
+
+  
+  <!-- HyperlinkButton -->
+  <Style TargetType="HyperlinkButton">
+    <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyLight}"/>
+    <Setter Property="FontSize" Value="34" />
+    <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}"/>
+    <Setter Property="Margin" Value="0"/>
+    <Setter Property="Padding" Value="0,12"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="HyperlinkButton">
+          <Grid Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal"/>
+                <VisualState x:Name="MouseOver"/>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <DoubleAnimation Duration="0" Storyboard.TargetName="TextElement" Storyboard.TargetProperty="Opacity" To="0.5" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextElement" Storyboard.TargetProperty="Foreground">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <TextBlock x:Name="TextElement" Text="{TemplateBinding Content}" 
+                         Margin="{StaticResource PhoneHorizontalMargin}" 
+                         Padding="{TemplateBinding Padding}"
+                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                         TextWrapping="Wrap" 
+                         TextDecorations="None"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

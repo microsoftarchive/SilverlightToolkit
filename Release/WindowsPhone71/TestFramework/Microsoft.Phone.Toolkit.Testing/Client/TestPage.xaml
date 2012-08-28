@@ -1,0 +1,287 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    x:Class="Microsoft.Phone.Testing.Client.TestPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+  xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+  xmlns:syscontrols="clr-namespace:System.Windows.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+  mc:Ignorable="d" 
+  d:DesignWidth="480" 
+  d:DesignHeight="696"
+  FontFamily="{StaticResource PhoneFontFamilyNormal}"
+  FontSize="{StaticResource PhoneFontSizeNormal}"
+  Foreground="{StaticResource PhoneForegroundBrush}"
+  xmlns:viewmodel="clr-namespace:Microsoft.Phone.Testing.Client"
+  d:DataContext="{d:DesignInstance Type=viewmodel:TestRunData}">
+
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Microsoft.Phone.Toolkit.Testing;component/Client/Resources/FrameworkResources.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="TestExecution" Visibility="Collapsed">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <!-- Header -->
+      <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <!-- Framework Title -->
+        <TextBlock Text="{Binding Source={StaticResource AppStrings}, 
+                                Path=AppStrings.AppTitle, 
+                                ValidatesOnNotifyDataErrors=False}" 
+                 Style="{StaticResource PhoneTextNormalStyle}"/>
+        <Grid HorizontalAlignment="Center">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+
+          <!-- Pass Counter -->
+          <Button x:Name="PassButton"
+                Style="{StaticResource CounterButtonStyle}"
+                  MinWidth="155">
+            <StackPanel>
+              <TextBlock Text="{Binding Path=PassedScenarios, 
+                                      ValidatesOnNotifyDataErrors=False}"
+                       HorizontalAlignment="Center"
+                       Style="{Binding Path=PassedScenarios, Converter={StaticResource TextLengthConverter}, ValidatesOnNotifyDataErrors=False}"
+                       Foreground="{StaticResource PassBrush}"/>
+              <TextBlock Text="{Binding Source={StaticResource AppStrings}, 
+                                      Path=AppStrings.PassText, 
+                                      ValidatesOnNotifyDataErrors=False}" 
+                       HorizontalAlignment="Center" 
+                       Style="{StaticResource PhoneTextLargeStyle}" 
+                       Foreground="{StaticResource PassBrush}" 
+                       Margin="0,-20,0,0"/>
+            </StackPanel>
+          </Button>
+
+          <!-- Fail Counter -->
+          <Button x:Name="FailButton" 
+                  Style="{StaticResource CounterButtonStyle}"
+                  Grid.Column="1"
+                  MinWidth="155">
+            <StackPanel>
+              <TextBlock Text="{Binding Path=FailedScenarios, 
+                                      ValidatesOnNotifyDataErrors=False}" 
+                       HorizontalAlignment="Center" 
+                       Style="{Binding Path=FailedScenarios, Converter={StaticResource TextLengthConverter}, ValidatesOnNotifyDataErrors=False}" 
+                       Foreground="{StaticResource FailBrush}"/>
+              <TextBlock Text="{Binding Source={StaticResource AppStrings}, 
+                                      Path=AppStrings.FailText, 
+                                      ValidatesOnNotifyDataErrors=False}" 
+                       HorizontalAlignment="Center" 
+                       Style="{StaticResource PhoneTextLargeStyle}" 
+                       Foreground="{StaticResource FailBrush}" 
+                       Margin="0,-20,0,0"/>
+            </StackPanel>
+          </Button>
+
+          <!-- Total Counter -->
+          <Button x:Name="TotalButton"
+                  Style="{StaticResource CounterButtonStyle}"
+                  Grid.Column="2"
+                  MinWidth="155">
+            <StackPanel>
+              <TextBlock Grid.Column="2" 
+                       Text="{Binding Path=TotalScenarios, 
+                                      ValidatesOnNotifyDataErrors=False}" 
+                       HorizontalAlignment="Center" 
+                       Style="{Binding Path=TotalScenarios, Converter={StaticResource TextLengthConverter}, ValidatesOnNotifyDataErrors=False}"
+                       Foreground="{StaticResource TotalBrush}"/>
+              <TextBlock Grid.Row="1" 
+                       Grid.Column="2" 
+                       Text="{Binding Source={StaticResource AppStrings}, 
+                                      Path=AppStrings.TotalText, 
+                                      ValidatesOnNotifyDataErrors=False}" 
+                       HorizontalAlignment="Center" 
+                       Style="{StaticResource PhoneTextLargeStyle}" 
+                       Foreground="{StaticResource TotalBrush}"
+                       Margin="0,-20,0,0" />
+            </StackPanel>
+          </Button>
+        </Grid>
+      </StackPanel>
+
+      <Grid x:Name="TestStage" Grid.Row="1" Opacity="0" />
+
+      <Grid Grid.Row="1" Margin="12,0">
+        <ListBox x:Name="ResultsListBox" ItemsSource="{Binding Path=TestAssemblies}">
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+          </ListBox.ItemContainerStyle>
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <syscontrols:HeaderedItemsControl Header="{Binding}" 
+                                           ItemsSource="{Binding Path=TestClasses}">
+                <syscontrols:HeaderedItemsControl.HeaderTemplate>
+                  <DataTemplate>
+                    <ListBoxItem>
+                      <!-- Assembly Information -->
+                      <Grid Background="#33CCCCCC" Width="456">
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto"/>
+                          <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto"/>
+                          <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Margin="12,6.5,0,0" Height="32" Width="32" Stretch="None">
+                          <Image.Source>
+                            <BitmapImage CreateOptions="BackgroundCreation"
+                                       UriSource="/Microsoft.Phone.Toolkit.Testing;component/Client/Resources/vsicon.assembly.png" />
+                          </Image.Source>
+                        </Image>
+                        <TextBlock Text="{Binding Path=Name}"
+                                     Grid.Column="1"
+                                     Style="{StaticResource PhoneTextLargeStyle}" 
+                                     Foreground="{StaticResource PhoneSubtleBrush}"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="12,0,0,0">
+                          <TextBlock Text="{Binding Path=PassCount}" Foreground="#FFA2C139"/>
+                          <TextBlock Text=" passed" Foreground="#FFA2C139"/>
+                          <TextBlock Text=", "  Foreground="{StaticResource PhoneSubtleBrush}"/>
+                          <TextBlock Text="{Binding Path=FailCount}" Foreground="#FFE51400"/>
+                          <TextBlock Text=" failed" Foreground="#FFE51400"/>
+                        </StackPanel>
+                      </Grid>
+                    </ListBoxItem>
+                  </DataTemplate>
+                </syscontrols:HeaderedItemsControl.HeaderTemplate>
+                <syscontrols:HeaderedItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <ListBoxItem>
+                      <toolkit:ExpanderView IsNonExpandable="False"
+                                           ItemsSource="{Binding Path=TestMethods}"
+                                           Header="{Binding}"
+                                           Expander="{Binding}">
+                        <toolkit:ExpanderView.HeaderTemplate>
+                          <DataTemplate>
+                            <!-- Class Information -->
+                            <Grid Width="444">
+                              <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                              </Grid.ColumnDefinitions>
+                              <Image Margin="12,6.5,0,0" Height="32" Width="32" Stretch="None">
+                                <Image.Source>
+                                  <BitmapImage CreateOptions="BackgroundCreation"
+                                       UriSource="/Microsoft.Phone.Toolkit.Testing;component/Client/Resources/vsicon.class.png" />
+                                </Image.Source>
+                              </Image>
+                              <TextBlock Text="{Binding Path=Name}"
+                                       Grid.Column="1"
+                                       FontSize="{StaticResource PhoneFontSizeExtraLarge}"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                                       Margin="12,0,0,0"/>
+                            </Grid>
+                          </DataTemplate>
+                        </toolkit:ExpanderView.HeaderTemplate>
+                        <toolkit:ExpanderView.ExpanderTemplate>
+                          <DataTemplate>
+                            <StackPanel>
+                              <TextBlock Text="{Binding Path=Namespace}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                              <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=PassCount}" Foreground="#FFA2C139"/>
+                                <TextBlock Text=" passed" Foreground="#FFA2C139"/>
+                                <TextBlock Text=", "  Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="{Binding Path=FailCount}" Foreground="#FFE51400"/>
+                                <TextBlock Text=" failed" Foreground="#FFE51400"/>
+                              </StackPanel>
+                            </StackPanel>
+                          </DataTemplate>
+                        </toolkit:ExpanderView.ExpanderTemplate>
+                        <toolkit:ExpanderView.ItemTemplate>
+                          <DataTemplate>
+                            <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True" Tap="OnMethodItemTap">
+                              <!-- Method Information -->
+                              <Grid>
+                                <Grid.RowDefinitions>
+                                  <RowDefinition Height="Auto"/>
+                                  <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width="Auto"/>
+                                  <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Margin="0,6.5,0,0" Height="32" Width="32" Stretch="None">
+                                  <Image.Source>
+                                    <BitmapImage CreateOptions="BackgroundCreation"
+                                       UriSource="/Microsoft.Phone.Toolkit.Testing;component/Client/Resources/vsicon.method.png" />
+                                  </Image.Source>
+                                </Image>
+                                <TextBlock Text="{Binding Path=Name}"
+                                         Grid.Column="1"
+                                         Foreground="{Binding Path=Passed, ValidatesOnNotifyDataErrors=False, Converter={StaticResource MethodPassedConverter}}"
+                                         FontSize="{StaticResource PhoneFontSizeExtraLarge}"
+                                         FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                                         Margin="12,0,0,0"/>
+                                <TextBlock Text="{Binding Path=Description}"
+                                         Grid.Row="1"
+                                         Grid.ColumnSpan="2"
+                                         TextWrapping="Wrap"
+                                         FontSize="{StaticResource PhoneFontSizeNormal}" 
+                                         FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                              </Grid>
+                            </ListBoxItem>
+                          </DataTemplate>
+                        </toolkit:ExpanderView.ItemTemplate>
+                      </toolkit:ExpanderView>
+                    </ListBoxItem>
+                  </DataTemplate>
+                </syscontrols:HeaderedItemsControl.ItemTemplate>
+              </syscontrols:HeaderedItemsControl>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+
+      <Grid x:Name="RunningTestPanel"
+            Background="{StaticResource PhoneBackgroundBrush}"             
+            Grid.Row="1" 
+            Margin="12,0" 
+            Visibility="Collapsed">
+        <Grid VerticalAlignment="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+          <TextBlock Text="{Binding Source={StaticResource AppStrings}, 
+                                    Path=AppStrings.RunningTestsText, 
+                                    ValidatesOnNotifyDataErrors=False}" 
+                     Style="{StaticResource PhoneTextLargeStyle}"
+                     HorizontalAlignment="Center"
+                     FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+          <toolkit:PerformanceProgressBar x:Name="RunningTestProgress" 
+                                           IsIndeterminate="False" 
+                                           Margin="0,12,0,0"
+                                           Grid.Row="1"/>
+        </Grid>
+      </Grid>
+
+    </Grid>
+    <Grid x:Name="TagEditorHolder" Visibility="Collapsed"/>
+    <Grid x:Name="TestMethodView" Visibility="Collapsed"/>
+  </Grid>
+
+</UserControl>

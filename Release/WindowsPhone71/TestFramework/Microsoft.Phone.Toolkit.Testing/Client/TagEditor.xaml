@@ -1,0 +1,136 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<UserControl 
+  x:Class="Microsoft.Phone.Testing.Client.TagEditor"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:Microsoft.Phone.Testing.Client"  
+  xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+  mc:Ignorable="d"
+  d:DesignHeight="700" 
+  d:DesignWidth="480"
+  FontFamily="{StaticResource PhoneFontFamilyNormal}"
+  Foreground="{StaticResource PhoneForegroundBrush}"
+  FontSize="{StaticResource PhoneFontSizeSmall}" 
+  Background="{StaticResource PhoneBackgroundBrush}">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Microsoft.Phone.Toolkit.Testing;component/Client/Resources/FrameworkResources.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!--Application and Page Title -->
+    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+      <TextBlock x:Name="ApplicationTitle" 
+                 Text="{Binding Source={StaticResource AppStrings}, 
+                                Path=AppStrings.AppTitle, 
+                                ValidatesOnNotifyDataErrors=False}" 
+                 Style="{StaticResource PhoneTextNormalStyle}"/>
+      <TextBlock x:Name="PageTitle" 
+                 Text="{Binding Source={StaticResource AppStrings},
+                                Path=AppStrings.TagEditorTitle,
+                                ValidatesOnNotifyDataErrors=False}" 
+                 Margin="9,-7,0,0" 
+                 Style="{StaticResource PhoneTextTitle1Style}"/>
+    </StackPanel>
+
+    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <!-- Test execution type selection -->
+      <TextBlock x:Name="UseTagsText"
+                 Text="Use tags" 
+                 Style="{StaticResource PhoneTextSubtleStyle}" />
+      <toolkit:ToggleSwitch x:Name="TagsToggle" 
+                            Margin="0,-20,0,-20"
+                            Grid.Row="1" 
+                            Checked="TagsToggle_Checked" 
+                            Unchecked="TagsToggle_Unchecked"/>
+
+      <!-- Tags Panel -->
+      <Grid x:Name="TagsPanel" Grid.Row="2" Visibility="{Binding ElementName=TagsToggle, Path=IsChecked, Converter={StaticResource VisibilityConverter}, ValidatesOnNotifyDataErrors=False}">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+          <TextBlock Text="Tag expression" Style="{StaticResource PhoneTextSubtleStyle}" />
+          <TextBox x:Name="TagExpressionTextBox" TextChanged="TagExpressionTextBox_TextChanged" />
+        </StackPanel>
+
+        <TextBlock Text="Previous and suggested tags" Grid.Row="1" Margin="12,0,0,12"  Style="{StaticResource PhoneTextSubtleStyle}" />
+
+        <ListBox x:Name="SuggestionsListBox" Grid.Row="2" Tap="OnSampleTagTap">
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+          </ListBox.ItemContainerStyle>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="All" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run all unit tests." TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="ExceptionInline" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run the unit tests in the ExceptionInline class." TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="ExceptionInline-Asy" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run the unit tests in the ChartTest class except those tagged with Asy" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="ExceptionInline+ExceptionInlineBugs" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run the unit tests in both the ExceptionInline and ExceptionInlineBugs classes" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="(ExceptionInline+ExceptionInlineBugs)-Asy" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run the unit tests in both the ExceptionInline and ExceptionInlineBugs classes except those tagged with Asy" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="ExceptionInline*Asy" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run the unit tests in the ExceptionInline class that are also tagged with Asy" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Margin="0,0,0,17">
+              <TextBlock Text="!Asy" Style="{StaticResource PhoneTextLargeStyle}"/>
+              <TextBlock Text="Run all unit tests except those tagged with Asc" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+            </StackPanel>
+          </ListBoxItem>
+        </ListBox>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>
