@@ -43,22 +43,49 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         /// <param name="list">The ItemsControl to search on.</param>
         /// <returns>
-        /// A collection of weak references to the items in the view port.
+        /// A list of weak references to the items in the view port.
         /// </returns>
         public static IList<WeakReference> GetItemsInViewPort(ItemsControl list)
+        {
+            IList<WeakReference> viewPortItems = new List<WeakReference>();
+
+            GetItemsInViewPort(list, viewPortItems);
+
+            return viewPortItems;
+        }
+
+        /// <summary>
+        /// Gets the items that are currently in the view port
+        /// of an ItemsControl with a ScrollViewer and adds them
+        /// into a list of weak references.
+        /// </summary>
+        /// <param name="list">
+        /// The items control to search on.
+        /// </param>
+        /// <param name="items">
+        /// The list of weak references where the items in 
+        /// the view port will be added.
+        /// </param>
+        public static void GetItemsInViewPort(ItemsControl list, IList<WeakReference> items)
         {
             int index;
             FrameworkElement container;
             GeneralTransform itemTransform;
             Rect boundingBox;
-            IList<WeakReference> viewPortItems = new List<WeakReference>();            
+
+            if (VisualTreeHelper.GetChildrenCount(list) == 0)
+            {
+                // no child yet
+                return;
+            }
+
             ScrollViewer scrollHost = VisualTreeHelper.GetChild(list, 0) as ScrollViewer;
 
             list.UpdateLayout();
             
             if (scrollHost == null)
             {
-                return viewPortItems;
+                return;
             }
 
             for (index = 0; index < list.Items.Count; index++)
@@ -74,14 +101,14 @@ namespace Microsoft.Phone.Controls
                     catch (ArgumentException)
                     {
                         // Ignore failures when not in the visual tree
-                        return viewPortItems;
+                        return;
                     }
 
                     boundingBox = new Rect(itemTransform.Transform(new Point()), itemTransform.Transform(new Point(container.ActualWidth, container.ActualHeight)));
 
                     if (boundingBox.Bottom > 0)
                     {
-                        viewPortItems.Add(new WeakReference(container));
+                        items.Add(new WeakReference(container));
                         index++;
                         break;
                     }
@@ -99,14 +126,14 @@ namespace Microsoft.Phone.Controls
                 catch (ArgumentException)
                 {
                     // Ignore failures when not in the visual tree
-                    return viewPortItems;
+                    return;
                 }
                 
                 boundingBox = new Rect(itemTransform.Transform(new Point()), itemTransform.Transform(new Point(container.ActualWidth, container.ActualHeight)));
 
                 if (boundingBox.Top < scrollHost.ActualHeight)
                 {
-                    viewPortItems.Add(new WeakReference(container));
+                    items.Add(new WeakReference(container));
                 }
                 else
                 {
@@ -114,7 +141,7 @@ namespace Microsoft.Phone.Controls
                 }
             }
 
-            return viewPortItems;
+            return;
         }
     }
 }
