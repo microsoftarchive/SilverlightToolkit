@@ -96,7 +96,13 @@ namespace Microsoft.Phone.Controls
         public bool? IsChecked
         {
             get { return (bool?)GetValue(IsCheckedProperty); }
-            set { SetValue(IsCheckedProperty, value); }
+            set {
+                // Testing the value before calling SetValue will preserve the OneWay databindings (because IsCheked is called as a result of transfering the value to the inner switch control)
+                if (IsChecked != value)
+                {
+                    SetValue(IsCheckedProperty, value);
+                }
+            }
         }
 
         /// <summary>
