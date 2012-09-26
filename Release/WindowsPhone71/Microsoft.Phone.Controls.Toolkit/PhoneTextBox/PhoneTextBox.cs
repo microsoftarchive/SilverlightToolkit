@@ -22,6 +22,7 @@ namespace Microsoft.Phone.Controls
     /// <QualityBand>Experimental</QualityBand>
     [TemplateVisualState(Name = LengthIndicatorVisibleState, GroupName = LengthIndicatorStates)]
     [TemplateVisualState(Name = LengthIndicatorHiddenState, GroupName = LengthIndicatorStates)]
+    [TemplateVisualState(Name = NormalState, GroupName = CommonStates)]
     [TemplateVisualState(Name = DisabledState, GroupName = CommonStates)]
     [TemplateVisualState(Name = ReadOnlyState, GroupName = CommonStates)]
     [TemplateVisualState(Name = FocusedState, GroupName = FocusStates)]
@@ -121,6 +122,11 @@ namespace Microsoft.Phone.Controls
         /// Common States.
         /// </summary>
         private const string CommonStates = "CommonStates";
+
+        /// <summary>
+        /// Normal state.
+        /// </summary>
+        private const string NormalState = "Normal";
 
         /// <summary>
         /// Disabled state.
