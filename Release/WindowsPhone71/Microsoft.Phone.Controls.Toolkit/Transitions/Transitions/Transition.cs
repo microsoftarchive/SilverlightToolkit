@@ -35,7 +35,8 @@ namespace Microsoft.Phone.Controls
         private CacheMode _cacheMode;
 
         /// <summary>
-        /// The <see cref="T:System.Windows.UIElement"/>.
+        /// The <see cref="T:System.Windows.UIElement"/>
+        /// that the transition will be applied to.
         /// </summary>
         private UIElement _element;
 
@@ -56,19 +57,37 @@ namespace Microsoft.Phone.Controls
         private Storyboard _storyboard;
 
         /// <summary>
-        /// Mirrors <see cref="E:System.Windows.Media.Animation.Storyboard.Completed"/>.
+        /// The property that identifies the
+        /// <see cref="T:System.Windows.Media.Animation.Storyboard"/>
+        /// for the
+        /// <see cref="T:System.Windows.UIElement"/>.
         /// </summary>
-        public event EventHandler Completed
-        {
-            add
+        protected Storyboard Storyboard 
+        { 
+            get { return _storyboard; }
+            set
             {
-                _storyboard.Completed += value;
-            }
-            remove
-            {
-                _storyboard.Completed -= value;
+                if(value != _storyboard)
+                {
+                    if (_storyboard != null)
+                    {
+                        _storyboard.Completed -= OnCompleted; 
+                    }                        
+
+                    _storyboard = value;
+                    
+                    if (_storyboard != null)
+                    {
+                        _storyboard.Completed += OnCompleted;
+                    }                                                  
+                }
             }
         }
+
+        /// <summary>
+        /// Mirrors <see cref="E:System.Windows.Media.Animation.Storyboard.Completed"/>.
+        /// </summary>
+        public event EventHandler Completed;
 
         /// <summary>
         /// Constructs a
@@ -91,17 +110,17 @@ namespace Microsoft.Phone.Controls
                 throw new ArgumentNullException("storyboard");
             }
             _element = element;
-            _storyboard = storyboard;
+            Storyboard = storyboard;
+            Storyboard.Completed += OnCompletedRestore;
         }
 
         /// <summary>
         /// Mirrors <see cref="M:System.Windows.Media.Animation.Storyboard.Begin"/>.
         /// </summary>
-        public void Begin()
+        public virtual void Begin()
         {
-            Save();
-            _storyboard.Completed += OnCompletedRestore;
-            _storyboard.Begin();
+            Save();           
+            Storyboard.Begin();
         }
 
         /// <summary>
@@ -119,7 +138,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public ClockState GetCurrentState()
         {
-            return _storyboard.GetCurrentState();
+            return Storyboard.GetCurrentState();
         }
 
         /// <summary>
@@ -127,7 +146,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public TimeSpan GetCurrentTime()
         {
-            return _storyboard.GetCurrentTime();
+            return Storyboard.GetCurrentTime();
         }
 
         /// <summary>
@@ -135,7 +154,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public void Pause()
         {
-            _storyboard.Pause();
+            Storyboard.Pause();
         }
 
         /// <summary>
@@ -170,7 +189,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public void Resume()
         {
-            _storyboard.Resume();
+            Storyboard.Resume();
         }
 
         /// <summary>
@@ -196,12 +215,26 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
+        /// Mirrors <see cref="E:System.Windows.Media.Animation.Storyboard.Completed"/>.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnCompleted(object sender, EventArgs e)
+        {
+            EventHandler handler = Completed;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
         /// Mirrors <see cref="M:System.Windows.Media.Animation.Storyboard.Seek"/>.
         /// </summary>
         /// <param name="offset">The time offset.</param>
         public void Seek(TimeSpan offset)
         {
-            _storyboard.Seek(offset);
+            Storyboard.Seek(offset);
         }
 
         /// <summary>
@@ -210,7 +243,7 @@ namespace Microsoft.Phone.Controls
         /// <param name="offset">The time offset.</param>
         public void SeekAlignedToLastTick(TimeSpan offset)
         {
-            _storyboard.SeekAlignedToLastTick(offset);
+            Storyboard.SeekAlignedToLastTick(offset);
         }
 
         /// <summary>
@@ -218,7 +251,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public void SkipToFill()
         {
-            _storyboard.SkipToFill();
+            Storyboard.SkipToFill();
         }
 
         /// <summary>
@@ -226,7 +259,7 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         public void Stop()
         {
-            _storyboard.Stop();
+            Storyboard.Stop();
             Restore();
         }
     }

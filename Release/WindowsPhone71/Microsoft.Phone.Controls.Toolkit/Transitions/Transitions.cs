@@ -198,5 +198,30 @@ namespace Microsoft.Phone.Controls
             element.Projection = new PlaneProjection { CenterOfRotationX = 0 };
             return GetEnumStoryboard<TurnstileTransitionMode>(element, "Turnstile", turnstileTransitionMode);
         }
+
+        /// <summary>
+        /// Creates an
+        /// <see cref="T:Microsoft.Phone.Controls.ITransition"/>
+        /// for a
+        /// <see cref="T:System.Windows.UIElement"/>
+        /// for the turnstile feather transition family.
+        /// </summary>
+        /// <param name="element">The <see cref="T:System.Windows.UIElement"/>.</param>
+        /// <param name="turnstileFeatherTransitionMode">The transition mode.</param>
+        /// <param name="beginTime">The time at which the transition should begin.</param>
+        /// <returns>The <see cref="T:Microsoft.Phone.Controls.ITransition"/>.</returns>
+        public static ITransition TurnstileFeather(UIElement element, TurnstileFeatherTransitionMode turnstileFeatherTransitionMode, TimeSpan? beginTime)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+            if (!Enum.IsDefined(typeof(TurnstileFeatherTransitionMode), turnstileFeatherTransitionMode))
+            {
+                throw new ArgumentOutOfRangeException("turnstileFeatherTransitionMode");
+            }
+            element.Projection = new PlaneProjection { CenterOfRotationX = 0 };
+            return new FeatheredTransition(element, new Storyboard(), turnstileFeatherTransitionMode, beginTime); 
+        }
     }
 }

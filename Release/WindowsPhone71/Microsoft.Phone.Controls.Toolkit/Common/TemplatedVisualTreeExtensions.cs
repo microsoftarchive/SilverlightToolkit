@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Media;
 
 namespace System.Windows.Controls
 {
@@ -69,6 +70,7 @@ namespace System.Windows.Controls
         /// <param name="parent">The parent framework element.</param>
         /// <param name="applyTemplates">Specifies whether to apply templates on the traversed framework elements</param>
         /// <returns>The logical children of the framework element of the specified type.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification="File is linked to projects that target previous platforms that require this method.")]
         internal static IEnumerable<T> GetLogicalChildrenByType<T>(this FrameworkElement parent, bool applyTemplates)
                 where T : FrameworkElement
         {
@@ -103,5 +105,40 @@ namespace System.Windows.Controls
         }
         #endregion
 
+        #region GetParentByType<T>(...)
+        /// <summary>
+        /// The first parent of the framework element of the specified type 
+        /// that is found while traversing the visual tree upwards.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The element type of the dependency object.
+        /// </typeparam>
+        /// <param name="element">The framework element.</param>
+        /// <returns>
+        /// The first parent of the framework element of the specified type.
+        /// </returns>
+        internal static T GetParentByType<T>(this FrameworkElement element)
+            where T : FrameworkElement
+        {
+            Debug.Assert(element != null, "The element cannot be null.");
+
+            T result = null;
+            DependencyObject parent = VisualTreeHelper.GetParent(element);
+
+            while (parent != null)
+            {
+                result = parent as T;
+
+                if (result != null)
+                {
+                    return result;
+                }
+
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return null;
+        }
+        #endregion
     }
 }

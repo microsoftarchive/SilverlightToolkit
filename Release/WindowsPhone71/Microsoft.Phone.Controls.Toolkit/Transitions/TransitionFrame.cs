@@ -146,6 +146,16 @@ namespace Microsoft.Phone.Controls
         /// <param name="e">The event arguments.</param>
         private void OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
+            // If the current application is not the origin
+            // and destination of the navigation, ignore it.
+            // e.g. do not play a transition when the 
+            // application gets deactivated because the shell
+            // will animate the frame out automatically.
+            if (!e.IsNavigationInitiator)
+            {
+                return;
+            }
+
             _isForwardNavigation = e.NavigationMode != NavigationMode.Back;
 
             var oldElement = Content as UIElement;

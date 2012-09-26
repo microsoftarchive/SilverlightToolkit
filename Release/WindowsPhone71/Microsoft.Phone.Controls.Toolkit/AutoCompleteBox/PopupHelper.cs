@@ -313,7 +313,7 @@ namespace System.Windows.Controls
                 return;
             }
             Point childPoint = isChildAbove ? AboveChildPoint(margin) : BelowChildPoint(margin, controlSize);
-            
+
 #if WP7
             GeneralTransform transformToRoot = Parent.TransformToVisual(null);
             Point textBoxScreenPosition = transformToRoot.Transform(new Point(0, 0));

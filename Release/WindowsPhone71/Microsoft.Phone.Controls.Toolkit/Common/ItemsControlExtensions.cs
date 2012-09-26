@@ -82,7 +82,7 @@ namespace Microsoft.Phone.Controls
             ScrollViewer scrollHost = VisualTreeHelper.GetChild(list, 0) as ScrollViewer;
 
             list.UpdateLayout();
-            
+
             if (scrollHost == null)
             {
                 return;
@@ -128,7 +128,7 @@ namespace Microsoft.Phone.Controls
                     // Ignore failures when not in the visual tree
                     return;
                 }
-                
+
                 boundingBox = new Rect(itemTransform.Transform(new Point()), itemTransform.Transform(new Point(container.ActualWidth, container.ActualHeight)));
 
                 if (boundingBox.Top < scrollHost.ActualHeight)
