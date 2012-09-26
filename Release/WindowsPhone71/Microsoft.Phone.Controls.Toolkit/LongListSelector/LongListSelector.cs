@@ -101,50 +101,17 @@ namespace Microsoft.Phone.Controls
         /// </summary>
         private List<INotifyCollectionChanged> _groupCollections = new List<INotifyCollectionChanged>();
 
+        /// <summary>
+        /// Indicates the LLS is in the process of setting the SelectedItem back to its old value.
+        /// </summary>
+        private bool _isResettingSelectedItem = false;
+
         #region Properties
 
         /// <summary>
         /// Gets or sets whether the list is flat instead of a group hierarchy.
         /// </summary>
         public bool IsFlatList { get; set; }
-
-        /// <summary>
-        /// Gets or sets the selected item.
-        /// </summary>
-        public object SelectedItem
-        {
-            get
-            {
-                if (_listBox != null && _listBox.SelectedItem != null)
-                {
-                    LongListSelectorItem tuple = (LongListSelectorItem)_listBox.SelectedItem;
-                    if (tuple.ItemType == LongListSelectorItemType.Item)
-                        return tuple.Item;
-                }
-                return null;
-            }
-            set
-            {
-                if (_listBox != null)
-                {
-                    if (value == null)
-                    {
-                        _listBox.SelectedItem = null;
-                    }
-                    else
-                    {
-                        foreach (LongListSelectorItem tuple in _listBox.ItemsSource)
-                        {
-                            if (tuple.Item == value)
-                            {
-                                _listBox.SelectedItem = tuple;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// Gets or sets whether the list can be (temporarily) scrolled off of the ends. 
@@ -212,6 +179,97 @@ namespace Microsoft.Phone.Controls
         }
 
 
+
+        #endregion
+
+        #region SelectedItem DependencyProperty
+
+        /// <summary>
+        /// Gets or sets the selected item.
+        /// </summary>       
+        public object SelectedItem
+        {
+            get { return GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+
+        /// <summary>
+        /// The SelectedItem DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(LongListSelector), new PropertyMetadata(null, OnSelectedItemChanged));
+
+        /// <summary>
+        /// Called when the selected item changes
+        /// </summary>
+        private static void OnSelectedItemChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {            
+            var lls = ((LongListSelector)obj);
+            bool shouldFireSelectionChanged = !lls._isResettingSelectedItem;
+
+            // Set the selected item of the ListBox if necessary
+            if (lls._listBox != null)
+            {
+                LongListSelectorItem selectedListBoxItem = lls._listBox.SelectedItem as LongListSelectorItem;
+                
+                if (e.NewValue == null)
+                {
+                    lls._listBox.SelectedItem = null;
+                }
+                else if (selectedListBoxItem == null || e.NewValue != selectedListBoxItem.Item || selectedListBoxItem.ItemType != LongListSelectorItemType.Item)
+                {
+                    bool itemFound = false;
+
+                    // Find the corresponding LLS item in the listbox. 
+                    foreach (LongListSelectorItem item in lls._listBox.Items)
+                    {
+                        if (item.ItemType == LongListSelectorItemType.Item && item.Item == e.NewValue)
+                        {
+                            lls._listBox.SelectedItem = item;
+                            itemFound = true;
+                            break;
+                        }
+                    }
+
+                    // If the item doesn't exist in the list, select null
+                    if (!itemFound)
+                    {
+                        lls._isResettingSelectedItem = true;
+                        try
+                        {
+                            lls.SelectedItem = null;
+                        }
+                        finally
+                        {
+                            lls._isResettingSelectedItem = false;
+                        }
+                    }
+                }
+            }
+
+            // Fire the SelectionChanged event
+            if (shouldFireSelectionChanged && e.OldValue != lls.SelectedItem)
+            {
+                var handler = lls.SelectionChanged;
+                if (handler != null)
+                {
+                    var added = new List<object>();
+                    var removed = new List<object>();
+
+                    if (e.OldValue != null)
+                    {
+                        removed.Add(e.OldValue);
+                    }
+
+                    if (lls.SelectedItem != null)
+                    {
+                        added.Add(lls.SelectedItem);
+                    }
+
+                    handler(obj, new SelectionChangedEventArgs(removed, added));
+                }
+            }
+        }
 
         #endregion
 
@@ -732,7 +790,7 @@ namespace Microsoft.Phone.Controls
             // Unsubscribe from events we registered for in the past.
             if (_listBox != null)
             {
-                _listBox.SelectionChanged -= OnSelectionChanged;
+                _listBox.SelectionChanged -= OnListBoxSelectionChanged;
                 _listBox.Link -= OnLink;
                 _listBox.Unlink -= OnUnlink;
             }
@@ -750,7 +808,7 @@ namespace Microsoft.Phone.Controls
             _listBox.GroupHeaderTemplate = GroupHeaderTemplate;
             _listBox.GroupFooterTemplate = GroupFooterTemplate;
             _listBox.ItemTemplate = ItemTemplate;
-            _listBox.SelectionChanged += OnSelectionChanged;
+            _listBox.SelectionChanged += OnListBoxSelectionChanged;
             _listBox.Link += OnLink;
             _listBox.Unlink += OnUnlink;
 
@@ -1549,11 +1607,11 @@ namespace Microsoft.Phone.Controls
         }
         #endregion
 
-        #region OnSelectionChanged(...)
+        #region OnListBoxSelectionChanged(...)
         /// <summary>
         /// Called when there is a change in the selected item(s) in the listbox.
         /// </summary>
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Group navigation
             //var group = (from t in (IEnumerable<object>)e.AddedItems where ((ItemTuple)t).ItemType == ItemType.GroupHeader select (ItemTuple)t).FirstOrDefault();
@@ -1569,35 +1627,26 @@ namespace Microsoft.Phone.Controls
 
             if (group != null)
             {
+                if (_listBox != null)
+                {
+                    _listBox.SelectedItem = null;
+                }
                 SelectedItem = null;
                 DisplayGroupView();
             }
             else
             {
-                var handler = SelectionChanged;
-
-                if (handler != null)
+                if (e.AddedItems.Count > 0 && ((LongListSelectorItem)e.AddedItems[0]).ItemType == LongListSelectorItemType.Item)
                 {
-                    List<LongListSelectorItem> addedItems = new List<LongListSelectorItem>();
-                    List<LongListSelectorItem> removedItems = new List<LongListSelectorItem>();
-
-                    foreach (LongListSelectorItem tuple in e.AddedItems)
-                    {
-                        if (tuple.ItemType == LongListSelectorItemType.Item)
-                        {
-                            addedItems.Add(tuple);
+                    SelectedItem = ((LongListSelectorItem)e.AddedItems[0]).Item;
                         }
-                    }
-
-                    foreach (LongListSelectorItem tuple in e.RemovedItems)
+                else
                     {
-                        if (tuple.ItemType == LongListSelectorItemType.Item)
+                    if (_listBox != null)
                         {
-                            removedItems.Add(tuple);
+                        _listBox.SelectedItem = null;
                         }
-                    }
-
-                    handler(this, new SelectionChangedEventArgs(removedItems, addedItems));
+                    SelectedItem = null;
                 }
             }
             
