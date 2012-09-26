@@ -129,11 +129,6 @@ namespace Microsoft.Phone.Controls
         private PhoneApplicationFrame _rootVisual;
 
         /// <summary>
-        /// Stores the last known mouse position (via MouseMove).
-        /// </summary>
-        private Point _mousePosition;
-
-        /// <summary>
         /// Stores a reference to the object that owns the ContextMenu.
         /// </summary>
         private DependencyObject _owner;
@@ -313,7 +308,10 @@ namespace Microsoft.Phone.Controls
             {
                 if (newValue)
                 {
-                    OpenPopup(_mousePosition);
+                    // User is trying to set IsOpen property to true to show the ContextMenu,
+                    // this property can be set anywhere so we don't know the exact position the user wants to show.
+                    // Passing negative numbers so we can put it around the current element
+                    OpenPopup(new Point(-1, -1));
                 }
                 else
                 {
@@ -426,8 +424,16 @@ namespace Microsoft.Phone.Controls
 
             _openingStoryboard = new List<Storyboard>();
 
-            // Temporarily hook LayoutUpdated to find out when Application.Current.RootVisual gets set.
-            LayoutUpdated += OnLayoutUpdated;
+            if (null == Application.Current.RootVisual)
+            {
+                // Temporarily hook LayoutUpdated to find out when Application.Current.RootVisual gets set.
+                LayoutUpdated += OnLayoutUpdated;
+            }
+            else
+            {
+                // We've already missed the LayoutUpdated event, so we are safe to call InitializeRootVisual() to compensate.
+                InitializeRootVisual();
+            }
         }
 
         /// <summary>
@@ -692,16 +698,6 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
-        /// Handles the RootVisual's MouseMove event to track the last mouse position.
-        /// </summary>
-        /// <param name="sender">Source of the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OnRootVisualMouseMove(object sender, MouseEventArgs e)
-        {
-            _mousePosition = e.GetPosition(null);
-        }
-
-        /// <summary>
         /// Handles the ManipulationCompleted event for the RootVisual.
         /// </summary>
         /// <param name="sender">Source of the event.</param>
@@ -807,7 +803,6 @@ namespace Microsoft.Phone.Controls
         {
             if (null != _rootVisual)
             {
-                _rootVisual.MouseMove -= OnRootVisualMouseMove;
                 _rootVisual.ManipulationCompleted -= OnRootVisualManipulationCompleted;
                 _rootVisual.OrientationChanged -= OnEventThatClosesContextMenu;
             }
@@ -866,9 +861,6 @@ namespace Microsoft.Phone.Controls
                     PhoneApplicationFrame;
                 if (null != _rootVisual)
                 {
-                    _rootVisual.MouseMove -= OnRootVisualMouseMove;
-                    _rootVisual.MouseMove += OnRootVisualMouseMove;
-
                     _rootVisual.ManipulationCompleted -= OnRootVisualManipulationCompleted;
                     _rootVisual.ManipulationCompleted += OnRootVisualManipulationCompleted;
 
@@ -986,33 +978,58 @@ namespace Microsoft.Phone.Controls
                         roiHeight = 0;
                     }
 
-                    // Try placing context menu below ROI
-                    p.Y = roiY + roiHeight;
-                    _reversed = false;
+                   
+                    
+                    bool notEnoughRoom = false;     // if we have enough room to place the menu without moving.
 
-                    if (p.Y > (bounds.Bottom - ActualHeight))
+                    double lowestTopOfMenu = bounds.Bottom - ActualHeight;
+                    double highestBottomOfMenu = bounds.Top + ActualHeight;
+
+                    if (bounds.Height <= ActualHeight)
                     {
-                        // Try placing context menu above ROI
+                        notEnoughRoom = true;
+                    }
+                    else if (roiY + roiHeight <= lowestTopOfMenu)           // there is enough room below the owner.
+                    {
+                        p.Y = roiY + roiHeight;
+                        _reversed = false;
+                    }
+                    else if (roiY >= highestBottomOfMenu)                   // there is enough room above the owner.
+                    {
                         p.Y = roiY - ActualHeight;
                         _reversed = true;
-
-                        if (p.Y < bounds.Top)
-                        {
-                            // Ignore ROI, place Context Menu at touch position and try downwards
-                            p = _popupAlignmentPoint;
+                    }
+                    else if (_popupAlignmentPoint.Y >= 0)                   // menu is displayed by Tap&Hold gesture, will try to place the menu at touch position                                                                            
+                    {
+                        p = _popupAlignmentPoint;
+                        if (p.Y <= lowestTopOfMenu)                   
+                        {   
                             _reversed = false;
+                        }
+                        else if (p.Y >= highestBottomOfMenu)
+                        {
+                            p.Y -= ActualHeight;
+                            _reversed = true;
+                        } 
+                        else 
+                        {
+                            notEnoughRoom = true;
+                        }
+                    }
+                    else                                                    // menu is displayed by calling "IsOpen = true", the point will be (-1, -1)
+                    {
+                        notEnoughRoom = true;
+                    }
 
-                            if (p.Y > (bounds.Bottom - ActualHeight))
-                            {
-                                // Expand upwards at touch position
-                                _reversed = true;
+                    if (notEnoughRoom)                                      // failed to place menu in above scenraios, try to align it to Bottom.
+                    {
+                        p.Y = lowestTopOfMenu;                              // align to bottom
+                        _reversed = true;
 
-                                if (p.Y < bounds.Top)
-                                {
-                                    p.Y = bounds.Bottom - ActualHeight;
-                                    _reversed = true;
-                                }
-                            }
+                        if (p.Y <= bounds.Top)                              // if the menu can't be fully displayed, make sure we truncate the bottom items, not the top items.
+                        {
+                            p.Y = bounds.Top;
+                            _reversed = false;
                         }
                     }
                 }
