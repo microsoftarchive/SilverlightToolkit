@@ -27,6 +27,7 @@ namespace PhoneToolkitSample
         }
     }
 
+#if WP7
     /// <summary>
     /// A class used to expose the Key property on a dynamically-created Linq grouping.
     /// The grouping will be generated as an internal class, so the Key property will not
@@ -34,7 +35,7 @@ namespace PhoneToolkitSample
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TElement">The type of the items.</typeparam>
-    public class PublicGrouping<TKey, TElement> : IGrouping<TKey, TElement>
+    public class PublicGrouping<TKey, TElement> : List<TElement>, IGrouping<TKey, TElement>
     {
         private readonly IGrouping<TKey, TElement> _internalGrouping;
 
@@ -82,4 +83,5 @@ namespace PhoneToolkitSample
 
         #endregion
     }
+#endif
 }

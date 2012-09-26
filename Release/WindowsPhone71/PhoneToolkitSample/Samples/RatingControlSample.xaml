@@ -1,0 +1,65 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.RatingControlSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="ratingcontrol" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="3">
+                <toolkit:Rating Width="250" Height="50" x:Name="RatingControl" RatingItemCount="5" Value="0.5" ShowSelectionHelper="True" ></toolkit:Rating>
+            </Grid>
+
+            <Button Grid.Row="1" Content="Increase" Click="Button_Click_Increase"  />
+            <Button Grid.Row="2" Content="Decrease" Click="Button_Click_Decrease" />
+            <Button Grid.Row="1" Grid.Column="1" Content="Reset" Click="Button_Click_Reset" Grid.ColumnSpan="2" />
+            <Button Grid.Row="3" Grid.Column="0" Content="Add Stars" Click="Button_Click_More" />
+            <Button Grid.Row="2" Grid.Column="1" Content="Flip Orientation" Click="Button_Click_Flip" Grid.ColumnSpan="2"/>
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Current Value: " />
+                <TextBlock>
+                    <TextBlock.Text>
+                        <Binding ElementName="RatingControl" Path="Value" />
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</phone:PhoneApplicationPage>

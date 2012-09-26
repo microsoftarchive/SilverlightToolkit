@@ -78,6 +78,13 @@
                                 Header="contextmenu"
                                 Content="Tap &amp; hold menu options control"/>
                         </HyperlinkButton>
+                        <HyperlinkButton NavigateUri="/Samples/CustomMessageBoxSample.xaml"
+                                         Style="{StaticResource HyperlinkEmptyStyle}">
+                            <localControls:HeaderedContentControl
+                                Style="{StaticResource MultilineHyperlinkStyle}"
+                                Header="custommessagebox"
+                                Content="A modular dialog box to display notifications"/>
+                        </HyperlinkButton>
                         <HyperlinkButton NavigateUri="/Samples/DateTimeConvertersSample.xaml"
                                          Style="{StaticResource HyperlinkEmptyStyle}">
                             <localControls:HeaderedContentControl
@@ -98,6 +105,13 @@
                                 Style="{StaticResource MultilineHyperlinkStyle}"
                                 Header="expanderview"
                                 Content="Shows sub-items similar to the new email app"/>
+                        </HyperlinkButton>
+                        <HyperlinkButton NavigateUri="/Samples/FeatheredTransitionsSample1.xaml"
+                                         Style="{StaticResource HyperlinkEmptyStyle}">
+                            <localControls:HeaderedContentControl
+                                Style="{StaticResource MultilineHyperlinkStyle}"
+                                Header="featheredtransitions"
+                                Content="Animate multiple elements between pages"/>
                         </HyperlinkButton>
                         <HyperlinkButton NavigateUri="/Samples/GestureSample.xaml"
                                          Style="{StaticResource HyperlinkEmptyStyle}">
@@ -154,6 +168,20 @@
                                 Style="{StaticResource MultilineHyperlinkStyle}"
                                 Header="phonetextbox"
                                 Content="Add new features to the TextBox"/>
+                        </HyperlinkButton>
+                        <HyperlinkButton NavigateUri="/Samples/RatingControlSample.xaml"
+                                         Style="{StaticResource HyperlinkEmptyStyle}">
+                            <localControls:HeaderedContentControl
+                                Style="{StaticResource MultilineHyperlinkStyle}"
+                                Header="ratingcontrol"
+                                Content="Simple control for star-based rating"/>
+                        </HyperlinkButton>
+                        <HyperlinkButton NavigateUri="/Samples/SlideInEffectSample.xaml"
+                                         Style="{StaticResource HyperlinkEmptyStyle}">
+                            <localControls:HeaderedContentControl
+                                Style="{StaticResource MultilineHyperlinkStyle}"
+                                Header="slideineffect"
+                                Content="Make elements responsive to PivotItem sliding"/>
                         </HyperlinkButton>
                         <HyperlinkButton NavigateUri="/Samples/ToggleSwitchSample.xaml"
                                          Style="{StaticResource HyperlinkEmptyStyle}">

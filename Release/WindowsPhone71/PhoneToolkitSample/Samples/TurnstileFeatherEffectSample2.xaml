@@ -1,0 +1,152 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<phone:PhoneApplicationPage 
+    x:Class="PhoneToolkitSample.Samples.TurnstileFeatherEffectSample2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+    
+    <!--Transitions-->
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <!--
+                // This page contains relatively complex visuals that can slow down
+                // the UI thread while they are being rendered.
+                // Slightly delaying the turnstile feather transition using the BeginTime
+                // property makes the animation appear smooth by waiting for the 
+                // rendering process to finish.
+                -->
+                <toolkit:TurnstileFeatherTransition Mode="ForwardIn" BeginTime="0:0:0.7"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Title="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT"
+                        toolkit:TurnstileFeatherEffect.FeatheringIndex="0">
+            <controls:Pivot.TitleTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel Grid.Row="0" Margin="-12,-2,0,0">
+                            <TextBlock Text="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}"/>
+                            <TextBlock Text="Turnstile Feather Example" Margin="12,-4,0,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </controls:Pivot.TitleTemplate>
+            <!--Pivot item one-->
+            <controls:PivotItem Header="profile">
+                <Grid Margin="12,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid toolkit:TurnstileFeatherEffect.FeatheringIndex="1"
+                          Tap="Item_Tap">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True">
+                            <Rectangle Height="173" Width="173" Fill="{StaticResource PhoneAccentBrush}"/>
+                        </ListBoxItem>
+                        <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True" Grid.Column="1" >
+                            <StackPanel Margin="12,-6,0,0">
+                                <TextBlock Text="Silverlight for Windows Phone Toolkit updated" TextWrapping="Wrap"
+                                       Foreground="{StaticResource PhoneAccentBrush}"/>
+                                <TextBlock Text="&quot;Check out the new cool stuff that we added.&quot;" TextWrapping="Wrap"
+                                       Foreground="{StaticResource PhoneForegroundBrush}"/>
+                                <TextBlock Text="Windows Live" TextWrapping="Wrap"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                <TextBlock Text="on Sunday" TextWrapping="Wrap"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"/>
+                            </StackPanel>
+                        </ListBoxItem>                        
+                    </Grid>
+                    <StackPanel Grid.Row="1" Margin="0,34,0,0">
+                        <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True"
+                                     toolkit:TurnstileFeatherEffect.FeatheringIndex="2">
+                            <TextBlock Text="post a message" TextWrapping="Wrap"
+                                       FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                       Margin="0,12,0,0"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"                                       
+                                       Tap="Item_Tap"/>
+                        </ListBoxItem>
+                        <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True"
+                                     toolkit:TurnstileFeatherEffect.FeatheringIndex="3"> 
+                            <TextBlock Text="check in" TextWrapping="Wrap"
+                                       FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                       Margin="0,12,0,0"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                                       Tap="Item_Tap"/>
+                        </ListBoxItem>
+                        <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True"
+                                     toolkit:TurnstileFeatherEffect.FeatheringIndex="4">
+                            <StackPanel Tap="Item_Tap">
+                                <TextBlock Text="set chat status" TextWrapping="Wrap"
+                                           FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                           Margin="0,12,0,0"
+                                           FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                <TextBlock Text="available" TextWrapping="Wrap"
+                                           Margin="0,-6,0,0"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"/>
+                            </StackPanel>
+                        </ListBoxItem>                       
+                    </StackPanel>
+                </Grid>
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="notifications">
+                <Grid>
+                    <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Items}"
+                             toolkit:TiltEffect.IsTiltEnabled="True"
+                             toolkit:TurnstileFeatherEffect.FeatheringIndex="2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="12,0,0,42" Width="432" Tap="Item_Tap">
+                                    <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" 
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                                    <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

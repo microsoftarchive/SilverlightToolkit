@@ -42,7 +42,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;WP7</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -52,7 +52,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Bin\Release</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP7</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -81,6 +81,8 @@
     <Compile Include="Data\GroupToBackgroundBrushValueConverter.cs" />
     <Compile Include="Data\InboxObject.cs" />
     <Compile Include="Data\LoremIpsumWebsites.cs" />
+    <Compile Include="Data\MultilineItem.cs" />
+    <Compile Include="Data\MultilineItemCollection.cs" />
     <Compile Include="Data\PeopleByFirstName.cs" />
     <Compile Include="Data\PeopleInGroup.cs" />
     <Compile Include="Data\Person.cs" />
@@ -103,6 +105,9 @@
     <Compile Include="Samples\ContextMenuSample.xaml.cs">
       <DependentUpon>ContextMenuSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Samples\CustomMessageBoxSample.xaml.cs">
+      <DependentUpon>CustomMessageBoxSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\DateTimeConvertersSample.xaml.cs">
       <DependentUpon>DateTimeConvertersSample.xaml</DependentUpon>
     </Compile>
@@ -111,6 +116,12 @@
     </Compile>
     <Compile Include="Samples\ExpanderViewSample.xaml.cs">
       <DependentUpon>ExpanderViewSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\FeatheredTransitionsSample1.xaml.cs">
+      <DependentUpon>FeatheredTransitionsSample1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\FeatheredTransitionsSample2.xaml.cs">
+      <DependentUpon>FeatheredTransitionsSample2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Samples\PhoneTextBoxSample.xaml.cs">
       <DependentUpon>PhoneTextBoxSample.xaml</DependentUpon>
@@ -145,6 +156,12 @@
     <Compile Include="Samples\PersonDetail.xaml.cs">
       <DependentUpon>PersonDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Samples\RatingControlSample.xaml.cs">
+      <DependentUpon>RatingControlSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\SlideInEffectSample.xaml.cs">
+      <DependentUpon>SlideInEffectSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Samples\TiltEffectSample.xaml.cs">
       <DependentUpon>TiltEffectSample.xaml</DependentUpon>
     </Compile>
@@ -153,6 +170,12 @@
     </Compile>
     <Compile Include="Samples\TransitionsSample.xaml.cs">
       <DependentUpon>TransitionsSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TurnstileFeatherEffectSample1.xaml.cs">
+      <DependentUpon>TurnstileFeatherEffectSample1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\TurnstileFeatherEffectSample2.xaml.cs">
+      <DependentUpon>TurnstileFeatherEffectSample2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Samples\WrapPanelSample.xaml.cs">
       <DependentUpon>WrapPanelSample.xaml</DependentUpon>
@@ -175,6 +198,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Samples\CustomMessageBoxSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Samples\DateTimeConvertersSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -182,6 +209,14 @@
     <Page Include="Samples\DateTimePickerSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\FeatheredTransitionsSample1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\FeatheredTransitionsSample2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Samples\PhoneTextBoxSample.xaml">
       <SubType>Designer</SubType>
@@ -231,6 +266,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Samples\RatingControlSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\SlideInEffectSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Samples\TiltEffectSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,6 +285,14 @@
     <Page Include="Samples\TransitionsSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\TurnstileFeatherEffectSample1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\TurnstileFeatherEffectSample2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Samples\WrapPanelSample.xaml">
       <SubType>Designer</SubType>

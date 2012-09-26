@@ -4,9 +4,9 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 -->
-
+ 
 <phone:PhoneApplicationPage 
-    x:Class="PhoneToolkitSample.Samples.TiltEffectSample"
+    x:Class="PhoneToolkitSample.Samples.FeatheredTransitionsSample2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -14,16 +14,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="PortraitOrLandscape" 
-    Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True"
-    toolkit:TiltEffect.IsTiltEnabled="True">
+    shell:SystemTray.IsVisible="True">
 
+    <!--Transitions-->
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
@@ -45,50 +43,32 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
 
+    <!--LayoutRoot-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
+        <!--TitlePanel-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="TOOLKIT SAMPLES" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="tilt effect" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="blank page" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <StackPanel
-            Grid.Row="1" Margin="12,0,12,0">
+        <!--ContentPanel-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel Margin="12,0,0,0">
+                <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap">
+                    This page was intentionally left blank in order to show the feathered transitions
+                    going forward and out.
+                </TextBlock>
+                <TextBlock Margin="0,24,0,0" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap">
+                    Now press the back key to go back and see the feathered transitions going backward and in.
+                </TextBlock>
+            </StackPanel>
             
-            <TextBlock Style="{StaticResource PhoneTextNormalStyle}"
-                       TextWrapping="Wrap"
-                       Text="The TiltEffect uses an attached property that can be placed on a container to allow tiltable items to enjoy that effect."/>
-            
-            <Button Content="Touch this button"/>
-            
-            <TextBlock Style="{StaticResource PhoneTextNormalStyle}"
-                       TextWrapping="Wrap"
-                       Text="Be mindful that there are slight performance implications of using this visual effect."/>
-            
-            <CheckBox Content="Touch this checkbox"/>
-
-            <TextBlock Style="{StaticResource PhoneTextNormalStyle}"
-                       TextWrapping="Wrap"
-                       Text="Tilt effect can now be applied also to ListPicker control"/>
-
-            <toolkit:ListPicker Header="Background">
-                <sys:String>dark</sys:String>
-                <sys:String>light</sys:String>
-                <sys:String>dazzle</sys:String>
-            </toolkit:ListPicker>
-
-            <HyperlinkButton Content="Click for online documentation"
-                             TargetName="_self"
-                             HorizontalAlignment="Stretch"
-                             HorizontalContentAlignment="Left"
-                             NavigateUri="http://msdn.microsoft.com/en-us/library/ff941094(VS.92).aspx"/>
-
-        </StackPanel>
+        </Grid>
     </Grid>
- 
+
 </phone:PhoneApplicationPage>
