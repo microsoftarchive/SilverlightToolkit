@@ -27,7 +27,7 @@ namespace Microsoft.Phone.Controls
 
         private static readonly double _screenWidth = Application.Current.Host.Content.ActualWidth;
         private static readonly double _screenHeight = Application.Current.Host.Content.ActualHeight;
-
+       
         private void OpenPopup()
         {
             SaveSystemState(false, false);
@@ -35,7 +35,7 @@ namespace Microsoft.Phone.Controls
             AttachToPageEvents();
             _groupSelectorPopup.IsOpen = true;
 
-            // This has to happen eventually anyway, and this forces the ItemsControl to
+            // This has to happen eventually anyway, and this forces the ItemsControl to 
             // expand it's template, populate it's items etc.
             UpdateLayout();
         }
@@ -84,14 +84,14 @@ namespace Microsoft.Phone.Controls
             _groupSelectorPopup = new Popup();
             _groupSelectorPopup.Opened += popup_Opened;
 
-            // Support the background color jumping through. Note that the
+            // Support the background color jumping through. Note that the 
             // alpha channel will be ignored, unless it is a purely transparent
             // value (such as when a user uses Transparent as the background
             // on the control).
             SolidColorBrush background = Background as SolidColorBrush;
             Color bg = (Color)Resources["PhoneBackgroundColor"];
-            if (background != null
-                && background.Color != null
+            if (background != null 
+                && background.Color != null 
                 && background.Color.A > 0)
             {
                 bg = background.Color;
@@ -101,12 +101,12 @@ namespace Microsoft.Phone.Controls
                 Background = new SolidColorBrush(
                     Color.FromArgb(0xa0, bg.R, bg.G, bg.B))
             };
-
+            
             // Prevents touch events from bubbling up for most handlers.
             _border.ManipulationStarted += ((o, e) => e.Handled = true);
             _border.ManipulationCompleted += ((o, e) => e.Handled = true);
             _border.ManipulationDelta += ((o, e) => e.Handled = true);
-
+            
             var gestureHandler = new EventHandler<System.Windows.Input.GestureEventArgs>((o, e) => e.Handled = true);
             _border.Tap += gestureHandler;
             _border.DoubleTap += gestureHandler;
@@ -129,7 +129,7 @@ namespace Microsoft.Phone.Controls
 
             SetItemsControlSize();
         }
-
+        
         private void SetItemsControlSize()
         {
             Rect client = GetTransformedRect();
@@ -221,7 +221,7 @@ namespace Microsoft.Phone.Controls
             if (frame != null)
             {
                 PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
-
+                
                 if (page != null)
                 {
                     return page.Orientation;

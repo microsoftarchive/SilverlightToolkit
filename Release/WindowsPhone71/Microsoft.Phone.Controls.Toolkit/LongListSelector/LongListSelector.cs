@@ -1632,20 +1632,20 @@ namespace Microsoft.Phone.Controls
                     _listBox.SelectedItem = null;
                 }
                 SelectedItem = null;
-                DisplayGroupView();
+                DisplayGroupView();                
             }
             else
             {
                 if (e.AddedItems.Count > 0 && ((LongListSelectorItem)e.AddedItems[0]).ItemType == LongListSelectorItemType.Item)
                 {
                     SelectedItem = ((LongListSelectorItem)e.AddedItems[0]).Item;
-                        }
+                }
                 else
-                    {
+                {
                     if (_listBox != null)
-                        {
+                    {
                         _listBox.SelectedItem = null;
-                        }
+                    }
                     SelectedItem = null;
                 }
             }

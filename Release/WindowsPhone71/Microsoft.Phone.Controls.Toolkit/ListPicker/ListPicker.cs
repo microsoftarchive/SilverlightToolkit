@@ -1241,28 +1241,28 @@ namespace Microsoft.Phone.Controls
         {
             if (null == _frame)
             {
-            // Unhook from events
+                // Unhook from events
                 _frame = Application.Current.RootVisual as PhoneApplicationFrame;
-            if (null != _frame)
-            {
-                _frame.Navigated -= OnFrameNavigated;
-                _frame.NavigationStopped -= OnFrameNavigationStoppedOrFailed;
-                _frame.NavigationFailed -= OnFrameNavigationStoppedOrFailed;
-
-                // Restore host page transitions for the completed "popup" navigation
-                UIElement frameContentWhenOpenedAsUIElement = _frameContentWhenOpened as UIElement;
-
-                if (null != frameContentWhenOpenedAsUIElement)
+                if (null != _frame)
                 {
-                    TransitionService.SetNavigationInTransition(frameContentWhenOpenedAsUIElement, _savedNavigationInTransition);
-                    _savedNavigationInTransition = null;
-                    TransitionService.SetNavigationOutTransition(frameContentWhenOpenedAsUIElement, _savedNavigationOutTransition);
-                    _savedNavigationOutTransition = null;
-                }
+                    _frame.Navigated -= OnFrameNavigated;
+                    _frame.NavigationStopped -= OnFrameNavigationStoppedOrFailed;
+                    _frame.NavigationFailed -= OnFrameNavigationStoppedOrFailed;
 
-                _frame = null;
-                _frameContentWhenOpened = null;
-            }
+                    // Restore host page transitions for the completed "popup" navigation
+                    UIElement frameContentWhenOpenedAsUIElement = _frameContentWhenOpened as UIElement;
+
+                    if (null != frameContentWhenOpenedAsUIElement)
+                    {
+                        TransitionService.SetNavigationInTransition(frameContentWhenOpenedAsUIElement, _savedNavigationInTransition);
+                        _savedNavigationInTransition = null;
+                        TransitionService.SetNavigationOutTransition(frameContentWhenOpenedAsUIElement, _savedNavigationOutTransition);
+                        _savedNavigationOutTransition = null;
+                    }
+
+                    _frame = null;
+                    _frameContentWhenOpened = null;
+                }
             }
 
             // Commit the value if available
