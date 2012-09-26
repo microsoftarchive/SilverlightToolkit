@@ -1365,6 +1365,30 @@ namespace System.Windows.Controls
                 DropDownPopup.Closed += DropDownPopup_Closed;
                 DropDownPopup.FocusChanged += OnDropDownFocusChanged;
                 DropDownPopup.UpdateVisualStates += OnDropDownPopupUpdateVisualStates;
+
+#if WP7
+                // In WP7, a rendering bug caused a ScrollViewer inside a Popup in the visual tree
+                // to be rendered at the wrong location onscreen.
+                // We want to remove the popup from the visual tree so we can position it ourselves,
+                // since having it in the visual tree doesn't work with any control that sets
+                // a TranslateTransform on its children.
+                DependencyObject popupParent = VisualTreeHelper.GetParent(popup);
+                Panel popupParentPanel = popupParent as Panel;
+
+                if (popupParentPanel != null)
+                {
+                    popupParentPanel.Children.Remove(popup);
+                }
+                else
+                {
+                    ContentControl popupParentContentControl = popupParent as ContentControl;
+
+                    if (popupParentContentControl != null)
+                    {
+                        popupParentContentControl.Content = null;
+                    }
+                }
+#endif
             }
             SelectionAdapter = GetSelectionAdapterPart();
             TextBox = GetTemplateChild(AutoCompleteBox.ElementTextBox) as TextBox;

@@ -314,8 +314,16 @@ namespace System.Windows.Controls
             }
             Point childPoint = isChildAbove ? AboveChildPoint(margin) : BelowChildPoint(margin, controlSize);
             
+#if WP7
+            GeneralTransform transformToRoot = Parent.TransformToVisual(null);
+            Point textBoxScreenPosition = transformToRoot.Transform(new Point(0, 0));
+
+            Popup.HorizontalOffset = textBoxScreenPosition.X;
+            Popup.VerticalOffset = textBoxScreenPosition.Y;
+#elif WP8
             Popup.HorizontalOffset = 0;
             Popup.VerticalOffset = 0;
+#endif
 
             PopupChild.Width = PopupChild.MaxWidth = PopupChild.MinWidth = controlSize.Width;
             PopupChild.MinHeight = 0;

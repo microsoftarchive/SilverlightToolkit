@@ -11,10 +11,10 @@ namespace Microsoft.Phone.Controls
         /// <summary>
         /// Create new LinkUnlinkEventArgs.
         /// </summary>
-        /// <param name="cp">The ContentPresenter.</param>
-        public LinkUnlinkEventArgs(ContentPresenter cp)
+        /// <param name="contentPresenter">The ContentPresenter.</param>
+        public LinkUnlinkEventArgs(ContentPresenter contentPresenter)
         {
-            ContentPresenter = cp;
+            ContentPresenter = contentPresenter;
         }
 
         /// <summary>
