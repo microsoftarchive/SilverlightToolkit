@@ -953,14 +953,10 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:HubTile">
-                        <StackPanel x:Name="Viewport"
-                                    Height="173" Width="173">
-                            <StackPanel.Resources>
+                        <Border x:Name="Container" Width="173" Height="173">
+                            <Border.Resources>
                                 <CubicEase EasingMode="EaseOut" x:Key="HubTileEaseOut"/>
-                            </StackPanel.Resources>
-                            <StackPanel.Projection>
-                                <PlaneProjection CenterOfRotationY="0.25" x:Name="ViewportProjection"/>
-                            </StackPanel.Projection>
+                            </Border.Resources>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="ImageStates">
                                     <VisualStateGroup.Transitions>
@@ -1013,6 +1009,10 @@
                                                                                Storyboard.TargetName="Image">
                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Collapsed"/>
                                                 </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="BackPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
                                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" 
                                                                                Storyboard.TargetName="ViewportProjection">
                                                     <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0.0" EasingFunction="{StaticResource HubTileEaseOut}"/>
@@ -1031,6 +1031,10 @@
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
                                                                                Storyboard.TargetName="Image">
                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="BackPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.185" Value="Collapsed"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" 
                                                                                Storyboard.TargetName="ViewportProjection">
@@ -1075,11 +1079,19 @@
                                                                                Storyboard.TargetName="Image">
                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed"/>
                                                 </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                               Storyboard.TargetName="BackPanel">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
                                     </VisualStateGroup.States>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
+                            <StackPanel x:Name="Viewport" Width="173" Height="173">
+                                <StackPanel.Projection>
+                                    <PlaneProjection CenterOfRotationY="0.25" x:Name="ViewportProjection"/>
+                                </StackPanel.Projection>
                             <Grid x:Name="TitlePanel"
                                   Height="346" Width="173"
                                   RenderTransformOrigin="0.5,0.5">
@@ -1106,7 +1118,8 @@
                                 <Grid x:Name="BackPanel"
                                       Grid.Row="1"   
                                       Height="173" Width="173"
-                                      Background="{TemplateBinding Background}">
+                                      Background="{TemplateBinding Background}"
+                                      Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
@@ -1140,12 +1153,15 @@
                                                Foreground="{TemplateBinding Foreground}"
                                                TextWrapping="NoWrap"/>
                                 </Grid>
-                                <Image x:Name="Image" Grid.Row="1"
-                                       Height="173" Width="173"
+                                    <Border x:Name="Image" Grid.Row="1"
+                                        Background="{TemplateBinding Background}">
+                                        <Image Height="173" Width="173"
                                        Stretch="UniformToFill"
                                        Source="{TemplateBinding Source}"/>
+                                    </Border>
                             </Grid>
                         </StackPanel>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

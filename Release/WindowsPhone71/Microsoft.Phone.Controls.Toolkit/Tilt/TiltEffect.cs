@@ -532,7 +532,7 @@ namespace Microsoft.Phone.Controls
             else
             {
                 // Apply the updated tilt effect
-                ApplyTiltEffect(currentTiltElement, e.ManipulationOrigin, currentTiltElementCenter);
+                ApplyTiltEffect(currentTiltElement, tiltTouchPoint, currentTiltElementCenter);
             }
         }
 

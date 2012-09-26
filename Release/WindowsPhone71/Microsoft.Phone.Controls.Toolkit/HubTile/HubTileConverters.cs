@@ -17,7 +17,12 @@ namespace Microsoft.Phone.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((string)value).Replace(Environment.NewLine, " ");
+            string multiline = value as string;
+
+            if (string.IsNullOrEmpty(multiline))
+                return string.Empty;
+
+            return multiline.Replace(Environment.NewLine, " ");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
