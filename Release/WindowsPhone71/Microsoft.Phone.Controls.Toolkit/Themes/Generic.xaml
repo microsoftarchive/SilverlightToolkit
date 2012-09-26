@@ -1780,6 +1780,89 @@
         </Setter>
     </Style>
 
+    <Style TargetType="controls:CustomMessageBox">
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyNormal}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeNormal}"/>
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource PhoneChromeBrush}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:CustomMessageBox">
+                    <Grid
+                        Background="{TemplateBinding Background}"
+                        HorizontalAlignment="Stretch">
+                        <Grid
+                            Width="480"
+                            HorizontalAlignment="Left">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel
+                                Grid.ColumnSpan="2"
+                                Margin="0,0,0,18">
+                                <TextBlock
+                                    x:Name="TitleTextBlock"
+                                    Text="{TemplateBinding Title}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Visibility="Collapsed"
+                                    Margin="24,16,24,-6"
+                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                <TextBlock
+                                    x:Name="CaptionTextBlock"
+                                    Text="{TemplateBinding Caption}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Visibility="Collapsed"
+                                    Margin="24,8,24,0"
+                                    FontSize="{StaticResource PhoneFontSizeLarge}"
+                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                    TextWrapping="Wrap"
+                                    HorizontalAlignment="Left"/>
+                                <TextBlock
+                                    x:Name="MessageTextBlock"
+                                    Text="{TemplateBinding Message}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Margin="24,11,24,0"
+                                    Visibility="Collapsed"
+                                    FontSize="{StaticResource PhoneFontSizeMedium}"
+                                    FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                                    TextWrapping="Wrap"
+                                    HorizontalAlignment="Left"/>
+                                <ContentPresenter Margin="12,0,0,0"/>
+                            </StackPanel>
+                            <Button
+                                x:Name="LeftButton"
+                                Grid.Row="1" Grid.Column="0"
+                                Content="{TemplateBinding LeftButtonContent}"
+                                IsEnabled="{Binding IsLeftButtonEnabled}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Margin="12,0,0,12"
+                                Visibility="Collapsed"
+                                controls:TiltEffect.IsTiltEnabled="True"/>
+                            <Button
+                                x:Name="RightButton"
+                                Grid.Row="1" Grid.Column="1"
+                                Content="{TemplateBinding RightButtonContent}"
+                                IsEnabled="{Binding IsRightButtonEnabled}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Margin="0,0,12,12"
+                                Visibility="Collapsed"
+                                controls:TiltEffect.IsTiltEnabled="True"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="controls:Rating">
 
         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}" />

@@ -108,6 +108,10 @@
     <Compile Include="ContextMenu\MenuBase.cs" />
     <Compile Include="ContextMenu\MenuItem.cs" />
     <Compile Include="ContextMenu\Separator.cs" />
+    <Compile Include="CustomMessageBox\CustomMessageBox.cs" />
+    <Compile Include="CustomMessageBox\CustomMessageBoxResult.cs" />
+    <Compile Include="CustomMessageBox\DismissedEventArgs.cs" />
+    <Compile Include="CustomMessageBox\DismissingEventArgs.cs" />
     <Compile Include="Data\HierarchicalDataTemplate.cs" />
     <Compile Include="DateTimeConverters\DailyDateTimeConverter.cs" />
     <Compile Include="DateTimeConverters\DateTimeFormatHelper.cs" />
