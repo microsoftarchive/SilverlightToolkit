@@ -10,24 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Phone.Controls.Toolkit.VisualStudio.Design", "Microsoft.Phone.Controls.Toolkit.VisualStudio.Design\Microsoft.Phone.Controls.Toolkit.VisualStudio.Design.csproj", "{BF8E3967-F531-440F-9AD9-C8330E96577B}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://vstfdevdiv:8080/devdiv
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = PhoneToolkitSample\\PhoneToolkitSample.csproj
-		SccProjectName1 = PhoneToolkitSample
-		SccLocalPath1 = PhoneToolkitSample
-		SccProjectUniqueName2 = Microsoft.Phone.Controls.Toolkit\\Microsoft.Phone.Controls.Toolkit.csproj
-		SccProjectName2 = Microsoft.Phone.Controls.Toolkit
-		SccLocalPath2 = Microsoft.Phone.Controls.Toolkit
-		SccProjectUniqueName3 = Microsoft.Phone.Controls.Toolkit.Design\\Microsoft.Phone.Controls.Toolkit.Design.csproj
-		SccProjectName3 = Microsoft.Phone.Controls.Toolkit.Design
-		SccLocalPath3 = Microsoft.Phone.Controls.Toolkit.Design
-		SccProjectUniqueName4 = Microsoft.Phone.Controls.Toolkit.VisualStudio.Design\\Microsoft.Phone.Controls.Toolkit.VisualStudio.Design.csproj
-		SccProjectName4 = Microsoft.Phone.Controls.Toolkit.VisualStudio.Design
-		SccLocalPath4 = Microsoft.Phone.Controls.Toolkit.VisualStudio.Design
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

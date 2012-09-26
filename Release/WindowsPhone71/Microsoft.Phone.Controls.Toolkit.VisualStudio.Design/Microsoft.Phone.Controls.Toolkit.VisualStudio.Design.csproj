@@ -14,10 +14,14 @@
     <FileAlignment>512</FileAlignment>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PhoneToolkit.snk</AssemblyOriginatorKeyFile>
-    <SccProjectName>%24/AgilityTeam/PhoneToolkit/Public/Microsoft.Phone.Controls.Toolkit.VisualStudio.Design</SccProjectName>
-    <SccLocalPath>.</SccLocalPath>
-    <SccAuxPath>http://vstfdevdiv:8080/devdiv</SccAuxPath>
-    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
