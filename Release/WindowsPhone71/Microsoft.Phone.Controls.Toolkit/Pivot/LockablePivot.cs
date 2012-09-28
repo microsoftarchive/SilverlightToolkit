@@ -82,6 +82,7 @@ namespace Microsoft.Phone.Controls
             public OpacityAnimator opacityAnimator;
             public TransformAnimator transformAnimator;
             public TranslateTransform transform;
+            public PivotHeaderItem headerItem;
         }
 
         private PivotItem[]           _savedItems     = null;
@@ -209,6 +210,7 @@ namespace Microsoft.Phone.Controls
                         _animInfo[i].transformAnimator =
                             new TransformAnimator(_animInfo[i].transform);
                         _animInfo[i].originalX = _animInfo[i].transform.X;
+                        _animInfo[i].headerItem = headerItem;
 
                         i++;
                     }
@@ -258,6 +260,9 @@ namespace Microsoft.Phone.Controls
            
             foreach (HeaderAnimationInfo anim in _animInfo)
             {
+                // headerItem should not be hittestable when it is faded out.
+                anim.headerItem.IsHitTestVisible = false;
+
                 anim.opacityAnimator.GoTo(
                     0.0, 
                     _animTime
@@ -273,6 +278,9 @@ namespace Microsoft.Phone.Controls
         {
             foreach (HeaderAnimationInfo anim in _animInfo)
             {
+                // Enable hit test on the headerItem when it is faded in.
+                anim.headerItem.IsHitTestVisible = true;
+
                 anim.opacityAnimator.GoTo(
                     anim.opacity,
                     _animTime
