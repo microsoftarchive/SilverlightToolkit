@@ -123,7 +123,6 @@ namespace Microsoft.Phone.Controls
         {
             DefaultStyleKey = typeof(TransitionFrame);
             Navigating += OnNavigating;
-            BackKeyPress += OnBackKeyPress;
         }
 
         /// <summary>
@@ -164,6 +163,8 @@ namespace Microsoft.Phone.Controls
                 return;
             }
 
+            EnsureLastTransitionIsComplete();
+
             FlipPresenters();
 
             TransitionElement oldTransitionElement = null;
@@ -197,6 +198,39 @@ namespace Microsoft.Phone.Controls
             else
             {
                 _readyToTransitionToNewContent = true;
+            }
+        }
+
+        /// <summary>
+        /// Stops the last navigation transition if it's active and a new navigation occurs.
+        /// </summary>
+        private void EnsureLastTransitionIsComplete()
+        {
+            _readyToTransitionToNewContent = false;
+            _contentReady = false;
+
+            if (_performingExitTransition)
+            {
+                Debug.Assert(_storedOldTransition != null && _storedNavigationOutTransition != null);
+
+                // If the app calls GoBack on NavigatedTo, we want the old content to be null
+                // because you can't have the same content in two spots on the visual tree.
+                _oldContentPresenter.Content = null;
+
+                _storedOldTransition.Stop();
+
+                _storedNavigationOutTransition = null;
+                _storedOldTransition = null;
+
+                if (_storedNewTransition != null)
+                {
+                    _storedNewTransition.Stop();
+
+                    _storedNewTransition = null;
+                    _storedNavigationInTransition = null;
+                }
+
+                _performingExitTransition = false;
             }
         }
 
@@ -312,44 +346,6 @@ namespace Microsoft.Phone.Controls
             {
                 _storedNewTransition = newTransition;
                 _storedNavigationInTransition = navigationInTransition;
-            }
-        }
-
-        /// <summary>
-        /// Handles the BackKeyPress to stop the animation and go back.
-        /// </summary>
-        /// <param name="sender">The source object.</param>
-        /// <param name="e">The event arguments.</param>
-        private void OnBackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // No need to handle backkeypress if exit transition is complete.
-            if (_performingExitTransition)
-            {
-                var oldElement = Content as UIElement;
-                if (oldElement == null)
-                {
-                    return;
-                }
-
-                TransitionElement oldTransitionElement = null;
-                NavigationOutTransition navigationOutTransition = null;
-                ITransition oldTransition = null;
-
-                navigationOutTransition = TransitionService.GetNavigationOutTransition(oldElement);
-
-                if (navigationOutTransition != null)
-                {
-                    oldTransitionElement = _isForwardNavigation ? navigationOutTransition.Forward : navigationOutTransition.Backward;
-                }
-                if (oldTransitionElement != null)
-                {
-                    oldTransition = oldTransitionElement.GetTransition(oldElement);
-                }
-                if (oldTransition != null)
-                {
-                    CompleteTransition(_storedNavigationOutTransition, /*_oldContentPresenter*/ null, _storedOldTransition);
-                    TransitionNewContent(oldTransition, null);
-                }
             }
         }
 
