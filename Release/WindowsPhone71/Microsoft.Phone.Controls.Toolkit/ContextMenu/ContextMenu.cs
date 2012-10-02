@@ -1177,7 +1177,12 @@ namespace Microsoft.Phone.Controls
                 {
                     ((FrameworkElement)Owner).Opacity = 1;
 
-                    Point point = SafeTransformToVisual(ownerElement, _rootVisual).Transform(new Point());
+                    // If the owner's flow direction is right-to-left, then (0, 0) is situated at the
+                    // top-right corner of the element instead of its top-left corner.
+                    // We need for the translated point to be in the top-left corner since we want these elements
+                    // to be drawn on top of the owner's position from left to right,
+                    // so to achieve that, we'll translate (0, ActualWidth) instead if its flow direction is right-to-left.
+                    Point point = SafeTransformToVisual(ownerElement, _rootVisual).Transform(new Point(ownerElement.FlowDirection == System.Windows.FlowDirection.RightToLeft ? ownerElement.ActualWidth : 0, 0));
 
                     // Create a layer for the element's background
                     UIElement elementBackground = new Rectangle
