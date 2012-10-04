@@ -94,6 +94,11 @@ namespace Microsoft.Phone.Controls
         private bool _performingExitTransition;
 
         /// <summary>
+        /// A value indicating whether the navigation is cancelled.
+        /// </summary>
+        private bool _navigationStopped;
+
+        /// <summary>
         /// The transition to use to move in new content once the old transition
         /// is complete and ready for movement.
         /// </summary>
@@ -123,6 +128,7 @@ namespace Microsoft.Phone.Controls
         {
             DefaultStyleKey = typeof(TransitionFrame);
             Navigating += OnNavigating;
+            NavigationStopped += OnNavigationStopped;
         }
 
         /// <summary>
@@ -202,6 +208,15 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
+        /// Handles the NavigationStopped event of the frame. Set a value indicating 
+        /// that the navigation is cancelled.
+        /// </summary>
+        private void OnNavigationStopped(object sender, NavigationEventArgs e)
+        {
+            _navigationStopped = true;
+        }
+
+        /// <summary>
         /// Stops the last navigation transition if it's active and a new navigation occurs.
         /// </summary>
         private void EnsureLastTransitionIsComplete()
@@ -246,7 +261,17 @@ namespace Microsoft.Phone.Controls
             _readyToTransitionToNewContent = true;
             _performingExitTransition = false;
 
-            CompleteTransition(_storedNavigationOutTransition, /*_oldContentPresenter*/ null, _storedOldTransition);
+            if (_navigationStopped)
+            {
+                // Restore the old content presenter's interactivity if the navigation is cancelled.
+                CompleteTransition(_storedNavigationOutTransition, _oldContentPresenter, _storedOldTransition);
+                _navigationStopped = false;
+            }
+            else
+            {
+                CompleteTransition(_storedNavigationOutTransition, /*_oldContentPresenter*/ null, _storedOldTransition);
+            }
+            
             _storedNavigationOutTransition = null;
             _storedOldTransition = null;
 
