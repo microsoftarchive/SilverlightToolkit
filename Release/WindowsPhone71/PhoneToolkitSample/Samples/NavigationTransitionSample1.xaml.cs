@@ -20,5 +20,19 @@ namespace PhoneToolkitSample.Samples
         {
             NavigationService.Navigate(new Uri("/Samples/NavigationTransitionSample2.xaml", UriKind.Relative));
         }
+
+        protected override void OnNavigatingFrom(System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+
+            e.Cancel = CancelNavigation.IsChecked.Value;
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnBackKeyPress(e);
+
+            e.Cancel = CancelNavigation.IsChecked.Value;
+        }
     }
 }

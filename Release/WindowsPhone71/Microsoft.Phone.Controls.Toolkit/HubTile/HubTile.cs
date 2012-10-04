@@ -22,8 +22,9 @@ namespace Microsoft.Phone.Controls
     [TemplatePart(Name = NotificationBlock, Type = typeof(TextBlock))]
     [TemplatePart(Name = MessageBlock, Type = typeof(TextBlock))]
     [TemplatePart(Name = BackTitleBlock, Type = typeof(TextBlock))]
+    [TemplatePart(Name = TitlePanel, Type = typeof(Panel))]
     public class HubTile : Control
-   {
+    {
         /// <summary>
         /// Common visual states.
         /// </summary>
@@ -63,6 +64,11 @@ namespace Microsoft.Phone.Controls
         /// Back Title Block template part name.
         /// </summary>
         private const string BackTitleBlock = "BackTitleBlock";
+        
+        /// <summary>
+        /// Title Panel template part name.
+        /// </summary>
+        private const string TitlePanel = "TitlePanel";
 
         /// <summary>
         /// Notification Block template part.
@@ -73,6 +79,11 @@ namespace Microsoft.Phone.Controls
         /// Message Block template part.
         /// </summary>
         private TextBlock _messageBlock;
+
+        /// <summary>
+        /// Title Panel template part.
+        /// </summary>
+        private Panel _titlePanel;
 
         /// <summary>
         /// Back Title Block template part.
@@ -320,6 +331,89 @@ namespace Microsoft.Phone.Controls
 
         #endregion
 
+        #region Size DependencyProperty
+
+        /// <summary>
+        /// Gets or sets the visual state.
+        /// </summary>
+        public TileSize Size
+        {
+            get { return (TileSize)GetValue(SizeProperty); }
+            set { SetValue(SizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the State dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SizeProperty =
+                DependencyProperty.Register("Size", typeof(TileSize), typeof(HubTile), new PropertyMetadata(TileSize.Default, OnSizeChanged));
+
+        /// <summary>
+        /// Triggers the transition between visual states.
+        /// </summary>
+        /// <param name="obj">The dependency object.</param>
+        /// <param name="e">The event information.</param>
+        private static void OnSizeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            HubTile hubTile = (HubTile)obj;
+
+            // And now we'll update the width and height to match the new size.
+            switch (hubTile.Size)
+            {
+                case TileSize.Default:
+                    hubTile.Width = 173;
+                    hubTile.Height = 173;
+                    break;
+
+                case TileSize.Small:
+                    hubTile.Width = 99;
+                    hubTile.Height = 99;
+                    break;
+
+                case TileSize.Medium:
+                    hubTile.Width = 210;
+                    hubTile.Height = 210;
+                    break;
+
+                case TileSize.Large:
+                    hubTile.Width = 432;
+                    hubTile.Height = 210;
+                    break;
+            }
+
+            hubTile.SizeChanged += OnHubTileSizeChanged;
+            HubTileService.FinalizeReference(hubTile);
+        }
+
+        static void OnHubTileSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            HubTile hubTile = (HubTile)sender;
+            hubTile.SizeChanged -= OnHubTileSizeChanged;
+
+            // In order to avoid getting into a bad state, we'll shift the HubTile
+            // back to the Expanded state.  If we were already in the Expanded state,
+            // then we'll manually shift the title panel to the right location,
+            // since the visual state manager won't do it for us in that case.
+            if (hubTile.State != ImageState.Expanded)
+            {
+                hubTile.State = ImageState.Expanded;
+                VisualStateManager.GoToState(hubTile, Expanded, false);
+            }
+            else if (hubTile._titlePanel != null)
+            {
+                CompositeTransform titlePanelTransform = hubTile._titlePanel.RenderTransform as CompositeTransform;
+
+                if (titlePanelTransform != null)
+                {
+                    titlePanelTransform.TranslateY = -hubTile.Height;
+                }
+            }
+
+            HubTileService.InitializeReference(hubTile);
+        }
+
+        #endregion
+
         /// <summary>
         /// Updates the visual state.
         /// </summary>
@@ -327,23 +421,32 @@ namespace Microsoft.Phone.Controls
         {
             string state;
 
-            switch (State)
+            // If we're in the Small size, then we should just display the image
+            // instead of having animations.
+            if (Size != TileSize.Small)
             {
-                case ImageState.Expanded:
-                    state = Expanded;
-                    break;
-                case ImageState.Semiexpanded:
-                    state = Semiexpanded;
-                    break;
-                case ImageState.Collapsed:
-                    state = Collapsed;
-                    break;
-                case ImageState.Flipped:
-                    state = Flipped;
-                    break;
-                default:
-                    state = Expanded;
-                    break;
+                switch (State)
+                {
+                    case ImageState.Expanded:
+                        state = Expanded;
+                        break;
+                    case ImageState.Semiexpanded:
+                        state = Semiexpanded;
+                        break;
+                    case ImageState.Collapsed:
+                        state = Collapsed;
+                        break;
+                    case ImageState.Flipped:
+                        state = Flipped;
+                        break;
+                    default:
+                        state = Expanded;
+                        break;
+                }
+            }
+            else
+            {
+                state = Expanded;
             }
             
             VisualStateManager.GoToState(this, state, true);
@@ -359,6 +462,7 @@ namespace Microsoft.Phone.Controls
             _notificationBlock = base.GetTemplateChild(NotificationBlock) as TextBlock;
             _messageBlock = base.GetTemplateChild(MessageBlock) as TextBlock;
             _backTitleBlock = base.GetTemplateChild(BackTitleBlock) as TextBlock;
+            _titlePanel = base.GetTemplateChild(TitlePanel) as Panel;
 
             //Do binding in code to avoid exposing unnecessary value converters.
             if (_notificationBlock != null)
@@ -450,5 +554,31 @@ namespace Microsoft.Phone.Controls
         /// Flipped visual state value.
         /// </summary>
         Flipped = 3,
+    };
+
+    /// <summary>
+    /// Represents the size of a Hub tile.
+    /// </summary>
+    public enum TileSize
+    {
+        /// <summary>
+        /// Default size (173 px x 173 px).
+        /// </summary>
+        Default,
+
+        /// <summary>
+        /// Small size (99 px x 99 px).
+        /// </summary>
+        Small,
+
+        /// <summary>
+        /// Medium size (210 px x 210 px).
+        /// </summary>
+        Medium,
+
+        /// <summary>
+        /// Large size (432 px x 210 px).
+        /// </summary>
+        Large,
     };
 }

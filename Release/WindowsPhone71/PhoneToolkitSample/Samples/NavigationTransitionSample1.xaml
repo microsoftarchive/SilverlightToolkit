@@ -49,6 +49,9 @@
             <TextBlock x:Name="ApplicationTitle" Text="TURNSTILE NAVIGATION TRANSITIONS" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="page 1" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-        <Button Content="Forward" Click="Forward" Grid.Row="1" Margin="12,0,12,0"/>
+        <StackPanel Margin="12,0,12,0" Grid.Row="1">
+            <Button Content="Forward" Click="Forward" />            
+            <CheckBox x:Name="CancelNavigation" Content="Cancel Navigation" />
+        </StackPanel>
     </Grid>
 </phone:PhoneApplicationPage>

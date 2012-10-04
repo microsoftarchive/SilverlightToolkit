@@ -257,6 +257,15 @@ namespace System.Windows.Controls
         {
             double x = margin.Left;
             double y = margin.Top - PopupChild.ActualHeight - PopupOffset;
+
+#if WP8
+            // In WP7, the popup had no border, so the space between the TextBox and the popup
+            // created a visual separation between the two.  In WP8, however, they do have a border,
+            // so now we have too much space.  We'll move the popup down by the size of twice the border.
+            // (in order to overlap the two borders).
+            y += Parent.BorderThickness.Bottom * 2;
+#endif
+
             return new Point(x, y);
         }
 
@@ -266,10 +275,19 @@ namespace System.Windows.Controls
         /// <param name="margin">The control's margin.</param>
         /// <param name="controlSize">The <see cref="T:Size"/> of the control.</param>
         /// <returns>The position.</returns>
-        private static Point BelowChildPoint(Thickness margin, Size controlSize)
+        private Point BelowChildPoint(Thickness margin, Size controlSize)
         {
             double x = margin.Left;
             double y = margin.Top + controlSize.Height + PopupOffset;
+
+#if WP8
+            // In WP7, the popup had no border, so the space between the TextBox and the popup
+            // created a visual separation between the two.  In WP8, however, they do have a border,
+            // so now we have too much space.  We'll move the popup up by the size of twice the border.
+            // (in order to overlap the two borders).
+            y -= Parent.BorderThickness.Top * 2;
+#endif
+
             return new Point(x, y);
         }
 

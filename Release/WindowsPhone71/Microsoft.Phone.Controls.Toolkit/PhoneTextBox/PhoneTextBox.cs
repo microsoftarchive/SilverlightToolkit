@@ -481,7 +481,7 @@ namespace Microsoft.Phone.Controls
 
             if (handler != null)
             {
-                handler(sender, e);
+                handler(this, e);
             }
         }
 
@@ -581,6 +581,7 @@ namespace Microsoft.Phone.Controls
         {
             UpdateLengthIndicatorVisibility();
             UpdateActionIconVisibility();
+            UpdateHintVisibility();
             ResizeTextBox();
         }
     }

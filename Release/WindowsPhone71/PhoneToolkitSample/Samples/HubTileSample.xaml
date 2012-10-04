@@ -169,6 +169,84 @@
                     </Grid>
                 </ScrollViewer>
             </controls:PivotItem>
+
+            <controls:PivotItem Header="sizes">
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <Grid Width="432" HorizontalAlignment="Left" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Grid.ColumnSpan="4"
+                                   TextWrapping="Wrap"
+                                   Margin="12,0,0,12">
+                            The HubTile control can be sized to be small, medium, or large,
+                            in addition to the default size.
+                        </TextBlock>
+                        <toolkit:HubTile Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+                                         Margin="12,12,0,0"
+                                         Source="/Images/Dessert.jpg"
+                                         Title="Dessert"
+                                         Notification="2 New&#x0d;&#x0a;Receipes"
+                                         DisplayNotification="True"
+                                         GroupTag="Sizes"
+                                         Size="Large"/>
+                        <toolkit:HubTile Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                         Margin="12,12,0,0"
+                                         Source="/Images/Fruits.jpg"
+                                         Title="Fruits"
+                                         GroupTag="Sizes"
+                                         Size="Medium"/>
+                        <toolkit:HubTile Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
+                                         Margin="12,12,0,0"
+                                         Source="/Images/Pretzel.jpg"
+                                         Title="Pretzel"
+                                         Notification="w/fixings"
+                                         DisplayNotification="True"
+                                         GroupTag="Sizes"
+                                         Size="Medium"/>
+                        <toolkit:HubTile Grid.Row="3" Grid.Column="0" 
+                                         Margin="12,12,0,0"
+                                         Source="/Images/Shrimp.jpg"
+                                         Title="Shrimp"
+                                         Message="&quot;Just an amazing work by the chef&quot;"
+                                         GroupTag="Sizes"
+                                         Size="Small"/>
+                        <toolkit:HubTile Grid.Row="3" Grid.Column="1" 
+                                         Margin="12,12,0,0"
+                                         Source="/Images/SteakSandwich.jpg"
+                                         Title="Steak&#x0d;&#x0a;Sandwich"
+                                         Message="@ a great cafe"
+                                         GroupTag="Sizes"
+                                         Size="Small"/>
+                        <toolkit:HubTile Grid.Row="3" Grid.Column="2" 
+                                         Margin="12,12,0,0"
+                                         Source="/Images/Beignets.jpg"
+                                         Title="Beignets"
+                                         Notification="New&#x0d;&#x0a;Orleans"
+                                         DisplayNotification="True"
+                                         GroupTag="Sizes"
+                                         Size="Small"/>
+                        <toolkit:HubTile Grid.Row="3" Grid.Column="3" 
+                                         Margin="12,12,0,0"
+                                         Source="/Images/Dessert.jpg"
+                                         Title="Beignets"
+                                         Notification="New&#x0d;&#x0a;Orleans"
+                                         DisplayNotification="True"
+                                         GroupTag="Sizes"
+                                         Size="Small"/>
+                    </Grid>
+                </ScrollViewer>
+            </controls:PivotItem>
         </controls:Pivot>
     </Grid>
     

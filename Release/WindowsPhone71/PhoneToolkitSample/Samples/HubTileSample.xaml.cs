@@ -17,15 +17,32 @@ namespace PhoneToolkitSample.Samples
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((sender as Pivot).SelectedIndex == 1)
+            Pivot pivot = sender as Pivot;
+
+            if (pivot == null)
             {
-                HubTileService.UnfreezeGroup("Places");
-                HubTileService.FreezeGroup("Food");
+                return;
             }
-            else
+
+            switch (pivot.SelectedIndex)
             {
-                HubTileService.UnfreezeGroup("Food");
-                HubTileService.FreezeGroup("Places");
+                case 0:
+                    HubTileService.UnfreezeGroup("Food");
+                    HubTileService.FreezeGroup("Places");
+                    HubTileService.FreezeGroup("Sizes");
+                    break;
+
+                case 1:
+                    HubTileService.FreezeGroup("Food");
+                    HubTileService.UnfreezeGroup("Places");
+                    HubTileService.FreezeGroup("Sizes");
+                    break;
+
+                case 2:
+                    HubTileService.FreezeGroup("Food");
+                    HubTileService.FreezeGroup("Places");
+                    HubTileService.UnfreezeGroup("Sizes");
+                    break;
             }
         }
     }

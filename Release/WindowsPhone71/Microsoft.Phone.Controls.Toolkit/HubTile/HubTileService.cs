@@ -252,8 +252,8 @@ namespace Microsoft.Phone.Controls
                     switch ((EnabledImagesPool[index].Target as HubTile).State)
                     {
                         case ImageState.Expanded:
-                            //If the tile can neither drop nor flip, do not change state.
-                            if (!(EnabledImagesPool[index].Target as HubTile)._canDrop && !(EnabledImagesPool[index].Target as HubTile)._canFlip)
+                            //If the tile can neither drop nor flip, or if its size is Small, do not change state.
+                            if ((!(EnabledImagesPool[index].Target as HubTile)._canDrop && !(EnabledImagesPool[index].Target as HubTile)._canFlip) || (EnabledImagesPool[index].Target as HubTile).Size == TileSize.Small)
                             {
                                 break;
                             }
