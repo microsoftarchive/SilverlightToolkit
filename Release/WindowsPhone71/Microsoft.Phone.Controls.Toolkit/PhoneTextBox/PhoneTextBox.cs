@@ -235,6 +235,7 @@ namespace Microsoft.Phone.Controls
                 else
                 {
                     ActualHintVisibility = Visibility.Collapsed;
+                    Foreground = ForegroundBrushEdit;
                 }
             }
         }
