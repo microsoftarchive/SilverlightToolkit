@@ -124,6 +124,10 @@ namespace Microsoft.Phone.Controls
                 throw new ArgumentOutOfRangeException("rotateTransitionMode");
             }
             element.Projection = new PlaneProjection { CenterOfRotationX = 0.5, CenterOfRotationY = 0.5 };
+
+            // Takes into account the flow direction.
+            rotateTransitionMode = AdjustRotateTransitionModeForFlowDirection(element, rotateTransitionMode);
+            
             return GetEnumStoryboard<RotateTransitionMode>(element, "Rotate", rotateTransitionMode);
         }
 
@@ -222,6 +226,51 @@ namespace Microsoft.Phone.Controls
             }
             element.Projection = new PlaneProjection { CenterOfRotationX = 0 };
             return new FeatheredTransition(element, new Storyboard(), turnstileFeatherTransitionMode, beginTime); 
+        }
+
+        /// <summary>
+        /// Adjusts the rotate transition mode based on the <paramref name="element"/>'s FlowDirection.
+        /// </summary>
+        /// <param name="element">The <see cref="T:System.Windows.UIElement"/>.</param>
+        /// <param name="rotateTransitionMode">The transition mode.</param>
+        /// <returns>Returns the adjusted rotate transition mode.</returns>
+        private static RotateTransitionMode AdjustRotateTransitionModeForFlowDirection(UIElement element, RotateTransitionMode rotateTransitionMode)
+        {
+            FrameworkElement fe = element as FrameworkElement;
+            RotateTransitionMode adjustedRotateTransitionMode = rotateTransitionMode;
+
+            if (fe != null && fe.FlowDirection == FlowDirection.RightToLeft)
+            {
+                switch (rotateTransitionMode)
+                {
+                    case RotateTransitionMode.In180Clockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.In180Counterclockwise;
+                        break;
+                    case RotateTransitionMode.In180Counterclockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.In180Clockwise;
+                        break;
+                    case RotateTransitionMode.In90Clockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.In90Counterclockwise;
+                        break;
+                    case RotateTransitionMode.In90Counterclockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.In90Clockwise;
+                        break;
+                    case RotateTransitionMode.Out180Clockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.Out180Counterclockwise;
+                        break;
+                    case RotateTransitionMode.Out180Counterclockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.Out180Clockwise;
+                        break;
+                    case RotateTransitionMode.Out90Clockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.Out90Counterclockwise;
+                        break;
+                    case RotateTransitionMode.Out90Counterclockwise:
+                        adjustedRotateTransitionMode = RotateTransitionMode.Out90Clockwise;
+                        break;
+                }
+            }
+
+            return adjustedRotateTransitionMode;
         }
     }
 }
