@@ -346,6 +346,10 @@ namespace Microsoft.Phone.Controls.Primitives
 
                 _state = State.Expanded;
             }
+            else if (!IsExpanded)
+            {
+                IsExpanded = true;
+            }
         }
         #endregion
 
@@ -373,6 +377,7 @@ namespace Microsoft.Phone.Controls.Primitives
                 else if (sender != _selectedItem && !_isAnimating)
                 {
                     SelectAndSnapTo((LoopingSelectorItem)sender);
+                    _selectedItem.SetState(LoopingSelectorItem.State.Selected, true);
                 }
             }
         }
@@ -415,6 +420,10 @@ namespace Microsoft.Phone.Controls.Primitives
 #if WP8
                     _changeStateAfterAnimation = true;
 #endif
+                }
+                else
+                {
+                    _selectedItem.SetState(LoopingSelectorItem.State.Selected, true);
                 }
             }
         }
