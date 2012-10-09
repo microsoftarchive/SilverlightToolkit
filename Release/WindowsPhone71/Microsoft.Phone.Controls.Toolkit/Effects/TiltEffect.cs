@@ -607,7 +607,11 @@ namespace Microsoft.Phone.Controls
                 tiltReturnStoryboard.Stop();
             }
 
-            RevertPrepareControlForTilt(currentTiltElement);
+            if (currentTiltElement != null)
+            {
+                RevertPrepareControlForTilt(currentTiltElement);
+                currentTiltElement = null;
+            }
         }
 
         /// <summary>
