@@ -387,12 +387,21 @@ namespace Microsoft.Phone.Controls
             base.OnApplyTemplate();
 
             _expanderPanel = base.GetTemplateChild(ExpanderPanel) as Grid;
-            _expandedStateAnimation = (base.GetTemplateChild(ExpandedState) as VisualState).Storyboard.Children[0] as DoubleAnimation;
             _expandedToCollapsedFrame = base.GetTemplateChild(ExpandedToCollapsedKeyFrame) as EasingDoubleKeyFrame;
             _collapsedToExpandedFrame = base.GetTemplateChild(CollapsedToExpandedKeyFrame) as EasingDoubleKeyFrame;
             _itemsCanvas = base.GetTemplateChild("ItemsCanvas") as Canvas;
+
+            VisualState expandedState = (base.GetTemplateChild(ExpandedState) as VisualState);
+            if (expandedState != null)
+            {
+                _expandedStateAnimation = expandedState.Storyboard.Children[0] as DoubleAnimation;
+            }
+            
             _presenter = base.GetTemplateChild(Presenter) as ItemsPresenter;
-            _presenter.SizeChanged += OnPresenterSizeChanged;
+            if (_presenter != null)
+            {
+                _presenter.SizeChanged += OnPresenterSizeChanged;
+            }
             
             if (_expanderPanel != null)
             {
