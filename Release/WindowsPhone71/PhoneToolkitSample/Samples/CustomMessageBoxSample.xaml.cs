@@ -121,7 +121,7 @@ namespace PhoneToolkitSample.Samples
             {
                 Caption = "Would you like to rate and review this application?",
                 Message = 
-                    "Thank you for trying out the Silverlight for Windows Phone Toolkit."
+                    "Thank you for trying out the Windows Phone Toolkit."
                     + Environment.NewLine + Environment.NewLine 
                     + "We would really like to hear what you think about it. Would you mind spending a couple of minutes to rate and review this application in the Marketplace?",
                 Content = checkBox,

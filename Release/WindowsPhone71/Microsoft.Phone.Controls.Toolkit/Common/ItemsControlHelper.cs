@@ -141,7 +141,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="itemContainerStyle">The ItemContainerStyle.</param>
         /// <remarks>
-        /// Silverlight does not support setting a Style multiple times, so we
+        /// XAML does not support setting a Style multiple times, so we
         /// only attempt to set styles on elements whose style hasn't already
         /// been set.
         /// </remarks>

@@ -935,6 +935,67 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
+        /// Adjust the position (Y) of ContextMenu for Portrait Mode.
+        /// </summary>
+        private double AdjustContextMenuPositionForPortraitMode(Rect bounds, double roiY, double roiHeight, ref bool reversed)
+        {
+            double y = 0.0;
+            bool notEnoughRoom = false;     // if we have enough room to place the menu without moving.
+
+            double lowestTopOfMenu = bounds.Bottom - ActualHeight;
+            double highestBottomOfMenu = bounds.Top + ActualHeight;
+
+            if (bounds.Height <= ActualHeight)
+            {
+                notEnoughRoom = true;
+            }
+            else if (roiY + roiHeight <= lowestTopOfMenu)           // there is enough room below the owner.
+            {
+                y = roiY + roiHeight;
+                reversed = false;
+            }
+            else if (roiY >= highestBottomOfMenu)                   // there is enough room above the owner.
+            {
+                y = roiY - ActualHeight;
+                reversed = true;
+            }
+            else if (_popupAlignmentPoint.Y >= 0)                   // menu is displayed by Tap&Hold gesture, will try to place the menu at touch position                                                                            
+            {
+                y = _popupAlignmentPoint.Y;
+                if (y <= lowestTopOfMenu)
+                {
+                    reversed = false;
+                }
+                else if (y >= highestBottomOfMenu)
+                {
+                    y -= ActualHeight;
+                    reversed = true;
+                }
+                else
+                {
+                    notEnoughRoom = true;
+                }
+            }
+            else                                                    // menu is displayed by calling "IsOpen = true", the point will be (-1, -1)
+            {
+                notEnoughRoom = true;
+            }
+
+            if (notEnoughRoom)                                      // failed to place menu in above scenraios, try to align it to Bottom.
+            {
+                y = lowestTopOfMenu;                              // align to bottom
+                reversed = true;
+
+                if (y <= bounds.Top)                              // if the menu can't be fully displayed, make sure we truncate the bottom items, not the top items.
+                {
+                    y = bounds.Top;
+                    reversed = false;
+                }
+            }
+            return y;
+        }
+
+        /// <summary>
         /// Updates the location and size of the Popup and overlay.
         /// </summary>
         private void UpdateContextMenuPlacement()
@@ -977,62 +1038,10 @@ namespace Microsoft.Phone.Controls
                         roiY = _popupAlignmentPoint.Y;
                         roiHeight = 0;
                     }
-
-                   
-                    
-                    bool notEnoughRoom = false;     // if we have enough room to place the menu without moving.
-
-                    double lowestTopOfMenu = bounds.Bottom - ActualHeight;
-                    double highestBottomOfMenu = bounds.Top + ActualHeight;
-
-                    if (bounds.Height <= ActualHeight)
-                    {
-                        notEnoughRoom = true;
-                    }
-                    else if (roiY + roiHeight <= lowestTopOfMenu)           // there is enough room below the owner.
-                    {
-                        p.Y = roiY + roiHeight;
-                        _reversed = false;
-                    }
-                    else if (roiY >= highestBottomOfMenu)                   // there is enough room above the owner.
-                    {
-                        p.Y = roiY - ActualHeight;
-                        _reversed = true;
-                    }
-                    else if (_popupAlignmentPoint.Y >= 0)                   // menu is displayed by Tap&Hold gesture, will try to place the menu at touch position                                                                            
-                    {
-                        p = _popupAlignmentPoint;
-                        if (p.Y <= lowestTopOfMenu)                   
-                        {   
-                            _reversed = false;
-                        }
-                        else if (p.Y >= highestBottomOfMenu)
-                        {
-                            p.Y -= ActualHeight;
-                            _reversed = true;
-                        } 
-                        else 
-                        {
-                            notEnoughRoom = true;
-                        }
-                    }
-                    else                                                    // menu is displayed by calling "IsOpen = true", the point will be (-1, -1)
-                    {
-                        notEnoughRoom = true;
-                    }
-
-                    if (notEnoughRoom)                                      // failed to place menu in above scenraios, try to align it to Bottom.
-                    {
-                        p.Y = lowestTopOfMenu;                              // align to bottom
-                        _reversed = true;
-
-                        if (p.Y <= bounds.Top)                              // if the menu can't be fully displayed, make sure we truncate the bottom items, not the top items.
-                        {
-                            p.Y = bounds.Top;
-                            _reversed = false;
-                        }
-                    }
+                                  
+                    p.Y = AdjustContextMenuPositionForPortraitMode(bounds, roiY, roiHeight, ref _reversed);
                 }
+                    
 
                 // Start with the current Popup alignment point
                 double x = p.X;

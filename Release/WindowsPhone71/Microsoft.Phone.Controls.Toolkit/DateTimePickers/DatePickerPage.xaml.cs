@@ -37,8 +37,18 @@ namespace Microsoft.Phone.Controls
         /// <returns>LoopingSelectors ordered by culture-specific priority.</returns>
         protected override IEnumerable<LoopingSelector> GetSelectorsOrderedByCulturePattern()
         {
+            string pattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpperInvariant();
+            string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+            if (DateTimePickerBase.DateShouldFlowRTL())
+            {
+                char[] reversedPattern = pattern.ToCharArray();
+                Array.Reverse(reversedPattern);
+                pattern = new string(reversedPattern);
+            }
+
             return GetSelectorsOrderedByCulturePattern(
-                CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpperInvariant(),
+                pattern,
                 new char[] { 'Y', 'M', 'D' },
                 new LoopingSelector[] { PrimarySelector, SecondarySelector, TertiarySelector });
         }
@@ -58,6 +68,19 @@ namespace Microsoft.Phone.Controls
             SystemTrayPlaceholder.Visibility = (0 != (PageOrientation.Portrait & e.Orientation)) ?
                 Visibility.Visible :
                 Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Sets the selectors and title flow direction.
+        /// </summary>
+        /// <param name="flowDirection">Flow direction to set.</param>
+        internal override void SetFlowDirection(FlowDirection flowDirection)
+        {
+            HeaderTitle.FlowDirection = flowDirection;
+
+            PrimarySelector.FlowDirection = flowDirection;
+            SecondarySelector.FlowDirection = flowDirection;
+            TertiarySelector.FlowDirection = flowDirection;
         }
     }
 }

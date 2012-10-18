@@ -47,17 +47,25 @@
     <!--LayoutRoot-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT">
+        <controls:Pivot Title="{StaticResource ApplicationTitle}">
             <!--Pivot item one-->
             <controls:PivotItem Header="first">
                 <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Items}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" Width="432">
-                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextAccentStyle}"
+                                <TextBlock Text="{Binding LineOne}" 
+                                           TextWrapping="Wrap" 
+                                           Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                                <TextBlock Text="{Binding LineTwo}" 
+                                           TextWrapping="Wrap" 
+                                           Margin="12,-6,12,0" 
+                                           Style="{StaticResource PhoneTextAccentStyle}"
                                            toolkit:SlideInEffect.LineIndex="1"/>
-                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"
+                                <TextBlock Text="{Binding LineTwo}" 
+                                           TextWrapping="Wrap" 
+                                           Margin="12,-6,12,0" 
+                                           Style="{StaticResource PhoneTextSubtleStyle}"
                                            toolkit:SlideInEffect.LineIndex="2"/>
                             </StackPanel>
                         </DataTemplate>

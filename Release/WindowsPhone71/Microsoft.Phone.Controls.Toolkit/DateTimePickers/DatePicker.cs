@@ -4,6 +4,8 @@
 // All other rights reserved.
 
 using System;
+using System.Globalization;
+using System.Windows;
 
 namespace Microsoft.Phone.Controls
 {
@@ -13,6 +15,8 @@ namespace Microsoft.Phone.Controls
     /// <QualityBand>Preview</QualityBand>
     public class DatePicker : DateTimePickerBase
     {
+        private string _fallbackValueStringFormat;
+
         /// <summary>
         /// Initializes a new instance of the DatePicker control.
         /// </summary>
@@ -21,5 +25,31 @@ namespace Microsoft.Phone.Controls
             DefaultStyleKey = typeof(DatePicker);
             Value = DateTime.Now.Date;
         }
+
+        /// <summary>
+        /// Gets the fallback value for the ValueStringFormat property.
+        /// </summary>
+        protected override string ValueStringFormatFallback
+        {
+            get
+            {
+                if (_fallbackValueStringFormat == null)
+                {
+                    string pattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+
+                    if (DateShouldFlowRTL())
+                    {
+                        char[] reversedPattern = pattern.ToCharArray();
+                        Array.Reverse(reversedPattern);
+                        pattern = new string(reversedPattern);
+                    }
+
+                    _fallbackValueStringFormat = "{0:" + pattern + "}";
+                }
+
+                return _fallbackValueStringFormat;
+            }
+        }
+        
     }
 }

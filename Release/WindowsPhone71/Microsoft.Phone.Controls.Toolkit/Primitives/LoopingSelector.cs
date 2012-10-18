@@ -266,7 +266,15 @@ namespace Microsoft.Phone.Controls.Primitives
         {
             if (_panningTransform != null)
             {
-                SelectAndSnapToClosest();
+                if (this.IsExpanded)
+                {
+                    SelectAndSnapToClosest();
+                }
+                else
+                {
+                    this.IsExpanded = true;
+                }
+
                 e.Handled = true;
             }
         }
@@ -345,10 +353,6 @@ namespace Microsoft.Phone.Controls.Primitives
                 }
 
                 _state = State.Expanded;
-            }
-            else if (!IsExpanded)
-            {
-                IsExpanded = true;
             }
         }
         #endregion

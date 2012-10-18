@@ -54,13 +54,13 @@
     <!--LayoutRoot-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT"
+        <controls:Pivot Title="{StaticResource ApplicationTitle}"
                         toolkit:TurnstileFeatherEffect.FeatheringIndex="0">
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <StackPanel Grid.Row="0" Margin="-12,-2,0,0">
-                            <TextBlock Text="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}"/>
+                            <TextBlock Text="{StaticResource ApplicationTitle}" Style="{StaticResource PhoneTextNormalStyle}"/>
                             <TextBlock Text="Turnstile Feather Example" Margin="12,-4,0,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
                         </StackPanel>
                     </StackPanel>
@@ -84,7 +84,7 @@
                         </ListBoxItem>
                         <ListBoxItem toolkit:TiltEffect.IsTiltEnabled="True" Grid.Column="1" >
                             <StackPanel Margin="12,-6,0,0">
-                                <TextBlock Text="Silverlight for Windows Phone Toolkit updated" TextWrapping="Wrap"
+                                <TextBlock Text="Windows Phone Toolkit updated" TextWrapping="Wrap"
                                        Foreground="{StaticResource PhoneAccentBrush}"/>
                                 <TextBlock Text="&quot;Check out the new cool stuff that we added.&quot;" TextWrapping="Wrap"
                                        Foreground="{StaticResource PhoneForegroundBrush}"/>

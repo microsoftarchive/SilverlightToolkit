@@ -300,5 +300,11 @@ namespace Microsoft.Phone.Controls.Primitives
                 }
             }
         }
+
+        /// <summary>
+        /// Sets the selectors and title flow direction.
+        /// </summary>
+        /// <param name="flowDirection">Flow direction to set.</param>
+        internal abstract void SetFlowDirection(FlowDirection flowDirection);
     }
 }

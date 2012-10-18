@@ -42,7 +42,7 @@
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
-    
+
     <!--LayoutRoot-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -51,9 +51,12 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}" />
-            <TextBlock x:Name="PageTitle" Text="featheredtransitions" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{StaticResource ApplicationTitle}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="featheredtransitions" 
+                       Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel-->
@@ -67,7 +70,7 @@
                     <Button Content="basic turnstile feathering" Click="BasicTurnstileFeathering_Click"/>
                     <Button Content="turnstile feathering with pivot" Click="TurnstileFeatheringWithPivot_Click"/>
                 </StackPanel>
-            </ScrollViewer>            
+            </ScrollViewer>
         </Grid>
     </Grid>
 

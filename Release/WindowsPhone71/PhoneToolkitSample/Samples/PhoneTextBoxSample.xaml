@@ -29,11 +29,14 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="{StaticResource ApplicationTitle}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="phonetextbox" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{StaticResource ApplicationTitle}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="phonetextbox" 
+                       Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-
+        
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ScrollViewer Margin="0, 0, -12, 0">
@@ -69,7 +72,7 @@
                                          MinHeight="150"
                                          TextWrapping="Wrap" AcceptsReturn="True" />
                 
-                    <TextBlock Text="This control is currently experimental and we are looking for your feedback. If you have comments about the PhoneTextBox or other Toolkit controls, visit the Silverlight Toolkit on CodePlex."
+                    <TextBlock Text="This control is currently experimental and we are looking for your feedback. If you have comments about the PhoneTextBox or other Toolkit controls, visit the Windows Phone Toolkit on CodePlex."
                                Margin="12" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" />
                     <HyperlinkButton Content="Toolkit on CodePlex" 
                                      NavigateUri="http://silverlight.codeplex.com/"

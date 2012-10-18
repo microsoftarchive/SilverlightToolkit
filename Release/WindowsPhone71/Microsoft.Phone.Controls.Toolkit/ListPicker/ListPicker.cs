@@ -996,14 +996,33 @@ namespace Microsoft.Phone.Controls
 
         private void OnItemsPresenterHostParentSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            // Pass width through the Canvas
-            if (null != _itemsPresenterPart)
+            if (null != _itemsPresenterPart && null != _itemsPresenterHostPart && (e.NewSize.Width != e.PreviousSize.Width || e.NewSize.Width == 0))
             {
-                _itemsPresenterPart.Width = e.NewSize.Width;
+                // The control size has changed and we need to update the items presenter's size as well
+                // as its host's size (the canvas).
+                UpdateItemsPresenterWidth(e.NewSize.Width);
             }
 
             // Update clip to show only the selected item in Normal mode
             _itemsPresenterHostParent.Clip = new RectangleGeometry { Rect = new Rect(new Point(), e.NewSize) };
+        }
+
+        private void UpdateItemsPresenterWidth(double availableWidth)
+        {
+            // First, we clear everthing and we measure the items presenter desired size.
+            _itemsPresenterPart.Width = _itemsPresenterHostPart.Width = double.NaN;
+            _itemsPresenterPart.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+            // We set the host's width to the presenter's desired width only if no explicit width is set and
+            // the horizontal alignment isn't stretch (when the horizontal alignment is stretch, the canvas is
+            // automatically stretched).
+            if (double.IsNaN(Width) && HorizontalAlignment != HorizontalAlignment.Stretch)
+            {
+                _itemsPresenterHostPart.Width = _itemsPresenterPart.DesiredSize.Width;
+            }
+
+            if (availableWidth > _itemsPresenterPart.DesiredSize.Width)
+                _itemsPresenterPart.Width = availableWidth;
         }
 
         private void OnListPickerItemSizeChanged(object sender, SizeChangedEventArgs e)
@@ -1013,6 +1032,12 @@ namespace Microsoft.Phone.Controls
             if (object.Equals(ItemContainerGenerator.ItemFromContainer(container), SelectedItem))
             {
                 SizeForAppropriateView(false);
+            }
+
+            // Updates the host's width to reflect the items presenter desired width.
+            if (double.IsNaN(Width) && HorizontalAlignment != HorizontalAlignment.Stretch)
+            {
+                _itemsPresenterHostPart.Width = _itemsPresenterPart.DesiredSize.Width;
             }
         }
 
@@ -1293,6 +1318,9 @@ namespace Microsoft.Phone.Controls
                 _listPickerPage = e.Content as ListPickerPage;
                 if (null != _listPickerPage)
                 {
+                    // Sets the flow direction.
+                    _listPickerPage.FlowDirection = this.FlowDirection;
+
                     // Set up the list picker page with the necesarry fields.
                     if (null != FullModeHeader)
                     {

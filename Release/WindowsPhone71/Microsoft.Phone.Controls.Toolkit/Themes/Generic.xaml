@@ -514,7 +514,8 @@
         <Setter Property="Foreground" Value="{StaticResource PhoneTextBoxForegroundBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="PickerPageUri" Value="/Microsoft.Phone.Controls.Toolkit;component/DateTimePickers/DatePickerPage.xaml"/>
-        <Setter Property="ValueStringFormat" Value="{}{0:d}"/>
+        <!-- For RTL, the pattern needs to be reversed -->
+        <!--<Setter Property="ValueStringFormat" Value="{}{0:d}"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DatePicker">

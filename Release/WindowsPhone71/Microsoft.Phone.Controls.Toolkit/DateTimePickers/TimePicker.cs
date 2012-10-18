@@ -38,6 +38,19 @@ namespace Microsoft.Phone.Controls
                     // such that only LongTimePattern respects the "24-hour clock" override setting.
                     // This technique is not perfect, but works for all the initially-supported languages.
                     string pattern = CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern.Replace(":ss", "");
+                    string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+                    if (lang == "ar" || lang == "fa")
+                    {
+                        // For arabic and persian, we want the am/pm designator to be displayed at the left.
+                        pattern = "\u200F" + pattern;
+                    }
+                    else
+                    {
+                        // For LTR languages and Hebrew, we want the am/pm designator to be displayed at the right.
+                        pattern = "\u200E" + pattern;
+                    }
+
                     _fallbackValueStringFormat = "{0:" + pattern + "}";
                 }
                 return _fallbackValueStringFormat;

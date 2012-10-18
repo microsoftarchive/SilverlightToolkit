@@ -17,7 +17,7 @@
     <!--Application Resources-->
     <Application.Resources>
 
-        <sys:String x:Key="ApplicationTitle">SILVERLIGHT FOR WINDOWS PHONE TOOLKIT</sys:String>
+        <sys:String x:Key="ApplicationTitle">WINDOWS PHONE TOOLKIT</sys:String>
 
         <Style x:Key="HyperlinkEmptyStyle" TargetType="HyperlinkButton">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>

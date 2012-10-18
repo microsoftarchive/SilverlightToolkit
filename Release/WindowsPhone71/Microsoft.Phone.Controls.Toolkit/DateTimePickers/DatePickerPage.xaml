@@ -67,12 +67,13 @@
             Height="32"/>
         <!-- Title -->
         <TextBlock
+            x:Name="HeaderTitle"
             Grid.Row="1"
             Text="{Binding DatePickerTitle, Source={StaticResource DateTimePickerResources}}"
             FontFamily="{StaticResource PhoneFontFamilySemiBold}"
             FontSize="{StaticResource PhoneFontSizeMedium}"
             Foreground="{StaticResource PhoneForegroundBrush}"
-            Margin="24,16,12,24"/>
+            Margin="24,16,24,24"/>
         <!-- LoopingSelectors -->
         <Grid
             Grid.Row="2"

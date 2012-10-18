@@ -123,7 +123,8 @@ namespace Microsoft.Phone.Controls
                 typeof(ButtonBase), 
                 typeof(ListBoxItem), 
                 typeof(ListPicker),
-                typeof(MenuItem)
+                typeof(MenuItem),
+                typeof(LongListSelector)
             };
         }
 
@@ -297,30 +298,88 @@ namespace Microsoft.Phone.Controls
                         }
                         else
                         {
-                            // Use first child of the control, so that we can add transforms and not
-                            // impact any transforms on the control itself.
-                            FrameworkElement element = VisualTreeHelper.GetChild(ancestor, 0) as FrameworkElement;
-                            FrameworkElement container = e.ManipulationContainer as FrameworkElement;
+#if WP8
+                            if (t == typeof(LongListSelector))
+                            {
+                                StartTiltEffectOnLLS((LongListSelector)ancestor, e);
+                            }
+                            else
+                            {
+#endif
+                                // Use first child of the control, so that we can add transforms and not
+                                // impact any transforms on the control itself.
+                                FrameworkElement element = VisualTreeHelper.GetChild(ancestor, 0) as FrameworkElement;
+                                FrameworkElement container = e.ManipulationContainer as FrameworkElement;
 
-                            if (element == null || container == null)
-                                return;
+                                if (element == null || container == null)
+                                    return;
 
-                            // Touch point relative to the element being tilted.
-                            Point tiltTouchPoint = container.TransformToVisual(element).Transform(e.ManipulationOrigin);
+                                // Touch point relative to the element being tilted.
+                                Point tiltTouchPoint = container.TransformToVisual(element).Transform(e.ManipulationOrigin);
 
-                            // Center of the element being tilted.
-                            Point elementCenter = new Point(element.ActualWidth / 2, element.ActualHeight / 2);
+                                // Center of the element being tilted.
+                                Point elementCenter = new Point(element.ActualWidth / 2, element.ActualHeight / 2);
 
-                            // Camera adjustment.
-                            Point centerToCenterDelta = GetCenterToCenterDelta(element, source);
+                                // Camera adjustment.
+                                Point centerToCenterDelta = GetCenterToCenterDelta(element, source);
 
-                            BeginTiltEffect(element, tiltTouchPoint, elementCenter, centerToCenterDelta);
+                                BeginTiltEffect(element, tiltTouchPoint, elementCenter, centerToCenterDelta);
+#if WP8
+                            }
+#endif
+
                             return;
                         }
                     }
                 }
             }
         }
+
+
+#if WP8
+        /// <summary>
+        /// Starts the tilt effect on LLS items or sticky header.
+        /// </summary>
+        private static void StartTiltEffectOnLLS(LongListSelector lls, ManipulationStartedEventArgs e)
+        {
+            FrameworkElement parent = (FrameworkElement)e.OriginalSource;
+            ContentPresenter[] cp = new ContentPresenter[2];
+            int cpCount = 0;
+
+            // Starts from OriginalSource and goes up to ViewportControl
+            // while keeping trace of the last 2 ContentPresenter
+            do
+            {
+                if (parent is ContentPresenter)
+                {
+                    cp[cpCount++ % 2] = (ContentPresenter)parent;
+                }
+
+                parent = parent.GetVisualParent();
+            }
+            while (parent != lls && parent.GetType() != typeof(ViewportControl));
+
+            // Makes sure we found a ViewportControl and at least 2 content presenters in our way.
+            if (parent != lls && cpCount >= 2)
+            {
+                // The tilted element is the child of the ContentPresenter that is the farthest from ViewportControl.
+                FrameworkElement element = cp[cpCount % 2].GetVisualChildren().FirstOrDefault() as FrameworkElement;
+
+                if(element != null)
+                {
+                    FrameworkElement container = e.ManipulationContainer as FrameworkElement;
+
+                    // Touch point relative to the element being tilted.
+                    Point tiltTouchPoint = container.TransformToVisual(element).Transform(e.ManipulationOrigin);
+
+                    // Center of the element being tilted.
+                    Point elementCenter = new Point(element.ActualWidth / 2, element.ActualHeight / 2);
+
+                    BeginTiltEffect(element, tiltTouchPoint, elementCenter, new Point(0, 0));
+                }
+            }
+        }
+#endif
 
         /// <summary>
         /// Computes the delta between the centre of an element and its 

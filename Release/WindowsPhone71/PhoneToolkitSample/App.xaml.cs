@@ -41,7 +41,7 @@ namespace PhoneToolkitSample
                 //Application.Current.Host.Settings.EnableCacheVisualization = true;
             }
 
-            // Standard Silverlight initialization
+            // Standard XAML initialization
             InitializeComponent();
 
             // Phone-specific initialization

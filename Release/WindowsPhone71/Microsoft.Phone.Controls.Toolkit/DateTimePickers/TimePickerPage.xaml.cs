@@ -39,8 +39,18 @@ namespace Microsoft.Phone.Controls
         /// <returns>LoopingSelectors ordered by culture-specific priority.</returns>
         protected override IEnumerable<LoopingSelector> GetSelectorsOrderedByCulturePattern()
         {
+            string pattern = CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern.ToUpperInvariant();
+
+            // The goal is to put the AM/PM part at the beginning for RTL languages.
+            if (DateTimePickerBase.IsRTLLanguage())
+            {
+                var parts = pattern.Split(' ');
+                Array.Reverse(parts);
+                pattern = string.Join(" ", parts);
+            }
+
             return GetSelectorsOrderedByCulturePattern(
-                CultureInfo.CurrentCulture.DateTimeFormat.LongTimePattern.ToUpperInvariant(),
+                pattern,
                 new char[] { 'H', 'M', 'T' },
                 new LoopingSelector[] { PrimarySelector, SecondarySelector, TertiarySelector });
         }
@@ -60,6 +70,19 @@ namespace Microsoft.Phone.Controls
             SystemTrayPlaceholder.Visibility = (0 != (PageOrientation.Portrait & e.Orientation)) ?
                 Visibility.Visible :
                 Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Sets the selectors and title flow direction.
+        /// </summary>
+        /// <param name="flowDirection">Flow direction to set.</param>
+        internal override void SetFlowDirection(FlowDirection flowDirection)
+        {
+            HeaderTitle.FlowDirection = flowDirection;
+
+            PrimarySelector.FlowDirection = flowDirection;
+            SecondarySelector.FlowDirection = flowDirection;
+            TertiarySelector.FlowDirection = flowDirection;
         }
     }
 }

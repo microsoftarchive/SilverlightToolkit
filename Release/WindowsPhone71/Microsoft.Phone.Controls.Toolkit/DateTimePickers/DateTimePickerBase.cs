@@ -194,6 +194,25 @@ namespace Microsoft.Phone.Controls
             }
         }
 
+        /// <summary>
+        /// Date should flow from right to left for arabic and persian.
+        /// </summary>
+        internal static bool DateShouldFlowRTL()
+        {
+            string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            return lang == "ar" || lang == "fa";
+        }
+
+        /// <summary>
+        /// Returns true if the current language is RTL.
+        /// </summary>
+        internal static bool IsRTLLanguage()
+        {
+            // Currently supported RTL languages are arabic, hebrew and persian.
+            string lang = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            return lang == "ar" || lang == "he" || lang == "fa";
+        }
+
         private void OnDateButtonClick(object sender, RoutedEventArgs e)
         {
             OpenPickerPage();
@@ -282,10 +301,14 @@ namespace Microsoft.Phone.Controls
             else if (null == _dateTimePickerPage)
             {
                 // Navigation to a new page; capture it and push the value in
-                _dateTimePickerPage = e.Content as IDateTimePickerPage;
-                if (null != _dateTimePickerPage)
+                var page = e.Content as DateTimePickerPageBase;
+                
+                if (null != page)
                 {
+                    _dateTimePickerPage = page;
                     _dateTimePickerPage.Value = Value.GetValueOrDefault(DateTime.Now);
+
+                    page.SetFlowDirection(this.FlowDirection);
                 }
             }
         }

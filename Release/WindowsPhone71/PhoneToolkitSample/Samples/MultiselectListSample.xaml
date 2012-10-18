@@ -58,11 +58,14 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="TOOLKIT SAMPLE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="multiselect" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{StaticResource ApplicationTitle}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="multiselect" 
+                       Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-
+        
         <!--ContentPanel-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0">
             <toolkit:MultiselectList x:Name="EmailList" 

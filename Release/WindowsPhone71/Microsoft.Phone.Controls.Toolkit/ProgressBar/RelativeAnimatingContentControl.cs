@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 // This is a very special primitive control that works around a limitation in
-// the core animation subsystem of Silverlight: there is no way to declare in
+// the core animation subsystem of XAML: there is no way to declare in
 // VSM states relative properties, such as animating from 0 to 33% the width of
 // the control, using double animations for translation.
 //

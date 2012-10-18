@@ -38,7 +38,7 @@
                 <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource PhoneTextNormalStyle}"
-                    Text="The PerformanceProgressBar is a specialized progress bar implementation that exposes a single property, IsIndeterminate, that has better performance than the ProgressBar built into Silverlight for Windows Phone."/>
+                    Text="The PerformanceProgressBar is a specialized progress bar implementation that exposes a single property, IsIndeterminate, that has better performance than the ProgressBar built into Windows Phone."/>
 
                 <CheckBox Content="Use new ProgressIndicator property"
                           Checked="CheckBox_Checked"

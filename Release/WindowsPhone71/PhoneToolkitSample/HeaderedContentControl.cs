@@ -16,7 +16,7 @@ namespace PhoneToolkitSample.LocalControls
     /// <remarks>
     /// HeaderedContentControl adds Header and HeaderTemplatefeatures to a
     /// ContentControl. HasHeader and HeaderTemplateSelector are removed for
-    /// lack of support and consistency with other Silverlight controls.
+    /// lack of support and consistency with other controls.
     /// </remarks>
     /// <QualityBand>Stable</QualityBand>
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Headered", Justification = "Consistency with WPF")]

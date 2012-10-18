@@ -16,7 +16,7 @@ namespace Microsoft.Phone.Controls
 {
     /// <summary>
     /// The GestureListener class raises events similar to those provided by the XNA TouchPanel, but it is designed for
-    /// Silverlight's event-driven model, rather than XNA's loop/polling model, and it also takes care of the hit testing
+    /// XAML's event-driven model, rather than XNA's loop/polling model, and it also takes care of the hit testing
     /// and event routing.
     /// </summary>
     public partial class GestureListener

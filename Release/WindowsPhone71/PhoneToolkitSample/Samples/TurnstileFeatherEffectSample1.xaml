@@ -51,10 +51,13 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="SILVERLIGHT FOR WINDOWS PHONE TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}"
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{StaticResource ApplicationTitle}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"
                        toolkit:TurnstileFeatherEffect.FeatheringIndex="0"/>
-            <TextBlock x:Name="PageTitle" Text="turnstilefeathereffect" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"
+            <TextBlock Text="turnstilefeathereffect" 
+                       Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"
                        toolkit:TurnstileFeatherEffect.FeatheringIndex="1"/>
         </StackPanel>
 

@@ -50,12 +50,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" 
-                       Text="{StaticResource ApplicationTitle}"
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{StaticResource ApplicationTitle}"
                        Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle"
-                       Text="contextmenu" 
+            <TextBlock Text="contextmenu" 
                        Margin="9,-7,0,0" 
                        Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
@@ -129,6 +127,11 @@
                         </toolkit:ContextMenu>
                     </toolkit:ContextMenuService.ContextMenu>
                 </Button>
+                <HyperlinkButton Margin="0,0"  
+                        VerticalAlignment="Center"
+                        Padding="12"
+                        Content="ContextMenu position test"
+                        FontSize="18" NavigateUri="/Samples/ContextMenuPositionTest.xaml"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
