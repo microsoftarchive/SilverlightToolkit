@@ -1,0 +1,159 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    x:Class="Microsoft.Silverlight.Testing.Client.MobileTestExceptionDetails"
+    d:DesignHeight="320" d:DesignWidth="480">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Silverlight.Testing;component/Client/MobileClientResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <local:VisibilityConverter x:Key="visibilityConverter"/>
+            <local:TypeNameVisibilityConverter x:Key="typeNameConverter"/>
+            
+            <local:ColorSelectorConverter x:Key="expectedExceptionBackgroundColoring" TrueColor="Transparent" FalseColor="{StaticResource highlightBackground}"/>
+            <local:ColorSelectorConverter x:Key="expectedExceptionBorderColoring" TrueColor="Transparent" FalseColor="{StaticResource highlightBorder}"/>
+            <DataTemplate x:Key="IssueDataTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Fill="Gray" Height="5" Width="5" VerticalAlignment="Center" />
+                    <TextBlock Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding}" Margin="2,0"/>
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal" />
+    </UserControl.FontFamily>
+    <UserControl.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush" />
+    </UserControl.Foreground>
+    <UserControl.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeSmall" />
+    </UserControl.FontSize>
+    <UserControl.Background>
+        <StaticResource ResourceKey="PhoneBackgroundBrush"/>
+    </UserControl.Background>
+    <Grid x:Name="LayoutRoot" Margin="0,0,12,0" MaxWidth="480">
+
+        <!-- Test method results only  -->
+        <StackPanel Visibility="{Binding Converter={StaticResource typeNameConverter}, ConverterParameter=TestMethodData}">
+
+            <StackPanel 
+                MaxWidth="480"
+                Visibility="{Binding KnownBugs, Converter={StaticResource visibilityConverter}}">
+                <TextBlock Text="Known Issues" FontWeight="Bold" />
+
+                <!-- Test passed, known issues caused the failure -->
+                <TextBlock Text="These issues are marked as known for this test and resulted in it being marked as a success:" Visibility="{Binding Passed, Converter={StaticResource visibilityConverter}}" 
+                           TextWrapping="Wrap"/>
+
+                <!-- Test failed, known issues were not marked as fixed -->
+                <StackPanel Visibility="{Binding Passed, Converter={StaticResource visibilityConverter}, ConverterParameter=Collapsed}" Orientation="Horizontal">
+                    <Border BorderThickness="1"  VerticalAlignment="Center"
+                            BorderBrush="{StaticResource highlightBorderBrush}" 
+                            Background="{StaticResource highlightBackgroundBrush}"                             
+                            Margin="0,-3,-1,-3"
+                            Padding="3"
+                            CornerRadius="3">
+                        <TextBlock Text="These known issues should be marked fixed."
+                                   TextWrapping="Wrap"
+                                   Foreground="{StaticResource highlightForegroundBrush}"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text=" The test passed otherwise." />
+                </StackPanel>
+                <ItemsControl ItemsSource="{Binding KnownBugs}" ItemTemplate="{StaticResource IssueDataTemplate}" />
+            </StackPanel>
+
+            <StackPanel 
+                Visibility="{Binding FixedBugs, Converter={StaticResource visibilityConverter}}">
+                <TextBlock Text="Fixed Issues" FontWeight="Bold" />
+                <TextBlock Text="These issues were marked as fixed, but should still be investigated for this failing test:" Visibility="{Binding Passed, Converter={StaticResource visibilityConverter}, ConverterParameter=Collapsed}" 
+                           TextWrapping="Wrap"/>
+                <ItemsControl ItemsSource="{Binding FixedBugs}" ItemTemplate="{StaticResource IssueDataTemplate}" />
+            </StackPanel>
+
+            <!-- Any stored exception information -->
+
+            <!-- Colors are variable:
+                 - If the test passed, neutral greys or tans
+                 - If it failed, we go red and scary-looking, perhaps a warning icon too 
+            -->
+
+            <!-- Shown any expected exception information -->
+            <StackPanel 
+                Visibility="{Binding SimplifiedExpectedExceptionName, Converter={StaticResource visibilityConverter}}">
+
+                <TextBlock Text="Expected Exception (Negative Test)" FontWeight="Bold" />
+
+                <StackPanel Visibility="{Binding SimplifiedExpectedExceptionName, Converter={StaticResource visibilityConverter}}">
+                    <TextBlock Text="This test expected an exception of type" VerticalAlignment="Center" />
+                    <Border BorderThickness="1"  VerticalAlignment="Center"
+                            BorderBrush="{Binding Passed, Converter={StaticResource expectedExceptionBorderColoring}}" 
+                            Background="{Binding Passed, Converter={StaticResource expectedExceptionBackgroundColoring}}" 
+                            Margin="0,-3,-1,-3"
+                            Padding="3"
+                            CornerRadius="3">
+                        <TextBlock Text="{Binding SimplifiedExpectedExceptionName}" 
+                                   TextWrapping="Wrap"
+                                   FontWeight="Bold" VerticalAlignment="Center" />
+                    </Border>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel 
+                Visibility="{Binding Result.Exception, Converter={StaticResource visibilityConverter}}">
+
+                <TextBlock Text="Exception Details" FontWeight="Bold" />
+
+                <Border Background="#33000000" BorderBrush="#7F000000" BorderThickness="1" CornerRadius="4,4,0,0"
+                    Margin="0,8,0,0">
+                    <StackPanel>
+                        <!-- Header -->
+                        <Border CornerRadius="4,4,0,0" BorderThickness="0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#33ffffff"/>
+                                <!-- 
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF293955" Offset="0"/>
+                                    <GradientStop Color="#FF4A5D80" Offset="1"/>
+                                </LinearGradientBrush>-->
+                            </Border.Background>
+                            <StackPanel Orientation="Horizontal" Margin="4">
+                                <TextBlock Text="{Binding SimplifiedExceptionName}" FontWeight="Bold" Foreground="White" />
+                                <TextBlock Text=" was unhandled" Foreground="#BFFFFFFF" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Message -->
+                        <TextBlock Text="{Binding Result.Exception.Message}" TextWrapping="Wrap" Margin="4"/>
+
+                        <Border>
+                            <TextBlock Text="{Binding SimplifiedExceptionStackTrace}" Margin="4" TextWrapping="Wrap"/>
+                        </Border>
+
+                        <StackPanel Margin="4" Visibility="{Binding Result.Exception.InnerException, Converter={StaticResource visibilityConverter}}">
+                            <TextBlock Text="This test result also contained an inner exception:" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding Result.Exception.InnerException}" TextWrapping="Wrap"  />
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

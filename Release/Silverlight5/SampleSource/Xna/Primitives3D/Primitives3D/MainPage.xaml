@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Primitives3D.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid>
+        <DrawingSurface Loaded="OnLoaded" Draw="OnDraw" />
+
+        <Grid Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Grid.Column="0" Grid.Row="0" SelectedIndex="0" SelectionChanged="OnPrimitiveChanged">
+                <ComboBoxItem>Cube</ComboBoxItem>
+                <ComboBoxItem>Sphere</ComboBoxItem>
+                <ComboBoxItem>Cylinder</ComboBoxItem>
+                <ComboBoxItem>Torus</ComboBoxItem>
+                <ComboBoxItem>Teapot</ComboBoxItem>
+            </ComboBox>
+
+            <ComboBox Grid.Column="2" Grid.Row="0" SelectedIndex="0" SelectionChanged="OnColorChanged">
+                <ComboBoxItem>Red</ComboBoxItem>
+                <ComboBoxItem>Green</ComboBoxItem>
+                <ComboBoxItem>Blue</ComboBoxItem>
+                <ComboBoxItem>White</ComboBoxItem>
+                <ComboBoxItem>Black</ComboBoxItem>
+            </ComboBox>
+
+            <CheckBox Grid.Column="4" Grid.Row="0" Content="Wireframe" Checked="OnWireframeChanged" Unchecked="OnWireframeChanged" />
+        </Grid>
+    </Grid>
+</UserControl>

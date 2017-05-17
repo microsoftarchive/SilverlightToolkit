@@ -1,0 +1,21 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <DefaultName>TestClass.vb</DefaultName>
+    <Name>Silverlight Test Class</Name>
+    <Description>Test class for Silverlight unit testing</Description>
+    <ProjectType>VisualBasic</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>Microsoft.Silverlight.Testing</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$.vb" ReplaceParameters="true">Tests.vb</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

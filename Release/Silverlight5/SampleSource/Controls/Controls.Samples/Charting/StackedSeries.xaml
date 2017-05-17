@@ -1,0 +1,417 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    x:Class="System.Windows.Controls.Samples.StackedSeriesSample">
+    <StackPanel>
+
+        <StackPanel.Resources>
+
+            <!-- Style for the Grid wrapper around each sample item -->
+            <Style x:Key="OverviewWrapperStyle" TargetType="Grid">
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Margin" Value="1,4,4,1"/>
+                <Setter Property="MinWidth" Value="450"/>
+                <Setter Property="MinHeight" Value="300"/>
+            </Style>
+
+        </StackPanel.Resources>
+
+        <controlsToolkit:WrapPanel>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+
+                <chartingToolkit:Chart
+                    Title="Sales (Stacked Line)"
+                    LegendTitle="Product">
+                    <chartingToolkit:StackedLineSeries>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource DoodadPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Doodad"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource GizmoPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Gizmo"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource WidgetPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Widget"/>
+                        <chartingToolkit:StackedLineSeries.DependentAxis>
+                            <chartingToolkit:LinearAxis
+                                Orientation="Y"
+                                Minimum="0"
+                                Title="Quantity (1000s)"
+                                ShowGridLines="True"/>
+                        </chartingToolkit:StackedLineSeries.DependentAxis>
+                    </chartingToolkit:StackedLineSeries>
+                </chartingToolkit:Chart>
+
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+
+                <chartingToolkit:Chart
+                    Title="Sales (100% Stacked Area)"
+                    LegendTitle="Product">
+                    <chartingToolkit:Stacked100AreaSeries>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource DoodadPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Doodad"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource GizmoPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Gizmo"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource WidgetPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Widget"/>
+                    </chartingToolkit:Stacked100AreaSeries>
+                </chartingToolkit:Chart>
+
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+
+                <chartingToolkit:Chart
+                    Title="Checkups (Stacked Column)">
+                    <chartingToolkit:StackedColumnSeries>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ1}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q1"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ2}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q2"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ3}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q3"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ4}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q4"/>
+                    </chartingToolkit:StackedColumnSeries>
+                </chartingToolkit:Chart>
+
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+
+                <chartingToolkit:Chart
+                    Title="Checkups (100% Stacked Bar)">
+                    <chartingToolkit:Stacked100BarSeries>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ1}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q1"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ2}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q2"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ3}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q3"/>
+                        <chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ4}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q4"/>
+                    </chartingToolkit:Stacked100BarSeries>
+                    <chartingToolkit:Chart.Axes>
+                        <chartingToolkit:CategoryAxis
+                            Orientation="Y"
+                            Title="Species"/>
+                        <chartingToolkit:LinearAxis
+                            Orientation="X"
+                            Title="Percent"
+                            ShowGridLines="True"/>
+                    </chartingToolkit:Chart.Axes>
+                </chartingToolkit:Chart>
+
+            </Grid>
+
+        </controlsToolkit:WrapPanel>
+
+
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="StackedSeries.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    x:Class="System.Windows.Controls.Samples.StackedSeriesSample"&gt;
+    &lt;StackPanel&gt;
+
+        &lt;StackPanel.Resources&gt;
+
+            &lt;!-- Style for the Grid wrapper around each sample item --&gt;
+            &lt;Style x:Key="OverviewWrapperStyle" TargetType="Grid"&gt;
+                &lt;Setter Property="VerticalAlignment" Value="Top"/&gt;
+                &lt;Setter Property="Margin" Value="1,4,4,1"/&gt;
+                &lt;Setter Property="MinWidth" Value="450"/&gt;
+                &lt;Setter Property="MinHeight" Value="300"/&gt;
+            &lt;/Style&gt;
+
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;controlsToolkit:WrapPanel&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+
+                &lt;chartingToolkit:Chart
+                    Title="Sales (Stacked Line)"
+                    LegendTitle="Product"&gt;
+                    &lt;chartingToolkit:StackedLineSeries&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource DoodadPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Doodad"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource GizmoPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Gizmo"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource WidgetPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Widget"/&gt;
+                        &lt;chartingToolkit:StackedLineSeries.DependentAxis&gt;
+                            &lt;chartingToolkit:LinearAxis
+                                Orientation="Y"
+                                Minimum="0"
+                                Title="Quantity (1000s)"
+                                ShowGridLines="True"/&gt;
+                        &lt;/chartingToolkit:StackedLineSeries.DependentAxis&gt;
+                    &lt;/chartingToolkit:StackedLineSeries&gt;
+                &lt;/chartingToolkit:Chart&gt;
+
+            &lt;/Grid&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+
+                &lt;chartingToolkit:Chart
+                    Title="Sales (100% Stacked Area)"
+                    LegendTitle="Product"&gt;
+                    &lt;chartingToolkit:Stacked100AreaSeries&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource DoodadPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Doodad"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource GizmoPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Gizmo"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{StaticResource WidgetPopularity}"
+                            DependentValuePath="Percent"
+                            IndependentValuePath="Date"
+                            Title="Widget"/&gt;
+                    &lt;/chartingToolkit:Stacked100AreaSeries&gt;
+                &lt;/chartingToolkit:Chart&gt;
+
+            &lt;/Grid&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+
+                &lt;chartingToolkit:Chart
+                    Title="Checkups (Stacked Column)"&gt;
+                    &lt;chartingToolkit:StackedColumnSeries&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ1}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q1"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ2}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q2"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ3}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q3"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ4}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q4"/&gt;
+                    &lt;/chartingToolkit:StackedColumnSeries&gt;
+                &lt;/chartingToolkit:Chart&gt;
+
+            &lt;/Grid&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+
+                &lt;chartingToolkit:Chart
+                    Title="Checkups (100% Stacked Bar)"&gt;
+                    &lt;chartingToolkit:Stacked100BarSeries&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ1}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q1"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ2}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q2"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ3}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q3"/&gt;
+                        &lt;chartingToolkit:SeriesDefinition
+                            ItemsSource="{Binding CheckupsQ4}"
+                            DependentValuePath="Count"
+                            IndependentValuePath="Species"
+                            Title="Q4"/&gt;
+                    &lt;/chartingToolkit:Stacked100BarSeries&gt;
+                    &lt;chartingToolkit:Chart.Axes&gt;
+                        &lt;chartingToolkit:CategoryAxis
+                            Orientation="Y"
+                            Title="Species"/&gt;
+                        &lt;chartingToolkit:LinearAxis
+                            Orientation="X"
+                            Title="Percent"
+                            ShowGridLines="True"/&gt;
+                    &lt;/chartingToolkit:Chart.Axes&gt;
+                &lt;/chartingToolkit:Chart&gt;
+
+            &lt;/Grid&gt;
+
+        &lt;/controlsToolkit:WrapPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="StackedSeries.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Controls.DataVisualization.Charting;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating stacked series.
+    /// &lt;/summary&gt;
+    [Sample("Stacked Series", DifficultyLevel.Basic, "Stacked Series")]
+    public partial class StackedSeriesSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the StackedSeriesSample class.
+        /// &lt;/summary&gt;
+        public StackedSeriesSample()
+        {
+            InitializeComponent();
+            CheckupsQ1 = new Pet[]
+            {
+                new Pet { Species = "Dog", Count = 20 },
+                new Pet { Species = "Cat", Count = 22 },
+                new Pet { Species = "Bird", Count = 8 },
+                new Pet { Species = "Gerbil", Count = 3 },
+                new Pet { Species = "Turtle", Count = 2 },
+            };
+            CheckupsQ2 = new Pet[]
+            {
+                new Pet { Species = "Dog", Count = 18 },
+                new Pet { Species = "Cat", Count = 25 },
+                new Pet { Species = "Bird", Count = 9 },
+                new Pet { Species = "Gerbil", Count = 2 },
+                new Pet { Species = "Turtle", Count = 1 },
+            };
+            CheckupsQ3 = new Pet[]
+            {
+                new Pet { Species = "Dog", Count = 24 },
+                new Pet { Species = "Cat", Count = 19 },
+                new Pet { Species = "Bird", Count = 6 },
+                new Pet { Species = "Gerbil", Count = 2 },
+                new Pet { Species = "Turtle", Count = 0 },
+            };
+            CheckupsQ4 = new Pet[]
+            {
+                new Pet { Species = "Dog", Count = 21 },
+                new Pet { Species = "Cat", Count = 21 },
+                new Pet { Species = "Bird", Count = 8 },
+                new Pet { Species = "Gerbil", Count = 5 },
+                new Pet { Species = "Turtle", Count = 3 },
+            };
+
+            DataContext = this;
+        }
+
+        /// &lt;summary&gt;
+        /// Gets the number of checkups for each pet during Q1.
+        /// &lt;/summary&gt;
+        public IEnumerable&lt;Pet&gt; CheckupsQ1 { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Gets the number of checkups for each pet during Q2.
+        /// &lt;/summary&gt;
+        public IEnumerable&lt;Pet&gt; CheckupsQ2 { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Gets the number of checkups for each pet during Q3.
+        /// &lt;/summary&gt;
+        public IEnumerable&lt;Pet&gt; CheckupsQ3 { get; private set; }
+
+        /// &lt;summary&gt;
+        /// Gets the number of checkups for each pet during Q4.
+        /// &lt;/summary&gt;
+        public IEnumerable&lt;Pet&gt; CheckupsQ4 { get; private set; }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

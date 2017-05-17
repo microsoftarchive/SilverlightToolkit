@@ -1,0 +1,235 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+    x:Class="System.Windows.Controls.Samples.OrganizationalChartSample">
+
+    <StackPanel>
+
+        <StackPanel.Resources>
+
+            <!-- Put all the items inside a horizontally stacked panel -->
+            <ItemsPanelTemplate x:Key="ItemsPanel">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+            </ItemsPanelTemplate>
+
+            <!-- TreeViewItem style to stack a header on top of children -->
+            <Style x:Key="ContainerStyle" TargetType="controls:TreeViewItem">
+                <Setter Property="ItemsPanel" Value="{StaticResource ItemsPanel}" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:TreeViewItem">
+                                <StackPanel x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+
+                                    <ContentControl 
+                                        x:Name="HeaderContent" 
+                                        Content="{TemplateBinding Header}" 
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalAlignment="Center"/>
+
+                                    <ItemsPresenter 
+                                        x:Name="Items" 
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center" />
+
+                                </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- HeaderContent -->
+            <common:HierarchicalDataTemplate x:Key="DepartmentTemplate" ItemsSource="{Binding Divisions}" ItemContainerStyle="{StaticResource ContainerStyle}">
+                <Border Background="AliceBlue" Margin="4 8" Padding="2" BorderBrush="Blue" BorderThickness="1" CornerRadius="6">
+                    <StackPanel HorizontalAlignment="Stretch" >                       
+                        <TextBlock Text="{Binding Title}" Margin="6 4" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold" />                        
+                        <ListBox ItemsSource="{Binding Employees}" BorderThickness="0" />
+                    </StackPanel>
+                </Border>
+            </common:HierarchicalDataTemplate>
+
+        </StackPanel.Resources>
+
+        <!-- Basic information about this scenario -->
+        <ContentControl Content="Organizational Chart Sample" Style="{StaticResource Header}" />
+        <TextBlock Style="{StaticResource Information}">
+                Demonstrates how to style a TreeView into an organizationl chart.
+                <LineBreak/>
+                <LineBreak/>
+                There are many ways to view hierarchical data, a tree is just 
+                one of them.  In this sample we explore how to drastically 
+                change the look of the TreeView with just a few style changes.
+        </TextBlock>
+
+        <!-- TreeView control styled to look like an organizational chart -->
+        <controls:TreeView
+            x:Name="DepartmentTree"
+            HorizontalAlignment="Center"
+            ItemsPanel="{StaticResource ItemsPanel}"
+            ItemTemplate="{StaticResource DepartmentTemplate}"
+            ItemContainerStyle="{StaticResource ContainerStyle}" />
+
+        <!-- Enables viewing of source from sample page -->
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="OrganizationalChartSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:common="clr-namespace:System.Windows;assembly=System.Windows.Controls"
+    x:Class="System.Windows.Controls.Samples.OrganizationalChartSample"&gt;
+
+    &lt;StackPanel&gt;
+
+        &lt;StackPanel.Resources&gt;
+
+            &lt;!-- Put all the items inside a horizontally stacked panel --&gt;
+            &lt;ItemsPanelTemplate x:Key="ItemsPanel"&gt;
+                &lt;StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Stretch" /&gt;
+            &lt;/ItemsPanelTemplate&gt;
+
+            &lt;!-- TreeViewItem style to stack a header on top of children --&gt;
+            &lt;Style x:Key="ContainerStyle" TargetType="controls:TreeViewItem"&gt;
+                &lt;Setter Property="ItemsPanel" Value="{StaticResource ItemsPanel}" /&gt;
+
+                &lt;Setter Property="Template"&gt;
+                    &lt;Setter.Value&gt;
+                        &lt;ControlTemplate TargetType="controls:TreeViewItem"&gt;
+                                &lt;StackPanel x:Name="Root" VerticalAlignment="Top" HorizontalAlignment="Stretch"&gt;
+
+                                    &lt;ContentControl 
+                                        x:Name="HeaderContent" 
+                                        Content="{TemplateBinding Header}" 
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalAlignment="Center"/&gt;
+
+                                    &lt;ItemsPresenter 
+                                        x:Name="Items" 
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center" /&gt;
+
+                                &lt;/StackPanel&gt;
+                        &lt;/ControlTemplate&gt;
+                    &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
+            &lt;/Style&gt;
+
+            &lt;!-- HeaderContent --&gt;
+            &lt;common:HierarchicalDataTemplate x:Key="DepartmentTemplate" ItemsSource="{Binding Divisions}" ItemContainerStyle="{StaticResource ContainerStyle}"&gt;
+                &lt;Border Background="AliceBlue" Margin="4 8" Padding="2" BorderBrush="Blue" BorderThickness="1" CornerRadius="6"&gt;
+                    &lt;StackPanel HorizontalAlignment="Stretch" &gt;                       
+                        &lt;TextBlock Text="{Binding Title}" Margin="6 4" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold" /&gt;                        
+                        &lt;ListBox ItemsSource="{Binding Employees}" BorderThickness="0" /&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/Border&gt;
+            &lt;/common:HierarchicalDataTemplate&gt;
+
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;!-- Basic information about this scenario --&gt;
+        &lt;ContentControl Content="Organizational Chart Sample" Style="{StaticResource Header}" /&gt;
+        &lt;TextBlock Style="{StaticResource Information}"&gt;
+                Demonstrates how to style a TreeView into an organizationl chart.
+                &lt;LineBreak/&gt;
+                &lt;LineBreak/&gt;
+                There are many ways to view hierarchical data, a tree is just 
+                one of them.  In this sample we explore how to drastically 
+                change the look of the TreeView with just a few style changes.
+        &lt;/TextBlock&gt;
+
+        &lt;!-- TreeView control styled to look like an organizational chart --&gt;
+        &lt;controls:TreeView
+            x:Name="DepartmentTree"
+            HorizontalAlignment="Center"
+            ItemsPanel="{StaticResource ItemsPanel}"
+            ItemTemplate="{StaticResource DepartmentTemplate}"
+            ItemContainerStyle="{StaticResource ContainerStyle}" /&gt;
+
+        &lt;!-- Enables viewing of source from sample page --&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="OrganizationalChartSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample demonstrating the TreeView restyled as an organizational chart.
+    /// &lt;/summary&gt;
+    [Sample("Organizational Chart", DifficultyLevel.Scenario, "TreeView")]
+    public partial class OrganizationalChartSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the OrganizationalChartSample class.
+        /// &lt;/summary&gt;
+        public OrganizationalChartSample()
+        {
+            InitializeComponent();
+            DepartmentTree.ItemsSource = Department.AllDepartments;
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="OrganizationalChartSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.Windows.Controls
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample demonstrating the TreeView restyled as an organizational chart.
+''' &lt;/summary&gt;
+&lt;Sample("Organizational Chart", DifficultyLevel.Scenario, "TreeView")&gt; _
+Partial Public Class OrganizationalChartSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the OrganizationalChartSample class.
+    ''' &lt;/summary&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification:="InitializeComponent Required by Visual Studio.")&gt; _
+    Public Sub New()
+        InitializeComponent()
+        DepartmentTree.ItemsSource = Department.AllDepartments
+    End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

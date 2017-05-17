@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Toolkit</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <FileAlignment>512</FileAlignment>
+    <SilverlightApplication>false</SilverlightApplication>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Toolkit.snk</AssemblyOriginatorKeyFile>
+    <GenerateExtensionManifest>true</GenerateExtensionManifest>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>$(SolutionDir)Binaries\System.Windows.Controls.Toolkit.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>$(SolutionDir)Binaries\System.Windows.Controls.Toolkit.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=5.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Controls\Common\InteractionHelper.cs">
+      <Link>Common\InteractionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls\Common\IUpdateVisualState.cs">
+      <Link>Common\IUpdateVisualState.cs</Link>
+    </Compile>
+    <Compile Include="BusyIndicator\BusyIndicator.cs" />
+    <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="Common\LengthConverter.cs" />
+    <Compile Include="..\Controls\Common\NumericExtensions.cs">
+      <Link>Common\NumericExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls\Common\TypeConverters.cs">
+      <Link>Common\TypeConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls\Common\VisualStates.cs">
+      <Link>Common\VisualStates.cs</Link>
+    </Compile>
+    <Compile Include="Common\VisualTreeExtensions.cs" />
+    <Compile Include="DockPanel\DockPanel.cs" />
+    <Compile Include="Common\CollectionHelper.cs" />
+    <Compile Include="DragDrop\CardPanel.cs" />
+    <Compile Include="DragDrop\DataObject.cs" />
+    <Compile Include="DragDrop\DependencyObjectExtensions.cs" />
+    <Compile Include="DragDrop\DragAction.cs" />
+    <Compile Include="DragDrop\DragDecorator.cs" />
+    <Compile Include="DragDrop\DragDrop.cs" />
+    <Compile Include="DragDrop\DragDropCompletedEventArgs.cs" />
+    <Compile Include="DragDrop\DragDropEffects.cs" />
+    <Compile Include="DragDrop\DragDropKeyStates.cs" />
+    <Compile Include="DragDrop\DragDropTarget.cs" />
+    <Compile Include="DragDrop\DragEventArgs.cs" />
+    <Compile Include="DragDrop\DragEventHandler.cs" />
+    <Compile Include="DragDrop\DragOperation.cs" />
+    <Compile Include="DragDrop\ExtendedRoutedEvent.cs" />
+    <Compile Include="DragDrop\ExtendedRoutedEventArgs.cs" />
+    <Compile Include="DragDrop\ExtendedRoutedEventHandlersCollection.cs" />
+    <Compile Include="DragDrop\FunctionalProgramming.cs" />
+    <Compile Include="DragDrop\GiveFeedbackEventArgs.cs" />
+    <Compile Include="DragDrop\GiveFeedbackEventHandler.cs" />
+    <Compile Include="DragDrop\IAcceptDrop.cs" />
+    <Compile Include="DragDrop\IDataObject.cs" />
+    <Compile Include="DragDrop\IDataObjectExtensions.cs" />
+    <Compile Include="DragDrop\IndicatingInsertionLocationEventArgs.cs" />
+    <Compile Include="DragDrop\ItemDragEventArgs.cs" />
+    <Compile Include="DragDrop\ItemsControlDragDropTarget.cs" />
+    <Compile Include="DragDrop\ListBoxDragDropTarget.cs" />
+    <Compile Include="Common\ObservableExtensions.cs" />
+    <Compile Include="DragDrop\MouseEventArgsExtensions.cs" />
+    <Compile Include="DragDrop\PanelDragDropTarget.cs" />
+    <Compile Include="DragDrop\QueryContinueDragEventArgs.cs" />
+    <Compile Include="DragDrop\QueryContinueDragEventHandler.cs" />
+    <Compile Include="DragDrop\Selection.cs" />
+    <Compile Include="DragDrop\SelectionCollection.cs" />
+    <Compile Include="DragDrop\SystemParameters.cs" />
+    <Compile Include="DragDrop\TreeViewDragDropTarget.cs" />
+    <Compile Include="DragDrop\UIElementExtendedRoutedEventExtensions.cs" />
+    <Compile Include="DragDrop\UIElementExtensions.cs" />
+    <Compile Include="Expander\ExpandDirection.cs" />
+    <Compile Include="Expander\Expander.cs" />
+    <Compile Include="Expander\ExpanderAutomationPeer.cs" />
+    <Compile Include="Common\BindingSourceEvaluator.cs" />
+    <Compile Include="Common\DesignerProperties.cs" />
+    <Compile Include="Common\WeakEventListener.cs" />
+    <Compile Include="Common\ItemsControlExtensions.cs" />
+    <Compile Include="Common\ScrollViewerExtensions.cs" />
+    <Compile Include="GlobalCalendar\CalendarExtensions.cs" />
+    <Compile Include="GlobalCalendar\CalendarInfo\CalendarInfo.cs" />
+    <Compile Include="GlobalCalendar\CalendarInfo\CultureCalendarInfo.cs" />
+    <Compile Include="GlobalCalendar\CalendarInfo\GregorianCalendarInfo.cs" />
+    <Compile Include="GlobalCalendar\CalendarDayButtonStyleSelector.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendar.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarAutomationPeer.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarBlackoutDatesCollection.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarButton.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarButtonAutomationPeer.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarDateChangedEventArgs.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarDayButton.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarDayButtonAutomationPeer.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarItem.cs" />
+    <Compile Include="GlobalCalendar\GlobalSelectedDatesCollection.cs" />
+    <Compile Include="TreeView\TreeViewItemConnectingLineInfo.cs" />
+    <Compile Include="TreeView\TreeViewConnectingLines.cs" />
+    <Compile Include="TreeView\TreeViewItemCheckBox.cs" />
+    <Compile Include="TreeView\TreeViewExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HeaderedContentControl\HeaderedContentControl.cs" />
+    <Compile Include="Common\ObjectCollection.cs" />
+    <Compile Include="TreeView\TreeViewItemIndentationConverter.cs" />
+    <Compile Include="WrapPanel\OrientedSize.cs" />
+    <Compile Include="WrapPanel\WrapPanel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="Expander\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="HeaderedContentControl\HeaderedContentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="DragDrop\DragDecorator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="DragDrop\ListBoxDragDropTarget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="DragDrop\TreeViewDragDropTarget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="BusyIndicator\BusyIndicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <DefaultStyle Include="DragDrop\PanelDragDropTarget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DefaultStyle>
+    <Page Include="Themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <DefaultStyle Include="GlobalCalendar\GlobalCalendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </DefaultStyle>
+    <DefaultStyle Include="GlobalCalendar\GlobalCalendarDayButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </DefaultStyle>
+    <DefaultStyle Include="GlobalCalendar\GlobalCalendarItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </DefaultStyle>
+    <DefaultStyle Include="GlobalCalendar\GlobalCalendarButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </DefaultStyle>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <None Include="..\Toolkit.snk" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

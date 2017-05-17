@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Testing</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Testing.Common</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Toolkit.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>ClientBin\System.Windows.Controls.Testing.Common.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>ClientBin\System.Windows.Controls.Testing.Common.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=5.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="ContentControl\ContentControlTest.cs" />
+    <Compile Include="ContentControl\IOverriddenContentControl.cs" />
+    <Compile Include="Control\ControlTest.cs" />
+    <Compile Include="Control\IOverriddenControl.cs" />
+    <Compile Include="DependencyProperties\DependencyPropertyTest.cs" />
+    <Compile Include="DependencyProperties\DependencyPropertyTestMethod.cs" />
+    <Compile Include="FrameworkElement\FrameworkElementTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="FrameworkElement\IOverriddenFrameworkElement.cs" />
+    <Compile Include="ItemsControl\IOverriddenItemsControl.cs" />
+    <Compile Include="ItemsControl\ItemsControlTest.cs" />
+    <Compile Include="Observable\ObservableExtensions.cs" />
+    <Compile Include="OverriddenMethod\MethodCallMonitor.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Double.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Quadruple.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Single.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethod.Triple.cs" />
+    <Compile Include="OverriddenMethod\OverriddenMethodBase.cs" />
+    <Compile Include="Panel\IOverriddenPanel.cs" />
+    <Compile Include="Panel\LayoutTestContentControl.cs" />
+    <Compile Include="Panel\PanelTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tags.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TypeConverters\TypeConverterTest.cs" />
+    <Compile Include="Utilities\Hierarchy.cs" />
+    <Compile Include="UIElement\UIElementExtensions.cs" />
+    <Compile Include="Utilities\LiveReference.cs" />
+    <Compile Include="Utilities\TestExtensions.cs" />
+    <Compile Include="Utilities\TestVisualStateManager.cs" />
+    <Compile Include="Utilities\TreeViewBuilder.cs" />
+    <Compile Include="Utilities\XamlBuilder.cs" />
+    <Compile Include="Utilities\XamlBuilder.Generic.cs" />
+    <Compile Include="Utilities\XamlConverter.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <None Include="..\Toolkit.snk" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

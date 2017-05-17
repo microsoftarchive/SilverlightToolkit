@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Designer", "Designer", "{24E7A743-E5A2-435E-A44A-403BEF79CEFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls.Design.Common", "Controls.Design.Common", "{5038F159-BC8C-4A93-B45C-B16099C975C5}"
+	ProjectSection(SolutionItems) = preProject
+		Controls.Design.Common\Extensions.cs = Controls.Design.Common\Extensions.cs
+		Controls.Design.Common\GenericDefaultInitializer.cs = Controls.Design.Common\GenericDefaultInitializer.cs
+		Controls.Design.Common\Util.cs = Controls.Design.Common\Util.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Data.DataForm.Toolkit.Design", "Controls.Data.DataForm.Toolkit.Design\Controls.Data.DataForm.Toolkit.Design.csproj", "{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Data.DataForm.Toolkit.Expression.Design", "Controls.Data.DataForm.Toolkit.Expression.Design\Controls.Data.DataForm.Toolkit.Expression.Design.csproj", "{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls.Data.DataForm.Toolkit.VisualStudio.Design", "Controls.Data.DataForm.Toolkit.VisualStudio.Design.4.0\Controls.Data.DataForm.Toolkit.VisualStudio.Design.csproj", "{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CodeCov|Any CPU = CodeCov|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}.CodeCov|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}.CodeCov|Any CPU.Build.0 = Release|Any CPU
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}.CodeCov|Any CPU.ActiveCfg = Release|Any CPU
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}.CodeCov|Any CPU.Build.0 = Release|Any CPU
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}.CodeCov|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}.CodeCov|Any CPU.Build.0 = Release|Any CPU
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5038F159-BC8C-4A93-B45C-B16099C975C5} = {24E7A743-E5A2-435E-A44A-403BEF79CEFC}
+		{6FE9F47D-6936-4488-B2E7-EF90E6B19F05} = {24E7A743-E5A2-435E-A44A-403BEF79CEFC}
+		{EFAE7285-3242-40B1-BE4E-07C894C4A4E0} = {24E7A743-E5A2-435E-A44A-403BEF79CEFC}
+		{4C9A887F-E442-4A0D-8E14-12D370D3B0E6} = {24E7A743-E5A2-435E-A44A-403BEF79CEFC}
+	EndGlobalSection
+EndGlobal

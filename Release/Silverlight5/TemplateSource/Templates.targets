@@ -1,0 +1,176 @@
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<!--
+//
+// Silverlight Toolkit template project targets
+//
+-->
+<Project
+  ToolsVersion="3.5"
+  DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!-- 
+  //
+  // HOW TO USE 
+  //
+  // 1. Create a .proj file
+  // 2. Define the TemplateProjectName property, that points to a .vstemplate
+  //
+  -->
+  
+  <!-- Tools -->
+  <PropertyGroup>
+    <ExternalTools>..\ExternalTools\</ExternalTools>
+    <Zip>$(ExternalTools)zip.exe</Zip>
+    <ZipCompress>$(Zip) -r -9 -X</ZipCompress>
+  </PropertyGroup>
+  
+  <!-- Properties based on any provided in the actual .proj file, if not
+       already defined -->
+  <PropertyGroup>
+    <VisualStudioTemplateFile Condition="$(VisualStudioTemplateFile)==''">$(TemplateProjectName).vstemplate</VisualStudioTemplateFile>
+    <TemplateIcon Condition="$(TemplateIcon)==''">$(TemplateProjectName).ico</TemplateIcon>
+  </PropertyGroup>
+
+  <!-- Staging Properties -->
+  <PropertyGroup>
+    <TemporaryTemplateStagingDirectory>$(TemplateProjectName)Staging</TemporaryTemplateStagingDirectory>
+  </PropertyGroup>
+  
+  <!--
+  //
+  // Reference the standard build tasks.
+  //
+  -->
+  <UsingTask TaskName="Build.Tasks.StringReplaceTask" AssemblyFile="Binaries\Build.dll" />
+
+  <Target Name="ValidateProperties">
+    <Error Condition="$(TemplateTitle)==''" Text="The TemplateTitle property is not set." />
+    <Error Condition="$(TemplateProjectName)==''" Text="The TemplateProjectName property is not set." />
+    <Error Condition="!Exists('$(TemplateProjectName).vstemplate')" Text="The $(TemplateProjectName).vstemplate file does not exist." />
+  </Target>
+  
+  <!--
+  //
+  // Build.
+  //
+  -->
+  <Target Name="Build" DependsOnTargets="ValidateProperties">
+    <Message Importance="high" Text="Creating the '$(TemplateTitle)' project from the contents of the $(TemplateProjectName) template directory" />
+
+    <MakeDir Directories="$(TemporaryTemplateStagingDirectory)" />
+
+    <!-- Copy the vstemplate file -->
+    <ItemGroup>
+      <VsTemplateFile Include="$(VisualStudioTemplateFile)" />
+    </ItemGroup>
+    <Copy SourceFiles="@(VsTemplateFile)" DestinationFiles="$(TemporaryTemplateStagingDirectory)\MyTemplate.vstemplate" />
+    
+    <!-- Icon -->
+    <Copy SourceFiles="$(TemplateIcon)" DestinationFiles="$(TemporaryTemplateStagingDirectory)\__templateicon.ico" />
+    
+    <!-- Copy the checked in sources -->
+    <ItemGroup>
+      <TemplateFiles Include="$(TemplateProjectName)\**" />
+    </ItemGroup>
+    <Copy SourceFiles="@(TemplateFiles)" DestinationFolder="$(TemporaryTemplateStagingDirectory)\%(RecursiveDir)" />
+    
+    <!-- Perform replacements -->
+    <CallTarget Targets="CreateTemplateTokens" />
+    
+    <!-- Zip the final file -->
+    <CallTarget Targets="CreateTemplateZip" />
+	
+	<!-- Cleanup -->
+	<RemoveDir Directories="$(TemporaryTemplateStagingDirectory)" />
+  </Target>
+
+  <Target Name="Clean">
+    <RemoveDir Directories="$(TemporaryTemplateStagingDirectory)" />
+    <ItemGroup>
+      <FoundTemplates Include="..\Binaries\*.zip" />
+    </ItemGroup>
+    <Delete Files="@(FoundTemplates)" />
+  </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build">
+  </Target>
+
+  <Target Name="CreateTemplateZip">
+    <Message Text="Creating the $(TemplateTitle).zip file" Importance="high"/>
+
+    <Exec WorkingDirectory="$(TemporaryTemplateStagingDirectory)" Command="..\$(ZipCompress) ..\temporaryprojectzip.zip .\" />
+    <Copy SourceFiles="temporaryprojectzip.zip" 
+          DestinationFiles="..\Binaries\$(TemplateTitle).zip" />
+    <Delete Files="temporaryprojectzip.zip" />
+  </Target>
+
+  <Target Name="CreateTemplateTokens">
+    <ItemGroup>
+      <StagedTemplateFiles
+        Include="$(TemporaryTemplateStagingDirectory)\**\*"
+        Exclude="$(TemporaryTemplateStagingDirectory)\**\*.vstemplate"
+        />
+    </ItemGroup>
+
+    <!-- NOTE: Individual targeted replacement will yield easier-to-customize 
+         results -->
+
+    <StringReplaceTask
+      Condition="$(ItemName) == ''"
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="namespace $(ProjectNamespace)"
+      ReplacementText="namespace $safeprojectname$" />
+    <StringReplaceTask
+      Condition="$(ItemName) != ''"
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="namespace $(ProjectNamespace)"
+      ReplacementText="namespace $rootnamespace$" />
+
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="Class=&quot;$(ProjectNamespace)"
+      ReplacementText="Class=&quot;$safeprojectname$" />
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="RootNamespace&gt;$(ProjectNamespace)"
+      ReplacementText="RootNamespace&gt;$safeprojectname$" />
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="AssemblyName&gt;$(ProjectNamespace)"
+      ReplacementText="AssemblyName&gt;$safeprojectname$" />
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="AssemblyTitle(&quot;$(ProjectNamespace)"
+      ReplacementText="AssemblyTitle(&quot;$safeprojectname$" />
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="AssemblyProduct(&quot;$(ProjectNamespace)"
+      ReplacementText="AssemblyProduct(&quot;$safeprojectname$" />
+
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="SilverlightAppEntry&gt;$(ProjectNamespace)"
+      ReplacementText="SilverlightAppEntry&gt;$safeprojectname$" />
+
+    <StringReplaceTask
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="XapFilename&gt;$(ProjectNamespace)"
+      ReplacementText="XapFilename&gt;$safeprojectname$" />
+
+    <!-- Safe item names -->
+    <StringReplaceTask
+      Condition="$(ItemName) != ''"
+      SourceFiles="@(StagedTemplateFiles)"
+      TokenText="$(ItemName)"
+      ReplacementText="$safeitemname$" />
+
+  </Target>
+
+</Project>

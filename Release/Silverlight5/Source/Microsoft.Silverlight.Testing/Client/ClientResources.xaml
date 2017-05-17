@@ -1,0 +1,104 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client"
+    xmlns:localControls="clr-namespace:Microsoft.Silverlight.Testing.Controls"
+    xmlns:mscorlib="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d">
+
+    <!-- Colors and other goods -->
+    <Color x:Key="highlightBorder">#fffd00</Color>
+    <Color x:Key="highlightBackground">#fdfdb0</Color>
+    
+    <SolidColorBrush x:Key="highlightBorderBrush" Color="{StaticResource highlightBorder}" />
+    <SolidColorBrush x:Key="highlightBackgroundBrush" Color="{StaticResource highlightBackground}" />
+    
+    <Color x:Key="TitleColor">#FF1F58C4</Color>
+    
+    <SolidColorBrush x:Key="GrayTextBrush" Color="#6B000000"/>
+    <SolidColorBrush x:Key="TitleBrush" Color="{StaticResource TitleColor}"/>
+    
+    <System:Double x:Key="TitleFont">24</System:Double>
+    
+    <Style x:Key="InformationTextBlock" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0,0,0,2"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="TestRunProgressBarStyle" TargetType="ProgressBar">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Maximum" Value="100"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid x:Name="Root">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Determinate"/>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border 
+                                    x:Name="ProgressBarTrack" 
+                                    Background="{TemplateBinding Background}"/>
+                        <Grid x:Name="ProgressBarRootGrid">
+                            <Grid x:Name="IndeterminateRoot" Visibility="Collapsed" />
+                            <Grid x:Name="DeterminateRoot" Margin="0">
+                                <Grid x:Name="ProgressBarIndicator" HorizontalAlignment="Left"
+                                              Background="{TemplateBinding Foreground}">
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SimpleGridSplitterStyle" TargetType="localControls:GridSplitter">
+        <Setter Property="IsTabStop" Value="true"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="localControls:GridSplitter">
+                    <Grid x:Name="Root" IsHitTestVisible="{TemplateBinding IsEnabled}">
+                        <Rectangle Fill="{TemplateBinding Background}" StrokeThickness="0"/>
+                        <Grid x:Name="HorizontalTemplate" Height="10"/>
+                        <Grid x:Name="VerticalTemplate" Width="10" Visibility="Collapsed"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Value and type converters -->
+    <local:FontWeightConverter x:Key="fontWeightConverter"/>
+    <local:VisibilityConverter x:Key="visibilityConverter"/>
+    <local:InvertValueConverter x:Key="InvertValueConverter" />
+
+    <local:ColorSelectorConverter 
+        x:Key="passFailColoring" 
+        TrueColor="{StaticResource TitleColor}" 
+        FalseColor="Red"/>
+    <local:ColorSelectorConverter 
+        x:Key="passFailTransparentColoring" 
+        TrueColor="Transparent" 
+        FalseColor="#66FF0000" />
+    <local:ColorSelectorConverter 
+        x:Key="passFailBoldColoring" 
+        TrueColor="Transparent" 
+        FalseColor="Red" />
+
+</ResourceDictionary>

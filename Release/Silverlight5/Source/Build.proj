@@ -1,0 +1,32 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+	</PropertyGroup>
+	
+    <ItemGroup>
+		<!-- Build Test Framework and output to Binaries/ -->
+        <ProjectToBuild Include="TestFramework.sln" />        
+	
+		<!-- Build Toolkit and output to Binaries/ -->        
+        <ProjectToBuild Include="Controls.Toolkit.sln" />
+        <ProjectToBuild Include="RiaClient.Toolkit.sln" />
+
+		<!-- Build Design which outputs to Binaries/ -->
+        <ProjectToBuild Include="Controls.Toolkit.Design.sln" />
+        <ProjectToBuild Include="RiaClient.Toolkit.Design.sln" />		
+    </ItemGroup>
+	
+    <Target Name="Build">			
+        <MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=$(Configuration)"/>
+		
+		<!-- Do not delay sign this toolkit assembly since it needs the toolkit SNK for 
+		     its types to be found by AQN from SilverlightContentPipeline.dll -->
+		<MSBuild Projects="Microsoft.Xna.Framework.Toolkit.sln" 
+			Properties="Configuration=$(Configuration)" RemoveProperties="DelaySign;AssemblyOriginatorKeyFile"/>
+    </Target>
+		
+    <Target Name="Clean">
+        <MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=$(Configuration)" Targets="Clean"/>
+		<MSBuild Projects="Microsoft.Xna.Framework.Toolkit.sln" Properties="Configuration=$(Configuration)" Targets="Clean"/>
+    </Target>
+</Project>

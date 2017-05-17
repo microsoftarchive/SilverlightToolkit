@@ -1,0 +1,34 @@
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<!--
+//
+// Unit Test Project Template
+//
+-->
+<Project
+  ToolsVersion="3.5"
+  DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Template Properties -->
+  <PropertyGroup>
+    <TemplateProjectName>TestClass.VB</TemplateProjectName>
+    <TemplateTitle>Silverlight Unit Test Class (VB)</TemplateTitle>
+    <TemplateIcon>TestProject.ico</TemplateIcon>
+  </PropertyGroup>
+  
+  <!-- Project specifics used in string replacement -->
+  <PropertyGroup>
+    <ProjectNamespace>SilverlightTestApplication</ProjectNamespace>
+    <ItemName>Tests</ItemName>
+  </PropertyGroup>
+
+  <!-- Import the template creation targets -->
+  <Import Project="..\Templates.targets" />
+  
+</Project>

@@ -1,0 +1,20 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <DefaultName>CustomEffect.slfx</DefaultName>
+    <Name>Silverlight Effect</Name>
+    <Description>A file describing a custom graphics rendering effect for Silverlight</Description>
+    <ProjectType>CSharp</ProjectType>
+	<TemplateGroupID>XnaFramework-v4.0-Content</TemplateGroupID>
+	<ShowByDefault>false</ShowByDefault>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>SilverlightContentPipeline</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.slfx" ReplaceParameters="false">CustomEffect.slfx</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

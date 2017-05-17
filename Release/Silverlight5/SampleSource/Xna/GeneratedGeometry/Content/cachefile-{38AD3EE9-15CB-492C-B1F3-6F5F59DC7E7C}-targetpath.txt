@@ -1,0 +1,3 @@
+sky.xnb
+terrain.xnb
+rocks_0.xnb

@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Silverlight.Testing", "Microsoft.Silverlight.Testing\Microsoft.Silverlight.Testing.csproj", "{F547057E-083C-4E1F-AFCB-7778A3E35CBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.VisualStudio.QualityTools.UnitTesting", "Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight\Microsoft.VisualStudio.QualityTools.UnitTesting.csproj", "{DC864857-6E49-4191-8EF6-94F04EFC2948}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F547057E-083C-4E1F-AFCB-7778A3E35CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F547057E-083C-4E1F-AFCB-7778A3E35CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F547057E-083C-4E1F-AFCB-7778A3E35CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F547057E-083C-4E1F-AFCB-7778A3E35CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC864857-6E49-4191-8EF6-94F04EFC2948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC864857-6E49-4191-8EF6-94F04EFC2948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC864857-6E49-4191-8EF6-94F04EFC2948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC864857-6E49-4191-8EF6-94F04EFC2948}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

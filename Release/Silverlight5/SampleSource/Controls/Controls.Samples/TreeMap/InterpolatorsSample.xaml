@@ -1,0 +1,198 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.InterpolatorsSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <ContentControl Content="TreeMap with Interpolators" Style="{StaticResource Header}" />
+            <TextBlock Style="{StaticResource Information}">
+                In this sample we show how to use Interpolators to customize the UI elements nested in the data template. In this 
+                case we use a SolidColorBrushInterpolator (ranging from Blue to Magenta) to show the number of times each 
+                team lost and a DoubleInterpolator to vary the font size is based on how many points they scored. 
+            </TextBlock>
+            <TextBlock Style="{StaticResource Information}" FontSize="9">
+                The statistical data used for this demonstration is (c) Copyright 2008 from http://www.hockeydb.com.
+            </TextBlock>
+        </StackPanel>
+        <datavis:TreeMap x:Name="treeMapControl" Grid.Row="1">
+            <datavis:TreeMap.Interpolators>
+                <datavis:SolidColorBrushInterpolator TargetName="itemBorder" TargetProperty="Background" 
+                                           DataRangeBinding="{Binding Losses}" From="Blue" To="Magenta" />
+                <datavis:DoubleInterpolator TargetName="textBlk" TargetProperty="FontSize" 
+                                           DataRangeBinding="{Binding GoalsFor}" From="8" To="15" />
+            </datavis:TreeMap.Interpolators>
+
+            <datavis:TreeMap.ItemDefinition>
+                <datavis:TreeMapItemDefinition ItemsSource="{Binding Children}" ValueBinding="{Binding Points}" ChildItemPadding="1">
+                    <DataTemplate>
+                        <Border x:Name="itemBorder" BorderBrush="Black" BorderThickness="1" ToolTipService.ToolTip="{Binding ToolTip}">
+                            <TextBlock x:Name="textBlk"  Foreground="White" Text="{Binding Name}" VerticalAlignment="Center" Margin="2,2,0,0" 
+                                       TextWrapping="Wrap" TextAlignment="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </datavis:TreeMapItemDefinition>
+            </datavis:TreeMap.ItemDefinition>
+        </datavis:TreeMap>
+    <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="InterpolatorsSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.InterpolatorsSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height="Auto"/&gt;
+            &lt;RowDefinition Height="*"/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;StackPanel Grid.Row="0"&gt;
+            &lt;ContentControl Content="TreeMap with Interpolators" Style="{StaticResource Header}" /&gt;
+            &lt;TextBlock Style="{StaticResource Information}"&gt;
+                In this sample we show how to use Interpolators to customize the UI elements nested in the data template. In this 
+                case we use a SolidColorBrushInterpolator (ranging from Blue to Magenta) to show the number of times each 
+                team lost and a DoubleInterpolator to vary the font size is based on how many points they scored. 
+            &lt;/TextBlock&gt;
+            &lt;TextBlock Style="{StaticResource Information}" FontSize="9"&gt;
+                The statistical data used for this demonstration is (c) Copyright 2008 from http://www.hockeydb.com.
+            &lt;/TextBlock&gt;
+        &lt;/StackPanel&gt;
+        &lt;datavis:TreeMap x:Name="treeMapControl" Grid.Row="1"&gt;
+            &lt;datavis:TreeMap.Interpolators&gt;
+                &lt;datavis:SolidColorBrushInterpolator TargetName="itemBorder" TargetProperty="Background" 
+                                           DataRangeBinding="{Binding Losses}" From="Blue" To="Magenta" /&gt;
+                &lt;datavis:DoubleInterpolator TargetName="textBlk" TargetProperty="FontSize" 
+                                           DataRangeBinding="{Binding GoalsFor}" From="8" To="15" /&gt;
+            &lt;/datavis:TreeMap.Interpolators&gt;
+
+            &lt;datavis:TreeMap.ItemDefinition&gt;
+                &lt;datavis:TreeMapItemDefinition ItemsSource="{Binding Children}" ValueBinding="{Binding Points}" ChildItemPadding="1"&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;Border x:Name="itemBorder" BorderBrush="Black" BorderThickness="1" ToolTipService.ToolTip="{Binding ToolTip}"&gt;
+                            &lt;TextBlock x:Name="textBlk"  Foreground="White" Text="{Binding Name}" VerticalAlignment="Center" Margin="2,2,0,0" 
+                                       TextWrapping="Wrap" TextAlignment="Center"/&gt;
+                        &lt;/Border&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/datavis:TreeMapItemDefinition&gt;
+            &lt;/datavis:TreeMap.ItemDefinition&gt;
+        &lt;/datavis:TreeMap&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="InterpolatorsSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+
+[assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "System.Windows.Controls.Samples.InterpolatorsSample.#itemBorder", Justification = "Artifact of using a name inside the custom control template.")]
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Example showing how to create and use Interpolators with for TreeMap. An interpolator 
+    /// calculates the minimum and maximum values for the bound property across the whole tree, and
+    /// then projects the value in the specified [From, To] range.
+    /// &lt;/summary&gt;
+    [Sample("(2)Interpolators", DifficultyLevel.Basic, "TreeMap")]
+    public partial class InterpolatorsSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the InterpolatorsSample class.
+        /// &lt;/summary&gt;
+        public InterpolatorsSample()
+        {
+            InitializeComponent();
+            Loaded += new RoutedEventHandler(InterpolatorsSample_Loaded);
+        }
+
+        /// &lt;summary&gt;
+        /// Loads the XML sample data and populates the TreeMap.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The event data.&lt;/param&gt;
+        private void InterpolatorsSample_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Sample browser-specific layout change
+            SampleHelpers.ChangeSampleAlignmentToStretch(this);
+
+            treeMapControl.ItemsSource = NhlDataHelper.LoadDefaultFile();
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="InterpolatorsSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+
+Imports Microsoft.VisualBasic
+Imports System.ComponentModel
+Imports System.Diagnostics.CodeAnalysis
+
+&lt;Assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope := "member", Target := "System.Windows.Controls.Samples.InterpolatorsSample.#itemBorder", Justification := "Artifact of using a name inside the custom control template.")&gt;
+
+''' &lt;summary&gt;
+''' Example showing how to create and use Interpolators with for TreeMap. An interpolator 
+''' calculates the minimum and maximum values for the bound property across the whole tree, and
+''' then projects the value in the specified [From, To] range.
+''' &lt;/summary&gt;
+&lt;Sample("(2)Interpolators", DifficultyLevel.Basic), Category("TreeMap")&gt; _
+Partial Public Class InterpolatorsSample
+	Inherits UserControl
+	''' &lt;summary&gt;
+	''' Initializes a new instance of the InterpolatorsSample class.
+	''' &lt;/summary&gt;
+	Public Sub New()
+		InitializeComponent()
+		AddHandler Loaded, AddressOf InterpolatorsSample_Loaded
+	End Sub
+
+	''' &lt;summary&gt;
+	''' Loads the XML sample data and populates the TreeMap.
+	''' &lt;/summary&gt;
+	''' &lt;param name="sender"&gt;The object where the event handler is attached.&lt;/param&gt;
+	''' &lt;param name="e"&gt;The event data.&lt;/param&gt;
+	Private Sub InterpolatorsSample_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+		' Sample browser-specific layout change
+		SampleHelpers.ChangeSampleAlignmentToStretch(Me)
+
+        treeMapControl.ItemsSource = NhlDataHelper.LoadDefaultFile()
+	End Sub
+End Class
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </Grid>
+</UserControl>

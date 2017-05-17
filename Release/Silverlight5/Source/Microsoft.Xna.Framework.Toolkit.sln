@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightContentPipeline", "SilverlightContentPipeline\SilverlightContentPipeline.csproj", "{55512AED-41FF-4D13-ACBE-EA294E17E774}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91} = {F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SilverlightShaderCompiler", "SilverlightShaderCompiler\SilverlightShaderCompiler.vcxproj", "{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Xna.Framework.Toolkit", "Microsoft.Xna.Framework.Toolkit\Microsoft.Xna.Framework.Toolkit.csproj", "{1C72E574-6E3E-470F-AF61-0BD13668E061}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Debug|Win32.ActiveCfg = Debug|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Debug|x86.ActiveCfg = Debug|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Debug|x86.Build.0 = Debug|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Release|Any CPU.ActiveCfg = Release|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Release|Mixed Platforms.Build.0 = Release|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Release|Win32.ActiveCfg = Release|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Release|x86.ActiveCfg = Release|x86
+		{55512AED-41FF-4D13-ACBE-EA294E17E774}.Release|x86.Build.0 = Release|x86
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Debug|Win32.Build.0 = Debug|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Debug|x86.ActiveCfg = Debug|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Release|Any CPU.ActiveCfg = Release|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Release|Win32.ActiveCfg = Release|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Release|Win32.Build.0 = Release|Win32
+		{F6A5DD71-68AD-4A7E-9FA2-6586DBE59C91}.Release|x86.ActiveCfg = Release|Win32
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Release|Win32.ActiveCfg = Release|Any CPU
+		{1C72E574-6E3E-470F-AF61-0BD13668E061}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

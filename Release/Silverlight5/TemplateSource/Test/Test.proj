@@ -1,0 +1,71 @@
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<!--
+// 
+// Build all of the testing Visual Studio templates.
+// 
+-->
+<Project
+  ToolsVersion="3.5"
+  DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+  //
+  // Paths to the projects contained in the branch.
+  //
+  -->
+  <PropertyGroup>
+    <TemplateProjects>
+      TestProject10.proj;
+      TestProject10.VB.proj;
+      TestClass.proj;
+      TestClass.VB.proj;
+    </TemplateProjects>
+  </PropertyGroup>
+
+  
+  <!--
+  //
+  // Reference the standard build tasks.
+  //
+  -->
+  <UsingTask
+    TaskName="Microsoft.Build.Tasks.MSBuild"
+    AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <UsingTask
+    TaskName="Engineering.Build.Tasks.MoveTask"
+    AssemblyFile=".\ExternalTools\Engineering.Build.Core.dll" />
+
+
+  <!--
+  //
+  // Basic build targets.
+  //
+  -->
+  <Target Name="Build">
+    <MSBuild Projects="$(TemplateProjects)" Targets="Build" />
+  </Target>
+
+  <Target Name="Rebuild">
+    <MSBuild Projects="$(TemplateProjects)" Targets="Rebuild" />
+  </Target>
+
+  <Target Name="Clean">
+    <MSBuild Projects="$(TemplateProjects)" Targets="Clean" />
+  </Target>
+
+  <Target Name="TreeClean">
+    <Exec Command="$(TreeCleaner) -d" />
+  </Target>
+
+  <Target Name="TreeCleanDisplay">
+    <Exec Command="$(TreeCleaner)" />
+  </Target>
+
+</Project>

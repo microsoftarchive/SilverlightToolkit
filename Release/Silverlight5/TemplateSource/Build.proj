@@ -1,0 +1,45 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+	</PropertyGroup>
+
+	<!-- Tools -->
+	<PropertyGroup>
+		<Zip>ExternalTools\zip.exe</Zip>
+		<ZipCompress>$(Zip) -r -9 -X</ZipCompress>
+	</PropertyGroup>
+	
+    <Target Name="Build">
+		<!-- Do not delay sign tools -->
+        <MSBuild Projects="ExternalTools\Build\Build.sln" 
+			Properties="Configuration=$(Configuration)" RemoveProperties="DelaySign;AssemblyOriginatorKeyFile" />
+	
+		<!-- Do not delay sign this assembly since it needs to retain its original key to be found by the templates -->
+        <MSBuild Projects="Xna\Silverlight3dAppWizard\Silverlight3dAppWizard.sln" 
+			Properties="Configuration=$(Configuration)" RemoveProperties="DelaySign;AssemblyOriginatorKeyFile" />
+			
+		<!-- Build Unit Test templates -->
+		<MSBuild Projects="Test\Test.proj" Properties="Configuration=$(Configuration)" />
+		
+		<!-- Build XNA Templates -->
+		<CallTarget Targets="ZipXnaTemplates" />
+	</Target>
+		
+	<Target Name="ZipXnaTemplates">
+		<Delete Files="Binaries\Silverlight3dApp.zip"/>
+		<Exec WorkingDirectory="Xna\Silverlight3dApp" Command="..\..\$(ZipCompress) ..\..\Binaries\Silverlight3dApp.zip .\" />
+		<Exec WorkingDirectory="." Command="$(Zip) -d Binaries\Silverlight3dApp.zip Silverlight3dApp.sln" />
+				
+		<Delete Files="Binaries\Silverlight3dLib.zip"/>
+		<Exec WorkingDirectory="Xna\Silverlight3dLib" Command="..\..\$(ZipCompress) ..\..\Binaries\Silverlight3dLib.zip .\" />
+
+		<Delete Files="Binaries\SilverlightEffect.zip"/>
+		<Exec WorkingDirectory="Xna\SilverlightEffect" Command="..\..\$(ZipCompress) ..\..\Binaries\SilverlightEffect.zip .\" />	
+	</Target>
+	
+    <Target Name="Clean">
+		<MSBuild Projects="ExternalTools\Build\Build.sln" Targets="Clean"/>
+        <MSBuild Projects="Xna\Silverlight3dAppWizard\Silverlight3dAppWizard.sln" Properties="Configuration=$(Configuration)" Targets="Clean"/>
+		<RemoveDir Directories="Binaries"/>
+    </Target>
+</Project>

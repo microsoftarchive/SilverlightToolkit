@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightXnaWeb", "SilverlightXnaWeb\SilverlightXnaWeb.csproj", "{878A5043-81DF-43FE-9C9E-B2F5BE749D76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightXnaApp", "SilverlightXnaApp\SilverlightXnaApp.csproj", "{5CA5E235-0C23-4978-AE08-C37E4281BDB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightXnaAppContent", "SilverlightXnaAppContent\SilverlightXnaAppContent.contentproj", "{CBEADA36-4A0B-4575-BC8E-872E932CA448}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CA5E235-0C23-4978-AE08-C37E4281BDB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CA5E235-0C23-4978-AE08-C37E4281BDB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CA5E235-0C23-4978-AE08-C37E4281BDB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CA5E235-0C23-4978-AE08-C37E4281BDB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{878A5043-81DF-43FE-9C9E-B2F5BE749D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{878A5043-81DF-43FE-9C9E-B2F5BE749D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{878A5043-81DF-43FE-9C9E-B2F5BE749D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{878A5043-81DF-43FE-9C9E-B2F5BE749D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBEADA36-4A0B-4575-BC8E-872E932CA448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBEADA36-4A0B-4575-BC8E-872E932CA448}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

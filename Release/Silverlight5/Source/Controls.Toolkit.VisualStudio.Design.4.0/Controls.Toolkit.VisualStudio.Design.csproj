@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A3714629-59C1-4A64-A4FD-DF911907A1D1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Design</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Toolkit.VisualStudio.Design</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SilverlightApplication>false</SilverlightApplication>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Toolkit.snk</AssemblyOriginatorKeyFile>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>$(SolutionDir)Binaries\System.Windows.Controls.Toolkit.VisualStudio.Design.xml</DocumentationFile>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>$(SolutionDir)Binaries\System.Windows.Controls.Toolkit.VisualStudio.Design.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Windows.Design.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Design.Interaction, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows, Version=5.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <Aliases>Silverlight</Aliases>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <!-- <Reference Include="WindowsBase" />  -->
+    <!-- <Reference Include="PresentationCore" />  -->
+    <!-- <Reference Include="PresentationFramework" />  -->
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Controls.Design.Common\Extensions.cs">
+      <Link>Controls.Design.Common\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.Design.Common\MetadataBase.cs">
+      <Link>Controls.Design.Common\MetadataBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.Design.Common\GenericDefaultInitializer.cs">
+      <Link>Controls.Design.Common\GenericDefaultInitializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Controls.Design.Common\Util.cs">
+      <Link>Controls.Design.Common\Util.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DockPanelMetadata.cs" />
+    <Compile Include="ExpanderMetadata.cs" />
+    <Compile Include="GlobalCalendarButtonMetadata.cs" />
+    <Compile Include="GlobalCalendarDayButtonMetadata.cs" />
+    <Compile Include="GlobalCalendarMetadata.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HeaderedContentControlMetadata.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="MetadataRegistration.cs" />
+    <Compile Include="WrapPanelMetadata.cs" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj">
+      <Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project>
+      <Name>Controls.Toolkit</Name>
+      <Aliases>Silverlight</Aliases>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="System.Windows.Controls\DockPanel.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="System.Windows.Controls\Expander.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="System.Windows.Controls\GlobalCalendar.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="System.Windows.Controls\HeaderedContentControl.bmp">
+    </EmbeddedResource>
+    <EmbeddedResource Include="System.Windows.Controls\WrapPanel.bmp">
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\Toolkit.Design.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

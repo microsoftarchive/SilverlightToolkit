@@ -1,0 +1,194 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Grid
+	xmlns="http://schemas.microsoft.com/client/2007" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Cursor="Wait">
+	<Grid Width="380" Height="235">
+		<Border BorderThickness="4" BorderBrush="#22000000" CornerRadius="8">
+			<Border.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="1,0">
+					<GradientStop Color="#22FFFFFF" Offset="0" />
+					<GradientStop Color="#07000000" Offset="1" />
+				</LinearGradientBrush>
+			</Border.Background>
+			<Border.Effect>
+				<DropShadowEffect
+					BlurRadius="50"
+					Direction="300"
+					ShadowDepth="8"
+					Opacity=".8"
+					/>
+			</Border.Effect>
+		</Border>
+	</Grid>
+	<Grid Width="380" Height="235">
+		<Grid.Clip>
+			<RectangleGeometry Rect="0, 0, 380, 235" />
+		</Grid.Clip>
+		<Image Width="340" Height="74" Source="Splash.png" Stretch="None" x:Name="toolkitLogo">
+			<Image.Triggers>
+				<EventTrigger RoutedEvent="Image.Loaded">
+					<BeginStoryboard>
+						<Storyboard x:Name="FadeInLogo">
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="toolkitLogo" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="00:00:01" Value="1"/>
+							</DoubleAnimationUsingKeyFrames>
+						</Storyboard>
+					</BeginStoryboard>
+					<BeginStoryboard>
+						<Storyboard x:Name="FeaturesBanner" RepeatBehavior="Forever">
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t0" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:00" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:00.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:00.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:00.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t1" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:01" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:01.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:01.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:01.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t2" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:02" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:02.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:02.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:02.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t3" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:03" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:03.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:03.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:03.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t4" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:04" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:04.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:04.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:04.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t5" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:05" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:05.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:05.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:05.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t6" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:06" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:06.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:06.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:06.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t7" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:07" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:07.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:07.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:07.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t8" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:08" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:08.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:08.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:08.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t9" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:09" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:09.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:09.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:09.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t10" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:10" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:10.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:10.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:10.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t11" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:11" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:11.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:11.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:11.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t12" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:12" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:12.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:12.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:12.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t13" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:13" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:13.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:13.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:13.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t14" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:14" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:14.2" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:14.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:14.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="t15" Storyboard.TargetProperty="(UIElement.Opacity)">
+								<SplineDoubleKeyFrame KeyTime="0:0:15" Value="0"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:15.4" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:16.7" Value="1"/>
+								<SplineDoubleKeyFrame KeyTime="0:0:17.999" Value="0"/>
+							</DoubleAnimationUsingKeyFrames>
+						</Storyboard>
+					</BeginStoryboard>
+				</EventTrigger>
+			</Image.Triggers>
+		</Image>
+		<Grid Width="345" Height="50" Margin="18,17,17,0" VerticalAlignment="Top">
+			<Grid.OpacityMask>
+				<LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+					<GradientStop Color="#0000" Offset="0"/>
+					<GradientStop Color="#ffff" Offset="0.1"/>
+					<GradientStop Color="#ffff" Offset="0.9"/>
+					<GradientStop Color="#0000" Offset="1"/>
+				</LinearGradientBrush>
+			</Grid.OpacityMask>
+			<Grid.Clip>
+				<RectangleGeometry Rect="0, 0, 345, 50" />
+			</Grid.Clip>
+			<Grid.Resources>
+				<Style TargetType="TextBlock" x:Key="t">
+					<Setter Property="FontFamily" Value="Verdana" />
+					<Setter Property="FontSize" Value="18" />
+					<Setter Property="HorizontalAlignment" Value="Center" />
+					<Setter Property="VerticalAlignment" Value="Center" />
+					<Setter Property="Effect">
+						<Setter.Value>
+							<DropShadowEffect
+								 Opacity=".2"
+								BlurRadius="8"
+								ShadowDepth="1"
+								/>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</Grid.Resources>
+			<TextBlock x:Name="t0" Opacity="0" Style="{StaticResource t}">Chart controls</TextBlock>
+			<TextBlock x:Name="t1" Opacity="0" Style="{StaticResource t}">Drag and Drop</TextBlock>
+			<TextBlock x:Name="t2" Opacity="0" Style="{StaticResource t}">Accordion</TextBlock>
+			<TextBlock x:Name="t3" Opacity="0" Style="{StaticResource t}">DockPanel</TextBlock>
+			<TextBlock x:Name="t4" Opacity="0" Style="{StaticResource t}">Rating</TextBlock>
+			<TextBlock x:Name="t5" Opacity="0" Style="{StaticResource t}">LayoutTransformer</TextBlock>
+			<TextBlock x:Name="t6" Opacity="0" Style="{StaticResource t}">Expander</TextBlock>
+			<TextBlock x:Name="t7" Opacity="0" Style="{StaticResource t}">GlobalCalendar</TextBlock>
+			<TextBlock x:Name="t8" Opacity="0" Style="{StaticResource t}">Viewbox</TextBlock>
+			<TextBlock x:Name="t9" Opacity="0" Style="{StaticResource t}">Themes</TextBlock>
+			<TextBlock x:Name="t10" Opacity="0" Style="{StaticResource t}">Unit tests</TextBlock>
+			<TextBlock x:Name="t11" Opacity="0" Style="{StaticResource t}">Microsoft Public License</TextBlock>
+			<TextBlock x:Name="t12" Opacity="0" Style="{StaticResource t}">Silverlight 3</TextBlock>
+			<TextBlock x:Name="t13" Opacity="0" Style="{StaticResource t}">Visual Studio 2010 Support</TextBlock>
+			<TextBlock x:Name="t14" Opacity="0" Style="{StaticResource t}">http://silverlight.codeplex.com/</TextBlock>
+			<TextBlock x:Name="t15" Opacity="0" Style="{StaticResource t}">and more...</TextBlock>
+		</Grid>
+		<TextBlock x:Name="progressText" Margin="18,0,17,19" Height="26" Text="0%" FontSize="16" Opacity="0.8" VerticalAlignment="Bottom" TextAlignment="Right"/>
+		<TextBlock x:Name="progressText2" Margin="18,0,7,8" Height="70" Text="0%" FontSize="50" Opacity="0.04" FontWeight="Bold" VerticalAlignment="Bottom" TextAlignment="Right"/>
+	</Grid>
+</Grid>

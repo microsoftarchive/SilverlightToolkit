@@ -1,0 +1,242 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to [###LICENSE_NAME###].
+// Please see [###LICENSE_LINK###] for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="Microsoft.Silverlight.Testing.Client.MobileTestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Microsoft.Silverlight.Testing.Client"
+    FontSize="20"
+    Foreground="White"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Microsoft.Silverlight.Testing;component/Client/MobileClientResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!-- desktop 
+    <Grid Background="Gray">
+        <Grid Width="480" Height="800">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="35" ShadowDepth="4" Opacity=".6" />
+            </Grid.Effect>
+    -->
+            <Grid x:Name="LayoutRoot" Width="480" Height="800" 
+                  Background="{StaticResource PhoneBackgroundBrush}">
+                <Grid.Clip>
+                    <RectangleGeometry Rect="0,0,480,800" />
+                </Grid.Clip>
+                <!--Grid.RenderTransform>
+                    <ScaleTransform ScaleX=".8" ScaleY=".8"/>
+                </Grid.RenderTransform-->
+                <Grid.RowDefinitions>
+<RowDefinition Height="0" /><!--                     <RowDefinition Height="20" />-->
+                    <RowDefinition />
+                    <RowDefinition Height="44" />
+                </Grid.RowDefinitions>
+
+                <!-- Very Top Header -->
+                <Grid>
+                    <Border BorderBrush="#5c6368"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="2,2,0,0">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="Silverlight Unit Test Framework"
+                                   FontSize="10"
+                                   Foreground="White"
+                                   Opacity=".9"
+                                   />
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="64" /><!-- 44 -->
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="0,0,0,1" BorderBrush="#FF2D3642">
+                        <Grid>
+                            <Grid Background="{Binding Passed, Converter={StaticResource topBarFinalPassedColoring}}" Visibility="{Binding PassedAndComplete, Converter={StaticResource visibilityConverter}}"/>
+                            <Grid Background="{Binding Passed, Converter={StaticResource topBarPassedColoring}}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="1" x:Name="Slides">
+                    <local:Slide x:Name="SlideTestsRunning" Position="Right" Visibility="Collapsed">
+                        <local:Slide.Header>
+                            <Grid>
+                                <ContentControl Content="testing..." Style="{StaticResource TextHeaderContent}" />
+
+                                <!--Grid>
+                                        <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
+                                            <Border Style="{StaticResource counterBorder}" Margin="0,0,10,0">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding PassedScenarios}" Style="{StaticResource counterText}" />
+                                                    <TextBlock Text="PASS" Style="{StaticResource smallText}" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Style="{StaticResource counterBorder}" Margin="0,0,10,0" Background="{Binding Passed, Converter={StaticResource runPassedFailCounterColor}}">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding FailedScenarios}" Style="{StaticResource counterText}" />
+                                                    <TextBlock Text="FAIL" Style="{StaticResource smallText}" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Style="{StaticResource counterBorder}" Margin="0,0,10,0">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding TotalScenarios}" Style="{StaticResource counterText}" />
+                                                    <TextBlock Text="TOTAL" Style="{StaticResource smallText}" />
+                                                </StackPanel>
+                                            </Border>
+                                        </StackPanel>
+                                </Grid-->
+                            </Grid>
+                        </local:Slide.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0" />
+                                <RowDefinition /><!-- stage -->
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <TextBlock Text="please wait" Style="{StaticResource PhoneTextApplicationNameStyle}"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Background="#eee">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid x:Name="TestStage" Grid.Row="1" Margin="5" Background="Black" />
+                            </Grid>
+                        </Grid>
+                    </local:Slide>
+                    <local:Slide x:Name="SlideTestAssemblies" Position="Right" Visibility="Collapsed">
+                        <local:Slide.Header>
+                            <Grid>
+                                <ContentControl Content="test assemblies" Style="{StaticResource TextHeaderContent}" />
+                            </Grid>
+                        </local:Slide.Header>
+                        <Grid>
+                            <ListBox ItemsSource="{Binding TestAssemblies}"
+                                 SelectionChanged="OnTestAssemblySelectionChanged"
+                                Style="{StaticResource StandardHierarchicalList}"/>
+                        </Grid>
+                    </local:Slide>
+                    <local:Slide x:Name="SlideTestClasses" Position="Right" Visibility="Collapsed">
+                        <local:Slide.Header>
+                            <Grid>
+                                <local:AdvancedButton
+                                    Opacity="0"
+                                    Content="assemblies"
+                                    Style="{StaticResource LeftArrowToolbarButton}"
+                                    Click="OnMoveBackToTestAssembliesClick" />
+                                <!-- CONSIDER: including test class designation -->
+                                <ContentControl Content="{Binding Name}" Style="{StaticResource TextHeaderContent}" />
+                            </Grid>
+                        </local:Slide.Header>
+                        <local:Slide.FixedHeader>
+                            <local:AdvancedButton Content="Edit"
+                                    Opacity="0"
+                                                  Style="{StaticResource ToolbarButton}"/>
+                        </local:Slide.FixedHeader>
+
+                        <Grid>
+                            <ListBox 
+                                SelectionChanged="OnTestClassSelectionChanged"
+                                ItemsSource="{Binding TestClasses}"
+                                Style="{StaticResource StandardHierarchicalList}"/>
+                        </Grid>
+
+                    </local:Slide>
+                    <local:Slide x:Name="SlideTestMethods" Position="Right" Visibility="Collapsed">
+                        <local:Slide.Header>
+                            <Grid>
+                                <local:AdvancedButton
+                                    HorizontalAlignment="Left"
+                                    Opacity="0"
+                                        Content="classes" 
+                                        Style="{StaticResource LeftArrowToolbarButton}"
+                                        Click="OnMoveBackToTestClassesClick"/>
+                                <ContentControl Content="{Binding Name}" Style="{StaticResource TextHeaderContent}" />
+                            </Grid>
+                        </local:Slide.Header>
+                        <Grid>
+                            <ListBox BorderThickness="0" 
+                                     SelectionChanged="OnTestMethodsSelectionChanged"
+                                     ItemsSource="{Binding TestMethods}"
+                                                                     Style="{StaticResource StandardHierarchicalList}"/>
+                        </Grid>
+
+                    </local:Slide>
+                    <local:Slide x:Name="SlideTestMethodDetails" Position="Right" Visibility="Collapsed">
+                        <local:Slide.Header>
+                            <Grid>
+                                <local:AdvancedButton HorizontalAlignment="Left"
+                                        Content="{Binding Parent.Name}" 
+                                    Opacity="0"
+                                        Style="{StaticResource LeftArrowToolbarButton}"
+                                        Click="OnMoveBackToTestMethodsClick"/>
+                                <ContentControl Content="{Binding Name}" Style="{StaticResource TextHeaderContent}" />
+                            </Grid>
+                        </local:Slide.Header>
+                        <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Auto"
+                                      BorderThickness="0">
+                            <local:MobileTestMethodDetails DataContext="{Binding}" />
+
+                        </ScrollViewer>
+                      
+                    </local:Slide>
+                </Grid>
+                
+                <Grid Grid.Row="2" x:Name="RunOverview" Visibility="Collapsed">
+                    <Border Background="Black" BorderBrush="#2d3033" BorderThickness="0,1,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="your code looks good" Foreground="White" FontSize="16" Margin="6,0,0,0" HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Visibility="{Binding Passed, Converter={StaticResource visibilityConverter}}"/>
+                    <TextBlock Text="test run failed" Foreground="White" FontSize="16" Margin="6,0,0,0" HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Visibility="{Binding Passed, Converter={StaticResource visibilityConverter}, ConverterParameter=Collapsed}"/>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <Border Style="{StaticResource counterBorder}" Margin="0,0,10,0" HorizontalAlignment="Center">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding PassedScenarios}" Style="{StaticResource counterText}" />
+                                        <TextBlock Text="PASS" Style="{StaticResource smallText}" />
+                                    </StackPanel>
+                                </Border>
+                            <Border Style="{StaticResource counterBorder}" Margin="0,0,10,0" HorizontalAlignment="Center" Background="{Binding Passed, Converter={StaticResource runPassedFailCounterColor}}">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding FailedScenarios}" Style="{StaticResource counterText}" />
+                                        <TextBlock Text="FAIL" Style="{StaticResource smallText}" />
+                                    </StackPanel>
+                                </Border>
+                            <Border Style="{StaticResource counterBorder}" HorizontalAlignment="Center" Margin="0,0,10,0">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding TotalScenarios}" Style="{StaticResource counterText}" />
+                                        <TextBlock Text="TOTAL" Style="{StaticResource smallText}" />
+                                    </StackPanel>
+                                </Border>
+</StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+
+    <!--
+    desktop
+        </Grid>
+    </Grid>
+-->
+</UserControl>

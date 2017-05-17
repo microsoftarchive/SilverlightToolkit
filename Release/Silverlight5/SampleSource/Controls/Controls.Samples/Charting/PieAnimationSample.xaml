@@ -1,0 +1,464 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  x:Class="System.Windows.Controls.Samples.PieAnimationSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="ChartStyle" TargetType="chartingToolkit:Chart">
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+        </StackPanel.Resources>
+
+        <!-- Zoom -->
+        <ContentControl Content="Custom: Zoom (Click chart to clear/reset series data)" Style="{StaticResource Header}"/>
+
+        <controlsToolkit:WrapPanel>
+            <controlsToolkit:WrapPanel.Resources>
+                <ControlTemplate x:Key="GrowPieDataPoint" TargetType="chartingToolkit:PieDataPoint">
+                    <Path
+                        Data="{TemplateBinding Geometry}"
+                        Fill="{TemplateBinding Background}"
+                        Stroke="{TemplateBinding BorderBrush}"
+                        RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <ScaleTransform x:Name="Scale" ScaleX="0" ScaleY="0"/>
+                        </Path.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="RevealStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Shown">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Hidden">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0"
+                                            Duration="0"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ToolTipService.ToolTip>
+                            <ContentControl Content="{TemplateBinding DependentValue}"/>
+                        </ToolTipService.ToolTip>
+                    </Path>
+                </ControlTemplate>
+
+                <visualizationToolkit:ResourceDictionaryCollection x:Key="GrowPieDataPointPalette">
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource GrayRadialBrush}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkRed}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Blue"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Red"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Green"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Pink"/>
+                        </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint">
+                            <Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/>
+                            <Setter Property="Background" Value="Cyan"/>
+                        </Style>
+                    </ResourceDictionary>
+                </visualizationToolkit:ResourceDictionaryCollection>
+            </controlsToolkit:WrapPanel.Resources>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="AnimationSequence = Simultaneous" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            DependentValueBinding="{Binding Particulate}"
+                            AnimationSequence="Simultaneous"/>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="AnimationSequence = FirstToLast" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            DependentValueBinding="{Binding Particulate}"
+                            AnimationSequence="FirstToLast"/>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Grid>
+
+            <Grid Style="{StaticResource WrapperStyle}">
+                <chartingToolkit:Chart Title="AnimationSequence = LastToFirst" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            DependentValueBinding="{Binding Particulate}"
+                            AnimationSequence="LastToFirst"/>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
+            </Grid>
+
+        </controlsToolkit:WrapPanel>
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="PieAnimationSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+  x:Class="System.Windows.Controls.Samples.PieAnimationSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="ChartStyle" TargetType="chartingToolkit:Chart"&gt;
+                &lt;Setter Property="Background" Value="Transparent"/&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+
+        &lt;!-- Zoom --&gt;
+        &lt;ContentControl Content="Custom: Zoom (Click chart to clear/reset series data)" Style="{StaticResource Header}"/&gt;
+
+        &lt;controlsToolkit:WrapPanel&gt;
+            &lt;controlsToolkit:WrapPanel.Resources&gt;
+                &lt;ControlTemplate x:Key="GrowPieDataPoint" TargetType="chartingToolkit:PieDataPoint"&gt;
+                    &lt;Path
+                        Data="{TemplateBinding Geometry}"
+                        Fill="{TemplateBinding Background}"
+                        Stroke="{TemplateBinding BorderBrush}"
+                        RenderTransformOrigin="0.5,0.5"&gt;
+                        &lt;Path.RenderTransform&gt;
+                            &lt;ScaleTransform x:Name="Scale" ScaleX="0" ScaleY="0"/&gt;
+                        &lt;/Path.RenderTransform&gt;
+                        &lt;VisualStateManager.VisualStateGroups&gt;
+                            &lt;VisualStateGroup x:Name="RevealStates"&gt;
+                                &lt;VisualStateGroup.Transitions&gt;
+                                    &lt;VisualTransition GeneratedDuration="0:0:0.5"/&gt;
+                                &lt;/VisualStateGroup.Transitions&gt;
+                                &lt;VisualState x:Name="Shown"&gt;
+                                    &lt;Storyboard&gt;
+                                        &lt;DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0"/&gt;
+                                        &lt;DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0"/&gt;
+                                    &lt;/Storyboard&gt;
+                                &lt;/VisualState&gt;
+                                &lt;VisualState x:Name="Hidden"&gt;
+                                    &lt;Storyboard&gt;
+                                        &lt;DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0"
+                                            Duration="0"/&gt;
+                                        &lt;DoubleAnimation
+                                            Storyboard.TargetName="Scale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0"/&gt;
+                                    &lt;/Storyboard&gt;
+                                &lt;/VisualState&gt;
+                            &lt;/VisualStateGroup&gt;
+                        &lt;/VisualStateManager.VisualStateGroups&gt;
+                        &lt;ToolTipService.ToolTip&gt;
+                            &lt;ContentControl Content="{TemplateBinding DependentValue}"/&gt;
+                        &lt;/ToolTipService.ToolTip&gt;
+                    &lt;/Path&gt;
+                &lt;/ControlTemplate&gt;
+
+                &lt;visualizationToolkit:ResourceDictionaryCollection x:Key="GrowPieDataPointPalette"&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource GrayRadialBrush}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkBlue}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource DefaultEnhancedChartDarkRed}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="{StaticResource ShinyYellowBrush}"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Blue"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Red"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Green"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Pink"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                    &lt;ResourceDictionary&gt;
+                        &lt;Style x:Key="DataPointStyle" TargetType="chartingToolkit:PieDataPoint"&gt;
+                            &lt;Setter Property="Template" Value="{StaticResource GrowPieDataPoint}"/&gt;
+                            &lt;Setter Property="Background" Value="Cyan"/&gt;
+                        &lt;/Style&gt;
+                    &lt;/ResourceDictionary&gt;
+                &lt;/visualizationToolkit:ResourceDictionaryCollection&gt;
+            &lt;/controlsToolkit:WrapPanel.Resources&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = Simultaneous" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:PieSeries
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            DependentValueBinding="{Binding Particulate}"
+                            AnimationSequence="Simultaneous"/&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = FirstToLast" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:PieSeries
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            DependentValueBinding="{Binding Particulate}"
+                            AnimationSequence="FirstToLast"/&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+            &lt;Grid Style="{StaticResource WrapperStyle}"&gt;
+                &lt;chartingToolkit:Chart Title="AnimationSequence = LastToFirst" Palette="{StaticResource GrowPieDataPointPalette}" Style="{StaticResource ChartStyle}" MouseLeftButtonDown="OnMouseLeftButtonDown"&gt;
+                    &lt;chartingToolkit:Chart.Series&gt;
+                        &lt;chartingToolkit:PieSeries
+                            ItemsSource="{Binding LevelsInRainfall, Source={StaticResource ParticulateLevel}}"
+                            DependentValueBinding="{Binding Particulate}"
+                            AnimationSequence="LastToFirst"/&gt;
+                    &lt;/chartingToolkit:Chart.Series&gt;
+                &lt;/chartingToolkit:Chart&gt;
+            &lt;/Grid&gt;
+
+        &lt;/controlsToolkit:WrapPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="PieAnimationSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Controls.DataVisualization.Charting;
+using System.Collections;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating Animations.
+    /// &lt;/summary&gt;
+    [Sample("(2)Animation", DifficultyLevel.Advanced, "Pie Series")]
+    public partial class PieAnimationSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the AnimationSample class.
+        /// &lt;/summary&gt;
+        public PieAnimationSample()
+        {
+            InitializeComponent();
+        }
+
+        /// &lt;summary&gt;
+        /// Called when the Chart is clicked.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The object that raised the event.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Information about the event.&lt;/param&gt;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Attached to event handler in XAML.")]
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Chart chart = sender as Chart;
+
+            if (null != chart)
+            {
+                // Toggle each Series ItemsSource so the reveal/hide animations can be seen
+                foreach (DataPointSeries series in chart.Series)
+                {
+                    if (null == series.Tag)
+                    {
+                        series.Tag = series.ItemsSource;
+                        series.ItemsSource = null;
+                    }
+                    else
+                    {
+                        series.ItemsSource = series.Tag as IEnumerable;
+                        series.Tag = null;
+                    }
+                }
+            }
+        }
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="PieAnimationSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.Windows.Controls
+Imports System.Windows.Input
+Imports System.Windows.Controls.DataVisualization.Charting
+Imports System.Collections
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating Animations.
+''' &lt;/summary&gt;
+&lt;Sample("(2)Animation", DifficultyLevel.Advanced, "Pie Series")&gt; _
+Partial Public Class PieAnimationSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the AnimationSample class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Called when the Chart is clicked.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The object that raised the event.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Information about the event.&lt;/param&gt;
+    &lt;System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Attached to event handler in XAML.")&gt; _
+    Private Overloads Sub OnMouseLeftButtonDown(ByVal sender As Object, ByVal e As MouseButtonEventArgs)
+        Dim chart As Chart = TryCast(sender, Chart)
+
+        If Nothing IsNot chart Then
+            ' Toggle each Series ItemsSource so the reveal/hide animations can be seen
+            For Each series As DataPointSeries In chart.Series
+                If Nothing Is series.Tag Then
+                    series.Tag = series.ItemsSource
+                    series.ItemsSource = Nothing
+                Else
+                    series.ItemsSource = TryCast(series.Tag, IEnumerable)
+                    series.Tag = Nothing
+                End If
+            Next series
+        End If
+    End Sub
+End Class
+
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>

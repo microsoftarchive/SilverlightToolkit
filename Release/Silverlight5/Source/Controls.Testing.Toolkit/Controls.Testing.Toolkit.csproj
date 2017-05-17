@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8A43A59C-A96A-482B-BCD1-6319DAC2D650}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Windows.Controls.Testing</RootNamespace>
+    <AssemblyName>System.Windows.Controls.Testing.Toolkit</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>System.Windows.Controls.Testing.Toolkit.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>System.Windows.Controls.Testing.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Toolkit.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>ClientBin\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=5.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Binaries\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusyIndicator\BusyIndicatorTest.cs" />
+    <Compile Include="Common\ItemsControlExtensionsTest.cs" />
+    <Compile Include="Common\LengthConverterTest.cs" />
+    <Compile Include="Common\ObjectCollectionTest.cs" />
+    <Compile Include="Common\ItemContainerGeneratorTest.cs" />
+    <Compile Include="Common\ScrollViewerExtensionsTest.cs" />
+    <Compile Include="DockPanel\DockPanelTest.cs" />
+    <Compile Include="DockPanel\DockPanelTest.Regressions.cs" />
+    <Compile Include="Expander\ExpanderAutomationPeerTest.cs" />
+    <Compile Include="Expander\ExpanderTest.cs" />
+    <Compile Include="Expander\ExpanderTest.Regressions.cs" />
+    <Compile Include="Expander\IOverriddenExpander.cs" />
+    <Compile Include="Accordion\AccordionAutomationPeerTest.cs" />
+    <Compile Include="Accordion\AccordionItemAutomationPeerTest.cs" />
+    <Compile Include="Accordion\AccordionItemTest.cs" />
+    <Compile Include="Accordion\AccordionTest.cs" />
+    <Compile Include="Accordion\ExpandableContentControlTest.cs" />
+    <Compile Include="Accordion\Person.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DomainUpDown\DomainUpDownAutomationPeerTest.cs" />
+    <Compile Include="DomainUpDown\DomainUpDownItemsInitialization.xaml.cs">
+      <DependentUpon>DomainUpDownItemsInitialization.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DomainUpDown\DomainUpDownTest.cs" />
+    <Compile Include="DomainUpDown\OverriddenDomainUpDown.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarTest.cs" />
+    <Compile Include="GlobalCalendar\GlobalCalendarTestExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="LayoutTransformer\LayoutTestPanel.cs" />
+    <Compile Include="LayoutTransformer\LayoutTransformerScenario.cs" />
+    <Compile Include="LayoutTransformer\LayoutTransformerTest.cs" />
+    <Compile Include="LayoutTransformer\LayoutTestControl.cs" />
+    <Compile Include="HeaderedContentControl\OverriddenHeaderedContentControl.cs" />
+    <Compile Include="HeaderedContentControl\HeaderedContentControlTest.cs" />
+    <Compile Include="HeaderedContentControl\IOverriddenHeaderedContentControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rating\LinearClipperTest.cs" />
+    <Compile Include="Rating\RatingAutomationPeerTest.cs" />
+    <Compile Include="Rating\RatingItemAutomationPeerTest.cs" />
+    <Compile Include="Rating\RatingItemTest.cs" />
+    <Compile Include="Rating\RatingTest.cs" />
+    <Compile Include="Rating\ClipperTest.cs" />
+    <Compile Include="TreeView\FactorizationValueConverter.cs" />
+    <Compile Include="TreeView\TreeViewExtensionsTest.cs" />
+    <Compile Include="TreeView\TreeViewItemCheckBoxTest.cs" />
+    <Compile Include="TreeView\TreeViewItemIndentationConverterTest.cs" />
+    <Compile Include="WrapPanel\WrapPanelTest.cs" />
+    <Compile Include="WrapPanel\WrapPanelTest.Regressions.cs" />
+    <Compile Include="TimeInput\ArabicTimeGlobalizationInfo.cs" />
+    <Compile Include="TimeInput\AutomationPeers\ListTimePickerPopupAutomationPeerTest.cs" />
+    <Compile Include="TimeInput\AutomationPeers\PickerAutomationPeerTest.cs" />
+    <Compile Include="TimeInput\AutomationPeers\RangeTimePickerPopupAutomationPeerTest.cs" />
+    <Compile Include="TimeInput\AutomationPeers\TimePickerPopupAutomationPeerTest.cs" />
+    <Compile Include="TimeInput\AutomationPeers\TimePickerAutomationPeerTest.cs" />
+    <Compile Include="TimeInput\AutomationPeers\TimeUpDownAutomationPeerTest.cs" />
+    <Compile Include="TimeInput\CatchallParserTest.cs" />
+    <Compile Include="TimeInput\CustomTimeParser.cs" />
+    <Compile Include="TimeInput\OverriddenTimeGlobalizationInfo.cs" />
+    <Compile Include="TimeInput\OverriddenTimePicker.cs" />
+    <Compile Include="TimeInput\OverriddenTimeUpDown.cs" />
+    <Compile Include="TimeInput\PickerTest.cs" />
+    <Compile Include="TimeInput\Popups\ListTimePickerPopupTest.cs" />
+    <Compile Include="TimeInput\Popups\OverriddenRangeTimePickerPopup.cs" />
+    <Compile Include="TimeInput\Popups\RangeTimePickerPopupTest.cs" />
+    <Compile Include="TimeInput\Popups\TimePickerPopupBaseTest.cs" />
+    <Compile Include="TimeInput\TimeFormatConverterTest.cs" />
+    <Compile Include="TimeInput\TimeGlobalizationInfoTest.cs" />
+    <Compile Include="TimeInput\TimePickerTest.cs" />
+    <Compile Include="TimeInput\TimeTypeConverterTest.cs" />
+    <Compile Include="TimeInput\TimeUpDownTest.cs" />
+    <Compile Include="NumericUpDown\IOverriddenNumericUpDown.cs" />
+    <Compile Include="NumericUpDown\NumericUpDownAutomationPeerTest.cs" />
+    <Compile Include="NumericUpDown\NumericUpDownTest.Regressions.cs" />
+    <Compile Include="NumericUpDown\NumericUpDownTest.cs" />
+    <Compile Include="NumericUpDown\OverriddenNumericUpDown.cs" />
+    <Compile Include="TransitioningContentControl\TransitioningContentControlTest.cs" />
+    <Compile Include="UpDownBase\IOverriddenUpDownBase.cs" />
+    <Compile Include="UpDownBase\IOverriddenUpDownBase.Generic.cs" />
+    <Compile Include="UpDownBase\UpDownBaseAutomationPeerTest.cs" />
+    <Compile Include="UpDownBase\UpDownBaseTest.cs" />
+    <Compile Include="UpDownBase\UpDownBaseTest.Generic.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Input.Toolkit\Controls.Input.Toolkit.csproj">
+      <Project>{F54EF3ED-CDA7-4262-BC7C-9EE709F61244}</Project>
+      <Name>Controls.Input.Toolkit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Layout.Toolkit\Controls.Layout.Toolkit.csproj">
+      <Project>{B30F74B9-9B41-4E5D-B764-F30275B7BBC5}</Project>
+      <Name>Controls.Layout.Toolkit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Testing.Common\Controls.Testing.Common.csproj">
+      <Project>{03598AF4-B0EE-4115-B425-2C0D8FBCAD78}</Project>
+      <Name>Controls.Testing.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls.Toolkit\Controls.Toolkit.csproj">
+      <Project>{1CDB9A12-B7CA-471A-BA35-8198F2FE4A51}</Project>
+      <Name>Controls.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DomainUpDown\DomainUpDownItemsInitialization.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <EmbeddedResource Include="TimeInput\TimeInputStyles.xaml">
+      <SubType>Page</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\Toolkit.snk" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primitives3D.Web", "Primitives3D.Web\Primitives3D.Web.csproj", "{EA507AD4-7845-4C1F-94AB-56965F885A60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primitives3D", "Primitives3D\Primitives3D.csproj", "{243DE6E3-1DFB-44BF-8066-54D2834CF6DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E2E6756-013E-487D-8450-21CBA372A8D8}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA507AD4-7845-4C1F-94AB-56965F885A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA507AD4-7845-4C1F-94AB-56965F885A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA507AD4-7845-4C1F-94AB-56965F885A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA507AD4-7845-4C1F-94AB-56965F885A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{243DE6E3-1DFB-44BF-8066-54D2834CF6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{243DE6E3-1DFB-44BF-8066-54D2834CF6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{243DE6E3-1DFB-44BF-8066-54D2834CF6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{243DE6E3-1DFB-44BF-8066-54D2834CF6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

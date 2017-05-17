@@ -1,0 +1,213 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl x:Class="System.Windows.Controls.Samples.TimePickerGesturesScenarios"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Background="Blue"
+    xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" >
+  <StackPanel>
+    <ContentControl Content="Picker will open up on Focus" Style="{StaticResource Header}" />
+    <inputToolkit:TimePicker x:Name="tp" PopupMinutesInterval="15"  />
+
+    <ContentControl Content="Picker will open up on Hover" Style="{StaticResource Header}" />
+    <inputToolkit:TimePicker x:Name="tp2" MouseEnter="PickerMouseEnter" PopupButtonMode="Hover" PopupMinutesInterval="15"  />
+    <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="TimePickerGesturesScenarios.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl x:Class="System.Windows.Controls.Samples.TimePickerGesturesScenarios"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Background="Blue"
+    xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" &gt;
+  &lt;StackPanel&gt;
+    &lt;ContentControl Content="Picker will open up on Focus" Style="{StaticResource Header}" /&gt;
+    &lt;inputToolkit:TimePicker x:Name="tp" PopupMinutesInterval="15"  /&gt;
+
+    &lt;ContentControl Content="Picker will open up on Hover" Style="{StaticResource Header}" /&gt;
+    &lt;inputToolkit:TimePicker x:Name="tp2" MouseEnter="PickerMouseEnter" PopupButtonMode="Hover" PopupMinutesInterval="15"  /&gt;
+  &lt;/StackPanel&gt;
+&lt;/UserControl&gt;
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TimePickerGesturesScenarios.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System.ComponentModel;
+using System.Threading;
+using System.Windows.Input;
+using System.Diagnostics.CodeAnalysis;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page that demonstrates different
+    /// interactions that are possible.
+    /// &lt;/summary&gt;
+    [Sample("TimePicker Gestures", DifficultyLevel.Scenario, "TimePicker")]
+    public partial class TimePickerGesturesScenarios : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Closing the dropdown will move focus to the ToggleButton, which 
+        /// will raise the 'GotFocus' event on the TimePicker, resulting in a
+        /// loop. We will ignore the next Focus event after closing the dropdown
+        /// to prevent this.
+        /// &lt;/summary&gt;
+        private bool _ignoreNextGain;
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref="TimePickerGesturesScenarios"/&gt; class.
+        /// &lt;/summary&gt;
+        public TimePickerGesturesScenarios()
+        {
+            InitializeComponent();
+
+            tp.GotFocus += GainedFocus;
+        }
+
+        #region Focus
+        /// &lt;summary&gt;
+        /// Called when the picker gains focus.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The sender.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The &lt;see cref="System.Windows.RoutedEventArgs"/&gt; instance containing the event data.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Set from Xaml.")]
+        private void GainedFocus(object sender, RoutedEventArgs e)
+        {
+            if (!_ignoreNextGain)
+            {
+                tp.DropDownClosed += DropDownClosed;
+                tp.IsDropDownOpen = true;
+            }
+            else
+            {
+                _ignoreNextGain = false;
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Handles the DropDownClosed event of the control.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The source of the event.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The instance containing the event data.&lt;/param&gt;
+        private void DropDownClosed(object sender, RoutedPropertyChangedEventArgs&lt;bool&gt; e)
+        {
+            tp.DropDownClosed -= DropDownClosed;
+
+            // closing dropdown will move focus to button.
+            _ignoreNextGain = true;
+        }
+        #endregion Focus
+
+        #region Hover
+        /// &lt;summary&gt;
+        /// Called when the mouse enters the Picker.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The sender.&lt;/param&gt;
+        /// &lt;param name="e"&gt;The &lt;see cref="System.Windows.Input.MouseEventArgs"/&gt; instance containing the event data.&lt;/param&gt;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Called by Xaml.")]
+        private void PickerMouseEnter(object sender, MouseEventArgs e)
+        {
+            tp2.IsDropDownOpen = true;
+        }
+        #endregion Hover
+    }
+}
+</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="TimePickerGesturesScenarios.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System.ComponentModel
+Imports System.Threading
+Imports System.Windows.Input
+Imports System.Diagnostics.CodeAnalysis
+
+''' &lt;summary&gt;
+''' Sample page that demonstrates different
+''' interactions that are possible.
+''' &lt;/summary&gt;
+&lt;Sample("TimePicker Gestures", DifficultyLevel.Scenario, "TimePicker")&gt; _
+Partial Public Class TimePickerGesturesScenarios
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Closing the dropdown will move focus to the ToggleButton, which 
+    ''' will raise the 'GotFocus' event on the TimePicker, resulting in a
+    ''' loop. We will ignore the next Focus event after closing the dropdown
+    ''' to prevent this.
+    ''' &lt;/summary&gt;
+    Private _ignoreNextGain As Boolean
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the &lt;see cref="TimePickerGesturesScenarios"/&gt; class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+#Region "Focus"
+    ''' &lt;summary&gt;
+    ''' Called when the picker gains focus.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The sender.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;The &lt;see cref="System.Windows.RoutedEventArgs"/&gt; instance containing the event data.&lt;/param&gt;
+    &lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Set from Xaml.")&gt; _
+    Private Sub GainedFocus(ByVal sender As Object, ByVal e As RoutedEventArgs) Handles tp.GotFocus
+        If (Not _ignoreNextGain) Then
+            AddHandler tp.DropDownClosed, AddressOf DropDownClosed
+            tp.IsDropDownOpen = True
+        Else
+            _ignoreNextGain = False
+        End If
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Handles the DropDownClosed event of the control.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The source of the event.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;The instance containing the event data.&lt;/param&gt;
+    Private Sub DropDownClosed(ByVal sender As Object, ByVal e As RoutedPropertyChangedEventArgs(Of Boolean))
+        RemoveHandler tp.DropDownClosed, AddressOf DropDownClosed
+
+        ' closing dropdown will move focus to button.
+        _ignoreNextGain = True
+    End Sub
+#End Region ' Focus
+
+#Region "Hover"
+    ''' &lt;summary&gt;
+    ''' Called when the mouse enters the Picker.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The sender.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;The &lt;see cref="System.Windows.Input.MouseEventArgs"/&gt; instance containing the event data.&lt;/param&gt;
+    &lt;SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification:="Called by Xaml.")&gt; _
+    Private Sub PickerMouseEnter(ByVal sender As Object, ByVal e As MouseEventArgs)
+        tp2.IsDropDownOpen = True
+    End Sub
+#End Region ' Hover
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+  </StackPanel>
+</UserControl>

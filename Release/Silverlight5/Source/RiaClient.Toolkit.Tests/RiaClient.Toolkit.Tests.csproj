@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7AB23D94-7271-44C6-BE75-8EC8CD7B1CA2}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Silverlight.Toolkit</RootNamespace>
+    <AssemblyName>Silverlight.Toolkit</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>Silverlight.Toolkit.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Silverlight.Toolkit.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Toolkit.snk</AssemblyOriginatorKeyFile>
+    <OutputPath>ClientBin\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0108</NoWarn>
+    <ErrorReport>prompt</ErrorReport>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ThrowErrorsInValidation>false</ThrowErrorsInValidation>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'CodeCov|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;CODECOV</DefineConstants>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Silverlight.Testing">
+      <HintPath>..\Binaries\Microsoft.Silverlight.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
+      <HintPath>..\Binaries\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DataClasses\BasicDataClass.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithShortNames.cs" />
+    <Compile Include="Common\DataClasses\DataClass.cs" />
+    <Compile Include="Common\DataClasses\DataClassAllTwoWayBindings.cs" />
+    <Compile Include="Common\DataClasses\DataClassList.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithEditableAttribute.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithEnum.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithMissingDescriptions.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithNullableBool.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithOrder.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithReadOnlyAttribute.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithReadOnlyProperty.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithUneditableType.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithValidation.cs" />
+    <Compile Include="Common\DataClasses\DataClassWithValidationValidator.cs" />
+    <Compile Include="Common\DataClasses\DataEnum.cs" />
+    <Compile Include="Common\DataClasses\IntCollection.cs" />
+    <Compile Include="Common\DataClasses\ListOperations.cs" />
+    <Compile Include="Common\DataClasses\ReadOnlyDataClass.cs" />
+    <Compile Include="DataField\DataFieldTests.cs" />
+    <Compile Include="DataForm\DataFormTests_Autogeneration.cs" />
+    <Compile Include="DataForm\DataFormTests_Automation.cs" />
+    <Compile Include="DataForm\DataFormTests_Base.cs" />
+    <Compile Include="DataForm\DataFormTests_DependencyProperties.cs" />
+    <Compile Include="DataForm\DataFormTests_Editing.cs" />
+    <Compile Include="DataForm\DataFormTests_Events.cs" />
+    <Compile Include="DataForm\DataFormTests_InsertingDeleting.cs" />
+    <Compile Include="DataForm\DataFormTests_Layout.cs" />
+    <Compile Include="DataForm\DataFormTests_Miscellaneous.cs" />
+    <Compile Include="DataForm\DataFormTests_Navigation.cs" />
+    <Compile Include="DataForm\DataFormTests_TemplateDrivenUI.cs" />
+    <Compile Include="DataForm\DataFormTests_TemplateParts.cs" />
+    <Compile Include="DataForm\DataFormTests_Validation.cs" />
+    <Compile Include="DataForm\DataTemplates\HeaderTemplate.xaml.cs">
+      <DependentUpon>HeaderTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\DataTemplates\TemplateFieldDisplayTemplate.xaml.cs">
+      <DependentUpon>TemplateFieldDisplayTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\DataTemplates\TemplateFieldEditTemplate.xaml.cs">
+      <DependentUpon>TemplateFieldEditTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\DataTemplates\TemplateFieldInsertTemplate.xaml.cs">
+      <DependentUpon>TemplateFieldInsertTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_DirectContent.xaml.cs">
+      <DependentUpon>DataFormApp_DirectContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithStylesWithTemplates.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithStylesWithTemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithUneditableType.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithUneditableType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_NoStrongReference.xaml.cs">
+      <DependentUpon>DataFormApp_NoStrongReference.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_Autogeneration.xaml.cs">
+      <DependentUpon>DataFormApp_Autogeneration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_AutoGenerationTwoDataForms.xaml.cs">
+      <DependentUpon>DataFormApp_AutoGenerationTwoDataForms.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_Fields.xaml.cs">
+      <DependentUpon>DataFormApp_Fields.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsDescriptionViewer.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsDescriptionViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsGroupWithNonGrouped.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsGroupWithNonGrouped.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsInverseLabelPlacement.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsInverseLabelPlacement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithDifferentBinding.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithDifferentBinding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithInitialAutoEdit.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithInitialAutoEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithLayoutChanges.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithLayoutChanges.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithPropertyPath.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithPropertyPath.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_FieldsWithStyles.xaml.cs">
+      <DependentUpon>DataFormApp_FieldsWithStyles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_LayoutProperties.xaml.cs">
+      <DependentUpon>DataFormApp_LayoutProperties.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_ReadOnlyProperty1.xaml.cs">
+      <DependentUpon>DataFormApp_ReadOnlyProperty1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_ReadOnlyProperty2.xaml.cs">
+      <DependentUpon>DataFormApp_ReadOnlyProperty2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_ReadOnlyProperty3.xaml.cs">
+      <DependentUpon>DataFormApp_ReadOnlyProperty3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_Standard.xaml.cs">
+      <DependentUpon>DataFormApp_Standard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_Templates.xaml.cs">
+      <DependentUpon>DataFormApp_Templates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_TemplatesWithBinding.xaml.cs">
+      <DependentUpon>DataFormApp_TemplatesWithBinding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_TemplatesWithElementNameBinding.xaml.cs">
+      <DependentUpon>DataFormApp_TemplatesWithElementNameBinding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\TestApps\DataFormApp_TemplatesWithTabIndex.xaml.cs">
+      <DependentUpon>DataFormApp_TemplatesWithTabIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestUtilities\DependencyObjectExtensions.cs" />
+    <Compile Include="TestUtilities\EnumerableCollection.cs" />
+    <Compile Include="TestUtilities\TestClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Toolkit.snk">
+      <Link>Toolkit.snk</Link>
+    </None>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls.Data.DataForm.Toolkit\Controls.Data.DataForm.Toolkit.csproj">
+      <Project>{28A532C4-BB61-42BB-BE3F-9A6FED831BA9}</Project>
+      <Name>System.Windows.Controls.Data.DataForm.Toolkit</Name>
+      <Private Condition="'$(Configuration)' == 'CodeCov'">False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DataForm\DataTemplates\HeaderTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\DataTemplates\TemplateFieldDisplayTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\DataTemplates\TemplateFieldEditTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\DataTemplates\TemplateFieldInsertTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_DirectContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithStylesWithTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithUneditableType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_NoStrongReference.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_Autogeneration.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_AutoGenerationTwoDataForms.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_Fields.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsDescriptionViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsGroupWithNonGrouped.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsInverseLabelPlacement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithDifferentBinding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithInitialAutoEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithLayoutChanges.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithPropertyPath.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_FieldsWithStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_LayoutProperties.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_ReadOnlyProperty1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_ReadOnlyProperty2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_ReadOnlyProperty3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_Standard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_Templates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_TemplatesWithBinding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_TemplatesWithElementNameBinding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataForm\TestApps\DataFormApp_TemplatesWithTabIndex.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

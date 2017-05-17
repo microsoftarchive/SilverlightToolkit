@@ -1,0 +1,313 @@
+﻿<!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+-->
+
+<UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:datainput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"
+  x:Class="System.Windows.Controls.Samples.WrapPanelSample">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style x:Key="DemoLabel" TargetType="datainput:Label">
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="BorderBrush" Value="LightGreen" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Style>
+        </StackPanel.Resources>
+              
+        <!-- Manual Text Wrapping -->
+        <ContentControl Content="Manual Text Wrapping" Style="{StaticResource Header}" />
+        <CheckBox x:Name="chkHorizontal" Content="Horizontal" IsChecked="true" />
+        <controlsToolkit:WrapPanel x:Name="ManualTextWrapping" />
+
+        <!-- Color swatch scenario -->
+        <ContentControl Content="Select a Color" Style="{StaticResource Header}" />
+        <ListBox
+          x:Name="Swatch"
+          Style="{StaticResource WrapListBox}"
+          Margin="20" />
+        
+        <!-- Thumbnail scenario -->
+        <ContentControl Content="Select a Thumbnail" Style="{StaticResource Header}" />
+        <ListBox
+          x:Name="Thumbnails"
+          Style="{StaticResource WrapListBox}"
+          ItemTemplate="{StaticResource PhotographTemplate}"
+          Margin="20" />
+        <src:SourceViewer xmlns:src="clr-namespace:System.Windows.Controls.Samples;assembly=System.Windows.Controls.Samples.Common" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <src:SourceFile Path="WrapPanelSample.xaml">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">&lt;!--
+// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+--&gt;
+
+&lt;UserControl
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+  xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+  xmlns:datainput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"
+  x:Class="System.Windows.Controls.Samples.WrapPanelSample"&gt;
+    &lt;StackPanel&gt;
+        &lt;StackPanel.Resources&gt;
+            &lt;Style x:Key="DemoLabel" TargetType="datainput:Label"&gt;
+                &lt;Setter Property="Margin" Value="3" /&gt;
+                &lt;Setter Property="BorderBrush" Value="LightGreen" /&gt;
+                &lt;Setter Property="BorderThickness" Value="1" /&gt;
+            &lt;/Style&gt;
+        &lt;/StackPanel.Resources&gt;
+              
+        &lt;!-- Manual Text Wrapping --&gt;
+        &lt;ContentControl Content="Manual Text Wrapping" Style="{StaticResource Header}" /&gt;
+        &lt;CheckBox x:Name="chkHorizontal" Content="Horizontal" IsChecked="true" /&gt;
+        &lt;controlsToolkit:WrapPanel x:Name="ManualTextWrapping" /&gt;
+
+        &lt;!-- Color swatch scenario --&gt;
+        &lt;ContentControl Content="Select a Color" Style="{StaticResource Header}" /&gt;
+        &lt;ListBox
+          x:Name="Swatch"
+          Style="{StaticResource WrapListBox}"
+          Margin="20" /&gt;
+        
+        &lt;!-- Thumbnail scenario --&gt;
+        &lt;ContentControl Content="Select a Thumbnail" Style="{StaticResource Header}" /&gt;
+        &lt;ListBox
+          x:Name="Thumbnails"
+          Style="{StaticResource WrapListBox}"
+          ItemTemplate="{StaticResource PhotographTemplate}"
+          Margin="20" /&gt;
+    &lt;/StackPanel&gt;
+&lt;/UserControl&gt;</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="WrapPanelSample.xaml.cs">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">// (c) Copyright Microsoft Corporation.
+// This source is subject to the Microsoft Public License (Ms-PL).
+// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+// All other rights reserved.
+
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using System.ComponentModel;
+
+namespace System.Windows.Controls.Samples
+{
+    /// &lt;summary&gt;
+    /// Sample page demonstrating the WrapPanel.
+    /// &lt;/summary&gt;
+    [Sample("WrapPanel", DifficultyLevel.Basic, "WrapPanel")]
+    public partial class WrapPanelSample : UserControl
+    {
+        /// &lt;summary&gt;
+        /// Gets or sets a value indicating whether the demonstration has
+        /// already been loaded.
+        /// &lt;/summary&gt;
+        private bool IsLoaded { get; set; }
+
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the WrapPanelSample class.
+        /// &lt;/summary&gt;
+        public WrapPanelSample()
+        {
+            InitializeComponent();
+
+            Loaded += OnLoad;
+
+            chkHorizontal.Checked += OnCheckChanged;
+            chkHorizontal.Unchecked += OnCheckChanged;
+        }
+
+        /// &lt;summary&gt;
+        /// Load the demonstration.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;Sample page.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnLoad(object sender, RoutedEventArgs e)
+        {
+            // Don't repopulate if the page has already been loaded.
+            if (IsLoaded)
+            {
+                return;
+            }
+            IsLoaded = true;
+
+            // Generate the text to wrap
+            string lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse sed tellus non sapien laoreet accumsan. Phasellus rhoncus imperdiet pede. Morbi semper ipsum at leo. Nullam elit mi, dignissim et, vestibulum ut, laoreet quis, velit. Nulla aliquet risus sed arcu. Nunc vitae tortor in lectus tristique iaculis. Morbi elit. Quisque euismod mollis orci. Nullam cursus interdum eros. Curabitur tristique mi non nulla. Curabitur non nisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam aliquet, velit eu pretium placerat, massa lorem sollicitudin dolor, non ultricies nisi lorem bibendum enim. Pellentesque mollis egestas ipsum. Donec odio quam, tempus ut, iaculis molestie, viverra vitae, sapien.";
+            for (int i = 0; i &lt; 4; i++)
+            {
+                foreach (string word in lorem.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    ManualTextWrapping.Children.Add(new TextBlock
+                    {
+                        Text = word,
+                        Margin = new Thickness(3)
+                    });
+                }
+            }
+
+            // Generate the color swatch
+            int granularity = 50;
+            for (int r = 0; r &lt; 255; r += granularity)
+            {
+                for (int g = 0; g &lt; 255; g += granularity)
+                {
+                    for (int b = 0; b &lt; 255; b += granularity)
+                    {
+                        Swatch.Items.Add(new Rectangle
+                        {
+                            Width = 20,
+                            Height = 20,
+                            Margin = new Thickness(5),
+                            Stroke = new SolidColorBrush(Colors.Black),
+                            StrokeThickness = 1,
+                            Fill = new SolidColorBrush(Color.FromArgb(255, (byte) r, (byte) g, (byte) b))
+                        });
+                    }
+                }
+            }
+
+            // Set the thumbnails
+            Thumbnails.ItemsSource = Photograph.GetPhotographs().OrderBy(p =&gt; p.Name);
+        }
+
+        /// &lt;summary&gt;
+        /// Update the manual text layout sample to match the CheckBox.
+        /// &lt;/summary&gt;
+        /// &lt;param name="sender"&gt;The CheckBox that was changed.&lt;/param&gt;
+        /// &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+        private void OnCheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (chkHorizontal.IsChecked == true)
+            {
+                ManualTextWrapping.Height = double.NaN;
+                ManualTextWrapping.Orientation = Orientation.Horizontal;
+            }
+            else
+            {
+                ManualTextWrapping.Height = 600;
+                ManualTextWrapping.Orientation = Orientation.Vertical;
+            }
+        }
+    }
+}</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+  <src:SourceFile Path="WrapPanelSample.xaml.vb">
+    <src:SourceFile.Source>
+      <sys:String xml:space="preserve">' (c) Copyright Microsoft Corporation.
+' This source is subject to the Microsoft Public License (Ms-PL).
+' Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+' All other rights reserved.
+
+Imports Microsoft.VisualBasic
+Imports System
+Imports System.Linq
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.Windows.Media
+Imports System.Windows.Shapes
+Imports System.ComponentModel
+
+''' &lt;summary&gt;
+''' Sample page demonstrating the WrapPanel.
+''' &lt;/summary&gt;
+&lt;Sample("WrapPanel", DifficultyLevel.Basic, "WrapPanel")&gt; _
+Partial Public Class WrapPanelSample
+    Inherits UserControl
+    ''' &lt;summary&gt;
+    ''' Gets or sets a value indicating whether the demonstration has
+    ''' already been loaded.
+    ''' &lt;/summary&gt;
+    Private privateIsLoaded As Boolean
+    Private Overloads Property IsLoaded() As Boolean
+        Get
+            Return privateIsLoaded
+        End Get
+        Set(ByVal value As Boolean)
+            privateIsLoaded = value
+        End Set
+    End Property
+
+    ''' &lt;summary&gt;
+    ''' Initializes a new instance of the WrapPanelSample class.
+    ''' &lt;/summary&gt;
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Load the demonstration.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;Sample page.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    Private Sub OnLoad(ByVal sender As Object, ByVal e As RoutedEventArgs) Handles Me.Loaded
+        ' Don't repopulate if the page has already been loaded.
+        If IsLoaded Then
+            Return
+        End If
+        IsLoaded = True
+
+        ' Generate the text to wrap
+        Dim lorem As String = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse sed tellus non sapien laoreet accumsan. Phasellus rhoncus imperdiet pede. Morbi semper ipsum at leo. Nullam elit mi, dignissim et, vestibulum ut, laoreet quis, velit. Nulla aliquet risus sed arcu. Nunc vitae tortor in lectus tristique iaculis. Morbi elit. Quisque euismod mollis orci. Nullam cursus interdum eros. Curabitur tristique mi non nulla. Curabitur non nisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam aliquet, velit eu pretium placerat, massa lorem sollicitudin dolor, non ultricies nisi lorem bibendum enim. Pellentesque mollis egestas ipsum. Donec odio quam, tempus ut, iaculis molestie, viverra vitae, sapien."
+        For i As Integer = 0 To 3
+            For Each word As String In lorem.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
+                ManualTextWrapping.Children.Add(New TextBlock With {.Text = word, .Margin = New Thickness(3)})
+            Next word
+        Next i
+
+        ' Generate the color swatch
+        Dim granularity As Integer = 50
+        For r As Integer = 0 To 254 Step granularity
+            For g As Integer = 0 To 254 Step granularity
+                For b As Integer = 0 To 254 Step granularity
+                    Swatch.Items.Add(New Rectangle With _
+                    { _
+                        .Width = 20, _
+                        .Height = 20, _
+                        .Margin = New Thickness(5), _
+                        .Stroke = New SolidColorBrush(Colors.Black), _
+                        .StrokeThickness = 1, _
+                        .Fill = New SolidColorBrush(Color.FromArgb(255, CByte(r), CByte(g), CByte(b))) _
+                    })
+                Next b
+            Next g
+        Next r
+
+        ' Set the thumbnails
+        Thumbnails.ItemsSource = Photograph.GetPhotographs().OrderBy(Function(p) p.Name)
+    End Sub
+
+    ''' &lt;summary&gt;
+    ''' Update the manual text layout sample to match the CheckBox.
+    ''' &lt;/summary&gt;
+    ''' &lt;param name="sender"&gt;The CheckBox that was changed.&lt;/param&gt;
+    ''' &lt;param name="e"&gt;Event arguments.&lt;/param&gt;
+    Private Sub OnCheckChanged(ByVal sender As Object, ByVal e As RoutedEventArgs) Handles chkHorizontal.Checked, chkHorizontal.Unchecked
+        If chkHorizontal.IsChecked = True Then
+            ManualTextWrapping.Height = Double.NaN
+            ManualTextWrapping.Orientation = Orientation.Horizontal
+        Else
+            ManualTextWrapping.Height = 600
+            ManualTextWrapping.Orientation = Orientation.Vertical
+        End If
+    End Sub
+End Class</sys:String>
+    </src:SourceFile.Source>
+  </src:SourceFile>
+</src:SourceViewer>
+    </StackPanel>
+</UserControl>
