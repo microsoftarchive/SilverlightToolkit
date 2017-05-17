@@ -2,6 +2,8 @@ _This repository was migrated from CodePlex to the MicrosoftArchive organization
 
 # Silverlight Toolkit
 
+![Silverlight Toolkit](https://download-codeplex.sec.s-msft.com/Download?ProjectName=silverlight&DownloadId=88223&Build=21050)
+
 Straight from Microsoft, the Silverlight Toolkit provides the developer community with new components, functionality, and an efficient way to help shape product development. Toolkit releases include open source code, samples & docs, plus design-time support for the Silverlight browser plugin.
 
 ## Silverlight 5 Toolkit
