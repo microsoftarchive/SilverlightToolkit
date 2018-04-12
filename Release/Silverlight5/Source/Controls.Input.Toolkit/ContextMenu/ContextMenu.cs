@@ -20,12 +20,13 @@ namespace System.Windows.Controls
         /// <summary>
         /// Stores a reference to the current root visual.
         /// </summary>
-        private FrameworkElement _rootVisual;
+        private static FrameworkElement _rootVisual;
 
         /// <summary>
         /// Stores the last known mouse position (via MouseMove).
         /// </summary>
-        private Point _mousePosition;
+
+        public static Point MousePosition;
 
         /// <summary>
         /// Stores a reference to the object that owns the ContextMenu.
@@ -167,7 +168,7 @@ namespace System.Windows.Controls
             {
                 if (newValue)
                 {
-                    OpenPopup(_mousePosition);
+                    OpenPopup(MousePosition);
                 }
                 else
                 {
@@ -289,9 +290,9 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="sender">Source of the event.</param>
         /// <param name="e">Event arguments.</param>
-        private void HandleRootVisualMouseMove(object sender, MouseEventArgs e)
+        private static void HandleRootVisualMouseMove(object sender, MouseEventArgs e)
         {
-            _mousePosition = e.GetPosition(null);
+            MousePosition = e.GetPosition(null);
         }
 
         /// <summary>
@@ -308,7 +309,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Initialize the _rootVisual property (if possible and not already done).
         /// </summary>
-        private void InitializeRootVisual()
+        private static void InitializeRootVisual()
         {
             if (null == _rootVisual)
             {
@@ -480,3 +481,4 @@ namespace System.Windows.Controls
         }
     }
 }
+
